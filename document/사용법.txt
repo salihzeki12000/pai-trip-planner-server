@@ -1,15 +1,12 @@
 1. PlanningHTTPServer.java 실행
 2. chrome창 띄우고 (IE안됨.한글 인코딩 문제) 주소창에 아래 text입력
-http://localhost:8088/get?type=trip_json_question&body=<"personalInfo":<"gender":"MAN","age":40,"numChildren":-1,"married":"Unknown","religion":"Unknown","preferenceOfPOIType":<"poiTypeList":[<"category":"여행","subCategory":"관광/명소","subSubCategory":"자연경관">,<"category":"음식점","subCategory":"한식","subSubCategory":"해물/생선">],"preferenceValueList":[0.9,0.9]>>,"dailyTripEntryList":[<"startTimeStr":"2016-12-15 11:00","returnTimeStr":"2016-12-15 18:00","startPOITitle":"메종글래드제주","endPOITitle":"메종글래드제주","areas":["제주특별자치도"],"phycalActivityLimit":2000.0,"categoryConstraintList":[<"poiTypes":[<"category":"음식점">],"startHour":11.0,"endHour":14.0,"minCount":1,"maxCount":1>,<"poiTypes":[<"category":"쇼핑">],"startHour":9.0,"endHour":18.0,"minCount":1,"maxCount":1>]>]>
 
 // mgkim:
 // scenario1 (tripQuestionExample7)
-//
 // 10-20, 제주국제공항, 제주국제공항, 제주특별자치도
 http://localhost:8088/get?type=trip_json_question&body=<"personalInfo":<"preferenceOfPOIType":<"poiTypeList":[],"preferenceValueList":[]>>,"dailyTripEntryList":[<"startTimeStr":"2017-01-17 10:00","returnTimeStr":"2017-01-17 20:00","startPOITitle":"제주국제공항","endPOITitle":"제주국제공항","areas":["제주특별자치도"],"physicalActivityLimit":2000.0,"categoryConstraintList":[],"poiConstraintList":[]>]>
 
 // scenario2 (tripQuestionExample8)
-//
 // 10-20, 제주국제공항, 켄싱턴제주호텔, 제주특별자치도, LDS
 // 10-20, 켄싱턴제주호텔, 제주퍼시픽호텔, 서귀포시, LD
 // 10-20, 제주퍼시픽호텔, 제주국제공항, 제주시, LDS
@@ -21,11 +18,6 @@ http://localhost:8088/get?type=trip_json_question&body=<"personalInfo":<"prefere
 // 10-20, 켄싱턴제주호텔, 제주퍼시픽호텔, 서귀포시, LD, 한림공원
 // 10-15, 제주퍼시픽호텔, 제주국제공항, 제주시, LS, 테디베어뮤지엄 제주점
 http://localhost:8088/get?type=trip_json_question&body=<"personalInfo":<"preferenceOfPOIType":<"poiTypeList":[<"category":"음식점","subCategory":"한식","subSubCategory":"해물/생선">,<"category":"여행","subCategory":"관광/명소","subSubCategory":"자연경관">,<"category":"여행","subCategory":"관광/명소","subSubCategory":"해수욕장/해변">,<"category":"여행","subCategory":"관광/명소","subSubCategory":"폭포/계곡">],"preferenceValueList":[0.9,0.9,0.9,0.9]>>,"dailyTripEntryList":[<"startTimeStr":"2017-01-15 15:00","returnTimeStr":"2017-01-15 20:00","startPOITitle":"제주국제공항","endPOITitle":"켄싱턴제주호텔","areas":["제주특별자치도"],"physicalActivityLimit":2000.0,"categoryConstraintList":[<"poiTypes":[<"category":"음식점">],"startHour":17.5,"endHour":19.0,"minCount":1,"maxCount":1>,<"poiTypes":[<"category":"쇼핑">],"startHour":9.0,"endHour":18.0,"minCount":1,"maxCount":1>],"poiConstraintList":[<"poiId":"daum.10717401","poiTitle":"정방폭포","visitOrNot":true>,<"poiId":"daum.8577982","poiTitle":"제주미니랜드","visitOrNot":false>]>,<"startTimeStr":"2017-01-16 10:00","returnTimeStr":"2017-01-16 20:00","startPOITitle":"켄싱턴제주호텔","endPOITitle":"제주퍼시픽호텔","areas":["서귀포시"],"physicalActivityLimit":2000.0,"categoryConstraintList":[<"poiTypes":[<"category":"음식점">],"startHour":12.0,"endHour":13.0,"minCount":1,"maxCount":1>,<"poiTypes":[<"category":"음식점">],"startHour":17.5,"endHour":19.0,"minCount":1,"maxCount":1>],"poiConstraintList":[<"poiId":"daum.10941032","poiTitle":"한림공원","visitOrNot":true>]>,<"startTimeStr":"2017-01-17 10:00","returnTimeStr":"2017-01-17 15:00","startPOITitle":"제주퍼시픽호텔","endPOITitle":"제주국제공항","areas":["제주시"],"physicalActivityLimit":2000.0,"categoryConstraintList":[<"poiTypes":[<"category":"음식점">],"startHour":12.0,"endHour":13.0,"minCount":1,"maxCount":1>,<"poiTypes":[<"category":"쇼핑">],"startHour":9.0,"endHour":18.0,"minCount":1,"maxCount":1>],"poiConstraintList":[<"poiId":"daum.8559375","poiTitle":"테디베어뮤지엄 제주점","visitOrNot":true>]>]>
-
-
-
-
-
 
 // mgkim:
 // 해물/생선, 자연경관, 해수욕장/해변, 폭포/계곡
@@ -63,12 +55,6 @@ http://localhost:8088/get?type=trip_json_question&body=<"personalInfo":<"prefere
 // 10-21, 켄싱턴제주호텔, 제주퍼시픽호텔, 서귀포시
 // 10-15, 제주퍼시픽호텔, 제주국제공항, 제주시
 http://localhost:8088/get?type=trip_json_question&body=<"personalInfo":<"preferenceOfPOIType":<"poiTypeList":[<"category":"음식점","subCategory":"한식","subSubCategory":"해물/생선">],"preferenceValueList":[0.9]>>,"dailyTripEntryList":[<"startTimeStr":"2017-01-15 15:00","returnTimeStr":"2017-01-15 21:00","startPOITitle":"제주국제공항","endPOITitle":"켄싱턴제주호텔","areas":["제주특별자치도"],"physicalActivityLimit":2000.0,"categoryConstraintList":[],"poiConstraintList":[]>,<"startTimeStr":"2017-01-16 10:00","returnTimeStr":"2017-01-16 21:00","startPOITitle":"켄싱턴제주호텔","endPOITitle":"제주퍼시픽호텔","areas":["서귀포시"],"physicalActivityLimit":2000.0,"categoryConstraintList":[],"poiConstraintList":[]>,<"startTimeStr":"2017-01-17 10:00","returnTimeStr":"2017-01-17 15:00","startPOITitle":"제주퍼시픽호텔","endPOITitle":"제주국제공항","areas":["제주시"],"physicalActivityLimit":2000.0,"categoryConstraintList":[],"poiConstraintList":[]>]>
-
-
-
-
-
-
 
 // 서귀포시
 http://localhost:8088/get?type=trip_json_question&body=<"personalInfo":<"gender":"MAN","age":40,"numChildren":-1,"married":"Unknown","religion":"Unknown","preferenceOfPOIType":<"poiTypeList":[<"category":"여행","subCategory":"관광/명소","subSubCategory":"자연경관">,<"category":"음식점","subCategory":"한식","subSubCategory":"해물/생선">],"preferenceValueList":[0.9,0.9]>>,"dailyTripEntryList":[<"startTimeStr":"2016-12-15 11:00","returnTimeStr":"2016-12-15 18:00","startPOITitle":"메종글래드제주","endPOITitle":"메종글래드제주","areas":["서귀포시"],"phycalActivityLimit":2000.0,"categoryConstraintList":[<"poiTypes":[<"category":"음식점">],"startHour":11.0,"endHour":14.0,"minCount":1,"maxCount":1>,<"poiTypes":[<"category":"쇼핑">],"startHour":9.0,"endHour":18.0,"minCount":1,"maxCount":1>]>]>

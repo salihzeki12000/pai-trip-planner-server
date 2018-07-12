@@ -96,7 +96,8 @@ public class PlanningHttpServer {
             String bodyStr = params.get("body");
 
             if (typeStr.equals("trip_json_question")) {
-                bodyStr = bodyStr.replaceAll("<", "{");     bodyStr = bodyStr.replaceAll(">", "}");
+                bodyStr = bodyStr.replaceAll("<", "{");
+                bodyStr = bodyStr.replaceAll(">", "}");
                 TripQuestion tripQuestion = gson.fromJson(bodyStr, TripQuestion.class);
 
                 long plannerStart = System.currentTimeMillis();
