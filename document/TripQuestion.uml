@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>edu.hanyang.trip_planning.trip_question.TripQuestion</OriginalElement>
+  <nodes>
+    <node x="315.0" y="449.0">edu.hanyang.trip_planning.trip_question.PreferenceOfPOIType</node>
+    <node x="0.0" y="0.0">edu.hanyang.trip_planning.trip_question.DailyTripEntry</node>
+    <node x="373.0" y="0.0">edu.hanyang.trip_planning.optimize.constraints.categoryConstraint.CategoryConstraint</node>
+    <node x="0.0" y="282.0">edu.hanyang.trip_planning.tripData.dataType.POIType</node>
+    <node x="0.0" y="593.0">edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfo</node>
+    <node x="0.0" y="449.0">edu.hanyang.trip_planning.trip_question.TripQuestion</node>
+    <node x="237.0" y="282.0">edu.hanyang.trip_planning.optimize.constraints.poiConstraint.PoiConstraint</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="354.5" y="467.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,28 @@
+#Category	SubCategory	subsubcategory	AttractionType	
+여행	관광,명소	바위	NaturalLandscape	자연경관
+여행	관광,명소	자연휴양림	NaturalLandscape	자연경관
+여행	관광,명소	도보여행	Trail	도보여행
+여행	관광,명소	산봉우리	Mountain	산
+여행	관광,명소	산	Mountain	산
+여행	관광,명소	국립공원	Mountain	산
+여행	관광,명소	섬	NaturalLandscape	자연경관
+여행	관광,명소	폭포	NaturalLandscape	자연경관
+여행	관광,명소	동굴	NaturalLandscape	자연경관
+여행	관광,명소	해수욕장,해변	Beach	해변
+여행	관광,명소	계곡	Valley	계곡
+여행	관광,명소	테마거리	ThemeStreet	테마거리
+여행	관광,명소	도시근린공원	Park	공원
+여행	관광,명소	문화유적	HistoricalSite	유적지
+여행	관광,명소	오름	NaturalLandscape	자연경관
+여행	관광,명소	민속촌	Museum	박물관
+여행	관광,명소	테마파크	ThemePark	테마파크
+여행	관광,명소	수목원,식물원	BotanicalGarden	식물원
+여행	관광,명소	숲	Forest	숲
+여행	관광,명소		Etc	기타
+여행	관광,명소	관광단지	Etc	기타
+여행	관광,명소	관광농원	Etc	기타
+여행	관광,명소	관광안내소	Etc	기타
+문화,예술	종교	불교	BuddhistTemple	절
+문화,예술	종교	기독교	Church
+문화,예술	종교	천주교	CatholicChurch
+문화,예술	문화시설	박물관	Museum	박물관

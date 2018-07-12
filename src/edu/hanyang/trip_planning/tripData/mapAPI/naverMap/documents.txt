@@ -1,0 +1,52 @@
+http://starplatina.tistory.com/entry/XML-%EC%9D%84-JSON%EC%9C%BC%EB%A1%9C
+
+
+http://www.androidpub.com/1602294
+
+http://code.google.com/p/for-happy-date-for-android/
+
+http://map.naver.com/findroute2/findCarRoute.nhn?via=&call=route2&output=json&car=0&mileage=12.4&start=128.0%2C37.0%2C%20&destination=128.0%2C37.5%2C%20&search=2
+
+
+출발지점과 도착지점만으로 미리 경로를 검색해서 가져오는 거라면 인터넷에서 경로를 제공하는 싸이트(구글맵, Cloudmade, YOURS, 다음, 네이버 등)로부터 경로를 포함하는 XML 문서 등을 가져와서 파싱하여 맵 위에 경로를 그려주어야 합니다.
+
+1. 구글맵으로부터 가져오는 방법은 다음 링크를 참고하세요.
+(단, 국내는 kml 포멧으로는 안되고 json 포멧으로 하면 대중교통 경로는 가져올 수 있습니다)
+http://blog.synyx.de/2010/06/routing-driving-directions-on-android-part-1-get-the-route/
+
+2. YOURS, Clodemade 로부터 가져오는 방법은 오픈소스 안드로이드 네비게이션 앱인 OsmAnd 의 소스 중 RouteProvider.java 파일을 참고하세요.
+http://code.google.com/p/osmand/
+
+3. 다음 은 아래 링크와 개발정보 게시판의 좌표계 변환코드를 참고하세요.
+http://dna.daum.net/griffin/do/griffin/do/DevQnA/read?articleId=942&bbsId=DevQnA
+그런데, 다음 길찾기 주소가 언제부턴가 다음과 같이 변경되었네요.
+http://map.daum.net/route/route.json?routeMode=SHORTEST_REALTIME&routeOption=NONE&sX=862540&sY=667938&eX=863549&eY=666837
+
+4. 네이버 는 아래 for-happy-date 프로젝트의 FastRoadModules.java 파일을 참고하세요.
+http://code.google.com/p/for-happy-date-for-android/
+그리고, 네이버도 변경되었습니다.
+http://map.naver.com/findroute2/findCarRoute.nhn?via=&call=route2&output=json&car=0&mileage=12.4&start=128.0%2C37.0%2C%20&destination=128.0%2C37.5%2C%20&search=2
+
+
+http://map.naver.com/findroute2/findPubTransRoute.nhn?
+http://map.naver.com/findroute2/findWalkRoute.nhn?call=route2&output=json"
+
+
+ 댓글 2011.06.16 17:34:47
+블랙홀3
+매발톱님 글 남겨주셔셔 감사합니다. 1번 사이트는 읽어 봤는데, 제가 대충봤었네요, 참고 하겠습니다.
+감사합니다.
+ 댓글 2011.06.17 22:10:31
+birdea
+저도 예전에 같은 주제로 고민했었는데 아래 글이 블랙홀3님께 참고가 될 것 같아서 링크 납깁니다.
+google map navigation 질문이요 ! http://www.androidpub.com/1206563
+
+
+
+
+
+
+
+
+
+"http://map.naver.com/findroute2/findPubTransRoute.nhn?output=xml&start=한양대학교+ srcX + "%2C" + srcY + "%2C" + src + "&destination=" + desX + "%2C" + desY + "%2C" + des + "&direct=0";

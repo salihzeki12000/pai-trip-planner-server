@@ -1,0 +1,3 @@
+2015-12-28 14:26:22,631 [main] DEBUG edu.hanyang.mapAPI.naver_car.BatchPathGeneration - 2015-12-28-14-26-
+2015-12-28 14:26:22,636 [main] DEBUG edu.hanyang.mapAPI.naver_car.BatchPathGeneration - 하얏트리젠시 제주->금호리조트 제주점
+2015-12-28 14:26:23,639 [main] DEBUG edu.hanyang.mapAPI.DaumLocalAPI.DaumLocalAPI - https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=%ED%95%98%EC%96%8F%ED%8A%B8%EB%A6%AC%EC%A0%A0%EC%8B%9C+%EC%A0%9C%EC%A3%BC

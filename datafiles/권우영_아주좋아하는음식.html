@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type"><title>음식점 선호도(못먹는 음식) 입력 </title>
+
+
+</head><body>
+<br>
+사용자 이름 <input type="text" name="user_name" value="권우영">
+<br>
+<p>못먹는 음식</p>
+일식
+<input type="checkbox" name="hatefood" value="돈까스/우동" />돈까스/우동   
+<input type="checkbox" name="hatefood" value="일식집" />일식집        
+<input type="checkbox" name="hatefood" value="일본식라면" />일본식라면    
+<input type="checkbox" name="hatefood" value="초밥/롤" />초밥/롤       
+<input type="checkbox" name="hatefood" value="샤브샤브" />샤브샤브      
+<br>
+중식
+<input type="checkbox" name="hatefood" value="중화요리" />중화요리      
+<br>
+양식
+<input type="checkbox" name="hatefood" value="이탈리안" />이탈리안      
+<input type="checkbox" name="hatefood" value="해산물" />해산물        
+<input type="checkbox" name="hatefood" value="햄버거" />햄버거        
+<input type="checkbox" name="hatefood" value="스테이크/립" />스테이크/립   
+<input type="checkbox" name="hatefood" value="패밀리레스토랑" />패밀리레스토랑
+<br>
+한식
+<input type="checkbox" name="hatefood" value="육류/고기" />육류/고기     
+<input type="checkbox" name="hatefood" value="냉면" />냉면          
+<input type="checkbox" name="hatefood" value="한정식" />한정식        
+<input type="checkbox" name="hatefood" value="해물/생선" />해물/생선     
+<input type="checkbox" name="hatefood" value="해장국" />해장국        
+<input type="checkbox" name="hatefood" value="국수" />국수          
+<input type="checkbox" name="hatefood" value="쌈밥" />쌈밥          
+<input type="checkbox" name="hatefood" value="설렁탕" />설렁탕        
+<br>
+기타
+<input type="checkbox" name="hatefood" value="뷔페" />뷔페          
+<input type="checkbox" name="hatefood" value="패스트푸드" />패스트푸드    
+<input type="checkbox" name="hatefood" value="분식" />분식          
+<br>                                                   
+<input type="button" name="btn" value="전송" onclick="selectFood()" />
+                                                   
+<script language="JavaScript">
+
+var xmlHttp;
+var username;
+
+function selectFood(){
+hatefood = document.getElementsByName("hatefood");
+window.console.log(hatefood.length);
+window.console.log("hatefood");
+user_name = document.getElementsByName("user_name");
+var userdict_name = user_name[0].value + "사전";
+// 선택한 싫어하는 음식 길이만큼 돌려라.
+for (var i = 0; i < hatefood.length; i++) {
+	if (hatefood[i].checked){
+	httpGet("http://166.104.36.218:8088/get?type=dict_update&dict_name="+userdict_name+ "&title_word=아주좋아하는음식&entry="+hatefood[i].value);
+	httpGet("http://166.104.36.218:8088/get?type=dict_delete&dict_name="+userdict_name+ "&title_word=싫어하는음식&entry="+hatefood[i].value);
+	httpGet("http://166.104.36.218:8088/get?type=dict_delete&dict_name="+userdict_name+ "&title_word=아주싫어하는음식&entry="+hatefood[i].value);
+	httpGet("http://166.104.36.218:8088/get?type=dict_delete&dict_name="+userdict_name+ "&title_word=좋아하는음식&entry="+hatefood[i].value);
+
+	}
+}	
+
+}
+
+
+function httpGet(theUrl)
+{
+ xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = loader;
+    xmlHttp.open( "GET", theUrl, true ); // false for synchronous request
+    xmlHttp.send(null);
+    return xmlHttp.responseText;
+}
+
+function loader() {
+	if(xmlHttp.readyState == 4) {
+		if(xmlHttp.status == 200) {
+			temp = xmlHttp.responseText;
+//			alert(temp);
+		}
+	}
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Trip Planner</title>
+
+    <style>
+        html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        }
+ #map_canvas1{
+				width: 800px;
+        height: 600px;
+        }
+    </style>
+</head>
+<body>
+<h4>1일차  </h4>
+<div id="map_canvas1" ></div>
+<p>
+날짜:2016-12-15<br>
+1. 메종글래드제주에서 09:00에 출발<br>
+2. 이호테우해변에서 09:16에 도착해서 30분 동안 머물고 09:46에 출발<br>
+3. 제주민속촌박물관에서 10:49에 도착해서 90분 동안 머물고 12:19에 출발<br>
+4. 제주어장에서 12:37에 도착해서 30분 동안 머물고 13:07에 출발<br>
+5. 국립제주박물관에서 13:28에 도착해서 40분 동안 머물고 14:08에 출발<br>
+6. 롯데면세점 제주점에서 14:19에 도착해서 30분 동안 머물고 14:49에 출발<br>
+7. 새섬에서 15:40에 도착해서 19분 동안 머물고 16:00에 출발<br>
+8. 용연구름다리에서 16:17에 도착해서 15분 동안 머물고 16:32에 출발<br>
+9. 용두암에서 16:49에 도착해서 15분 동안 머물고 17:04에 출발<br>
+10. 메종글래드제주에 17:22에 도착<br>
+</p>
+<script>
+function initmap() {
+var poi11 = {lat:33.485279068690566, lng:126.488523388547};
+var poi12 = {lat:33.49717732, lng:126.4516203};
+var poi13 = {lat:33.32239234, lng:126.842293};
+var poi14 = {lat:33.51682833, lng:126.5156428};
+var poi15 = {lat:33.51359629, lng:126.5488761};
+var poi16 = {lat:33.4906410067903, lng:126.48660235445963};
+var poi17 = {lat:33.23654516, lng:126.5618959};
+var poi18 = {lat:33.51488321, lng:126.5143922};
+var poi19 = {lat:33.51611062, lng:126.5119571};
+var poi110 = {lat:33.485279068690566, lng:126.488523388547};
+  var map1 = new google.maps.Map(document.getElementById('map_canvas1'), {
+    zoom: 10,
+    center: poi11
+  });
+  var marker11 = new google.maps.Marker({
+    position: poi11,
+    map: map1,
+    label: 'A',
+    title: '메종글래드제주'
+  });
+  var marker12 = new google.maps.Marker({
+    position: poi12,
+    map: map1,
+    label: 'B',
+    title: '이호테우해변'
+  });
+  var marker13 = new google.maps.Marker({
+    position: poi13,
+    map: map1,
+    label: 'C',
+    title: '제주민속촌박물관'
+  });
+  var marker14 = new google.maps.Marker({
+    position: poi14,
+    map: map1,
+    label: 'D',
+    title: '제주어장'
+  });
+  var marker15 = new google.maps.Marker({
+    position: poi15,
+    map: map1,
+    label: 'E',
+    title: '국립제주박물관'
+  });
+  var marker16 = new google.maps.Marker({
+    position: poi16,
+    map: map1,
+    label: 'F',
+    title: '롯데면세점 제주점'
+  });
+  var marker17 = new google.maps.Marker({
+    position: poi17,
+    map: map1,
+    label: 'G',
+    title: '새섬'
+  });
+  var marker18 = new google.maps.Marker({
+    position: poi18,
+    map: map1,
+    label: 'H',
+    title: '용연구름다리'
+  });
+  var marker19 = new google.maps.Marker({
+    position: poi19,
+    map: map1,
+    label: 'I',
+    title: '용두암'
+  });
+  var marker110 = new google.maps.Marker({
+    position: poi110,
+    map: map1,
+    label: 'J',
+    title: '메종글래드제주'
+  });
+var pathCoord1 = [poi11,poi12,poi13,poi14,poi15,poi16,poi17,poi18,poi19,poi110,];
+  var path1 = new google.maps.Polyline({
+    path: pathCoord1,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+  path1.setMap(map1);
+}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1kXkYitdbTZWd8glOSMoeChJo-gTsK_g&signed_in=true&callback=initmap"></script>
+</body>
+<html>

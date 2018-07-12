@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Simple markers</title>
+  <style>      html, body {        height: 100%;        margin: 0;        padding: 0;      }      #map {        height: 80%;      }    </style>
+</head>
+<body>
+<div id="map"></div>
+
+<script>
+function initMap() {
+    var poi0 = {
+        lat: 33.54425326,
+        lng: 126.661818
+    };
+    var poi1 = {
+        lat: 33.518780879184455,
+        lng: 126.5178794396309
+    };
+
+    var marker0 = new google.maps.Marker({
+        position: poi0,
+        map: map,
+        label: '1',
+        title: '선샤인호텔'
+    });
+    var marker1 = new google.maps.Marker({
+        position: poi1,
+        map: map,
+        label: '2',
+        title: '라마다프라자제주호텔'
+    });
+    var pathCoord = [poi0, poi1, ];
+    var path = new google.maps.Polyline({
+        path: pathCoord,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+}
+</script>
+
+<script async defer src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyD1kXkYitdbTZWd8glOSMoeChJo-gTsK_g&signed_in=true&callback=initMap" >
+</script>
+
+
+<script>
+ var ttsText = "선샤인호텔에서02월01일부터2일간 워크숍을 하는게 어때요?";
+  function tts() {
+</script>
+1: 선샤인호텔에서02월01일부터2일간 워크숍을 하는게 어때요?<br>
+2: 라마다프라자제주호텔에서02월01일부터2일간 워크숍을 하는게 어때요?<br>
+3: 선샤인호텔에서02월08일부터2일간 워크숍을 하는게 어때요?<br>
+4: 라마다프라자제주호텔에서02월08일부터2일간 워크숍을 하는게 어때요?<br>
+</body>
+</html>

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html class="index">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+
+
+
+	<link rel="stylesheet" href="http://s1.daumcdn.net/svc/attach/U0301/cssjs/place-map/1507161122/app.css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="http://s1.daumcdn.net/svc/attach/U0301/cssjs/place-map/1507161122/roughMapIE7.css">
+    <![endif]-->
+<title>밸런스버거 한양대점 &ndash; Daum 지도</title>
+
+
+
+<meta property="og:title" content="밸런스버거 한양대점">
+<meta property="og:site_name" content="Daum지도상세">
+<meta property="og:description" content="서울 성동구 왕십리로 223-1">
+<meta property="og:type" content="website">
+<meta property="og:image" content="http://map3.daum.net/staticmap/og?type=place&srs=wcongnamul&size=400x200&m=509353,1127123">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="밸런스버거 한양대점">
+<meta name="twitter:description" content="서울 성동구 왕십리로 223-1">
+<meta name="twitter:image" content="http://map3.daum.net/staticmap/og?type=place&srs=wcongnamul&size=400x200&m=509353,1127123">
+</head>
+<body>
+<div id="daumIndex"><a href="#cMain">본문 바로가기</a></div>
+<div id="wrapModalLayer">
+	<div id="roughmapLayer" class="modal_layer">
+	<div class="root_roughmap_popup">
+		<div class="wrap_title">
+			<h2 class="title title_map hide_text">Daum 약도 만들기</h2>
+			<a href="http://blog.daum.net/daummaps/482" class="link_roughmap_help bt_map hide_text" target="_blank">도움말</a>
+			<button id="btnRoughMapClose" class="btn_roughmap_close bt_map hide_text">닫기</button>
+
+		</div>
+		<div class="wrap_content">
+
+			<div class="left">
+				<div class="section wrap_roughmap_size">
+					<h3 class="name title_map hide_text">지도크기</h3>
+					<input type="radio" name="input_mapsize_type" class="btn_mapsize_type" id="inputRoughMapSizeTypePC" data-width="520" data-height="300" checked/>
+					<label for="inputRoughMapSizeTypePC" class="img_com on">PC기본화면(520 x 300)</label>
+					<input type="radio" name="input_mapsize_type" class="btn_mapsize_type" id="inputRoughMapSizeTypeMobile" data-width="320" data-height="200"/>
+					<label for="inputRoughMapSizeTypeMobile" class="img_com">모바일기본화면(320 x 200)</label>
+					<input type="radio" name="input_mapsize_type" class="btn_mapsize_type" id="inputRoughMapSizeTypeCustom" />
+					<label for="inputRoughMapSizeTypeCustom" class="img_com">사용자 지정</label>
+					<div class="wrap_input_mapsize">
+						<input type="text" class="input_mapsize img_com" name="roughmap_width" value="" />
+						<span class="icon_x img_com">X</span>
+						<input type="text" class="input_mapsize img_com" name="roughmap_height" value="" />
+					</div>
+				</div>
+
+				<div class="section wrap_roughmap_marker">
+					<div class="wrap_section_name">
+						<h3 class="name title_map hide_text">아이콘변경</h3>
+						<a href="http://blog.daum.net/daummaps/483" target="_blank"><button class="btn_help_marker_icon bt_map hide_text">?</button></a>
+					</div>
+					<div>
+						<div>
+							<input type="radio" id="roughMapMarkerTypeDefault" name="roughmap_marker_type" class="btn_marker_type" checked />
+							<label for="roughMapMarkerTypeDefault" class="img_com on">기본아이콘</label>
+						</div>
+						<ul class="wrap_basic_marker_image">
+							<li class="btn_basic_marker on" data-number="1">
+								<span class="select_border"></span>
+								<button class="btn_basic_marker1 marker_smap hide_text">마커1</button>
+							</li>
+							<li class="btn_basic_marker" data-number="2">
+								<span class="select_border"></span>
+								<button class="btn_basic_marker2 marker_smap hide_text">마커2</button>
+							</li>
+							<li class="btn_basic_marker" data-number="3">
+								<span class="select_border"></span>
+								<button class="btn_basic_marker3 marker_smap hide_text">마커3</button>
+							</li>
+							<li class="btn_basic_marker" data-number="4">
+								<span class="select_border"></span>
+								<button class="btn_basic_marker4 marker_smap hide_text">마커4</button>
+							</li>
+						</ul>
+					</div>
+					<div class="wrap_custom_marker">
+						<input type="radio"	id="roughMapMarkerTypeCustom" name="roughmap_marker_type" class="btn_marker_type" />
+						<label for="roughMapMarkerTypeCustom" class="img_com">사용자등록 아이콘</label>
+						<div class="wrap_btn_upload">
+                            <div class="wrap_thumb">
+                                <img class="user_thumb">
+                                <div class="img_com thumb"></div>
+                            </div>
+                            <form id="formRoughMapUploadImage" action="/roughmap/uploadImage.json" enctype="multipart/form-data" target="uploadIframe" method="post" class="btn_upload_marker bt_map">
+                                <label for="inputRoughMapUploadImage" class="label_file"></label>
+                                <input id="inputRoughMapUploadImage" type="file" name="up_file" class="input_file">
+                            </form>
+                            <iframe id="uploadIframe" name="uploadIframe" style="display: none;"></iframe>
+							<div class="wrap_recom_img_txt">
+								<span class="recom_img_txt">64x64 픽셀보다 큰 이미지는 알맞게 줄어듭니다.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="section wrap_roughmap_info">
+					<h3 class="name title_map hide_text">노출정보</h3>
+					<input type="checkbox" name="roughmap_info_address" id="roughMapInfoAddress" checked />
+					<label for="roughMapInfoAddress" class="img_com on">주소 / 전화번호</label>
+					<input type="checkbox" name="roughmap_info_subway" id="roughMapInfoSubway" checked />
+					<label for="roughMapInfoSubway" class="img_com on">주변 지하철</label>
+					<input type="checkbox" name="roughmap_info_busstop" id="roughMapInfoBusStop" checked />
+					<label for="roughMapInfoBusStop" class="img_com on">주변 정류장</label>
+					<input type="checkbox" name="roughmap_info_busline" id="roughMapInfoBusLine" checked />
+					<label for="roughMapInfoBusLine" class="img_com on">주변 버스</label>
+					<input type="checkbox" name="roughmap_info_howtogo" id="roughMapInfoHowToGo" checked />
+					<label for="roughMapInfoHowToGo" class="img_com on">찾아오는길</label>
+				</div>
+
+			</div>
+			<div class="body_container">
+				<div class="body">
+					<div id="roughmapTempContainer"></div>
+					<div id="daumRoughmapContainer" class="root_daum_roughmap"></div>
+					<!-- <div class="roughmap_info_txt">* 해당 정보는 약도를 만든 날짜를 기준으로 내용이 만들어져 <span class="default_ls">Daum</span>지도 서비스에 노출되는 정보와 다소 차이가 생길 수 있습니다.</div> -->
+				</div>
+			</div>
+			<div class="bottom">
+				<div class="wrap_info_txt">
+					<span class="img_com hide_text ico_info">!</span>
+					<span class="info_txt">해당 정보는 약도를 만든 날짜를 기준으로 작성된 내용이므로 향후 변경이 있을 수 있습니다.</span>
+					<!-- <span class="wrap_more">
+						<a href="#" target="_blank" class="more_txt">자세히보기</a>
+						<span class="img_com ico_more hide_text">></span>
+					</span> -->
+				</div>
+				<button class="bt_map hide_text btn_gen_code" id="btnGenCode">소스 생성하기</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div id="roughmapGenLayer" class="modal_layer hide">
+	<div class="root_roughmap_gen_popup js_map">
+		<div class="head">
+			<div class="wrap_tit">
+				<h3 class="tit">소스생성하기</h3>
+				<span class="tit_info">원하시는 지도타입을 선택하여 퍼가세요.</span>
+			</div>
+			<button id="btnCloseRoughmapGenLayer" class="btn_close_roughmap_gen_layer hide_text img_com">닫기</button>
+		</div>
+		<div class="body">
+			<div class="wrap_radio">
+				<input type="radio" name="input_roughmap_code_type" class="btn_code_type img_com on" id="inputRoughmapCodeTypeNormal" checked/>
+				<label for="inputRoughmapCodeTypeNormal" class="img_com on">일반지도</label>
+				<input type="radio" name="input_roughmap_code_type" class="btn_code_type img_com" id="inputRoughmapCodeTypeNormalHttps" checked/>
+				<label for="inputRoughmapCodeTypeNormalHttps" class="img_com">일반지도(HTTPS)</label>
+				<input type="radio" name="input_roughmap_code_type" class="btn_code_type img_com" id="inputRoughmapCodeTypeImage" />
+				<label for="inputRoughmapCodeTypeImage" class="img_com">이미지지도</label>
+			</div>
+			<ul class="code_type_desc code_type_desc_js">
+				<li class="img_com"><span>소스를 붙여 넣었을 때,&nbsp;</span><span>지도를 확대</span><span class="img_com ico_zoom zoomin hide_text">+</span><span>,&nbsp;축소</span><span class="img_com ico_zoom zoomout hide_text">-</span><span>&nbsp;및 이동할 수 있는 형태</span><span>입니다.</span></li>
+				<li class="img_com">주로 웹사이트에 사용이 가능하며, 특정 게시판이나 카페/블로그 서비스에서는 지도가 삽입되지 않을 수 있습니다. 그런 경우 <a href="#" id="btnToRoughmapCodeTypeImage"><em>이미지지도</em></a>를 사용하시는 것을 추천드립니다.</li>
+			</ul>
+			<ul class="code_type_desc code_type_desc_img">
+				<li class="img_com">주로 카페/블로그 등 Javascript를 지원하지 않는 환경에서 사용이 가능한 형태입니다.</li>
+				<li class="img_com">지도를 이미지로 생성하므로 확대, 축소 및 이동할 수 없습니다.</li>
+                <li class="img_com">결과 화면은 약도가 보여지는 환경에 따라 차이가 생길 수 있습니다.</li>
+			</ul>
+			<div class="wrap_ta">
+				<img id="roughmapCodeLoading" class="loading hide_text" src="http://i1.daumcdn.net/localimg/localimages/07/2013/map/img_loading.gif" width="21" height="21" alt="로딩중" >
+				<textarea id="roughmapOutput" class="code_ta" readonly></textarea>
+			</div>
+			<div class="copy_info">
+				<span class="hide_text img_com ico_copy_info">!</span>
+				<div>위의 소스를 복사한 후, 원하는 곳에 <em><span class="normal_ls">'Ctrl+V'</span></em>를 눌러 붙여 넣어보세요.</div>
+				<div class="html_mode_info">
+					에디터가 있는 게시판에는 아래의 이미지처럼 <em><span class="normal_ls">HTML</span></em>모드로 전환 후에 <em>붙여넣기<span class="normal_ls">(Ctrl+V)</span></em>를 하세요.
+					<img src="http://i1.daumcdn.net/localimg/localimages/07/2013/map/img_copysample.png" width="360" height="42" alt="에디터 게시판에서 HTML 모드 활성화." class="img">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	<div class="modal_bg"></div>
+</div>
+<div id="wrapFiyModalLayer">
+	<div class="FiyFrameWrap">
+    	<iframe frameborder='0' border='0' class="fiyFrame" src=""></iframe>
+	</div>
+	<div class="modal_bg"></div>
+</div>
+<div id="wrapMinidaum"></div>
+<div id="daumWrap">
+	<div role="banner" id="daumHead">
+	<h1>
+		<a href="http://www.daum.net/?nil_profile=daum&amp;nil_src=local" id="daumLogo">
+			<img width="51" height="27" src="http://i1.daumcdn.net/localimg/localimages/07/2013/map/detail/daumlogo_131114.gif" alt="Daum"></a>
+		<a href="http://map.daum.net/?nil_profile=title&amp;nil_src=local" id="daumServiceLogo"><span class="ir_wa">지도</span></a>
+	</h1>
+	<h2 class="screen_out">관련서비스</h2>
+	<ul id="daumRelServices">
+		<li><a href="#" class="link_services link_services1" data-widget="forefront:%Mapapp:%closeMapapp"><span class="ir_wa">지도앱</span></a></li>
+		<li><a href="http://map.daum.net/3d/" target="_top" class="link_services link_services2"><span class="ir_wa">3D지도</span></a></li>
+		<li><a href="http://heritage.daum.net/" target="_top" class="link_services link_services3"><span class="ir_wa">문화유산</span></a></li>
+		<li><a href="http://travel.daum.net/" target="_top" class="link_services link_services4"><span class="ir_wa">여행</span></a></li>
+	</ul>
+
+	<h2 class="screen_out">검색</h2>
+	<form role="search" data-widget="searchBox:queryText:suggestWrapper" class="searchform_news" name="daumSearch" id="daumSearch" action="http://map.daum.net/">
+		<fieldset class="fld_inside">
+			<legend class="screen_out">검색어 입력폼</legend>
+			<div class="box_searchbar">
+				<input type="text" class="tf_keyword" id="queryText" name="q" value="" title="검색어 입력" autocomplete="off" spellcheck="false">
+				<button id="daumBtnSearch" class="ico_search btn_search" type="submit"><span class="ir_wa">검색</span></button>
+			</div>
+		</fieldset>
+		<blockquote id="suggestWrapper" class="wrapper"></blockquote>
+	</form>
+</div>
+<div id="Mapapp" class="Mapapp" style="display:none">
+	<button id="closeMapapp" type="button" class="close"></button>
+	<span class="qr"></span>
+	<span class="intro"></span>
+	<a href="http://itunes.apple.com/kr/app/id304608425" target="_blank" class="iphone"></button>
+	<a href="https://play.google.com/store/apps/details?id=net.daum.android.map" target="_blank" class="android"></button>
+	<a data-widget="popup:432:284" href="http://place.daum.net/popup/MapAppSms.do" target="_blank" class="sms">문자로 전송하기</a>
+</div>
+<hr class="hide">
+
+	<div id="daumContent">
+		<div id="cMain">
+			<div id="mSub">
+								<div class="wrap_info">
+					<div class="box_map">
+						<div class="box_store">	<a href="#none" data-widget="favorite:@favoriteData:@addurl:@removeurl:@favoriteId"
+		class="img_graph favorite"
+		data-widget-favoriteData="9078153,밸런스버거 한양대점,509353,1127123"
+		data-widget-addurl="favorite/add"
+		data-widget-removeurl="favorite/remove"
+		data-widget-favoriteId=""></a>
+	<h2 class="store_name icon_count3">
+		<span title="밸런스버거 한양대점">밸런스버거 한양대점</span>
+	</h2>
+		<div class="view_buttons_wrap">
+		<a class="ico_comm road_view" target="_blank" href="http://map.daum.net/?srcid=9078153&confirmid=9078153&q=%EB%B0%B8%EB%9F%B0%EC%8A%A4%EB%B2%84%EA%B1%B0+%ED%95%9C%EC%96%91%EB%8C%80%EC%A0%90&rv=on">로드뷰</a>									</div>
+</div>
+<div class="wrap_sns">
+	<div id="snsCont" class="snsCont" data-widget="sns:%socialShareContainer:@placeName:@imgurl:PROD" data-widget-placeName="밸런스버거 한양대점" data-widget-imgurl="http://cfile84.uf.daum.net/image/2570C7475444AF1F364AE3">
+		<div id="socialShareContainer"></div>
+	</div>
+</div>					</div>
+					<div class="box_info">
+						<div class="box_btn">
+	<img id="previewTarget" data-widget="forefront:%photoviewerTarget:%closeViewer:true" width="198" height="156" alt="" src="http://t1.daumcdn.net/thumb/C198x156/?fname=http://cfile84.uf.daum.net/image/2570C7475444AF1F364AE3">
+	<div class="previewFrameTop"></div>
+	<div class="previewFrameLeft"></div>
+	<div class="previewFrameRight"></div>
+	<div class="previewFrameBottom"></div>
+			<a title="이전 사진 보기" id="previewPrev" data-click="status:prevPreview" class="btn_arr btn_prev" href="#none">이전 사진 보기</a>
+	<a title="다음 사진 보기" id="previewNext" data-click="status:nextPreview" class="btn_arr btn_next" href="#none">다음 사진 보기</a>
+		<div class="view_info">
+		<span class="txt">
+		<span id="status" class="em"  data-widget="photoPreviewer:%previewTarget:%previewPrev:%previewNext:@images:%blogName:~photoviewer"
+		data-widget-images="2570C7475444AF1F364AE3~20141020~~~http://cfile84.uf.daum.net/image/2570C7475444AF1F364AE3;196D8C484DAFB6D3327BD7~20120717~~~http://cfile74.uf.daum.net/image/196D8C484DAFB6D3327BD7;1868DC4F4DB7A9EF021428~20120717~~~http://cfile74.uf.daum.net/image/1868DC4F4DB7A9EF021428;~20150415~~~http://cfile73.uf.daum.net/image/23077138552E1C14139335">1</span>/4</span>
+		<em class="blog" id="blogName"></em>
+	</div>
+</div>
+<div class="section_detailinfo">
+	<h3 class="screen_out">상세정보</h3>
+	<dl class="list">
+		<dt class="screen_out">주소</dt>
+					<dd class="desc">서울 성동구 왕십리로 223-1</dd>
+			<dd class="jibunAddr"><span class="jibunIcon"></span> 성동구 행당동 32-2번지 </dd>
+			</dl>
+		<dl class="list phoneTooltopParent">
+		<dt class="screen_out">전화번호</dt>
+		<dd class="desc" id="phoneTooltip"> 			<span class="f_l num">02-2281-5078</span>
+					<div class="info_more" id="morePhone" data-widget="setClass">
+				<a title="더보기" data-widget="forefront:%placeCalls:%closePhone:::~morePhone"
+					class="btn_comm btn_layeropen" href="#none">더보기</a>
+				<a id="closePhone" class="btn_comm btn_layerclose" href="#none">닫기</a>
+				<strong class="screen_out">기타 전화번호 목록</strong>
+				<ul class="layer_tooltip layer_call" id="placeCalls">
+																			<li class="lst">031-825-1017</li>
+											</ul>
+			</div>
+					</dd>
+	</dl>
+			<dl class="list pageTooltopParent">
+		<dt class="screen_out">홈페이지</dt> 		<dd class="desc" id="homepageTooltip"> 			<a class="f_l" target="_blank" href="http://www.valanceburgers.co.kr">http://www.valanceburgers.co.kr</a>
+		</dd>
+	</dl>
+		<dl class="list">
+		<dt class="screen_out">카테고리</dt>
+		<dd class="desc">
+			<span class="f_l">
+			음식점			&gt; 양식			&gt; 햄버거						</span>
+		</dd>
+	</dl>
+		<div class="grade_star">
+		<strong class="screen_out">별점 : </strong>
+		<span class="img_graph star_comm"><span style="width:73.33300113677979%;" class="img_graph star"></span></span>
+		<em class="num_em">7.3</em>
+		<span class="screen_out">점</span>
+		<span class="num_comm">(3)</span>
+		<span class="txt_bar"> | </span>
+		<a class="link" href="#valuation" data-click="ratingToggleBtn:show">
+			<span data-click="mainTab:setClass:on_intro">
+				<span data-widget="show:%registryWrite">평점주기</span></span></a>
+	</div>
+			<dl class="list">
+		<dt class="screen_out">리뷰</dt>
+		<dd class="desc">
+			<span data-widget="scrollto:%reviewTab"><a data-click="mainTab:setClass:on_review" class="f_l" href="#review">12건의 리뷰</a></span>
+		</dd>
+	</dl>
+	</div>
+<span class="screen_out">기타서비스</span>
+<ul class="box_etc">
+		<li><a class="ico_comm ico_photo" data-widget="fiyframe:9078153:509353:1127123:photobtn" href="#">장소사진 등록</a></li>
+	</ul>
+					</div>
+				</div>
+								<div class="section_map">
+ 	<div class="map_view">
+		<ul class="box_zoom">
+			<li class="on" id="mapZoomin"><a class="zoom up" href="#none">+</a></li> 			<li id="mapZoomout"><a class="zoom down" href="#none">-</a></li>
+			<li id="mapRefresh"><a class="zoom reset" href="#none">초기화</a></li>
+		</ul>
+
+		<div class="map_area" id="map"
+		data-widget="mapController:%mapZoomin:%mapZoomout:%mapRefresh:@coords:@markers:@lines:~busItemController:~markertooltip:@placeName:%bigMapUrl:@spoint:@epoint:@cpoint"
+	 	data-widget-coords="509353,1127123"
+	 	data-widget-markers="1,한양대정문앞,11040551016,509562.0,1127025.0,04-130(서울);2,한양대앞,11040551010,509005.0,1127565.0,04-128(서울)"
+	 	data-widget-placeName="밸런스버거 한양대점"
+		data-widget-lines=""
+		data-widget-spoint="$v_lineCourse.spoint.x,$v_lineCourse.spoint.y"
+		data-widget-epoint="$v_lineCourse.epoint.x,$v_lineCourse.epoint.y">
+
+		</div>
+		<a id="bigMapUrl" href="http://map.daum.net/?urlX=509353&urlY=1127123&urlLevel=3&itemId=9078153&q=%EB%B0%B8%EB%9F%B0%EC%8A%A4%EB%B2%84%EA%B1%B0+%ED%95%9C%EC%96%91%EB%8C%80%EC%A0%90&srcid=9078153" class="btn_comm btn_mapview" target="_blank">큰지도로 보기</a>
+
+		<div class="layer_copy longUrlCopy" id="layerCopy" data-widget="urlcopy:%longUrl:%longCopy:%shortUrl:%shortCopy">
+																	<ul class="urlLabels">
+						<li class="longUrlLabel">
+							<span class="radio" data-click="layerCopy:setUrlStyle:on_long"></span>
+							<span class="txt">일반 URL</span>
+						</li>
+						<li class="shortUrlLabel">
+							<span class="radio" data-click="layerCopy:setUrlStyle:on_short"></span>
+							<span class="txt">짧은 URL</span>
+							<span id="shortUrlHelp" class="shortUrlHelp" data-widget="helpTooltip:%helpUrlCopyTooltip:%mSub"></span>
+						</li>
+					</ul>
+					<div class="tf_normal">
+						<input type="text" id="longUrl" value="place.map.daum.net" class="inp_copy" name="myPhone" id="myPhone">
+                        <div id="longCopy" class="cont">
+							<button id="longCopyBtn" class="btn_comm btn_motion">복사하기</button>
+							<div class="longCopyWrap"></div>
+						</div>
+					</div>
+					<div class="tf_short">
+						<input id="shortUrl" type="text" value="place.map.daum.net" class="inp_copy" name="myPhone" id="myPhone">
+						<div id="shortCopy" class="cont">
+							<button id="shortCopyBtn" class="btn_comm btn_motion">복사하기</button>
+							<div class="shortCopyWrap"></div>
+						</div>
+					</div>
+					<a id="copyClose" class="btn_close" href="#none">닫기</a>
+					<div id="helpUrlCopyTooltip" class="helpUrlCopyTooltip"></div>
+
+		</div>
+		<div class="layer_place" id="markertooltip" data-widget="markertooltip:%stopname:%stopid">
+									<span class="box_place_left"></span><span class="inner_place" id="markerTooltipContent"><span id="stopname"></span><span id="stopid" class="txt"></span></span><span class="box_place_right"></span>
+		</div>
+	</div>
+</div>				<div class="line_bot"></div>
+				<span class="screen_out">기타서비스</span>
+				<ul class="box_service">
+	<li class="wrap_btn_rough"><a id="btnRoughmap" class="ico_comm ico_rough" href="#none" title="약도 만들기">약도 만들기</a><span class="txt_bar"></span></li>
+	<li><a id="urlcopy" data-widget="forefront:%layerCopy:%copyClose:false:%urlcopy:~layerCopy" class="ico_comm ico_share" href="#none" title="퍼가기">퍼가기</a><span class="txt_bar"></span></li>
+	<li class="lst"><a data-widget="popup:661:733" href="placePrint.daum?confirmid=9078153" class="ico_comm ico_print" title="인쇄">인쇄</a></li>
+</ul>
+				<div class="join_card">
+									</div>
+			</div>
+			<div id="mArticle">
+
+
+
+
+
+				<div id="mainTab" class="wrap_tab on_intro" data-widget="setClass:on_intro">
+					<h3 class="tit_place"><a data-click="mainTab:setClass:on_intro" class="tab_comm tab_place" href="#main">이 곳은?</a></h3>
+					<div class="box_intro">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<h4 class="tit_comm tit_intro ">소개</h4>
+		<p class="desc">가격, 맛, 영양의 밸런스를 추구하는 정통 수제버거 전문점<br>
+			</p>
+
+
+
+
+<strong class="screen_out">가게정보</strong>
+
+
+
+
+
+
+
+
+<div class="gap"></div>
+
+					<div class="wrap_relation noIcon">
+	<div class="wrap_relation1 ">
+					<dl class="list_relation">
+			<dt class="tit">1인당가격정보 :</dt>
+
+			<dd class="cont">
+																												3천원~6천원미만
+
+			</dd>
+
+		</dl>
+								</div>
+		<div class="wrap_relation2 ">
+
+
+
+		<dl class="list_relation tvshow">
+			<dt class="tit">TV방영정보 :</dt>
+			<dd class="cont">
+				<div class="info">SBS  생활의 달인</div>
+				<div id="tvmore" class="info_more" data-widget="forefront:%tvshowTooltip:::%tvmore">
+					<a title="더보기" class="btn_comm btn_layeropen" href="#none">더보기</a>
+					<a title="닫기" class="btn_comm btn_layerclose" href="#none">닫기</a>
+				</div>
+				<ul id="tvshowTooltip" class="layer_tooltip">
+											<li><span class="list" title="SBS <생활의 달인> 362회">SBS &lt;생활의 달인&gt; 362회</span><span class="date">2012.12.24</span></li>
+									</ul>
+			</dd>
+		</dl>
+	</div>
+</div>
+
+
+<div class="gap"></div>
+											                            <div class="section_menu">
+<div class="area_menu" id="areaMenu">
+	<h4 class="tit_comm tit_menuinfo">메뉴</h4>
+	<div id="menuContent" data-widget="navigator:ul:%menuPrevBtn:%menuPrevNoneBtn:%menuNextBtn:%menuNextNoneBtn:%menuListCount" class="slide_menu">
+		<ul id="menuList" style="width:2000px;" class="list_menupan">
+						<li>
+								<div class="thumb">
+					<img width="108" height="80" alt="밸런스도그" class="img_thumb" src="http://t1.daumcdn.net/thumb/C108x80/?fname=http://cfile74.uf.daum.net/image/131A36344DB7B8D12F85E7" title="밸런스도그" >
+				</div>
+				<div class="cont">
+										<span title="밸런스도그" class="tit"> 밸런스도그</span>
+					<strong class="price">4,900원</strong>				</div>
+							</li>
+									<li>
+								<div class="thumb">
+					<img width="108" height="80" alt="스윗갈릭프라이" class="img_thumb" src="http://t1.daumcdn.net/thumb/C108x80/?fname=http://cfile75.uf.daum.net/image/2037713B4DB7BCD31FD44A" title="스윗갈릭프라이" >
+				</div>
+				<div class="cont">
+										<span title="스윗갈릭프라이" class="tit"> 스윗갈릭프라이</span>
+					<strong class="price">3,500원</strong>				</div>
+							</li>
+									<li>
+								<div class="thumb">
+					<img width="108" height="80" alt="수퍼사이즈버거" class="img_thumb" src="http://t1.daumcdn.net/thumb/C108x80/?fname=http://cfile174.uf.daum.net/image/207284374DB7B84E2B7E20" title="수퍼사이즈버거" >
+				</div>
+				<div class="cont">
+										<span title="수퍼사이즈버거" class="tit"> 수퍼사이즈버거</span>
+					<strong class="price">6,500원</strong>				</div>
+							</li>
+									<li>
+								<div class="thumb">
+					<img width="108" height="80" alt="비비큐치킨버거" class="img_thumb" src="http://t1.daumcdn.net/thumb/C108x80/?fname=http://cfile71.uf.daum.net/image/150D7E354DB7B7F30127D0" title="비비큐치킨버거" >
+				</div>
+				<div class="cont">
+										<span title="비비큐치킨버거" class="tit"> 비비큐치킨버거</span>
+					<strong class="price">5,500원</strong>				</div>
+							</li>
+									<li>
+								<div class="thumb">
+					<img width="108" height="80" alt="치킨텐더샐러드" class="img_thumb" src="http://t1.daumcdn.net/thumb/C108x80/?fname=http://cfile73.uf.daum.net/image/1775ED354DB7B97C320012" title="치킨텐더샐러드" >
+				</div>
+				<div class="cont">
+										<span title="치킨텐더샐러드" class="tit"> 치킨텐더샐러드</span>
+					<strong class="price">4,000원</strong>				</div>
+							</li>
+							</ul>
+				<ul id="menuList" style="width:2000px;" class="list_menupan">
+									<li>
+								<div class="thumb">
+					<img width="108" height="80" alt="밸런스버거" class="img_thumb" src="http://t1.daumcdn.net/thumb/C108x80/?fname=http://cfile74.uf.daum.net/image/120707354DB7B7DD0AFA45" title="밸런스버거" >
+				</div>
+				<div class="cont">
+										<span title="밸런스버거" class="tit"> 밸런스버거</span>
+					<strong class="price">4,900원</strong>				</div>
+							</li>
+									<li>
+								<div class="thumb">
+					<img width="108" height="80" alt="쏘핫버거" class="img_thumb" src="http://t1.daumcdn.net/thumb/C108x80/?fname=http://cfile75.uf.daum.net/image/166F143C4DB7B87C1D9A03" title="쏘핫버거" >
+				</div>
+				<div class="cont">
+										<span title="쏘핫버거" class="tit"> 쏘핫버거</span>
+					<strong class="price">4,900원</strong>				</div>
+							</li>
+									<li>
+								<div class="thumb">
+					<img width="108" height="80" alt="칠리프라이" class="img_thumb" src="http://t1.daumcdn.net/thumb/C108x80/?fname=http://cfile71.uf.daum.net/image/1974033A4DB7BCC407514B" title="칠리프라이" >
+				</div>
+				<div class="cont">
+										<span title="칠리프라이" class="tit"> 칠리프라이</span>
+					<strong class="price">3,500원</strong>				</div>
+							</li>
+									<li>
+								<div class="thumb">
+					<img width="108" height="80" alt="클래식버거" class="img_thumb" src="http://t1.daumcdn.net/thumb/C108x80/?fname=http://cfile172.uf.daum.net/image/1221973B4DB7B7EC3687BA" title="클래식버거" >
+				</div>
+				<div class="cont">
+										<span title="클래식버거" class="tit"> 클래식버거</span>
+					<strong class="price">4,900원</strong>				</div>
+							</li>
+									<li>
+								<div class="no_thumb_wrap">
+					<div class="no_thumb_outer">
+    					<div class="no_thumb_inner">
+            				<div class="cont">
+            					<span title="감자튀김" class="tit">감자튀김</span>
+            					            				</div>
+    					</div>
+					</div>
+				</div>
+							</li>
+							</ul>
+				<ul id="menuList" style="width:2000px;" class="list_menupan">
+									<li>
+								<div class="no_thumb_wrap">
+					<div class="no_thumb_outer">
+    					<div class="no_thumb_inner">
+            				<div class="cont">
+            					<span title="햄버거" class="tit">햄버거</span>
+            					            				</div>
+    					</div>
+					</div>
+				</div>
+							</li>
+								</ul>
+	</div>
+		<span class="etc"><span class="screen_out">메뉴정보 페이지보기</span><span id="menuListCount"style="font-weight:bold;" class="em">1</span>/3</span>
+	<span class="wrap_btn btn_comm">
+		<a title="이전목록보기" id="menuPrevBtn" class="btn_comm btn_prev" data-click="menuContent:setPrev" href="#none"></a>
+		<span id="menuPrevNoneBtn" class="btn_comm btn_prevnone" title="이전목록이 없습니다"></span>
+		<a href="#none" id="menuNextBtn" class="btn_comm btn_next" title="다음목록보기" data-click="menuContent:setNext"></a>
+		<span id="menuNextNoneBtn" title="다음목록이 없습니다" class="btn_comm btn_nextnone"></span>
+			</span>
+	</div>
+</div>
+<div class="gap"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+										<div class="section_review">
+	<div class="area_title">
+		<h4 class="tit_comm tit_intro_review">리뷰</h4>
+		<span class="txt_bar"></span>
+		<span class="count">총<strong class="num">12</strong>건</span>
+		<span class="review">
+						<a class="btn_comm link_review" href="#none" data-widget="forefront:%regMenu:">리뷰등록</a>
+			<span class="layer_review" id="regMenu" data-widget="reviewRegister:%regCafe:%regBlog:9078153:PROD">
+				<a id="regCafe" href="#none" class="link">내 카페글 등록하기</a>
+				<a id="regBlog" href="#none" class="link">내 블로그 리뷰 등록하기</a>
+			</span>
+		</span>
+		<a href="#none" data-click="mainTab:setClass:on_review" class="ico_comm link_more">더보기</a>
+	</div>
+		<div class="area_review">
+		<ul class="list_review">
+
+						<li>
+								<a target="_blank" class="thumb" href="http://blog.naver.com/PostView.nhn?blogId=clonazepam&logNo=220371372548">
+					<img width="134" height="104" alt="" class="img_thumb" src="http://t1.daumcdn.net/thumb/C134x104/?fname=http://t1.daumcdn.net/local/review/1ba69840569c7b9230110a87b4d0450ec608c7379dc728d8e65b169abe592f36">
+					<span class="frame"></span>
+				</a>
+								<div class="cont">
+					<strong class="tit">
+						<a target="_blank" href="http://blog.naver.com/PostView.nhn?blogId=clonazepam&logNo=220371372548">[왕십리, 한양대] 밸런스버거</a>
+					</strong>
+										<span class="desc">
+						<a target="_blank" class="link_txt" href="http://blog.naver.com/PostView.nhn?blogId=clonazepam&logNo=220371372548">
+							내님을 만나 저녁을 뭘 먹을까 하다가언제나 맛난 한양김밥을 먹습니다유부김밥과 소고기김밥참치라면라뽂이보통 사람은 여기서배가 차는게 정상인 거 같은데?아, 이 포스팅 제목은 밸런스 버거.....?저렇게 먹고 배가 고프다며며칠간 관찰하던 버거집으로 이동!!역시 우린 대식가 ㅜㅜㅋㅋㅋㅋㅋ엥겔지수는 올리라고 있는거지....한양대 앞에 있는 벨런스 버거로 간다집에 가다 사람들이 바글거리는걸 자주 봐서 와봄야외석이 있어서 자전거는 대충 주차마마챠리는 옳다 ㅋㅋㅋ이정도로 허름해야 아무도 안훔쳐가지!!그래도 딱딱 소리가 너무 거슬려서 페달은 바꿔야겠음광활한 메ㅡ뉴셀러드가 인상적이다가격이 수제버거 치고 싸다일단 세트1을 밸런스버거로 해서 주문하고 밸런스 버거 단품 추가!한양대랑 한양여대 학생은 음료...무료....내가 십년
+						</a>
+					</span>
+										<span class="info">
+													<a target="_blank" class="name" href="http://blog.naver.com/clonazepam">어미새의 싹스돌 & 라이드</a>
+												<span class="txt_bar"> | </span>						<span class="time">2015.05.27</span>
+					</span>
+				</div>
+			</li>
+
+						<li>
+								<a target="_blank" class="thumb" href="http://blog.naver.com/PostView.nhn?blogId=scrg2&logNo=220346876823">
+					<img width="134" height="104" alt="" class="img_thumb" src="http://t1.daumcdn.net/thumb/C134x104/?fname=http://t1.daumcdn.net/local/review/ef90111bd834b56dd73d4913393e5133a95a578578eb5bf54d1267df1e98690b">
+					<span class="frame"></span>
+				</a>
+								<div class="cont">
+					<strong class="tit">
+						<a target="_blank" href="http://blog.naver.com/PostView.nhn?blogId=scrg2&logNo=220346876823">왕십리/한양대맛집 :: 밸런스 수제버거 VALANCE BURGERS</a>
+					</strong>
+										<span class="desc">
+						<a target="_blank" class="link_txt" href="http://blog.naver.com/PostView.nhn?blogId=scrg2&logNo=220346876823">
+							한양대 밸런스버거 VALANCE BURGERS ? 또 수제버거 후기에요^^;;;; ? ? 4월은 저에게 버거의 달이라고 해도 될만큼 정말 버거를 많이 먹었어요 ㅋㅋ ?수제버거, 밥버거, 햄버거 등등 또 어떤버거가 있을지 ㅎㅎ ?버거 투어 갈까봐요!! ? ? ? ?주소 : 서울 성동구 행당동 32-2 T : 02-2281-5578 ? ? ? 한양대 밸런스버거 위치는 찾기도 쉽게 한양대역 4번출구로 한양대 쪽으로 쭈욱 걸어오면 있어요! 한양대 정문앞 삼거리 바로 앞에 위치해 있으니 ㅋㅋ 엄청 찾기 쉽죠잉. ? ? ? ? ? 메뉴가 딱봐도 엄청 많아보임 ㅋㅋ 전 사실 이렇게 메뉴많은거 별로에
+						</a>
+					</span>
+										<span class="info">
+													<a target="_blank" class="name" href="http://blog.naver.com/scrg2">토동유의 맛있는 블로그</a>
+												<span class="txt_bar"> | </span>						<span class="time">2015.05.01</span>
+					</span>
+				</div>
+			</li>
+				</ul>
+	</div>
+</div>
+<div class="gap"></div>
+										<div class="section_valuation section_grade" id="valuation" name="valuation">
+	<div class="area_title" href="#rating">
+		<h4 class="tit_comm tit_valuation">평점</h4>
+		<span class="txt_bar"></span>
+				<span class="count">총<strong class="num" id="ratingTotalCnt">3</strong>건</span>
+		<span class="review">
+			<a id="ratingToggleBtn" class="btn_comm link_review" href="#none" data-widget="show:%registryWrite">평점주기</a>
+		</span>
+	</div>
+
+	<form action="#" data-widget-url="api/addComment.daum"
+		id="writeRating"
+		data-widget-confirmid="9078153"
+		data-widget="writeRating:%writeTextarea:%submit:@confirmid:@url:%byte">
+		<fieldset>
+			<legend class="screen_out">평가 작성</legend>
+			<div class="registry_mark">
+				<div class="grade_star">
+					<strong class="screen_out">별점 : </strong>
+					<span class="img_graph star_comm"><span style="width:73.33300113677979%;" class="img_graph star"></span></span>
+					<em class="num_em">7.3</em>
+					<span class="screen_out">점</span>
+				</div>
+			</div>
+			<div style="display:block;" class="registry_write" id="registryWrite">
+				<a class="btn_close" href="#none" data-widget="toggle:%registryWrite">닫기</a>
+				<div class="registry_mark grading">
+					<div class="grade_star grade_none" data-widget="grade:~writeRating:%slider:%starimg:%scoretext:%gradetext"> 						<strong class="screen_out">별점 : </strong>
+						<span class="img_graph star_comm" id="slider"><span id="starimg" style="width:0%;" class="img_graph star"></span></span>
+						<em id="scoretext" class="num_em">0.0</em>
+						<span class="screen_out">점</span>
+						<span id="gradetext" class="txt">별을 선택해주세요</span>
+					</div>
+				</div>
+				<div class="bg_comm tf_grade">
+					<textarea id="writeTextarea"></textarea>
+				</div>
+				<button class="btn_comm btn_registry" type="submit" id="submit">등록</button>
+				<span class="byte"><em id="byte">0</em>/200자</span>
+			</div>
+		</fieldset>
+	</form>
+	<ul class="area_comment" id="rating" data-widget="rating:%moreView:%bothView:%foldView:@url:9078153"
+			data-widget-url="placeCommentList.daum">
+	</ul>
+
+		<div class="fold_comm fold_more" id="moreView"> 		<a class="link_fold" href="#none" data-click="rating:moreView">
+			<span class="inner">
+				<span class="ico_comm">평가 더보기</span>
+			</span>
+		</a>
+	</div>
+
+	<div class="fold_comm fold_open" id="bothView"> 		<a class="link_fold" href="#none" data-click="rating:moreView">
+			<span class="inner">
+				<span class="ico_comm">평가 더보기</span>
+			</span>
+		</a>
+		<a class="link_up" href="#none" data-click="rating:clickFold">
+			<span class="inner">
+				<span class="ico_comm">접기</span>
+			</span>
+		</a>
+	</div>
+
+	<div class="fold_comm fold_close" id="foldView"> 		<a class="link_fold" href="#none" data-click="rating:clickFold">
+			<span class="inner">
+				<span class="fold_txt">
+					<span class="ico_comm">접기</span>
+				</span>
+			</span>
+		</a>
+	</div>
+</div>
+
+										</div>
+
+
+<h3 class="tit_review"><a data-click="mainTab:setClass:on_review" id="reviewTab" class="tab_comm tab_review" href="#review">리뷰</a></h3>
+
+<div class="box_review on" id="reviewContent">		<div class="section_review">
+		<div class="area_title">
+			<h4 class="tit_comm tit_intro_review">리뷰</h4>
+			<span class="txt_bar"></span>
+			<span class="count">총<strong class="num" id="reviewTotalWrap">12</strong>건</span>
+			<span class="review">
+				<a id="reviewTabRegister" class="btn_comm link_review" href="#none" data-widget="forefront:%reviewTabRegMenu:::%reviewTabRegister">리뷰등록</a>
+				<span data-widget="reviewRegister:%RTregCafe:%RTregBlog:9078153:PROD" id="reviewTabRegMenu" class="layer_review" style="">
+					<a class="link" href="#none" id="RTregCafe">내 카페글 등록하기</a>
+					<a class="link" href="#none" id="RTregBlog">내 블로그 리뷰 등록하기</a>
+				</span>
+			</span>
+		</div>
+				<div class="box_radio" id="">
+			<input data-click="placeReviewContent:radioHandler:ALL" CHECKED="checked" type="radio" name="reviewtype" class="inp_radio" id="hopeRank">
+			<label class="lab_total" for="hopeRank">전체</label>
+			<input data-click="placeReviewContent:radioHandler:BLOG"type="radio" name="reviewtype" class="inp_radio" id="lowestBid">
+			<label class="lab_blog" for="lowestBid">블로그</label>
+			<input data-click="placeReviewContent:radioHandler:CAFE" type="radio" name="reviewtype" class="inp_radio" id="directInput">
+			<label class="lab_cafe" for="directInput">카페</label>
+		</div>
+		<div class="area_review" >
+			<ul class="list_review" id="placeReviewContent"
+				data-widget="reviewcontroller:@url:@confirmid:~paging:%noReview:%reviewTotalWrap"
+				data-widget-url="placeReviewList.daum" data-widget-confirmid="9078153">
+			</ul>
+
+			<div class="paging_comm" id="paging" data-widget="paging:~placeReviewContent:12">
+	   			<a class="btn_page img_sample btn_prev" href="#none" style="display:none;"><span class="screen_out">이전</span>1~10</a>
+			    <a class="btn_page pageEL" href="#none">1</a>
+			    <a class="btn_page pageEL" href="#none">2</a>
+			    <a class="btn_page pageEL" href="#none">3</a>
+			    <a class="btn_page pageEL" href="#none">4</a>
+			    <a class="btn_page pageEL" href="#none">5</a>
+			    <a class="btn_page pageEL" href="#none">6</a>
+			    <a class="btn_page pageEL" href="#none">7</a>
+			    <a class="btn_page pageEL" href="#none">8</a>
+			    <a class="btn_page pageEL" href="#none">9</a>
+			    <a class="btn_page pageEL" href="#none">10</a>
+			    <a class="btn_page img_sample btn_next" href="#none"><span class="screen_out">다음</span>11~20</a>
+			</div>
+		</div>
+
+		<p id="noReview" class="noreview" style="display: none;">리뷰 정보가 없습니다. 첫 리뷰를 등록해 주세요.</p>
+
+
+	</div>
+</div>
+															<span class="edit_time "><em class="txt">최근수정 : </em>2015.06.13</span>
+
+										<a class="btn_comm btn_report" data-widget="fiyframe:9078153:509353:1127123:detail" href="#">틀린정보신고</a>
+									</div>
+			</div>
+			<div id="mAside">
+				<div class="section_map">
+
+<div class="aside_map">
+	<h3 class="tit_comm tit_road">길찾기</h3>
+	<form action="http://map.daum.net/" target="_blank">
+		<fieldset>
+			<legend class="screen_out">길찾기 입력폼</legend>
+			<strong class="screen_out">출발지</strong>
+			<div class="fold_departure">
+				<div class="search_road">
+					<div class="inner">
+						<input data-widget="placeHolder:출발지를 입력하세요" autocomplete="off" type="text" name="sName" class="inp_keyword">
+						<button class="btn_comm btn_candisearch" type="submit">검색</button>
+					</div>
+				</div>
+			</div>
+			<strong class="screen_out">도착지</strong>
+			<div class="fold_arrival">
+				 <div class="search_road">
+					<div class="inner">
+						<input type="text" name="eName" value="밸런스버거 한양대점" title="" class="inp_keyword" readonly>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		<input type="hidden" name="eX" value="509353">
+		<input type="hidden" name="eY" value="1127123">
+			</form>
+</div>
+
+															<div class="section_traffic">
+							<h3 class="tit_comm tit_bus">주변버스</h3>
+	<span class="screen_out">해당 장소 주변에 정차하는 버스리스트</span>
+	<ul class="how_way how_bus" id="busItemController"
+		data-widget="busItemController:~map:~busItem1:~busItem2:~busItem3:~busItem4:~busItem5:~busItem6:~busItem7:~busItem8:~busItem9:">
+
+								<li>
+			<span class="ico_comm ico_bus1">bus1</span>
+			<span class="txt">
+										<span class="txt_item">
+								<a href="http://map.daum.net/?busInfoId=1109000002&busStopId=11040551016" target="_blank" id="busItem1""
+				data-widget="busItem:~busItemTooltip:~busItemController:@stop"
+				data-widget-stop="한양대정문앞,11040551016,92,$markerMap[$stop.id]				">121</a>
+								<span class="txt_bar"> | </span>				</span>
+							<span class="txt_item">
+								<a href="http://map.daum.net/?busInfoId=1100061527&busStopId=11040551016" target="_blank" id="busItem2""
+				data-widget="busItem:~busItemTooltip:~busItemController:@stop"
+				data-widget-stop="한양대정문앞,11040551016,92,$markerMap[$stop.id]				">302</a>
+								<span class="txt_bar"> | </span>				</span>
+							<span class="txt_item">
+								<a href="http://map.daum.net/?busInfoId=B24211&busStopId=11040551016" target="_blank" id="busItem3""
+				data-widget="busItem:~busItemTooltip:~busItemController:@stop"
+				data-widget-stop="한양대정문앞,11040551016,92,$markerMap[$stop.id]				">N62 (심야)</a>
+												</span>
+						</span>
+		</li>
+								<li>
+			<span class="ico_comm ico_bus2">bus2</span>
+			<span class="txt">
+										<span class="txt_item">
+								<a href="http://map.daum.net/?busInfoId=1100071633&busStopId=11040551016" target="_blank" id="busItem4""
+				data-widget="busItem:~busItemTooltip:~busItemController:@stop"
+				data-widget-stop="한양대정문앞,11040551016,92,$markerMap[$stop.id]				">2012</a>
+								<span class="txt_bar"> | </span>				</span>
+							<span class="txt_item">
+								<a href="http://map.daum.net/?busInfoId=1100071610&busStopId=11040551010" target="_blank" id="busItem5""
+				data-widget="busItem:~busItemTooltip:~busItemController:@stop"
+				data-widget-stop="한양대앞,11040551010,225,$markerMap[$stop.id]				">2013</a>
+								<span class="txt_bar"> | </span>				</span>
+							<span class="txt_item">
+								<a href="http://map.daum.net/?busInfoId=1100071583&busStopId=11040551016" target="_blank" id="busItem6""
+				data-widget="busItem:~busItemTooltip:~busItemController:@stop"
+				data-widget-stop="한양대정문앞,11040551016,92,$markerMap[$stop.id]				">2014</a>
+								<span class="txt_bar"> | </span>				</span>
+							<span class="txt_item">
+								<a href="http://map.daum.net/?busInfoId=B2192&busStopId=11040551016" target="_blank" id="busItem7""
+				data-widget="busItem:~busItemTooltip:~busItemController:@stop"
+				data-widget-stop="한양대정문앞,11040551016,92,$markerMap[$stop.id]				">2016</a>
+								<span class="txt_bar"> | </span>				</span>
+							<span class="txt_item">
+								<a href="http://map.daum.net/?busInfoId=1100071592&busStopId=11040551016" target="_blank" id="busItem8""
+				data-widget="busItem:~busItemTooltip:~busItemController:@stop"
+				data-widget-stop="한양대정문앞,11040551016,92,$markerMap[$stop.id]				">2222</a>
+								<span class="txt_bar"> | </span>				</span>
+							<span class="txt_item">
+								<a href="http://map.daum.net/?busInfoId=B25966&busStopId=11040551010" target="_blank" id="busItem9""
+				data-widget="busItem:~busItemTooltip:~busItemController:@stop"
+				data-widget-stop="한양대앞,11040551010,225,$markerMap[$stop.id]				">4211</a>
+												</span>
+						</span>
+		</li>
+
+	</ul>
+								<h3 class="tit_comm tit_subway">주변지하철역</h3>
+	<ul class="how_way how_subway">
+				<li>
+			<span class="txt_item">
+				<a href="http://map.daum.net/?subwayId=SES1013" target="_blank">왕십리역</a>
+				<span class="ico_comm ico_subway11"></span>
+			</span>
+		</li>
+				<li>
+			<span class="txt_item">
+				<a href="http://map.daum.net/?subwayId=SES1846" target="_blank">왕십리역</a>
+				<span class="ico_comm ico_subway13"></span>
+			</span>
+		</li>
+				<li>
+			<span class="txt_item">
+				<a href="http://map.daum.net/?subwayId=SES2541" target="_blank">왕십리역</a>
+				<span class="ico_comm ico_subway05"></span>
+			</span>
+		</li>
+				<li>
+			<span class="txt_item">
+				<a href="http://map.daum.net/?subwayId=SES0208" target="_blank">왕십리역</a>
+				<span class="ico_comm ico_subway02"></span>
+			</span>
+		</li>
+				<li>
+			<span class="txt_item">
+				<a href="http://map.daum.net/?subwayId=SES0209" target="_blank">한양대역</a>
+				<span class="ico_comm ico_subway02"></span>
+			</span>
+		</li>
+			</ul>
+									<h3 class="tit_comm tit_seeroad">찾아가는길</h3>
+	<p class="txt_seeroad">
+				<span>한양대역 1번출구로 나와 길 건너편에 위치</span>
+			</p>
+	<span id="howToGoText" class="hide">한양대역 1번출구로 나와 길 건너편에 위치</span>
+						</div>
+
+									</div>
+			</div>
+
+		</div>
+	</div>
+
+	<hr class="hide">
+
+
+		<div id="daumFoot">
+		<h2 class="screen_out">서비스 이용정보</h2>
+		<a target="_blank" class="link_info" href="http://www.daum.net/doc/info.html">서비스 약관/정책</a>
+		 | <a target="_blank" class="link_info" href="http://cs.daum.net/faq/48.html">고객센터</a>
+		 | <a class="link_info" target="_blank" href="https://cs.daum.net/redbell/top.html">권리침해 신고</a>
+		 | <a target="_blank" class="link_info" href="http://local.biz.daum.net/rainbow_core/ols/index.local">로컬광고 신청</a>
+		 | <a target="_blank" class="link_info" href="http://store.biz.daum.net/">매장관리</a>
+        <address class="copyright">Copyright (c) <a class="link_daum" href="http://www.daumkakao.com">Daum Kakao Corp.</a> All rights reserved.</address>
+	</div>
+
+</div>
+
+<div class="layer_viewer" id="photoviewerTarget">
+	<div class="screen_out">사진 크게 보기 레이어</div>
+	<div class="box_photo">
+		<div class="screen_out">선택된 확대사진</div>
+		<div class="thumb">
+			<img id="photoviewer"
+				data-widget="photoLayerviewer:%prevMain:%nextMain:%prevNoneMain:%nextNoneMain:%prevList:%nextList:%prevNoneList:%nextNoneList:@imageEl:%imageTitle:%imageDate:%blogLink:%sourceImage:%mainStatus"
+				data-widget-imageEl="#imageList,img,li" src=""  alt="" src="" class="photo">
+						</div>
+		<div class="view_info">
+			<span class="inner">
+				<p class="titleWrap"><span id="imageTitle" class="title">블로그명</span><span id="imageDate" class="time">2011-11-16</span></p>
+				<a id="blogLink" class="blogLink" target="_blank" href="#none">블로그링크</a>
+				<a id="sourceImage" class="sourceImage" target="_blank" href="#none">원본이미지</a>
+			</span>
+		</div>
+		<span id="prevNoneMain" title="이전 사진이 없습니다." class="btn_arr btn_prevnone"><span class="btn_comm">이전 사진이 없습니다.</span></span> 		<a id="prevMain" data-click="photoviewer:showPrevPhoto"  title="이전 사진 보기" class="btn_arr btn_arr btn_prev" href="#none"><span class="btn_comm">이전 사진 보기</span></a> 		<span id="nextNoneMain" title="다음 사진이 없습니다." class="btn_arr btn_nextnone"><span class="btn_comm">다음 사진이 없습니다.</span></span> 		<a id="nextMain" data-click="photoviewer:showNextPhoto" title="다음 사진 보기" class="btn_arr btn_next" href="#none"><span class="btn_comm">다음 사진 보기</span></a> 	</div>
+
+	<div class="box_bit">
+		<p class="screen_out">사진목록</p>
+		<span class="txt_loca"><span id="mainStatus">1-10</span> / 4건</span>
+		<div class="box_slide_photo">
+			<ul class="list_photo" id="imageList">
+								<li class="on" data-click="photoviewer:clickThumbnail:0">
+					<a class="thumb" href="#none"><img width="60" height="53" alt="" class="img_thumb" src=""><span class="frame"></span></a>
+				</li>
+								<li class="" data-click="photoviewer:clickThumbnail:1">
+					<a class="thumb" href="#none"><img width="60" height="53" alt="" class="img_thumb" src=""><span class="frame"></span></a>
+				</li>
+								<li class="" data-click="photoviewer:clickThumbnail:2">
+					<a class="thumb" href="#none"><img width="60" height="53" alt="" class="img_thumb" src=""><span class="frame"></span></a>
+				</li>
+								<li class="" data-click="photoviewer:clickThumbnail:3">
+					<a class="thumb" href="#none"><img width="60" height="53" alt="" class="img_thumb" src=""><span class="frame"></span></a>
+				</li>
+								<li class="" data-click="photoviewer:clickThumbnail:4">
+					<a class="thumb" href="#none"><img width="60" height="53" alt="" class="img_thumb" src=""><span class="frame"></span></a>
+				</li>
+								<li class="" data-click="photoviewer:clickThumbnail:5">
+					<a class="thumb" href="#none"><img width="60" height="53" alt="" class="img_thumb" src=""><span class="frame"></span></a>
+				</li>
+								<li class="" data-click="photoviewer:clickThumbnail:6">
+					<a class="thumb" href="#none"><img width="60" height="53" alt="" class="img_thumb" src=""><span class="frame"></span></a>
+				</li>
+								<li class="" data-click="photoviewer:clickThumbnail:7">
+					<a class="thumb" href="#none"><img width="60" height="53" alt="" class="img_thumb" src=""><span class="frame"></span></a>
+				</li>
+								<li class="" data-click="photoviewer:clickThumbnail:8">
+					<a class="thumb" href="#none"><img width="60" height="53" alt="" class="img_thumb" src=""><span class="frame"></span></a>
+				</li>
+								<li class="" data-click="photoviewer:clickThumbnail:9">
+					<a class="thumb" href="#none"><img width="60" height="53" alt="" class="img_thumb" src=""><span class="frame"></span></a>
+				</li>
+							</ul>
+		</div>
+		<span id="prevNoneList" title="이전 목록이 없습니다." class="btn_comm btn_prevnone">이전 목록이 없습니다.</span> 		<a id="prevList" data-click="photoviewer:showPrevList" title="이전 목록 보기" class="btn_comm btn_prev" href="#none">이전 목록 보기</a> 		<span id="nextNoneList" title="다음 목록이 없습니다." class="btn_comm btn_nextnone">다음 목록이 없습니다.</span> 		<a id="nextList" title="다음 목록 보기" data-click="photoviewer:showNextList" class="btn_comm btn_next" href="#none">다음 목록 보기</a>
+	</div>
+
+	<a title="레이어 닫기" id="closeViewer" class="btn_comm btn_close" href="#none">이미지 크게보기 레이어 닫기</a>
+
+	<img src="" id="cacheImage" class="cacheImage" />
+</div>
+
+<div class="layer_busstop" id="busItemTooltip" data-widget="busItemTooltip:%content" style="display:none;">
+	<div style="position:relative;" class="inner">
+		<strong class="screen_out">정류장 :</strong>
+		<span id="content"></span>
+				<div class="arr"></div>
+	</div>
+</div>
+
+
+<script>
+	if (!window.daum) {
+		window.daum = {};
+	}
+
+	window.daum.place = {};
+	window.daum.place.CDNPATH = 'http://s1.daumcdn.net/svc/attach/U0301/cssjs/place-map/1507161122';
+	window.daum.place.ENV = 'PROD';
+	window.daum.place.data = {
+		name : '\uBC38\uB7F0\uC2A4\uBC84\uAC70 \uD55C\uC591\uB300\uC810',
+		confirmId : '9078153',
+		placeX : '509353',
+		placeY : '1127123',
+		address : encodeURIComponent('서울 성동구 행당동 32-2번지'),
+		phone : '',
+		busLines : {},
+		busStops : [],
+		subways : [],
+		howToGo : ''
+	};
+
+			window.daum.place.data.phone = encodeURIComponent('02-2281-5078');
+
+			window.daum.place.data.howToGo = encodeURIComponent(document.getElementById('howToGoText').innerHTML);
+
+			window.daum.place.data.busStops.push({
+		id : '11040551016',
+		name : '한양대정문앞',
+		x : '509562.0',
+		y : '1127025.0',
+		itsCode : '1',
+		distance : '92'
+	});
+		window.daum.place.data.busStops.push({
+		id : '11040551010',
+		name : '한양대앞',
+		x : '509005.0',
+		y : '1127565.0',
+		itsCode : '1',
+		distance : '225'
+	});
+
+					window.daum.place.data.busLines['0101'] = [];
+
+				window.daum.place.data.busLines['0101'].push({
+		name : '121',
+		busInfoId : '1109000002',
+		busStopId : '11040551016'
+	});
+				window.daum.place.data.busLines['0101'].push({
+		name : '302',
+		busInfoId : '1100061527',
+		busStopId : '11040551016'
+	});
+				window.daum.place.data.busLines['0101'].push({
+		name : 'N62 (심야)',
+		busInfoId : 'B24211',
+		busStopId : '11040551016'
+	});
+									window.daum.place.data.busLines['0102'] = [];
+
+				window.daum.place.data.busLines['0102'].push({
+		name : '2012',
+		busInfoId : '1100071633',
+		busStopId : '11040551016'
+	});
+				window.daum.place.data.busLines['0102'].push({
+		name : '2013',
+		busInfoId : '1100071610',
+		busStopId : '11040551010'
+	});
+				window.daum.place.data.busLines['0102'].push({
+		name : '2014',
+		busInfoId : '1100071583',
+		busStopId : '11040551016'
+	});
+				window.daum.place.data.busLines['0102'].push({
+		name : '2016',
+		busInfoId : 'B2192',
+		busStopId : '11040551016'
+	});
+				window.daum.place.data.busLines['0102'].push({
+		name : '2222',
+		busInfoId : '1100071592',
+		busStopId : '11040551016'
+	});
+				window.daum.place.data.busLines['0102'].push({
+		name : '4211',
+		busInfoId : 'B25966',
+		busStopId : '11040551010'
+	});
+
+					window.daum.place.data.subways.push({
+		lineId : 'SES26',
+		stationId : 'SES1013',
+		name : '왕십리역'
+	});
+			window.daum.place.data.subways.push({
+		lineId : 'SES23',
+		stationId : 'SES1846',
+		name : '왕십리역'
+	});
+			window.daum.place.data.subways.push({
+		lineId : 'SES5',
+		stationId : 'SES2541',
+		name : '왕십리역'
+	});
+			window.daum.place.data.subways.push({
+		lineId : 'SES2',
+		stationId : 'SES0208',
+		name : '왕십리역'
+	});
+			window.daum.place.data.subways.push({
+		lineId : 'SES2',
+		stationId : 'SES0209',
+		name : '한양대역'
+	});
+
+			window.daum.place.data.roadview = true;
+
+</script>
+
+<script src="http://dmaps.daum.net/map_js_init/v3.js"></script>
+<script src="http://s1.daumcdn.net/dmaps/local/require-2.1.0.js"></script>
+<script src="http://s1.daumcdn.net/svc/original/U0301/cssjs/JSON-js/fc535e9cc8/json2.min.js"></script>
+<script src="http://s1.daumcdn.net/svc/original/U03/cssjs/jquery/jquery-1.8.1.min.js"></script>
+<script src="http://s1.daumcdn.net/svc/original/U0301/cssjs/jquery/plugin/jquery.cookie-1.0.0.min.js"></script>
+<script src="http://s1.daumcdn.net/svc/original/U0301/cssjs/swfobject/swfobject-2.2.min.js"></script>
+<script src="http://s1.daumcdn.net/dmaps/local/ZeroClipboard.js"></script>
+<script src="http://s1.daumcdn.net/svc/attach/U0301/cssjs/mapcopy/201307091516916/flashcanvas.min.js"></script>
+<script type="text/javascript" src="http://s1.daumcdn.net/svc/original/U03/cssjs/pcsocialshare/pcSocialshare-1.5.3.min.js"></script>
+
+<script src="http://s1.daumcdn.net/svc/attach/U0301/cssjs/maplant/131121/Maplant.min.js"></script>
+
+<script src="http://s1.daumcdn.net/svc/attach/U0301/cssjs/place-map/1507161122/app.js"></script>
+
+
+
+<script>
+document.domain = 'daum.net';
+
+(function (con) {
+    var prop, method;
+    var empty = {};
+    var dummy = function() {};
+    var properties = 'memory'.split(',');
+    var methods = ('assert,count,debug,dir,dirxml,error,exception,group,' +
+            'groupCollapsed,groupEnd,info,log,markTimeline,profile,profileEnd,' +
+            'time,timeEnd,trace,warn').split(',');
+    while (prop = properties.pop()) con[prop] = con[prop] || empty;
+    while (method = methods.pop()) con[method] = con[method] || dummy;
+})(window.console = window.console || {});
+
+require.config({
+	baseUrl: 'js/app',
+//	waitSeconds: 1,
+	deps: [ 'lib/jquery', 'service/widget', 'service/nohash', 'roughMap/RoughMapMainController', 'service/localdss' ],
+	callback: function(jQuery, widget, nohash, roughMapMainController, localdss) {
+		widget.load(jQuery(document));
+		nohash.setup(jQuery(document));
+
+
+				localdss.send({type: 'place_view', confirmid: '9078153', cateid: '2999'});
+	}
+});
+</script>
+<script type="text/javascript">
+var minidaum_options = {
+    disableHotissue: true,
+    disableLogo: true,
+    disableTracker: true
+}
+</script>
+<script src="http://go.daum.net/jsa_minidaum_pc.daum" charset="utf-8" type="text/javascript"></script>
+
+</body>
+
+
+</html>
