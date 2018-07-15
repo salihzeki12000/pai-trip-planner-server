@@ -1,6 +1,6 @@
 package edu.hanyang.trip_planning.optimize.aco;
 
-import wykwon.common.array.MyArrays;
+import wykwon.common.Erf;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -61,7 +61,7 @@ public abstract class ItineraryPlanning implements ACOProblem {
 
     @Override
     public int[] getPath() {
-        return MyArrays.toIntArray(trail);
+        return Erf.MyArrays.toIntArray(trail);
     }
 
     @Override

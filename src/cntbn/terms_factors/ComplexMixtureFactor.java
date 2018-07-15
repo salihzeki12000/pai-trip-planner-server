@@ -64,17 +64,6 @@ public class ComplexMixtureFactor implements ContinuousFactor {
         List<SimpleProductTerm> simpleTermList = DecomposeComplexProductTerm
                 .decompose(term);
         productTermList.addAll(simpleTermList);
-
-        // ComplexMixtureFactor newFactor = new ComplexMixtureFactor();
-        //
-        // for (SimpleProductTerm decomposedTerm : simpleTermList) {
-        // newFactor.addTerm(decomposedTerm);
-        // }
-        // ComplexMixtureFactor result =
-        // ProductOfTwoMixtureFactors.product(this,
-        // newFactor);
-        // this.replace(result);
-        // logger.debug(this.toString());
     }
 
     public void addAll(ComplexMixtureFactor md) {

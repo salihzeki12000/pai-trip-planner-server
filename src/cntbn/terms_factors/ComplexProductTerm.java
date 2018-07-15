@@ -74,11 +74,6 @@ public class ComplexProductTerm implements ContinuousTerm {
         mixtureFactors.add(factor);
     }
 
-    public void addMixtureFactor(ComplexMixtureFactor factor) {
-        throw new RuntimeException(
-                "Not supported to add ComplexMixtureFactor to ComplexProductTerm ");
-
-    }
 
     public void addAll(ComplexProductTerm productTerm) {
         simpleFactors.addAll(productTerm.simpleFactors);

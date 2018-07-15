@@ -5,7 +5,7 @@ import cntbn.common.NodeDictionary;
 import cntbn.common.TestNodeDictionary;
 import javolution.util.FastSet;
 import org.apache.log4j.Logger;
-import wykwon.common.array.MyArrays;
+import wykwon.common.Erf;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -339,7 +339,7 @@ public class ConditionalLinearGaussian implements GaussianFunction {
         nd.putValues("W", "true");
         nd.putValues("Z", "true");
         double condParams[] = {0.5, 1, 1.5};
-        ConditionalLinearGaussian clg = new ConditionalLinearGaussian(1, "X", MyArrays.makeString("Y,W,Z"), MyArrays.makeDouble("0.5,1,1.5"), 10, 1);
+        ConditionalLinearGaussian clg = new ConditionalLinearGaussian(1, "X", Erf.MyArrays.makeString("Y,W,Z"), Erf.MyArrays.makeDouble("0.5,1,1.5"), 10, 1);
 //        GaussianFunction sg = new GaussianFunction(1.0, "Y1", 1, 1);
 //
 //
@@ -354,7 +354,7 @@ public class ConditionalLinearGaussian implements GaussianFunction {
         nd.putValues("Y1", "true");
         nd.putValues("Y2", "true");
         nd.putValues("Y3", "true");
-        ConditionalLinearGaussian clg = new ConditionalLinearGaussian(1, "X", MyArrays.makeString("Y1,Y2,Y3"), MyArrays.makeDouble("0.995,1.005,1.0"), 10, 1);
+        ConditionalLinearGaussian clg = new ConditionalLinearGaussian(1, "X", Erf.MyArrays.makeString("Y1,Y2,Y3"), Erf.MyArrays.makeDouble("0.995,1.005,1.0"), 10, 1);
         return clg;
     }
 

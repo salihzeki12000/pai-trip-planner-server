@@ -51,6 +51,5 @@ public class WeatherSuitabilityCPT {
 
     public static void main(String[] args) {
 
-        // activiy는 POI를 넣으면 나온다. From ActivityUtils 에서
     }
 }

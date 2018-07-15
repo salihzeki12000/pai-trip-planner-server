@@ -4,10 +4,10 @@ import edu.hanyang.trip_planning.optimize.aco.ACOProblem;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import org.apache.log4j.Logger;
 import org.math.plot.utils.Array;
-import wykwon.common.array.MyArrays;
-import wykwon.common.combination.Permutation;
-import wykwon.common.combination.SubsetGenerator;
-import wykwon.common.selection.RouletteWheelSelection;
+import wykwon.common.Erf;
+import wykwon.common.Permutation;
+import wykwon.common.SubsetGenerator;
+import wykwon.common.RouletteWheelSelection;
 
 import java.util.*;
 
@@ -116,7 +116,7 @@ public class DummyOrienteeringProblem implements ACOProblem {
 
     @Override
     public int[] getPath() {
-        return MyArrays.toIntArray(trail);
+        return Erf.MyArrays.toIntArray(trail);
     }
 
     @Override

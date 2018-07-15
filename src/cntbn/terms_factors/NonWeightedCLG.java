@@ -4,7 +4,7 @@ import cntbn.common.GlobalParameters;
 import cntbn.common.NodeDictionary;
 import javolution.util.FastSet;
 import org.apache.log4j.Logger;
-import wykwon.common.array.MyArrays;
+import wykwon.common.Erf;
 
 import java.text.DecimalFormat;
 import java.util.Set;
@@ -215,7 +215,7 @@ public class NonWeightedCLG implements GaussianFunction {
         nd.putValues("Y3", "true");
         double condParams[] = {0.5, 1, 1.5};
         String condArgs[] = {"Y1", "Y2", "Y3"};
-        NonWeightedCLG clg = new NonWeightedCLG(1, "X", MyArrays.makeString("Y1,Y2,Y3"), 10, 1);
+        NonWeightedCLG clg = new NonWeightedCLG(1, "X", Erf.MyArrays.makeString("Y1,Y2,Y3"), 10, 1);
 //        GaussianFunction sg = new GaussianFunction(1.0, "Y1", 1, 1);
 //
 //

@@ -1,6 +1,6 @@
 package edu.hanyang.trip_planning.tripHTBN;
 
-import wykwon.common.utils.Counter;
+import wykwon.common.Counter;
 
 import java.text.DecimalFormat;
 

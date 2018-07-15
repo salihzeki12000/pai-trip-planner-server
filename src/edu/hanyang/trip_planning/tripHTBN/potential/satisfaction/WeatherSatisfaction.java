@@ -39,6 +39,5 @@ public class WeatherSatisfaction {
 
     public static void main(String[] args) {
         logger.debug(makeCPD(1));
-        // activiy는 POI를 넣으면 나온다. From ActivityUtils 에서
     }
 }

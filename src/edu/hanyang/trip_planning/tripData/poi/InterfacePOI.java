@@ -17,7 +17,6 @@ public interface InterfacePOI {
 
     String getTitle();
 
-//    public POIIdentifier getIdentifier();
 
     /**
      * 이름: 별칭 포함

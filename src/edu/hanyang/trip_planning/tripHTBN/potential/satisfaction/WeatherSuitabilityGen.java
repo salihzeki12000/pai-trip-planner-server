@@ -203,6 +203,5 @@ public class WeatherSuitabilityGen {
 
     public static void main(String[] args) {
         System.out.println(WeatherSuitabilityGen.type4_sensitive());
-        // activiy는 POI를 넣으면 나온다. From ActivityUtils 에서
     }
 }

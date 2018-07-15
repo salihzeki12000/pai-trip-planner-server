@@ -54,13 +54,10 @@ public class CapitalPathFinder implements InterfacePathFinder {
 //
         logger.debug("srcWalkDist=" + srcWalkDist);
         logger.debug("destWalkDist=" + destWalkDist);
-//        public UnitMovement(POIIdentifier srcLocation, POIIdentifier destLocation, WayOfMovement way, ProbabilisticDuration spendingTime, int cost) {
 
         UnitMovement srcWalk = new UnitMovement(src.getTitle(), src.getLocation(), srcNearStn.getTitle(), srcNearStn.getLocation(), WayOfMovement.Walk, estimateTime(srcWalkDist), 0);
         UnitMovement subway = subwayGraph.findPath(srcNearStn, destNearStn);
         UnitMovement destWalk = new UnitMovement(destNearStn.getTitle(), destNearStn.getLocation(), dest.getTitle(), dest.getLocation(), WayOfMovement.Walk, estimateTime(destWalkDist), 0);
-
-//        subwayGraph.findPath(src.getIdentifier().name, dest.getIdentifier().name);
 
         List<UnitMovement> movementList = new ArrayList<UnitMovement>();
         movementList.add(srcWalk);
@@ -88,7 +85,6 @@ public class CapitalPathFinder implements InterfacePathFinder {
         logger.debug("destNearStn = " + destNearStn);
 
         logger.debug("destWalkDist=" + destWalkDist);
-//        public UnitMovement(POIIdentifier srcLocation, POIIdentifier destLocation, WayOfMovement way, ProbabilisticDuration spendingTime, int cost) {
 
         UnitMovement subway = subwayGraph.findPath(srcNearStn, destNearStn);
         UnitMovement destWalk = new UnitMovement(destNearStn.getTitle(), destNearStn.getLocation(), dest.getTitle(), dest.getLocation(), WayOfMovement.Walk, estimateTime(destWalkDist), 0);
@@ -112,16 +108,8 @@ public class CapitalPathFinder implements InterfacePathFinder {
         MinimalPOI srcNearStn = capitalPoiManager.getNearestPOI(src.getLocation(), 1.0);
         double srcWalkDist = POIUtil.distance(src.getLocation(), srcNearStn.getLocation());
 
-//        logger.debug("srcNearStn = " + srcNearStn);
-
-//        logger.debug("srcWalkDist=" + srcWalkDist);
-//        public UnitMovement(POIIdentifier srcLocation, POIIdentifier destLocation, WayOfMovement way, ProbabilisticDuration spendingTime, int cost) {
-
         UnitMovement srcWalk = new UnitMovement(src.getTitle(), src.getLocation(), dest.getTitle(), dest.getLocation(), WayOfMovement.Walk, estimateTime(srcWalkDist), 0);
         UnitMovement subway = subwayGraph.findPath(srcNearStn, dest);
-
-
-//        subwayGraph.findPath(src.getIdentifier().name, dest.getIdentifier().name);
 
         List<UnitMovement> movementList = new ArrayList<UnitMovement>();
         movementList.add(srcWalk);

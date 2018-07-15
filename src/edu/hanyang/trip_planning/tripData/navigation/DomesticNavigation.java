@@ -24,7 +24,6 @@ public class DomesticNavigation implements InterfacePathFinder {
 
     private Map<String, InterfacePathFinder> intraRegionPathFinderMap = new HashMap<String, InterfacePathFinder>();
     DistanceBasedPathFinder defaultPathFinder = new DistanceBasedPathFinder();
-    //    private InterRegionPathFinder interRegionPathFinder = new InterRegionPathFinder();
     private DomesticRegion domesticRegion;
     private DomesticNavigationPOIsManager domesticNavigationPOIsManager = new DomesticNavigationPOIsManager();
 
@@ -47,7 +46,6 @@ public class DomesticNavigation implements InterfacePathFinder {
     public void init() {
         domesticRegion = new DomesticRegion();
         domesticNavigationTable = new DomesticNavigationTable();
-        intraRegionPathFinderMap.put("수도권", new CapitalPathFinder());
         intraRegionPathFinderMap.put("제주", new DistanceBasedPathFinder());
     }
 

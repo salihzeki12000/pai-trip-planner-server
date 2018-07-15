@@ -5,7 +5,7 @@ import cntbn.common.NodeDictionary;
 import cntbn.terms_factors.tools.GaussianUtil;
 import javolution.util.FastSet;
 import org.apache.log4j.Logger;
-import wykwon.common.array.MyArrays;
+import wykwon.common.Erf;
 
 import java.text.DecimalFormat;
 import java.util.Set;
@@ -188,7 +188,7 @@ public class _ConditionalLinearGaussian implements GaussianFunction {
         nd.putValues("Y3", "true");
         double condParams[] = {0.5, 1, 1.5};
         String condArgs[] = {"Y1", "Y2", "Y3"};
-        _ConditionalLinearGaussian clg = new _ConditionalLinearGaussian(1, "X", MyArrays.makeString("Y1,Y2,Y3"), MyArrays.makeDouble("0.5,1,1.5"), 10, 1);
+        _ConditionalLinearGaussian clg = new _ConditionalLinearGaussian(1, "X", Erf.MyArrays.makeString("Y1,Y2,Y3"), Erf.MyArrays.makeDouble("0.5,1,1.5"), 10, 1);
 //        GaussianFunction sg = new GaussianFunction(1.0, "Y1", 1, 1);
 //
 //

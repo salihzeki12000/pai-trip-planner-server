@@ -17,6 +17,7 @@ import edu.hanyang.trip_planning.tripHTBN.potential.satisfaction.WeatherSuitabil
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import wykwon.common.Erf;
 import wykwon.common.MyArrays;
 import wykwon.common.Triple;
 
@@ -227,7 +228,7 @@ public class IncrementalInferenceTripNetwork {
         if (weather == null) {
             logger.debug("왜?");
         }
-        double weatherSuit = wykwon.common.array.MyArrays.expectation(values, weather);
+        double weatherSuit = Erf.MyArrays.expectation(values, weather);
 //        logger.debug("weather=" + DoubleArray.toString("%3.3f", weather) + "\t" + weatherSuit);
 
         double ret[] = new double[2];

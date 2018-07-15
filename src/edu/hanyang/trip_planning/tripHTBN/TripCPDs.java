@@ -6,7 +6,7 @@ import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.DiscreteTimeCPD;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceCLGCPD;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceHybridCPD;
-import edu.hanyang.trip_planning.utils.DateTimeFormatStr;
+import wykwon.common.DateTimeFormatStr;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import wykwon.common.MyCollections;

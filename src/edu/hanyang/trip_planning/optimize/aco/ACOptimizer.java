@@ -3,9 +3,9 @@ package edu.hanyang.trip_planning.optimize.aco;
 import edu.hanyang.trip_planning.optimize.aco.dummyProblem.AdvancedDummyOrienteeringProblem;
 import org.apache.log4j.Logger;
 import org.math.array.DoubleArray;
+import wykwon.common.Erf;
 import wykwon.common.MyFunction;
-import wykwon.common.array.MyArrays;
-import wykwon.common.selection.RouletteWheelSelection;
+import wykwon.common.RouletteWheelSelection;
 
 import java.util.*;
 
@@ -81,7 +81,7 @@ public class ACOptimizer {
         for (int i = 0; i < eta.length; i++) {
             p[i] = Math.pow(eta[i], acoParameters.getAlpha()) * Math.pow(tau[i], acoParameters.getBeta());
         }
-        double sum = MyArrays.sum(p);
+        double sum = Erf.MyArrays.sum(p);
         for (int i = 0; i < eta.length; i++) {
             p[i] = p[i] / sum;
         }

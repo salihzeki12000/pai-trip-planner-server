@@ -3,8 +3,7 @@ package edu.hanyang.trip_planning.tripHTBN;
 import cntbn.common.NodeDictionary;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIGen;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
-import edu.hanyang.trip_planning.utils.DateTimeFormatStr;
-import org.apache.log4j.Logger;
+import wykwon.common.DateTimeFormatStr;
 import org.joda.time.DateTime;
 import wykwon.common.MyCollections;
 import wykwon.common.Pair;
@@ -171,7 +170,6 @@ public class TripNodesAndValues {
                 break;
             }
             timeStrList.add(DateTimeFormatStr.printTime(curDateTime));
-//            logger.debug(DateTimeFormatStr.printTime(curDateTime));
             curDateTime = curDateTime.plusMinutes(dMin);
         }
         String retArray[] = MyCollections.toArray(timeStrList);

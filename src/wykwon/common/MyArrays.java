@@ -207,19 +207,6 @@ public class MyArrays {
     public static boolean isFlat(double[] array) {
         double var = StatisticSample.variance(array);
         return var < flatThreshold;
-
-//        double sum=0.0;
-//        for (double v: array){
-//            sum+=MyMath.abs(v);
-//        }
-//
-//        if ((sum/(double)array.length)< flatThreshold)
-//        {
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
     }
 
 

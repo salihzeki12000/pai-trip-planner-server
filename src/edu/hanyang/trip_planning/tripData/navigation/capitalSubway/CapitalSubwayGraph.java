@@ -176,10 +176,5 @@ public class CapitalSubwayGraph {
         CapitalSubwayGraph movementGraph = new CapitalSubwayGraph();
         movementGraph.loadFromFiles("datafiles/movements/capital_subway.csv");
 
-//        movementGraph.findPath("한양대역 2호선", "김포공항역 공항철도");
-//        GraphVisualizer.draw(movementGraph.getGraph());
-//        logger.debug(movementGraph);
-
-
     }
 }

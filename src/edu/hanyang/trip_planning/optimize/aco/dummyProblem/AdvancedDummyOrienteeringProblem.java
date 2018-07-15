@@ -5,8 +5,8 @@ import edu.hanyang.trip_planning.optimize.aco.ACOProblem;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import org.apache.log4j.Logger;
-import wykwon.common.array.MyArrays;
-import wykwon.common.selection.RouletteWheelSelection;
+import wykwon.common.Erf;
+import wykwon.common.RouletteWheelSelection;
 
 import java.util.*;
 
@@ -119,7 +119,7 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
 
     @Override
     public int[] getPath() {
-        return MyArrays.toIntArray(trail);
+        return Erf.MyArrays.toIntArray(trail);
     }
 
     @Override

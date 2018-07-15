@@ -7,7 +7,7 @@ import cntbn.terms_factors.ConditionalLinearGaussian;
 import cntbn.terms_factors.ContinuousFactor;
 import edu.hanyang.trip_planning.tripHTBN.potential.util.ArrayKey;
 import org.apache.log4j.Logger;
-import wykwon.common.array.SortArrays;
+import wykwon.common.SortArrays;
 
 import java.util.Arrays;
 

@@ -19,7 +19,6 @@ public class BasicPOI implements InterfacePOI {
     private static Logger logger = Logger.getLogger(BasicPOI.class);
     private String id;      // 1.위치 식별자
     private String title;
-//    private POIIdentifier identifier;
 
     /**
      * 2 이름: 별칭 포함

@@ -58,8 +58,6 @@ public class ItemConverter {
 
         while (it.hasNext()) {
             Item item = it.next();
-//            logger.debug(item.getId() + "\t" + item.getTitle());
-//            POIIdentifier identifier = new POIIdentifier(item.getTitle(), Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
             Location location = new Location(Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
             String id = "daum." + item.getId();
             BasicPOI basicPOI = new BasicPOI(id, item.getTitle(), location);
@@ -112,34 +110,6 @@ public class ItemConverter {
 
         return poiMap;
     }
-
-//    public static Set<BasicPOI> test() {
-//        Set<BasicPOI> poiSet = new HashSet<BasicPOI>();
-//        DaumPoiIO daumPoiIO = new DaumPoiIO();
-//        ItemList itemList = daumPoiIO.readItemList();
-//        Iterator<Item> it = itemList.getItemList().iterator();
-//
-//        while (it.hasNext()) {
-//            Item item = it.next();
-//            POIIdentifier identifier = new POIIdentifier(item.getTitle(), Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
-//
-//            BasicPOI basicPOI = new BasicPOI(identifier);
-//            basicPOI.setAddress(getAddress(item.getAddress()));
-//
-//
-//            POIType poiType = getType(item.getCategory());
-//            basicPOI.setPoiType(poiType);
-//            basicPOI.setLocation(item.getLatitude(), item.getLongitude());
-//
-//            logger.debug(basicPOI);
-//            logger.debug(item.getPlaceUrl());
-//            poiSet.add(basicPOI);
-//
-//
-//        }
-//
-//        return poiSet;
-//    }
 
     private static POIType getType(String categoryStr) {
         String typeArray[] = categoryStr.split(" > ");
