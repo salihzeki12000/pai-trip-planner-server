@@ -5,7 +5,7 @@ import cntbn.common.NodeDictionary;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceSoftmaxCPD;
 import org.apache.log4j.Logger;
-import wykwon.common.Pair;
+import util.Pair;
 
 import java.io.FileReader;
 import java.io.IOException;

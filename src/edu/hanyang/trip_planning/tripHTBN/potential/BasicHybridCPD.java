@@ -5,9 +5,9 @@ import cntbn.common.NodeUtil;
 
 import cntbn.terms_factors.ConditionalLinearGaussian;
 import cntbn.terms_factors.ContinuousFactor;
-import edu.hanyang.trip_planning.tripHTBN.potential.util.ArrayKey;
+import util.ArrayKey;
 import org.apache.log4j.Logger;
-import wykwon.common.SortArrays;
+import util.SortArrays;
 
 import java.util.Arrays;
 
@@ -126,17 +126,13 @@ public class BasicHybridCPD implements InterfaceHybridCPD {
      * @param
      */
     public void setDistribution(int[] discreteParentIndices, int[] discreteParentValues, ContinuousFactor factor) {
-//        logger.debug(NodeDictionary.getInstance().nodeName(theNodeIdx));
         SortArrays.sort(discreteParentIndices, discreteParentValues);
 
         if (!Arrays.equals(this.discreteParentIndices, discreteParentIndices)) {
             throw new RuntimeException("parent Indices mismatch " + Arrays.toString(this.discreteParentIndices) + " and " + Arrays.toString(discreteParentIndices));
         }
-//        logger.debug(Arrays.toString(discreteParentValues));
-//        logger.debug(Arrays.toString(discreteParentIndices));
         int pKey = parentKey.key(discreteParentValues);
 
-//        logger.debug(factor);
         factors[pKey] = factor.deepCopy();
     }
 

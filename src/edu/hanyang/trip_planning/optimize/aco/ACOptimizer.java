@@ -3,9 +3,9 @@ package edu.hanyang.trip_planning.optimize.aco;
 import edu.hanyang.trip_planning.optimize.aco.dummyProblem.AdvancedDummyOrienteeringProblem;
 import org.apache.log4j.Logger;
 import org.math.array.DoubleArray;
-import wykwon.common.Erf;
-import wykwon.common.MyFunction;
-import wykwon.common.RouletteWheelSelection;
+import util.Erf;
+import util.MyFunction;
+import util.WeightedRandomSelector;
 
 import java.util.*;
 
@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class ACOptimizer {
     private static Logger logger = Logger.getLogger(ACOptimizer.class);
-    private RouletteWheelSelection selection = new RouletteWheelSelection();
+    private WeightedRandomSelector selection = new WeightedRandomSelector();
     private ACOProblem agent;
     private ACOParameters acoParameters;
     private int nodeSize;
@@ -34,7 +34,6 @@ public class ACOptimizer {
         TopKScoredPaths topKScoredPaths = new TopKScoredPaths(topK);
         for (int i = 0; i < acoParameters.getNumberOfIteration(); i++) {
             ScoredPath solutions = generateSolutions();
-//            logger.debug(solutions.getValue());
             analyzeSolution(solutions);
             topKScoredPaths.add(solutions);
         }
@@ -43,7 +42,6 @@ public class ACOptimizer {
 
     public void analyzeSolution(ScoredPath solution) {
         int path[] = solution.getPath();
-        // decrease all pheromone
         for (int i = 0; i < nodeSize; i++) {
             for (int j = 0; j < nodeSize; j++) {
                 pheromone[i][j] = pheromone[i][j] * (1 - acoParameters.getEvaporation());
@@ -90,7 +88,7 @@ public class ACOptimizer {
 
     public static void main(String[] args) {
         AdvancedDummyOrienteeringProblem op = new AdvancedDummyOrienteeringProblem(0, 1);
-        ACOParameters acoParameters = ACOParameterFactory.simpleParamGen();
+        ACOParameters acoParameters = new ACOParameters();
         ACOptimizer ants = new ACOptimizer(op, acoParameters);
 
         ScoredPath solutions[] = ants.optimize(10);

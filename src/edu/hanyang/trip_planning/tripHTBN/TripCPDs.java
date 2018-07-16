@@ -6,10 +6,10 @@ import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.DiscreteTimeCPD;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceCLGCPD;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceHybridCPD;
-import wykwon.common.DateTimeFormatStr;
+import util.TimeStrHelper;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
-import wykwon.common.MyCollections;
+import util.MyCollections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,28 +123,6 @@ public class TripCPDs {
 
     public TripNodesAndValues getTripNodesAndValues() {
         return tripNodesAndValues;
-    }
-
-    /**
-     * 분 간격으로 시간 Sequence를 만들어냄
-     *
-     * @param dMin
-     * @return
-     */
-    private String[] generateDiscreteTime(int dMin) {
-        DateTime curDateTime = DateTimeFormatStr.parseFullDateTime("2000-01-01 00:00");
-        int startDay = curDateTime.getDayOfYear();
-        List<String> timeStrList = new ArrayList<>();
-        while (true) {
-            if (curDateTime.getDayOfYear() != startDay) {
-                break;
-            }
-            timeStrList.add(DateTimeFormatStr.printTime(curDateTime));
-            logger.debug(DateTimeFormatStr.printTime(curDateTime));
-            curDateTime = curDateTime.plusMinutes(dMin);
-        }
-
-        return MyCollections.toArray(timeStrList);
     }
 
     public String toString(){

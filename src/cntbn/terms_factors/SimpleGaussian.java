@@ -6,7 +6,7 @@ import cntbn.exception.NoSuchVariableException;
 import javolution.util.FastSet;
 
 import org.apache.log4j.Logger;
-import wykwon.common.Erf;
+import util.Erf;
 
 import java.text.DecimalFormat;
 import java.util.Set;

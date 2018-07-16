@@ -1,7 +1,7 @@
 package edu.hanyang.trip_planning.optimize.constraints;
 
 import org.apache.log4j.Logger;
-import wykwon.common.Erf;
+import util.Erf;
 
 /**
  * Created by wykwon on 2015-09-22.

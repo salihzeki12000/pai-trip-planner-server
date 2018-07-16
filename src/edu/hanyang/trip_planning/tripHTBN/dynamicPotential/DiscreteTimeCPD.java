@@ -2,7 +2,7 @@ package edu.hanyang.trip_planning.tripHTBN.dynamicPotential;
 
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceSoftmaxCPD;
 import org.apache.log4j.Logger;
-import wykwon.common.Triple;
+import util.Triple;
 
 /**
  * Created by wykwon on 2015-10-08.

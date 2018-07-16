@@ -1,3 +1,0 @@
-#src_region	dest_region	src_poi	dest_poi	way	distance	time	time_sd	cost
-수도권	제주	김포공항	제주국제공항	Airway	600	120	30	90000
-수도권	대전	서울역	대전역	Train	200	90	20	23000

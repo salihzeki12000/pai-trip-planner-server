@@ -17,9 +17,9 @@ import edu.hanyang.trip_planning.tripHTBN.potential.satisfaction.WeatherSuitabil
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import wykwon.common.Erf;
-import wykwon.common.MyArrays;
-import wykwon.common.Triple;
+import util.Erf;
+import util.MyArrays;
+import util.Triple;
 
 import java.util.ArrayList;
 import java.util.Arrays;

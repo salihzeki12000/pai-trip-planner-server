@@ -6,7 +6,7 @@ import edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI.Item;
 import edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI.ItemConverter;
 
 import org.apache.log4j.Logger;
-import wykwon.common.Pair;
+import util.Pair;
 
 import java.io.FileWriter;
 import java.io.IOException;

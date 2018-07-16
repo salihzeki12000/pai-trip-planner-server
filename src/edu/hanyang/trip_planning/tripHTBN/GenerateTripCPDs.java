@@ -12,7 +12,7 @@ import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import edu.hanyang.trip_planning.tripHTBN.potential.BasicCLGCPD;
 import edu.hanyang.trip_planning.tripHTBN.potential.BasicHybridCPD;
 import org.apache.log4j.Logger;
-import wykwon.common.Pair;
+import util.Pair;
 
 import java.util.Arrays;
 
@@ -29,9 +29,6 @@ public class GenerateTripCPDs {
     private static Logger logger = Logger.getLogger(GenerateTripCPDs.class);
     private TripNodesAndValues tripNodesAndValues;
     private int discreteTimeWidth;
-    //    private ContinuousFactor marg_D[];
-//    private ContinuousFactor marg_T[];
-//    private ContinuousFactor marg_M[];
     private int nodeSize;
 
     // CPD와 marginal 두개로 나누어서 해야함 .

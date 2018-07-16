@@ -2,7 +2,6 @@ package edu.hanyang.trip_planning.tripData.navigation;
 
 
 import edu.hanyang.trip_planning.tripData.dataType.UnitMovement;
-import edu.hanyang.trip_planning.tripData.navigation.capitalSubway.CapitalPathFinder;
 import edu.hanyang.trip_planning.tripData.poi.InterfacePOI;
 import edu.hanyang.trip_planning.tripData.poi.POIManager;
 import org.apache.log4j.Logger;

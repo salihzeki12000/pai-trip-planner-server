@@ -6,7 +6,7 @@ import edu.hanyang.trip_planning.tripData.navigation.DomesticNavigation;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import org.apache.log4j.Logger;
-import wykwon.common.Pair;
+import util.Pair;
 
 import java.util.List;
 

@@ -3,11 +3,8 @@ package edu.hanyang.trip_planning.optimize.aco.dummyProblem;
 import edu.hanyang.trip_planning.optimize.aco.ACOProblem;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import org.apache.log4j.Logger;
-import org.math.plot.utils.Array;
-import wykwon.common.Erf;
-import wykwon.common.Permutation;
-import wykwon.common.SubsetGenerator;
-import wykwon.common.RouletteWheelSelection;
+import util.Erf;
+import util.WeightedRandomSelector;
 
 import java.util.*;
 
@@ -29,15 +26,15 @@ public class DummyOrienteeringProblem implements ACOProblem {
     private List<Integer> trail = new ArrayList<>();
 
     private double distanceMatrix[][] = {{0, 83, 42, 165, 90, 145},
-            {83, 0, 52, 84, 81, 116},
-            {42, 52, 0, 128, 54, 107},
-            {165, 84, 128, 0, 124, 120},
-            {90, 81, 54, 124, 0, 55},
-            {145, 116, 107, 120, 55, 0}};
+                                         {83, 0, 52, 84, 81, 116},
+                                         {42, 52, 0, 128, 54, 107},
+                                         {165, 84, 128, 0, 124, 120},
+                                         {90, 81, 54, 124, 0, 55},
+                                         {145, 116, 107, 120, 55, 0}};
     private double profits[] = {0.0, 0.5, 0.15, 0.3, 0.4, 0.6};
     private double spendingHour[] = {0.0, 0.3, 0.4, 0.5, 0.6, 1.6};
 
-    private Set<Integer> avaliableNodes = new HashSet<>();
+    private Set<Integer> availableNodes = new HashSet<>();
     private int curNodeIdx;
     private boolean terminalCondition = false;
 
@@ -55,11 +52,11 @@ public class DummyOrienteeringProblem implements ACOProblem {
     @Override
     public void init() {
         this.trail.clear();
-        this.avaliableNodes.clear();
+        this.availableNodes.clear();
         this.trail.add(startNodeIdx);
         curNodeIdx = startNodeIdx;
         for (int i = 1; i < numNodes; i++) {
-            avaliableNodes.add(i);
+            availableNodes.add(i);
         }
         this.totalTime = 0.0;
         this.totalValue = 0.0;
@@ -70,10 +67,10 @@ public class DummyOrienteeringProblem implements ACOProblem {
     public double[] heuristicValue() {
         // 선택 가능한 노드들은?
         double sum = 0.0;
-//        logger.debug("avaliable nodes: " + avaliableNodes);
+//        logger.debug("avaliable nodes: " + availableNodes);
         int srcNodeIdx = curNodeIdx;
         double retValues[] = new double[numNodes];
-        for (int destNodeIdx : avaliableNodes) {
+        for (int destNodeIdx : availableNodes) {
             double value = profits[destNodeIdx];
             double expectedTotalTime = totalTime + spendingHour[destNodeIdx] + movementTime(curNodeIdx, destNodeIdx);
 
@@ -94,13 +91,13 @@ public class DummyOrienteeringProblem implements ACOProblem {
     @Override
     public void addNodeToTrail(int destNodeIdx) {
         trail.add(destNodeIdx);
-        avaliableNodes.remove(new Integer(destNodeIdx));
-        if (avaliableNodes.size() == 0) {
+        availableNodes.remove(new Integer(destNodeIdx));
+        if (availableNodes.size() == 0) {
             terminalCondition = true;
         }
         totalTime += spendingHour[destNodeIdx] + movementTime(curNodeIdx, destNodeIdx);
         totalValue += profits[destNodeIdx];
-//        logger.debug("avaliable nodes = " + avaliableNodes);
+//        logger.debug("available nodes = " + availableNodes);
         curNodeIdx = destNodeIdx;
 
     }
@@ -181,46 +178,8 @@ public class DummyOrienteeringProblem implements ACOProblem {
         return distance * 0.02;
     }
 
-    public static void exhaustiveSolution() {
-        DummyOrienteeringProblem op = new DummyOrienteeringProblem(0,0);
-        /**
-         * 12345
-         * 1234
-         * 1245
-         * 1345
-         *
-         */
-
-        int argMax[] = null;
-        double max = 0.0;
-        SubsetGenerator subsetGenerator = new SubsetGenerator(5);
-
-        while (subsetGenerator.hasNext()) {
-            int subset[] = subsetGenerator.next();
-            List<int[]> permutations = Permutation.permute(subset);
-            for (int path[] : permutations) {
-                double value = op.getValue(path);
-                if (value > max) {
-                    max = value;
-                    argMax = path.clone();
-                }
-            }
-        }
-
-        logger.debug("optimal path=" + Array.toString(argMax) + "value = " + max);
-//        logger.debug(op.getValue(1, 2, 5));
-
-        // optimal path:
-
-//        DummyOrienteeringProblem.java:147| optimal path=1 2 4 value = 1.5
-    }
-
-    public static void acoSolution() {
-
-    }
-
     public static void localSearchSolution() {
-        RouletteWheelSelection selection = new RouletteWheelSelection();
+        WeightedRandomSelector selection = new WeightedRandomSelector();
         DummyOrienteeringProblem op = new DummyOrienteeringProblem(0, 0);
         for (int t = 0; t < 10; t++) {
             if (op.isTerminalCondition()) {
@@ -238,7 +197,6 @@ public class DummyOrienteeringProblem implements ACOProblem {
 
     public static void main(String[] args) {
         localSearchSolution();
-//        exhaustiveSolution();
     }
 
 }

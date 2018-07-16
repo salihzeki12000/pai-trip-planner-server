@@ -3,7 +3,7 @@ package edu.hanyang.trip_planning.trip_question;
 import edu.hanyang.trip_planning.optimize.constraints.categoryConstraint.CategoryConstraint;
 import edu.hanyang.trip_planning.optimize.constraints.categoryConstraint.CategoryConstraintFactory;
 import edu.hanyang.trip_planning.optimize.constraints.poiConstraint.PoiConstraint;
-import wykwon.common.DateTimeFormatStr;
+import util.TimeStrHelper;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
@@ -40,24 +40,10 @@ public class DailyTripEntry {
     }
 
     public int[] getStartTime() {
-        DateTime dateTime = DateTimeFormatStr.parseFullDateTime(startTimeStr);
-        int ret[] = new int[5];
-        ret[0] = dateTime.getYear();            // year
-        ret[1] = dateTime.getMonthOfYear();     // month
-        ret[2] = dateTime.getDayOfMonth();      // day
-        ret[3] = dateTime.getHourOfDay();       // hour
-        ret[4] = dateTime.getMinuteOfHour();    // min
-        return ret;
+        return TimeStrHelper.fullDateStr2IntArray(startTimeStr);
     }
     public int[] getReturnTime() {
-        DateTime dateTime = DateTimeFormatStr.parseFullDateTime(returnTimeStr);
-        int ret[] = new int[5];
-        ret[0] = dateTime.getYear();            // year
-        ret[1] = dateTime.getMonthOfYear();     // month
-        ret[2] = dateTime.getDayOfMonth();      // day
-        ret[3] = dateTime.getHourOfDay();       // hour
-        ret[4] = dateTime.getMinuteOfHour();    // min
-        return ret;
+        return TimeStrHelper.fullDateStr2IntArray(returnTimeStr);
     }
     public String getStartPOITitle() {
         return startPOITitle;

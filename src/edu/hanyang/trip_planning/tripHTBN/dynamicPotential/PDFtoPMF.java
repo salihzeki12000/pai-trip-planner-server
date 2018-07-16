@@ -3,7 +3,7 @@ package edu.hanyang.trip_planning.tripHTBN.dynamicPotential;
 
 import org.apache.commons.math3.util.FastMath;
 import org.apache.log4j.Logger;
-import wykwon.common.Triple;
+import util.Triple;
 
 /**
  * PDF를 histogram으로 변환한 다음에 PMF로 바꾸는 클래수

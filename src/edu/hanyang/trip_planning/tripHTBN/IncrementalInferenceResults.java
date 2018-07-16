@@ -1,7 +1,5 @@
 package edu.hanyang.trip_planning.tripHTBN;
 
-import wykwon.common.Counter;
-
 import java.text.DecimalFormat;
 
 /**
@@ -17,7 +15,6 @@ public class IncrementalInferenceResults {
     private double totalPA[];
     private double pa[];
     private double cost[];
-    private Counter<String> categoryCounter;
 
     public int getDestNodeIdx() {
         return destNodeIdx;
@@ -96,19 +93,6 @@ public class IncrementalInferenceResults {
 
     public double[] getCost() {
         return cost;
-    }
-
-    public Counter<String> getCategoryCounter() {
-        return categoryCounter;
-    }
-
-    public void setCategoryCounter(Counter<String> categoryCounter) {
-        this.categoryCounter = categoryCounter;
-    }
-
-    public void addCategoryCounter(Counter<String> categoryCounter, String category) {
-        this.categoryCounter = categoryCounter;
-        categoryCounter.increase(category);
     }
 
     public String toString() {

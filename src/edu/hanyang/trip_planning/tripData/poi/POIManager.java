@@ -7,7 +7,7 @@ import edu.hanyang.trip_planning.tripData.dataType.ClosingDays;
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI.*;
 import org.apache.log4j.Logger;
-import wykwon.common.MyCollections;
+import util.MyCollections;
 
 import java.io.*;
 import java.nio.file.Files;

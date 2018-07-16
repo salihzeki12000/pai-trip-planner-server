@@ -1,6 +1,5 @@
 package server;
 
-
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -20,15 +19,6 @@ import java.util.*;
 
 public class PlanningHttpServer {
     private static Logger logger = Logger.getLogger(PlanningHttpServer.class);
-    private static String oldBodyStr;
-    private static String fakeToday = null;
-
-//    static class InfoHandler implements HttpHandler {
-//        public void handle(HttpExchange httpExchange) throws IOException {
-//            String response = "/get?identifier=01045598193&query_handling=내일 엑소브레인 실무자 회의를 하려고 하는데 추천좀 해줘";
-//            PlanningHttpServer.writeResponse(httpExchange, response.toString());
-//        }
-//    }
 
     public static void writeResponse(HttpExchange httpExchange, String response) throws IOException {
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
@@ -53,19 +43,6 @@ public class PlanningHttpServer {
             map.put(key, value);
         }
         return map;
-    }
-
-    public static Map<String, String> queryToMap(String query) {
-        Map<String, String> result = new HashMap<String, String>();
-        for (String param : query.split("&")) {
-            String pair[] = param.split("=");
-            if (pair.length > 1) {
-                result.put(pair[0], pair[1]);
-            } else {
-                result.put(pair[0], "");
-            }
-        }
-        return result;
     }
 
     public static void main(String[] args) throws Exception {
@@ -115,8 +92,6 @@ public class PlanningHttpServer {
 
                 GenerateMultiMapPathHTML genHTML = new GenerateMultiMapPathHTML(multiDayTripAnswer);
                 response.append(genHTML.generateMapHTMLStr());
-            } else if (typeStr.equals("natural_question")) {
-                response.append("Not implemented");
             } else {
                 response.append("정의되지 않은 요청입니다. ");
             }

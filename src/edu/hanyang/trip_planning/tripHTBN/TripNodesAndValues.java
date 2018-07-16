@@ -3,10 +3,10 @@ package edu.hanyang.trip_planning.tripHTBN;
 import cntbn.common.NodeDictionary;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIGen;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
-import wykwon.common.DateTimeFormatStr;
+import util.TimeStrHelper;
 import org.joda.time.DateTime;
-import wykwon.common.MyCollections;
-import wykwon.common.Pair;
+import util.MyCollections;
+import util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +25,11 @@ public class TripNodesAndValues {
     public int T2;
     public int T0;
 
-
     public int E1;
     public int E2;
 
     public int DT;
     public int DE;
-
 
     public int M;
     public int D0;
@@ -162,14 +160,14 @@ public class TripNodesAndValues {
         if (dMin % 10 != 0) {
             throw new RuntimeException("minute must be divided by 10");
         }
-        DateTime curDateTime = DateTimeFormatStr.parseFullDateTime("2000-01-01 00:00");
+        DateTime curDateTime = TimeStrHelper.parseFullDate("2000-01-01 00:00");
         int startDay = curDateTime.getDayOfYear();
         List<String> timeStrList = new ArrayList<>();
         while (true) {
             if (curDateTime.getDayOfYear() != startDay) {
                 break;
             }
-            timeStrList.add(DateTimeFormatStr.printTime(curDateTime));
+            timeStrList.add(TimeStrHelper.printHourMin(curDateTime));
             curDateTime = curDateTime.plusMinutes(dMin);
         }
         String retArray[] = MyCollections.toArray(timeStrList);

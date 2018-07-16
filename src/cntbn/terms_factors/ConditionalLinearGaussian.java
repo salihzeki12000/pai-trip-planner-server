@@ -5,7 +5,7 @@ import cntbn.common.NodeDictionary;
 import cntbn.common.TestNodeDictionary;
 import javolution.util.FastSet;
 import org.apache.log4j.Logger;
-import wykwon.common.Erf;
+import util.Erf;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -340,11 +340,6 @@ public class ConditionalLinearGaussian implements GaussianFunction {
         nd.putValues("Z", "true");
         double condParams[] = {0.5, 1, 1.5};
         ConditionalLinearGaussian clg = new ConditionalLinearGaussian(1, "X", Erf.MyArrays.makeString("Y,W,Z"), Erf.MyArrays.makeDouble("0.5,1,1.5"), 10, 1);
-//        GaussianFunction sg = new GaussianFunction(1.0, "Y1", 1, 1);
-//
-//
-//        logger.debug(clg);
-//        logger.debug(new _ConditionalLinearGaussian(clg));
         return clg;
     }
 
@@ -370,12 +365,6 @@ public class ConditionalLinearGaussian implements GaussianFunction {
         cg.setParams(1.0, 2.0, 3.0, 4.0);
         Logger.getRootLogger().info(cg);
         cg.relocateParameters(Z);
-
-        // _ConditionalLinearGaussian cg = new _ConditionalLinearGaussian(1.0,
-        // "X",
-        // "Y1", "Y2", "Y3");
-        // cg.setParams(1.0, 2.0, 1.0, 2.0, 3.0);
-        // cg.relocateConditionalGaussian("Y1");
 
         Logger.getRootLogger().info(cg);
 

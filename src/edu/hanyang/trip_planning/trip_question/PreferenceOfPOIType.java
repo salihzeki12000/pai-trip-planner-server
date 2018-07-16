@@ -3,7 +3,7 @@ package edu.hanyang.trip_planning.trip_question;
 import com.google.gson.Gson;
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import org.apache.log4j.Logger;
-import wykwon.common.Pair;
+import util.Pair;
 
 import java.util.*;
 

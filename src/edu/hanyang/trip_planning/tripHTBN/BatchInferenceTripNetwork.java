@@ -17,9 +17,9 @@ import edu.hanyang.trip_planning.tripHTBN.potential.satisfaction.WeatherSuitabil
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import wykwon.common.Erf;
-import wykwon.common.MyArrays;
-import wykwon.common.Triple;
+import util.Erf;
+import util.MyArrays;
+import util.Triple;
 
 import java.util.Arrays;
 import java.util.List;
@@ -127,7 +127,7 @@ public class BatchInferenceTripNetwork {
             double arrivalTime[] = inferenceArrivalTime(previousDepartureTime, movement);
             double departureTime[] = inferenceDepartureTime(arrivalTime, duration);
             Triple<double[], Integer, Integer> discretizedTime = PDFtoPMF.getGaussianPMFDayTime(arrivalTime[0], arrivalTime[1], tripNodesAndValues.getDiscreteTimeWidth());
-            double satisfication[] = inferenceSatisfaction(destNodeIdx, discretizedTime.first());
+            double satisfaction[] = inferenceSatisfaction(destNodeIdx, discretizedTime.first());
             double pa[] = inferencePhysicalActivity(destNodeIdx);
             double cost[] = inferenceCost(destNodeIdx);
 //        public void addEntry(String poiTitle, double arrivalTime[], double duration[], double departureTime[], double cost[], double pa[])
@@ -140,8 +140,8 @@ public class BatchInferenceTripNetwork {
             totalPA[1] += pa[1];
             totalCost[0] += cost[0];
             totalCost[1] += cost[1];
-            totalSatisfaction[0] += satisfication[0];
-            totalSatisfaction[1] += satisfication[1];
+            totalSatisfaction[0] += satisfaction[0];
+            totalSatisfaction[1] += satisfaction[1];
             srcNodeIdx = destNodeIdx;
         }
 

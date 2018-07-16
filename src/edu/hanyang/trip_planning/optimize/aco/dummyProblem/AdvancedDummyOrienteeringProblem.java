@@ -5,8 +5,8 @@ import edu.hanyang.trip_planning.optimize.aco.ACOProblem;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import org.apache.log4j.Logger;
-import wykwon.common.Erf;
-import wykwon.common.RouletteWheelSelection;
+import util.Erf;
+import util.WeightedRandomSelector;
 
 import java.util.*;
 
@@ -254,7 +254,7 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
 
 
     public static void localSearchSolution() {
-        RouletteWheelSelection selection = new RouletteWheelSelection();
+        WeightedRandomSelector selection = new WeightedRandomSelector();
         AdvancedDummyOrienteeringProblem op = new AdvancedDummyOrienteeringProblem(0, 0);
         for (int t = 0; t < 10; t++) {
             if (op.isTerminalCondition()) {

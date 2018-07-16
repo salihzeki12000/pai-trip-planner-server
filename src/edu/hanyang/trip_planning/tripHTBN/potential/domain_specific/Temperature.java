@@ -2,7 +2,7 @@ package edu.hanyang.trip_planning.tripHTBN.potential.domain_specific;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.log4j.Logger;
-import wykwon.common.Pair;
+import util.Pair;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,11 +21,6 @@ public class Temperature {
     private Map<Integer, Pair<Double, Double>> temperatureMap = new HashMap<Integer, Pair<Double, Double>>();
 
     private Temperature() {
-//        try {
-//            readCSV("datafiles/weather/temperature.csv", '\t');
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
 

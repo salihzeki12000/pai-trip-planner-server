@@ -1,7 +1,6 @@
 package edu.hanyang.trip_planning;
 
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
-import edu.hanyang.trip_planning.optimize.aco.ACOParameterFactory;
 import edu.hanyang.trip_planning.optimize.aco.ACOParameters;
 import edu.hanyang.trip_planning.optimize.aco.ACOptimizer;
 import edu.hanyang.trip_planning.optimize.aco.ScoredPath;
@@ -10,31 +9,28 @@ import edu.hanyang.trip_planning.optimize.constraints.poiConstraint.PoiConstrain
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import edu.hanyang.trip_planning.tripData.mapAPI.googleMap.MultiDayTripAnswer;
 import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfo;
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfoFactory;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripData.poi.POIManager;
 import edu.hanyang.trip_planning.tripData.poi.VincentyDistanceCalculator;
 import edu.hanyang.trip_planning.tripHTBN.GenerateTripCPDs;
 import edu.hanyang.trip_planning.tripHTBN.TripACOProblem;
 import edu.hanyang.trip_planning.tripHTBN.TripCPDs;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIGen;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import edu.hanyang.trip_planning.trip_question.DailyTripEntry;
-import edu.hanyang.trip_planning.trip_question.DailyTripEntryFactory;
 import edu.hanyang.trip_planning.trip_question.TripQuestion;
 import edu.hanyang.trip_planning.trip_question.TripQuestionFactory;
 import org.apache.log4j.Logger;
 
 import java.util.*;
 
-public class TripPlanner implements InterfaceTripPlanning {
+public class TripPlanner {
     private static Logger logger = Logger.getLogger(TripPlanner.class);
     private int minuteTime = 30;
     private int numAcoSolution = 1;
     private int numPlan = 1;
     private int numTotalPoi = 50;
     private int numConstrainedTypePoi = 5;
-    private ACOParameters acoParameters = ACOParameterFactory.simpleParamGen();
+    private ACOParameters acoParameters = new ACOParameters(1.0,0.5,0.1,1000);
 
     public TripPlanner(){};
     // mgkim:
@@ -47,7 +43,6 @@ public class TripPlanner implements InterfaceTripPlanning {
     }
 
     // mgkim:
-    @Override
     public MultiDayTripAnswer tripPlanning(TripQuestion tripQuestion) {
         // mgkim: input arguments assignment
         PersonalInfo personalInfo = tripQuestion.getPersonalInfo();

@@ -6,7 +6,7 @@ import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfo;
 import edu.hanyang.trip_planning.tripData.preference.TouristAttractionType;
 import edu.hanyang.trip_planning.trip_question.PreferenceOfPOIType;
 import org.apache.log4j.Logger;
-import wykwon.common.Pair;
+import util.Pair;
 
 import java.util.*;
 

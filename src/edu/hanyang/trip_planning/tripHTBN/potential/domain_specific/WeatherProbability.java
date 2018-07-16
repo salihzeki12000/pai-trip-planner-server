@@ -4,9 +4,9 @@ import au.com.bytecode.opencsv.CSVReader;
 import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.TrafficJamCPD;
 import javolution.util.FastMap;
 import org.apache.log4j.Logger;
-import wykwon.common.Erf;
-import wykwon.common.MyArrays;
-import wykwon.common.Pair;
+import util.Erf;
+import util.MyArrays;
+import util.Pair;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,7 +54,6 @@ public class WeatherProbability {
                     continue;
                 }
 
-//                logger.debug(Arrays.toString(strArray));
                 int hour = Integer.parseInt(strArray[0]);
                 double rainProb = Double.parseDouble(strArray[1]);
                 double amountOfRain = Double.parseDouble(strArray[2]);
@@ -176,22 +175,10 @@ public class WeatherProbability {
             }
 
             if (dailyProbMap == null) {
-//                logger.debug("load " + fileName);
                 dailyProbMap = readCSV(fileName);
                 weatherProbMap.put(key, dailyProbMap);
             }
         }
-//        logger.debug("hour="+hour);
-/**
-        int max = Collections.max(dailyProbMap.keySet());
-        int min = Collections.min(dailyProbMap.keySet());
-        if (hour > max) {
-            return dailyProbMap.get(max);
-        } else if (hour < min) {
-            return dailyProbMap.get(min);
-        }
- */
-//        logger.debug("out");
 
         return dailyProbMap.get(hour);
     }

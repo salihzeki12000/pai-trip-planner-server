@@ -6,7 +6,7 @@ import edu.hanyang.trip_planning.tripData.poi.InterfacePOI;
 import edu.hanyang.trip_planning.tripData.poi.POIManager;
 import edu.hanyang.trip_planning.tripData.poi.POIUtil;
 import org.apache.log4j.Logger;
-import wykwon.common.MyCollections;
+import util.MyCollections;
 
 import java.io.FileReader;
 import java.io.IOException;
