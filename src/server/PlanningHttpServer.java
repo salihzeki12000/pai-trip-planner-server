@@ -5,8 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import edu.hanyang.trip_planning.TripPlanner;
-import edu.hanyang.trip_planning.tripData.mapAPI.googleMap.GenerateMultiMapPathHTML;
-import edu.hanyang.trip_planning.tripData.mapAPI.googleMap.MultiDayTripAnswer;
+import edu.hanyang.trip_planning.optimize.MultiDayTripAnswer;
 import edu.hanyang.trip_planning.trip_question.TripQuestion;
 import org.apache.log4j.Logger;
 
@@ -14,35 +13,69 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
-import java.net.URLDecoder;
 import java.util.*;
 
 public class PlanningHttpServer {
     private static Logger logger = Logger.getLogger(PlanningHttpServer.class);
 
-    public static void writeResponse(HttpExchange httpExchange, String response) throws IOException {
-        httpExchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = httpExchange.getResponseBody();
-        OutputStreamWriter writer = new OutputStreamWriter(os);
-        writer.write(response);
-        writer.flush();
-        writer.close();
-    }
+    static class GetHandler implements HttpHandler {
 
-    public static Map<String, String> parseQuestion(String query) {
-        Map<String, String> map = new HashMap<String, String>();
-        List<String> pairList = new ArrayList<String>();
-        StringTokenizer stringTokenizer = new StringTokenizer(query);
-        while (stringTokenizer.hasMoreTokens()) {
-            pairList.add(stringTokenizer.nextToken("&"));
+        private static Map<String, String> parseQuery(String query) {
+            query = query.replaceAll("<", "{").replaceAll(">", "}");
+            StringTokenizer stringTokenizer = new StringTokenizer(query);
+
+            List<String> pairList = new ArrayList<>();
+            while (stringTokenizer.hasMoreTokens()) {
+                pairList.add(stringTokenizer.nextToken("&"));
+            }
+
+            Map<String, String> params = new HashMap<>();
+            for (String pairStr : pairList) {
+                StringTokenizer pairTokenizer = new StringTokenizer(pairStr);
+                String key = pairTokenizer.nextToken("=");
+                String value = pairTokenizer.nextToken("=");
+                params.put(key, value);
+            }
+            return params;
         }
-        for (String pairStr : pairList) {
-            StringTokenizer pairTokennizer = new StringTokenizer(pairStr);
-            String key = pairTokennizer.nextToken("=");
-            String value = pairTokennizer.nextToken("=");
-            map.put(key, value);
+
+        private static void writeResponse(HttpExchange httpExchange, String response) throws IOException {
+            httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");   // for CORS issue
+            httpExchange.sendResponseHeaders(200, response.getBytes().length);
+            OutputStream os = httpExchange.getResponseBody();
+            OutputStreamWriter writer = new OutputStreamWriter(os);
+            writer.write(response);
+            writer.flush();
+            writer.close();
         }
-        return map;
+
+        public void handle(HttpExchange httpExchange) throws IOException {
+            Gson gson = new Gson();
+
+            String query = httpExchange.getRequestURI().getQuery();
+//            String utfStr = URLDecoder.decode(str, "UTF-8");
+            Map<String, String> params = parseQuery(query);
+            String typeStr = params.get("type");
+            String bodyStr = params.get("body");
+
+            StringBuilder response = new StringBuilder();
+            if (typeStr.equals("html") || typeStr.equals("json")) {
+                TripQuestion tripQuestion = gson.fromJson(bodyStr, TripQuestion.class);
+                TripPlanner tripPlanner = new TripPlanner();
+                MultiDayTripAnswer multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);
+
+                if (typeStr.equals("html")) {
+                    HTMLGenerator htmlGenerator = new HTMLGenerator(multiDayTripAnswer);
+                    response.append(htmlGenerator.generateHTML());
+                } else {
+                    //json
+                }
+            } else {
+                response.append("정의되지 않은 요청입니다. ");
+            }
+
+            writeResponse(httpExchange, response.toString());
+        }
     }
 
     public static void main(String[] args) throws Exception {
@@ -53,54 +86,5 @@ public class PlanningHttpServer {
         server.setExecutor(null); // creates a default executor
         server.start();
         System.out.println("This is Planning HTTP server with port " + serverPort);
-    }
-
-    static class GetHandler implements HttpHandler {
-        public void handle(HttpExchange httpExchange) throws IOException {
-
-            long start = System.currentTimeMillis();
-
-            Gson gson = new Gson();
-            TripPlanner tripPlanner = new TripPlanner();
-            MultiDayTripAnswer multiDayTripAnswer;
-            StringBuilder response = new StringBuilder();
-
-            String str = httpExchange.getRequestURI().getQuery();
-            String utfStr = URLDecoder.decode(str, "UTF-8");
-            Map<String, String> params = parseQuestion(utfStr);
-            String typeStr = params.get("type");
-            String bodyStr = params.get("body");
-
-            if (typeStr.equals("trip_json_question")) {
-                bodyStr = bodyStr.replaceAll("<", "{");
-                bodyStr = bodyStr.replaceAll(">", "}");
-                TripQuestion tripQuestion = gson.fromJson(bodyStr, TripQuestion.class);
-
-                long plannerStart = System.currentTimeMillis();
-                multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);
-                long plannerEnd = System.currentTimeMillis();
-                System.out.println("실행 시간: "+(plannerEnd-plannerStart)/1000.0);
-
-                logger.debug(multiDayTripAnswer);
-                for (int i = 0; i < multiDayTripAnswer.size(); i++) {
-                    logger.debug(multiDayTripAnswer.getItinerary(i));
-                    System.out.println(multiDayTripAnswer.getItinerary(i).value);
-                }
-                for (int i = 0; i < multiDayTripAnswer.size(); i++) {
-                    System.out.println(multiDayTripAnswer.getItinerary(i).getPoiTitles());
-                }
-
-                GenerateMultiMapPathHTML genHTML = new GenerateMultiMapPathHTML(multiDayTripAnswer);
-                response.append(genHTML.generateMapHTMLStr());
-            } else {
-                response.append("정의되지 않은 요청입니다. ");
-            }
-
-            PlanningHttpServer.writeResponse(httpExchange, response.toString());
-
-            long end = System.currentTimeMillis();
-            System.out.println("실행 시간: "+(end-start)/1000.0);
-
-        }
     }
 }
