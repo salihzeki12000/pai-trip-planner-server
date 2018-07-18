@@ -1,0 +1,6 @@
+콩나물 경위도 및 인코딩 경위도 basicPOI 에 추가
+콩나물 경위도 simplePOI에 추가
+
+HTBN 살펴보기
+출 도착 포함한 플래닝
+mustlist daily->전체로 적용
