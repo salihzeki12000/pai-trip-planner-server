@@ -1,4 +1,4 @@
-package edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI;
+package edu.hanyang.trip_planning.tripData.daumLocalAPI;
 
 
 import edu.hanyang.trip_planning.tripData.dataType.Address;

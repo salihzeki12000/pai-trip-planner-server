@@ -1,4 +1,4 @@
-package edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI;
+package edu.hanyang.trip_planning.tripData.daumLocalAPI;
 
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;

@@ -5,7 +5,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import edu.hanyang.trip_planning.tripData.dataType.BusinessHour;
 import edu.hanyang.trip_planning.tripData.dataType.ClosingDays;
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
-import edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI.*;
+import edu.hanyang.trip_planning.tripData.daumLocalAPI.*;
 import org.apache.log4j.Logger;
 import util.MyCollections;
 

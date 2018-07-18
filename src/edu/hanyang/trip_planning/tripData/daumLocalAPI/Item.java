@@ -1,4 +1,4 @@
-package edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI;
+package edu.hanyang.trip_planning.tripData.daumLocalAPI;
 
 import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.builder.ToStringBuilder;
