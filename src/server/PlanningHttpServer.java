@@ -68,7 +68,8 @@ public class PlanningHttpServer {
                     HTMLGenerator htmlGenerator = new HTMLGenerator(multiDayTripAnswer);
                     response.append(htmlGenerator.generateHTML());
                 } else {
-                    //json
+                    JSONGenerator jsonGenerator = new JSONGenerator(multiDayTripAnswer);
+                    response.append(jsonGenerator.generateJSON());
                 }
             } else {
                 response.append("정의되지 않은 요청입니다. ");

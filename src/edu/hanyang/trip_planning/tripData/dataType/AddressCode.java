@@ -5,26 +5,9 @@ package edu.hanyang.trip_planning.tripData.dataType;
  * 모든 항목은 null 이 될수 있지만,
  */
 public class AddressCode {
-
-
-    /**
-     * 국가코드
-     */
-    public String countryCode = null;
-
-    /**
-     * 특별/광역시, 도
-     *
-     * @return
-     */
-    public String provinceCode = null;
-
-    /**
-     * 시, 군
-     *
-     * @return
-     */
-    public String cityCode = null;
+    public String countryCode = null;   // 국가코드
+    public String provinceCode = null;  // 특별/광역시, 도
+    public String cityCode = null;      // 시, 군
 
     public AddressCode() {
         this.countryCode = null;

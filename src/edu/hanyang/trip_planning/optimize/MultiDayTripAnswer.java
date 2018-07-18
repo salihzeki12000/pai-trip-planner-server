@@ -1,6 +1,5 @@
-package edu.hanyang.trip_planning.tripData.mapAPI.googleMap;
+package edu.hanyang.trip_planning.optimize;
 
-import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import org.apache.log4j.Logger;
 

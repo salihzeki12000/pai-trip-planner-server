@@ -12,40 +12,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: wykwon
- * Date: 15. 1. 2
- * Time: 오전 9:52
- * <p/>
- * To change this template use File | Settings | File Templates.
- */
 public class DaumLocalAPI {
     private static Logger logger = Logger.getLogger(DaumLocalAPI.class);
-
-    //https://apis.daum.net/local/v1/search/category.xml?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&code=FD6&location=37.646559,127.048057&radius=2000
-    public static List<Item> getPOIs(double longtitude, double latitude, int radius, int numberOfItem) {
-
-        String str = "https://apis.daum.net/local/v1/search/category.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&code=FD6&location=" + latitude + "," + longtitude + "&radius=" + radius;
-        try {
-            return parseLocation(str, numberOfItem);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        throw new RuntimeException("error");
-    }
-
-    public static List<Item> getPOIs(String name, int numberOfItem) {
-
-        String str = null;
-        try {
-            str = "https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=" + URLEncoder.encode(name, "UTF-8");
-            return parseLocation(str, numberOfItem);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        throw new RuntimeException("error");
-    }
 
     public static Item getPOI(String name) {
         logger.debug("getPOI:"+name);
@@ -60,8 +28,18 @@ public class DaumLocalAPI {
         throw new RuntimeException("error");
     }
 
-    public static List<Item> getPOIs(String keyword, double longtitude, double latitude, int radius, int numberOfItem) {
+    public static List<Item> getPOIs(String name, int numberOfItem) {
+        String str = null;
+        try {
+            str = "https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=" + URLEncoder.encode(name, "UTF-8");
+            return parseLocation(str, numberOfItem);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        throw new RuntimeException("error");
+    }
 
+    public static List<Item> getPOIs(String keyword, double longtitude, double latitude, int radius, int numberOfItem) {
         String str = null;
         try {
             str = "https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=" + URLEncoder.encode(keyword, "UTF-8") + "&location=" + latitude + "," + longtitude + "&radius=" + radius;
@@ -72,24 +50,19 @@ public class DaumLocalAPI {
         throw new RuntimeException("error");
     }
 
-    public static String requestHTTP(String str) throws IOException {
-        URL url = new URL(str);
-        URLConnection yc = url.openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-        StringBuffer strBuf = new StringBuffer();
-        String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-            strBuf.append(inputLine);
-            strBuf.append('\n');
+    public static List<Item> getPOIs(double longtitude, double latitude, int radius, int numberOfItem) {
+        String str = "https://apis.daum.net/local/v1/search/category.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&code=FD6&location=" + latitude + "," + longtitude + "&radius=" + radius;
+        try {
+            return parseLocation(str, numberOfItem);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        in.close();
-
-        return strBuf.toString();
+        throw new RuntimeException("error");
     }
 
     public static List<Item> parseLocation(String str, int numberOfItem) throws IOException {
         logger.debug(str);
-        List<Item> infoPOIList = new ArrayList<Item>();
+        List<Item> infoPOIList = new ArrayList<>();
         URL url = new URL(str);
         URLConnection yc = url.openConnection();
         BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
@@ -97,12 +70,8 @@ public class DaumLocalAPI {
         Gson gson = new GsonBuilder().create();
         while (jsonStreamParser.hasNext()) {
             JsonElement jElement = jsonStreamParser.next();
-//            logger.debug(jElement);
             JsonObject channelObject = (JsonObject) ((JsonObject) jElement).get("channel");
             JsonArray itemArray = channelObject.get("item").getAsJsonArray();
-//            logger.debug(channelObject);
-//            logger.debug(itemArray);
-//
 
             int size = 0;
             if (numberOfItem <= itemArray.size()) {

@@ -1,4 +1,3 @@
-
 package edu.hanyang.trip_planning.tripHTBN;
 
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
@@ -7,15 +6,13 @@ import edu.hanyang.trip_planning.optimize.constraints.ChanceConstraint;
 import edu.hanyang.trip_planning.optimize.constraints.categoryConstraint.CategoryConstraint;
 import edu.hanyang.trip_planning.optimize.constraints.categoryConstraint.CategoryConstraintFactory;
 import edu.hanyang.trip_planning.optimize.constraints.poiConstraint.PoiConstraint;
-import edu.hanyang.trip_planning.tripData.dataType.POIType;
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfo;
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfoFactory;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import edu.hanyang.trip_planning.tripData.poi.POIManager;
 import edu.hanyang.trip_planning.tripData.poi.VincentyDistanceCalculator;
+import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIGen;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import edu.hanyang.trip_planning.tripHTBN.potential.TripACOParameters;
+import edu.hanyang.trip_planning.trip_question.PersonalInfo;
+import edu.hanyang.trip_planning.trip_question.PersonalInfoFactory;
 import edu.hanyang.trip_planning.trip_question.PreferenceOfPOIType;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -331,12 +328,10 @@ public class TripACOProblem extends ItineraryPlanning {
 
             if (isTypeAffordableAtThatTime){    // mgkim: destPOI에 도착하는 시간에 affordable한 constraint가 있으면
                 int affordableCategoryConstraintIdx = categoryConstraintList.indexOf(affordableCategoryConstraint);
-                if (categoryConstraintCnt[affordableCategoryConstraintIdx] == affordableCategoryConstraint.getMaxCount()){
-                    return true;    // 해당 constraint type에 들를 수 있는 회수가 이미 꽉 찾으면 constraint violation
-                } else {
+                // 해당 constraint type에 들를 수 있는 회수가 이미 꽉 찾으면 constraint violation
 //                    logger.debug(destPOI.getTitle()+": "+destPOI.getPoiType()+"-"+arrivalTime[0]);
-                    return false;   // 해당 constraint type에 들를 수 있는 회수가 남아 있으면 no violation
-                }
+// 해당 constraint type에 들를 수 있는 회수가 남아 있으면 no violation
+                return categoryConstraintCnt[affordableCategoryConstraintIdx] == affordableCategoryConstraint.getMaxCount();
             }else {
                 return true;                    // mgkim: destPOI에 도착하는 시간에 affordable한 constraint가 없으면 constraint violation
             }

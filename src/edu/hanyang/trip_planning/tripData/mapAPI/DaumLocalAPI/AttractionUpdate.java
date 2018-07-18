@@ -1,4 +1,4 @@
-package edu.hanyang.trip_planning.tripData.poi.update;
+package edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI;
 
 import au.com.bytecode.opencsv.CSVReader;
 import edu.hanyang.trip_planning.tripData.dataType.BusinessHour;

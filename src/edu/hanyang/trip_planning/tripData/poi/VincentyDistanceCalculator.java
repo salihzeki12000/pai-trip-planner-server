@@ -168,9 +168,9 @@ public class VincentyDistanceCalculator {
      *                in meters.
      * @param flat    The flattening of the reference ellipsoid.
      * @return An array containing the latitude and longitude
-     *         of the desired point, in radians, and the
-     *         azimuth back from that point to the starting
-     *         point, in radians clockwise from north.
+     * of the desired point, in radians, and the
+     * azimuth back from that point to the starting
+     * point, in radians clockwise from north.
      */
     private static double[] dirct1(double glat1, double glon1,
                                    double azimuth, double dist,
@@ -236,11 +236,11 @@ public class VincentyDistanceCalculator {
      * @param p2 Lat station 2, in radians, positive north.
      * @param e2 Lon station 2, in radians, positive east.
      * @return An array of doubles, containing: the geodetic
-     *         distance between the stations, in meters; the
-     *         azimuth at station 1 to station 2; and the
-     *         azimuth at station 2 to station 1.  Azimuths are
-     *         in radians, clockwise from north, and may not
-     *         be normalized.
+     * distance between the stations, in meters; the
+     * azimuth at station 1 to station 2; and the
+     * azimuth at station 2 to station 1.  Azimuths are
+     * in radians, clockwise from north, and may not
+     * be normalized.
      */
     private static double[] gpnhri(double a, double f,
                                    double p1, double e1, double p2, double e2) {
@@ -388,9 +388,9 @@ public class VincentyDistanceCalculator {
      * @param p1   The latitude of station 1.
      * @param p2   The latitude of station 2.
      * @return An array of doubles, containing: the geodesic
-     *         distance between the stations, in meters;
-     *         the azimuth at station 1 to station 2;
-     *         and the azimuth at station 2 to station 1.
+     * distance between the stations, in meters;
+     * the azimuth at station 1 to station 2;
+     * and the azimuth at station 2 to station 1.
      */
     private static double[] gpnarc(double amax, double flat, double esq,
                                    double p1, double p2) {
@@ -455,9 +455,9 @@ public class VincentyDistanceCalculator {
      * @param esq  Eccentricity squared for reference ellipsoid.
      * @param dlon The longitude difference.
      * @return An array of doubles, containing: the geodesic
-     *         distance between the stations, in meters;
-     *         the azimuth at station 1 to station 2;
-     *         and the azimuth at station 2 to station 1.
+     * distance between the stations, in meters;
+     * the azimuth at station 1 to station 2;
+     * and the azimuth at station 2 to station 1.
      */
     private static double[] gpnloa(double a, double f, double esq, double dlon) {
         double absDlon = abs(dlon);
@@ -667,7 +667,7 @@ class Angle {
         return new Angle(angleR + radians);
     }
 
-    public static  double modPi(double v) {
+    public static double modPi(double v) {
         v %= PI;
         return v < 0 ? v + PI : v;
     }
@@ -873,7 +873,7 @@ final class Distance {
         return new Distance(distanceM + d.distanceM);
     }
 
-    public static  String formatM(double m) {
+    public static String formatM(double m) {
         floatFormat.setMaximumFractionDigits(1);
         return floatFormat.format(m) + " m";
     }

@@ -1,11 +1,12 @@
 package edu.hanyang.trip_planning.tripData.poi;
 
 import com.google.gson.Gson;
+import org.apache.log4j.Logger;
+
 import edu.hanyang.trip_planning.tripData.dataType.*;
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfo;
+import edu.hanyang.trip_planning.trip_question.PersonalInfo;
 import edu.hanyang.trip_planning.tripData.preference.TouristAttractionType;
 import edu.hanyang.trip_planning.trip_question.PreferenceOfPOIType;
-import org.apache.log4j.Logger;
 import util.Pair;
 
 import java.util.*;
@@ -17,70 +18,22 @@ import java.util.*;
  */
 public class BasicPOI implements InterfacePOI {
     private static Logger logger = Logger.getLogger(BasicPOI.class);
-    private String id;      // 1.위치 식별자
+    private String id;                                  // 1. 위치 식별자
     private String title;
-
-    /**
-     * 2 이름: 별칭 포함
-     * 1번째가 대표이름임
-     */
-    private Set<String> names;
-    /**
-     * 3 주소
-     */
-    private Address address;
-    /**
-     * 4 장소의 종류
-     */
-    private POIType poiType;
-    /**
-     * 5. 해당 장소에서 할수 있는 활동들
-     */
-    private Set<ActivityType> avaliableActivities;
-    /**
-     * 6. 위치 (경위도)
-     */
-    private Location location;
-    /**
-     * 7. 영업시간
-     */
-    private BusinessHour businessHour;
-    /**
-     * 8. 휴일
-     */
-    private ClosingDays closingDays;
-    /**
-     * 9. 주차가능 여부
-     */
-    private int hasParkingLot = -1;
-    /**
-     * 10. 평균 비용
-     */
-    private int averageCostPerPerson = -1;
-    /**
-     * 11. 대중교통 접근성
-     * <p/>
-     * 예: XX 지하철 역에서 몇분거리
-     */
-    private Set<AdjacentPOI> publicTransportationAccess;
-    /**
-     * 5 머무는 시간
-     *
-     * @return
-     */
-    private ProbabilisticDuration spendingTime;
-    /**
-     * 사용자 만족도
-     */
-    private double score = -1;
-
-    /**
-     * 분위기
-     */
-    private Set<String> ambiences;
-
+    private Set<String> names;                          // 2. 이름 (별칭 포함 1번째가 대표이름임)
+    private Address address;                            // 3. 주소
+    private POIType poiType;                            // 4. 장소의 종류
+    private Set<ActivityType> availableActivities;      // 5. 해당 장소에서 할수 있는 활동들
+    private Location location;                          // 6. 위치 (경위도)
+    private BusinessHour businessHour;                  // 7. 영업시간
+    private ClosingDays closingDays;                    // 8. 휴일
+    private int hasParkingLot = -1;                     // 9. 주차가능 여부   (-1: Unknwon, 0: false, 1: true)
+    private int averageCostPerPerson = -1;              // 10. 평균 비용
+    private Set<AdjacentPOI> publicTransportationAccess;// 11. 대중교통 접근성 (예: XX 지하철 역에서 몇분거리)
+    private ProbabilisticDuration spendingTime;         // 12. 머무는 시간
+    private double score = -1;                          // 13. 사용자 만족도
+    private Set<String> ambiences;                      // 14. 분위기
     private Map<String, String> urlList = new HashMap<String, String>();
-
     private TouristAttractionType touristAttractionType = null;
     private boolean bRestaurant = false;
 
@@ -92,10 +45,10 @@ public class BasicPOI implements InterfacePOI {
         this.id = id;
         this.title = title;
         this.location = location.deepCopy();
-        names = new HashSet<String>();
-        avaliableActivities = new HashSet<ActivityType>();
-        ambiences = new HashSet<String>();
-        publicTransportationAccess = new HashSet<AdjacentPOI>();
+        names = new HashSet<>();
+        availableActivities = new HashSet<>();
+        ambiences = new HashSet<>();
+        publicTransportationAccess = new HashSet<>();
         address = new Address();
         // 기본 소요시간은 1시간  +- 10분
         spendingTime = new ProbabilisticDuration(0.5, 0.1);
@@ -125,25 +78,14 @@ public class BasicPOI implements InterfacePOI {
         bRestaurant = restaurantType.contain(poiType);
     }
 
-//    public void setLocation(Location location) {
-//        this.location = location.deepCopy();
-//    }
-
     public void setLocation(double latitude, double longtitude) {
         this.location = new Location(latitude, longtitude);
     }
 
-//    public void setLocation(String latitude, String longtitude) {
-//        this.location = new Location(Double.parseDouble(latitude), Double.parseDouble(longtitude));
-//    }
-
     public void addActivity(ActivityType activity) {
-        this.avaliableActivities.add(activity);
+        this.availableActivities.add(activity);
     }
 
-    /**
-     * @param parkingFlag -1 : Unknwon, 0: false, 1: true
-     */
     public void setParking(int parkingFlag) {
         this.hasParkingLot = parkingFlag;
     }
@@ -181,22 +123,12 @@ public class BasicPOI implements InterfacePOI {
         this.touristAttractionType = TouristAttractionType.parse(type);
     }
 
-    /**
-     * 사용자 만족도
-     */
     public void setScore(double value) {
         this.score = value;
     }
 
     public double getScore() {
         return this.score;
-    }
-
-    /**
-     * 분위기
-     */
-    private void addAmbience(String ambience) {
-        ambiences.add(ambience);
     }
 
     @Override
@@ -211,12 +143,12 @@ public class BasicPOI implements InterfacePOI {
 
     @Override
     public Set<String> getNames() {
-        return names;  //To change body of implemented methods use File | Settings | File Templates.
+        return names;
     }
 
     @Override
     public Address getAddress() {
-        return address;  //To change body of implemented methods use File | Settings | File Templates.
+        return address;
     }
 
     @Override
@@ -226,25 +158,22 @@ public class BasicPOI implements InterfacePOI {
 
     @Override
     public ProbabilisticDuration getSpendingTime(PersonalInfo personalInfo, String startTime) {
-        return spendingTime;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-    public double getAverageSpendingTime() {
-        return spendingTime.hour;  //To change body of implemented methods use File | Settings | File Templates.
+        return spendingTime;
     }
 
     @Override
-    public Set<ActivityType> getAvaliableActivities() {
-        return avaliableActivities;  //To change body of implemented methods use File | Settings | File Templates.
+    public Set<ActivityType> getAvailableActivities() {
+        return availableActivities;
     }
 
     @Override
     public Location getLocation() {
-        return location;  //To change body of implemented methods use File | Settings | File Templates.
+        return location;
     }
 
     @Override
     public BusinessHour getBusinessHour() {
-        return businessHour;  //To change body of implemented methods use File | Settings | File Templates.
+        return businessHour;
     }
 
     @Override
@@ -254,16 +183,16 @@ public class BasicPOI implements InterfacePOI {
 
     @Override
     public Set<AdjacentPOI> getPubicTransportationAccess() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     @Override
     public Integer getParkingLotInfo() {
-        return hasParkingLot;  //To change body of implemented methods use File | Settings | File Templates.
+        return hasParkingLot;
     }
 
     @Override
-    public Double getSatisifaction(PersonalInfo personalInfo, TimeAndDuration timeAndDuration) {
+    public Double getSatisfaction(PersonalInfo personalInfo, TimeAndDuration timeAndDuration) {
         double defaultValue = 0.5;
         PreferenceOfPOIType preferenceOfPOIType = personalInfo.getPreferenceOfPOIType();
 
@@ -280,12 +209,12 @@ public class BasicPOI implements InterfacePOI {
 
     @Override
     public Integer getAverageCostPerPerson() {
-        return averageCostPerPerson;  //To change body of implemented methods use File | Settings | File Templates.
+        return averageCostPerPerson;
     }
 
     @Override
     public Set<String> getAmbiences() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     /**
@@ -307,13 +236,13 @@ public class BasicPOI implements InterfacePOI {
     }
 
     public String toString() {
-        StringBuffer strBuf = new StringBuffer();
+        StringBuilder strBuf = new StringBuilder();
         strBuf.append("id: " + id + '\n');
         strBuf.append("Other names : " + names + '\n');
         strBuf.append("Address: " + address.toString() + '\n');
         strBuf.append("InterfacePOI type : " + poiType + '\n');
-        strBuf.append("Avaliable Activity: " + avaliableActivities + "\n");
-        strBuf.append("loaction: " + location + '\n');
+        strBuf.append("Available Activity: " + availableActivities + "\n");
+        strBuf.append("location: " + location + '\n');
         if (businessHour != null) {
             strBuf.append(businessHour.toString() + '\n');
         }
@@ -359,27 +288,9 @@ public class BasicPOI implements InterfacePOI {
             array[18] = Double.toString(spendingTime.hour);
             array[19] = Double.toString(spendingTime.standardDeviation);
         }
-//        logger.debug(array[14]);
         array[20] = urlList.get("place");
 
         return array;
-//        StringBuffer stringBuffer
-//        strBuf.append("InterfacePOI ID: " + identifier + '\n');
-//        strBuf.append("Other names : " + names + '\n');
-//        strBuf.append("Address: " + address.toString() + '\n');
-//        strBuf.append("InterfacePOI type : " + poiType + '\n');
-//        strBuf.append("Avaliable Activity: " + avaliableActivities + "\n");
-//        strBuf.append("loaction: " + location + '\n');
-//        if (businessHour != null) {
-//            strBuf.append(businessHour.toString() + '\n');
-//        }
-//        strBuf.append("휴무일: " + closingDays + "\n");
-//        strBuf.append("주차여부: " + getParkingLotInfo() + "\n");
-//        strBuf.append("평균비용: " + averageCostPerPerson + "\n");
-//        strBuf.append("대중교통 접근여부: " + publicTransportationAccess + "\n");
-//        strBuf.append("만족도(평점): " + score + "\n");
-//        strBuf.append("소요시간:" + spendingTime + "\n");
-//        return strBuf.toString();
     }
 
     public TouristAttractionType getTouristAttractionType() {
@@ -387,7 +298,6 @@ public class BasicPOI implements InterfacePOI {
             return this.touristAttractionType;
         } else {
             return null;
-//            throw new RuntimeException(title + "is not tourist attraction");
         }
     }
 
@@ -395,18 +305,13 @@ public class BasicPOI implements InterfacePOI {
         return getPhysicalActivity(70);
 
     }
-    /**
-     * @param bodyWeight
-     * @return
-     */
+
     public double[] getPhysicalActivity(double bodyWeight) {
         double ret[] = new double[2];
         if (this.touristAttractionType == null) {
-//            logger.fatal(title + " has no attraction type");
             ret[0] = 0.0;
             ret[1] = 1.0;
             return ret;
-//            throw new RuntimeException(title + " has no attraction type");
         }
         // 1MET = 1 * kcal / (kg * h)
         // kcal = MET*kg * h
@@ -422,60 +327,7 @@ public class BasicPOI implements InterfacePOI {
         ret[1] = newSD * newSD;
         return ret;
     }
-    /**
-     * 활동량을 보여줌
-     *
-     * @param durationHour
-     * @param durationHourSD
-     * @return
-     */
-    public Pair<Double, Double> getPhysicalActivity(double durationHour, double durationHourSD, double bodyWeight) {
-        if (this.touristAttractionType == null) {
-            return new Pair<Double, Double>(0.0, 1.0);
-//            throw new RuntimeException(title + " has no attraction type");
-        }
-        // 1MET = 1 * kcal / (kg * h)
-        // kcal = MET*kg * h
-        Pair<Double, Double> met = getMETPerHour();
-        double newMean = durationHour * met.first() * bodyWeight;
-        // 새로운 SD는 mean 에 대한 비율로 처리하는게 나을것 같군.
-        double metSDRatio = met.second() / met.first();
-        double durationRatio = durationHourSD / durationHour;
-        double sdRatio = Math.sqrt((metSDRatio * durationRatio) / (metSDRatio + durationHour));
 
-        double newSD = newMean * sdRatio;
-        return new Pair<Double, Double>(newMean, newSD);
-    }
-    /**
-     * 기본 weight인 70.9kg 인 한국인 남성 표준 체중으로 계산
-     *
-     * @param durationHour
-     * @param durationHourSD
-     * @return
-     */
-    public Pair<Double, Double> getPhysicalActivity(double durationHour, double durationHourSD) {
-        if (this.touristAttractionType == null) {
-            return new Pair<Double, Double>(0.0, 1.0);
-//            throw new RuntimeException(title + " has no attraction type");
-        }
-        double bodyWeight = 70.9;
-        // 1MET = 1 * kcal / (kg * h)
-        // kcal = MET*kg * h
-        Pair<Double, Double> met = getMETPerHour();
-        double newMean = durationHour * met.first() * bodyWeight;
-        // 새로운 SD는 mean 에 대한 비율로 처리하는게 나을것 같군.
-        double metSDRatio = met.second() / met.first();
-        double durationRatio = durationHourSD / durationHour;
-        double sdRatio = Math.sqrt((metSDRatio * durationRatio) / (metSDRatio + durationHour));
-
-        double newSD = newMean * sdRatio;
-        return new Pair<Double, Double>(newMean, newSD);
-    }
-    /**
-     * 시간당 MET를 반환
-     *
-     * @return
-     */
     public Pair<Double, Double> getMETPerHour() {
         double mean = 0.0;
         double var = 1.0;
@@ -489,12 +341,10 @@ public class BasicPOI implements InterfacePOI {
                 mean = 5.0;
                 var = 0.5;
                 break;
-
             case HikingTrail:
                 mean = 3.3;
                 var = 0.33;
                 break;
-
             case Cave:
             case Island:
             case Beach:
@@ -507,7 +357,6 @@ public class BasicPOI implements InterfacePOI {
                 mean = 2.5;
                 var = 0.2;
                 break;
-
             case Zoo:
             case Aquarium:
             case Temple:
@@ -517,12 +366,10 @@ public class BasicPOI implements InterfacePOI {
                 mean = 2.3;
                 var = 0.15;
                 break;
-
             case Park:
                 mean = 2.0;
                 var = 0.1;
                 break;
-
             case SightseeingWithVehicle:
             case HotSpring:
                 mean = 1.1;
@@ -530,10 +377,7 @@ public class BasicPOI implements InterfacePOI {
                 break;
         }
 
-//        mean = (mean - 1.0) * 60.0;
-
-        return new Pair<Double, Double>(mean, var);
-
+        return new Pair<>(mean, var);
     }
 
     public void initTouristAttractionType() {
@@ -573,25 +417,20 @@ public class BasicPOI implements InterfacePOI {
             basicPOI.setBusinessHour(businessHour);
         }
 
-
         ClosingDays closingDays = gson.fromJson(array[13], ClosingDays.class);
         if (closingDays != null) {
             basicPOI.setClosingDays(closingDays);
         }
 
-
         int hasParkingLot = Integer.parseInt(array[14]);
         basicPOI.setParking(hasParkingLot);
         int averageCostPerPerson = Integer.parseInt(array[15]);
         basicPOI.setAverageCostPerPerson(averageCostPerPerson);
-//        Set<AdjacentPOI> publicTransportation = gson.fromJson(array[10],Set<AdjacentPOI>.getClass());
-//        logger.debug(array[10] + "\t size=" + array[10].length());
         if (array[16].length() > 3) {
             logger.debug(array[16] + "\t size=" + array[16].length());
             AdjacentPOI adjacentPOIs[] = gson.fromJson(gson.toJson(array[16]), AdjacentPOI[].class);
             for (AdjacentPOI adjacentPOI : adjacentPOIs) {
                 basicPOI.addPublicTransportationAccess(adjacentPOI);
-
             }
         }
 
@@ -617,48 +456,36 @@ public class BasicPOI implements InterfacePOI {
     public static void main(String[] args) {
 //1. ID로 이름 만들고
         BasicPOI poi = new BasicPOI("daum.111", "하동관", new Location(111, 222));
-
 //2. 이름들 넣고
         poi.addName("하동관");
         poi.addName("하동관 본점");
 //3.  주소
         poi.setAddress(new Address("대한민국", "서울특별시", "중구", "명동9길 12"));
-
 //4. 장소종류
         poi.setPoiType(new POIType("음식점", "한식", "곰탕"));
-
 //5. 가능한 활동
         poi.addActivity(ActivityType.Eat);
-
 //6. 좌표
         poi.setLocation(39.564380, 126.984978);
 //7. 영업시간
         poi.setBusinessHour(new BusinessHour("07:00", "16:30"));
 // 8. 휴일
-
         ClosingDays closingDays = new ClosingDays();
         closingDays.addMonthlyClosingDay(1, DayOfWeek.Sunday);
         closingDays.addMonthlyClosingDay(3, DayOfWeek.Sunday);
         poi.setClosingDays(closingDays);
-
 //9. 주차가능여부
         poi.setParking(1);
-
         // 10. 평균비용
         poi.setAverageCostPerPerson(11000);
-
         // 11 대중교통 접근성
         poi.addPublicTransportationAccess("을지로입구역", 5);
         poi.addPublicTransportationAccess("을지로3가역", 10);
         poi.addPublicTransportationAccess("종각역", 15);
-
         // 12. 만족도
         poi.setScore(5.5);
-
         // 소요시간
         poi.setSpendingHour(40, 10);
-
-
         System.out.println(poi);
 
         for (String str : poi.toStrArray()) {
@@ -667,19 +494,8 @@ public class BasicPOI implements InterfacePOI {
 
     }
 
-    private String toString(String strArray[]) {
-        StringBuffer strbuf = new StringBuffer();
-        for (int i = 0; i < strArray.length - 1; i++) {
-            strbuf.append(strArray[i]);
-            strbuf.append(',');
-        }
-        strbuf.append(strArray[strArray.length - 1]);
-
-        return strbuf.toString();
-    }
-
     private String toString(Set<String> strSet) {
-        StringBuffer strbuf = new StringBuffer();
+        StringBuilder strbuf = new StringBuilder();
         for (String str : strSet) {
             strbuf.append(str);
             strbuf.append(',');

@@ -289,28 +289,10 @@ public class SubsetPOIs {
     }
 
     public static void main(String[] args) {
-//        SubsetPOIs subsetPOIs = SubsetPOIGen.getJeju10_();
-//        subsetPOIs.reduceSubsetPoisByIdxes(4, 6, 3, 8);
-
         SubsetPOIs subsetPOIs = new SubsetPOIs();
         subsetPOIs.makeSubsetPOIsByAreas("서귀포시");
         subsetPOIs.addSubsetPOIsBytitle("메종글래드제주");
-
-//        String address = "제주시";                     List<BasicPOI> pois = POIManager.getInstance().getPOIByAddresses(address);
-//        System.out.println(pois.size());
-//        String[] addresses1 = {"제주시"};              pois = POIManager.getInstance().getPOIByAddresses(addresses1);
-//        System.out.println(pois.size());
-//        String[] addresses2 = {"서귀포시"};            pois = POIManager.getInstance().getPOIByAddresses(addresses2);
-//        System.out.println(pois.size());
-//        String[] addresses3 = {"제주시","서귀포시"};   pois = POIManager.getInstance().getPOIByAddresses(addresses3);
-//        System.out.println(pois.size());
-//        String[] addresses4 = {"제주특별자치도"};      pois = POIManager.getInstance().getPOIByAddresses(addresses4);
-//        System.out.println(pois.size());
-//        String[] addresses5 = {"제주"};                pois = POIManager.getInstance().getPOIByAddresses(addresses5);
-//        System.out.println(pois.size());
-
     }
-
 }
 
 class CompareBasicPoiByScore implements Comparator<BasicPOI> {

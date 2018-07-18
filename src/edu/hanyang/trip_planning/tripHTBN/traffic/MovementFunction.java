@@ -23,10 +23,8 @@ public class MovementFunction {
     public List<UnitMovement> findPath(int srcId, int destId) {
         BasicPOI src = subsetPOIs.getPOI(srcId);
         BasicPOI dest = subsetPOIs.getPOI(destId);
-//        logger.debug("find path from " + src.getTitle() + " to " + dest.getTitle());
         foundPath = navigation.findPath(src, dest);
         return foundPath;
-//        logger.debug(foundPath);
     }
 
     public Pair<Double, Double> getCost() {
@@ -52,10 +50,8 @@ public class MovementFunction {
         }
         for (UnitMovement unitMovement : foundPath) {
             totalTime = totalTime + unitMovement.spendingTime.hour;
-//            logger.debug(unitMovement);
             totalSD = totalSD + unitMovement.spendingTime.standardDeviation;
         }
-//        logger.debug("totlaTime="+totalTime);
         return new Pair<Double, Double>(totalTime, totalSD);
     }
 
@@ -70,7 +66,6 @@ public class MovementFunction {
     public static void main(String[] args) {
         SubsetPOIs subsetPOIs = new SubsetPOIs();
         subsetPOIs.makeSubsetPOIsByTitle("분당서울대학교병원", "교보문고 광화문점", "뚝섬한강공원", "창동주공4단지아파트", "한양대학교 정보통신관");
-//        subsetPOIs.makeSubsetPOIsByTitle("분당서울대학교병원", "교보문고 광화문점", "뚝섬한강공원", "창동주공4단지아파트", "한양대학교 정보통신관");
         MovementFunction trafficCondition = new MovementFunction(subsetPOIs);
         for (int i = 1; i < 4; i++) {
             trafficCondition.findPath(0, i);

@@ -36,7 +36,6 @@ public class ItemConverter {
         basicPOI.setScore(updatePlaceURLInfo.getSatisfication());
         basicPOI.setClosingDays(updatePlaceURLInfo.cLosingDays());
 
-//        logger.debug(basicPOI);
         return basicPOI;
     }
 
@@ -45,8 +44,6 @@ public class ItemConverter {
         for (Item item : itemList) {
             poiList.add(getPOI(item));
         }
-
-
         return poiList;
     }
 

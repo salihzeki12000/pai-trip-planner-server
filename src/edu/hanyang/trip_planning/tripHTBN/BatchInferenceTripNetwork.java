@@ -3,8 +3,8 @@ package edu.hanyang.trip_planning.tripHTBN;
 import cntbn.terms_factors.ContinuousFactor;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration;
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfo;
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfoFactory;
+import edu.hanyang.trip_planning.trip_question.PersonalInfo;
+import edu.hanyang.trip_planning.trip_question.PersonalInfoFactory;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripData.preference.TouristAttractionType;
 import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.PDFtoPMF;
@@ -229,7 +229,7 @@ public class BatchInferenceTripNetwork {
     private double[] inferencePreference(int destNodeIdx) {
         BasicPOI poi = tripCPDs.getPOI(destNodeIdx);
         double ret[] = new double[2];
-        ret[0] = poi.getSatisifaction(personalInfo, null);
+        ret[0] = poi.getSatisfaction(personalInfo, null);
         ret[1] = 0.1;
 //        logger.debug("poi=" + poi.getTitle() + " preference=" + ret[0]);
         return ret;

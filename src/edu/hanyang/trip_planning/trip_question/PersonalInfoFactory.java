@@ -1,8 +1,7 @@
-package edu.hanyang.trip_planning.tripData.personalInfo;
+package edu.hanyang.trip_planning.trip_question;
 
 import com.google.gson.Gson;
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
-import edu.hanyang.trip_planning.trip_question.PreferenceOfPOIType;
 
 // mgkim
 public class PersonalInfoFactory {

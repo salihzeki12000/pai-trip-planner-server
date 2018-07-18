@@ -1,10 +1,8 @@
-package edu.hanyang.trip_planning.tripData.poi;
+package edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI;
 
 import au.com.bytecode.opencsv.CSVWriter;
-import edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI.DaumLocalAPI;
-import edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI.Item;
-import edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI.ItemConverter;
 
+import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import org.apache.log4j.Logger;
 import util.Pair;
 

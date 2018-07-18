@@ -5,24 +5,13 @@ package edu.hanyang.trip_planning.tripData.dataType;
  * 모든 항목은 null 이 될수 있지만,
  */
 public class Address {
-
-    /**
-     * 국가, 도, 시
-     */
-    public AddressCode addressCode;
-
-    /**
-     * 상세주소
-     *
-     * @return
-     */
-    public String detailedAddress;
+    public AddressCode addressCode; // 국가, 도, 시
+    public String detailedAddress;  // 상세주소
 
     public Address() {
         this.addressCode = new AddressCode();
         this.detailedAddress = "";
     }
-
 
     public Address(String countryCode, String provinceCode, String cityCode, String detailedAddress) {
         this.addressCode = new AddressCode(countryCode, provinceCode, cityCode);

@@ -2,7 +2,7 @@ package edu.hanyang.trip_planning.tripData.poi;
 
 import edu.hanyang.trip_planning.tripData.dataType.Address;
 import edu.hanyang.trip_planning.tripData.dataType.*;
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfo;
+import edu.hanyang.trip_planning.trip_question.PersonalInfo;
 
 import java.util.Set;
 
@@ -44,7 +44,7 @@ public interface InterfacePOI {
     /**
      * 해당 장소에서 할수 있는 활동들
      */
-    Set<ActivityType> getAvaliableActivities();
+    Set<ActivityType> getAvailableActivities();
 
     /**
      * 위치 (경위도)
@@ -81,7 +81,7 @@ public interface InterfacePOI {
      * @param userType        사용자 type
      * @param timeAndDuration 이용 시작시간 및 기간
      */
-    Double getSatisifaction(PersonalInfo userType, TimeAndDuration timeAndDuration);
+    Double getSatisfaction(PersonalInfo userType, TimeAndDuration timeAndDuration);
 
     /**
      * 평균 비용

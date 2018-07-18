@@ -1,4 +1,4 @@
-package edu.hanyang.trip_planning.tripHTBN.poi;
+package edu.hanyang.trip_planning.tripData.mapAPI.DaumLocalAPI;
 
 import edu.hanyang.trip_planning.tripData.poi.POIManager;
 

@@ -1,7 +1,5 @@
 package edu.hanyang.trip_planning.trip_question;
 
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfo;
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfoFactory;
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 

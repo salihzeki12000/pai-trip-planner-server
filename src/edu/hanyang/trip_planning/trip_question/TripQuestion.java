@@ -1,8 +1,6 @@
 package edu.hanyang.trip_planning.trip_question;
 
 import com.google.gson.Gson;
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfo;
-import edu.hanyang.trip_planning.tripData.personalInfo.PersonalInfoFactory;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
