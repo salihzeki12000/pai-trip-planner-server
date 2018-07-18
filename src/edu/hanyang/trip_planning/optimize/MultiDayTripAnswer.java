@@ -17,6 +17,7 @@ public class MultiDayTripAnswer {
 //    // 머무는 장소
 //    String hotel;
     private static Logger logger = Logger.getLogger(MultiDayTripAnswer.class);
+
     List<DetailItinerary> itineraryList = new ArrayList<DetailItinerary>();
     List<List<List<BasicPOI>>> nearbyDiningPoiListListList = new ArrayList<>();         // Day - Pois - NearbyPois
     List<List<List<BasicPOI>>> nearbyShoppingPoiListListList = new ArrayList<>();       // Day - Pois - NearbyPois
@@ -44,6 +45,10 @@ public class MultiDayTripAnswer {
 
     public void setNearbyShoppingPoiListListList(List<List<List<BasicPOI>>> nearbyShoppingPoiListListList) {
         this.nearbyShoppingPoiListListList = nearbyShoppingPoiListListList;
+    }
+
+    public List<DetailItinerary> getItineraryList() {
+        return itineraryList;
     }
 
     public String toString() {

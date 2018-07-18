@@ -99,7 +99,4 @@ public class HTMLGenerator {
     String generateHTML() {
         return generateHead() + generateBody();
     }
-
-    public static void main(String[] args) {
-    }
 }

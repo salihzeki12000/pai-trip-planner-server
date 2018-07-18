@@ -56,11 +56,11 @@ public class PlanningHttpServer {
 //            String utfStr = URLDecoder.decode(str, "UTF-8");
             Map<String, String> params = parseQuery(query);
             String typeStr = params.get("type");
-            String bodyStr = params.get("body");
+            String tripQuestionStr = params.get("tripQuestion");
 
             StringBuilder response = new StringBuilder();
             if (typeStr.equals("html") || typeStr.equals("json")) {
-                TripQuestion tripQuestion = gson.fromJson(bodyStr, TripQuestion.class);
+                TripQuestion tripQuestion = gson.fromJson(tripQuestionStr, TripQuestion.class);
                 TripPlanner tripPlanner = new TripPlanner();
                 MultiDayTripAnswer multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);
 
@@ -69,7 +69,8 @@ public class PlanningHttpServer {
                     response.append(htmlGenerator.generateHTML());
                 } else {
                     JSONGenerator jsonGenerator = new JSONGenerator(multiDayTripAnswer);
-                    response.append(jsonGenerator.generateJSON());
+                    String json = jsonGenerator.generateJSON();
+                    response.append(json);
                 }
             } else {
                 response.append("정의되지 않은 요청입니다. ");

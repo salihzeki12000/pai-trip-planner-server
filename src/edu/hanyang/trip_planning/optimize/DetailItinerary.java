@@ -13,11 +13,24 @@ import java.util.*;
 public class DetailItinerary {
     private BasicPOI startPOI;
     private BasicPOI endPOI;
+
+    public String getDate() {
+        return date;
+    }
+
+    public double getStartTime() {
+        return startTime;
+    }
+
+    public List<double[]> getCosts() {
+        return costs;
+    }
+
     private String date;
     private double startTime;
     private double endTime[];
 
-    private List<BasicPOI> poiList = new ArrayList<BasicPOI>();
+    private List<BasicPOI> poiList = new ArrayList<>();
     private List<double[]> arrivalTimes = new ArrayList<>();
     private List<double[]> durations = new ArrayList<>();
     private List<double[]> departureTimes = new ArrayList<>();
