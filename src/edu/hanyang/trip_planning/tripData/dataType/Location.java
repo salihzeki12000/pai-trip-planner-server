@@ -4,15 +4,8 @@ package edu.hanyang.trip_planning.tripData.dataType;
  * 위치 좌표를 나타내는 인터페이스 (경위도 사용함)
  */
 public class Location {
-    /**
-     * 위도
-     */
-    public double latitude;
-
-    /**
-     * 경도
-     */
-    public double longitude;
+    public double latitude; // 위도
+    public double longitude; // 경도
 
     public Location(double latitude, double longitude) {
         this.latitude = latitude;
