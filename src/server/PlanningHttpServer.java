@@ -64,6 +64,14 @@ public class PlanningHttpServer {
                 TripPlanner tripPlanner = new TripPlanner();
                 MultiDayTripAnswer multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);
 
+                logger.debug(multiDayTripAnswer);
+                for (int i = 0; i < multiDayTripAnswer.size(); i++) {
+                    logger.debug(multiDayTripAnswer.getItinerary(i));
+                    System.out.println(multiDayTripAnswer.getItinerary(i).value);
+                }
+                for (int i = 0; i < multiDayTripAnswer.size(); i++) {
+                    System.out.println(multiDayTripAnswer.getItinerary(i).getPoiTitles());
+                }
                 if (typeStr.equals("html")) {
                     HTMLGenerator htmlGenerator = new HTMLGenerator(multiDayTripAnswer);
                     response.append(htmlGenerator.generateHTML());

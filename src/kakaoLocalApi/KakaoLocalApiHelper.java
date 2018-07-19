@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 public class KakaoLocalApiHelper {
     private static final String API_SERVER_HOST = "https://dapi.kakao.com";
     private static final String SEARCH_CATEGORY_PATH = "/v2/local/search/category.json?";
+    private static final String TRANSCOORD_PATH = "/v2/local/geo/transcoord.json?";
     private static final String API_KEY = "4de6f3195493e6e3110c34c2b34d7c8a";    // 이거 이대로 github 올라가면 보안 이슈 있음, 해결 필요
     private static final Map<String, String> categoryGroupCodes = Map.ofEntries(
             entry("대형마트", "MT1"),
@@ -113,24 +114,46 @@ public class KakaoLocalApiHelper {
         return null;
     }
 
-    public static void main(String[] args) {
-        String apiPath = SEARCH_CATEGORY_PATH;
+    public static WcongLocation wsg84ToWcongnamul(double x, double y) {
+        String apiPath = TRANSCOORD_PATH;
         Map<String, String> params = Map.ofEntries(
-                entry("category_group_code", "AT4"),
-                entry("rect", "126.110534,33.575816,126.953735,33.188224"),
-                entry("sort", "accuracy"),
-                entry("page", "1"),
-                entry("size", "15")
+                entry("x", "127.108212"),
+                entry("y", "37.402056"),
+                entry("input_coord", "WGS84"),
+                entry("output_coord", "WCONGNAMUL")
         );
+        String strParams = "x=" + x + "&y=" + y + "&input_coord=WGS84&output_coord=WCONGNAMUL";
 
         KakaoLocalApiHelper helper = new KakaoLocalApiHelper();
-        String jsonString = helper.request(apiPath, helper.mapToParams(params));
+//        String jsonString = helper.request(apiPath, helper.mapToParams(params));
+        String jsonString = helper.request(apiPath, strParams);
         jsonString = jsonString.substring(jsonString.indexOf("["), jsonString.indexOf("]") + 1);
 
-        System.out.println(jsonString);
+        WcongLocation[] wcongLocation = GSON.fromJson(jsonString, WcongLocation[].class);
 
-        KakaoPoi[] kakaoPoiList = GSON.fromJson(jsonString, KakaoPoi[].class);
+        return wcongLocation[0];
+    }
 
-        System.out.println(kakaoPoiList[1].toString());
+    public static void main(String[] args) {
+//        String apiPath = SEARCH_CATEGORY_PATH;
+//        Map<String, String> params = Map.ofEntries(
+//                entry("category_group_code", "AT4"),
+//                entry("rect", "126.110534,33.575816,126.953735,33.188224"),
+//                entry("sort", "accuracy"),
+//                entry("page", "1"),
+//                entry("size", "15")
+//        );
+//
+//        KakaoLocalApiHelper helper = new KakaoLocalApiHelper();
+//        String jsonString = helper.request(apiPath, helper.mapToParams(params));
+//        jsonString = jsonString.substring(jsonString.indexOf("["), jsonString.indexOf("]") + 1);
+//
+//        System.out.println(jsonString);
+//
+//        KakaoPoi[] kakaoPoiList = GSON.fromJson(jsonString, KakaoPoi[].class);
+//
+//        System.out.println(kakaoPoiList[1].toString());
+
+
     }
 }

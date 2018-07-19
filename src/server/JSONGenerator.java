@@ -6,6 +6,8 @@ import edu.hanyang.trip_planning.optimize.MultiDayTripAnswer;
 import edu.hanyang.trip_planning.tripData.dataType.Location;
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
+import kakaoLocalApi.KakaoLocalApiHelper;
+import kakaoLocalApi.WcongLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,41 +37,49 @@ class JSONGenerator {
         class DailyItinerary {
             private String date;
             private double startTime;
-            private double endTime[];
-            private SimplePOI startPOI;
-            private SimplePOI endPOI;
+            private double endTime;
             private List<SimplePOI> poiList = new ArrayList<>();
-            private List<double[]> arrivalTimes;
-            private List<double[]> durations;
-            private List<double[]> departureTimes;
-            private List<double[]> costs;
+            private List<Double> arrivalTimes = new ArrayList<>();
+            private List<Double> durations = new ArrayList<>();
+            private List<Double> departureTimes = new ArrayList<>();
+            private List<Double> costs = new ArrayList<>();
 
             private DailyItinerary(DetailItinerary detailItinerary) {
                 date = detailItinerary.getDate();
-                startPOI = new SimplePOI(detailItinerary.getStartPOI());
-                endPOI = new SimplePOI(detailItinerary.getEndPOI());
                 startTime = detailItinerary.getStartTime();
-                endTime = detailItinerary.getEndTime();
+                endTime = detailItinerary.getEndTime()[0];
+
+                poiList.add(new SimplePOI(detailItinerary.getStartPOI()));
                 for (BasicPOI basicPOI : detailItinerary.getPoiList()) {
                     poiList.add(new SimplePOI(basicPOI));
                 }
-                arrivalTimes = detailItinerary.getArrivalTimes();
-                durations = detailItinerary.getDurations();
-                departureTimes = detailItinerary.getDepartureTimes();
-                costs = detailItinerary.getCosts();
+                poiList.add(new SimplePOI(detailItinerary.getEndPOI()));
+
+                for (double[] arrivalTime : detailItinerary.getArrivalTimes()) {
+                    arrivalTimes.add(arrivalTime[0]);
+                }
+                for (double[] duration : detailItinerary.getDurations()) {
+                    durations.add(duration[0]);
+                }
+                for (double[] departureTime : detailItinerary.getDepartureTimes()) {
+                    departureTimes.add(departureTime[0]);
+                }
+                for (double[] cost : detailItinerary.getCosts()) {
+                    costs.add(cost[0]);
+                }
             }
 
             private class SimplePOI {
                 private String id;
                 private String title;
                 private POIType poiType;
-                private Location location;
+                private WcongLocation location;
 
                 private SimplePOI(BasicPOI basicPOI) {
                     id = basicPOI.getId();
                     title = basicPOI.getTitle();
                     poiType = basicPOI.getPoiType();
-                    location = basicPOI.getLocation();
+                    location = KakaoLocalApiHelper.wsg84ToWcongnamul(basicPOI.getLocation().longitude,basicPOI.getLocation().latitude) ;
                 }
             }
         }
