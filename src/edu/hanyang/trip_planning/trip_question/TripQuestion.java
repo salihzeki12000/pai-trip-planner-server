@@ -22,10 +22,6 @@ public class TripQuestion {
         dailyTripEntryList.add(dailyTripEntry);
     }
 
-    public boolean validateQuestion(){
-        throw new RuntimeException("Not Implemented");
-    }
-
     public PersonalInfo getPersonalInfo(){
         return personalInfo;
     }
