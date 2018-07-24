@@ -651,25 +651,5 @@ public class Erf {
             }
             return sum / (double) length;
         }
-
-        public static void main(String[] args) {
-
-    //        int array[] = {1, 1, 1, 1, 3, 3, 3, 1, 1, -1, -1};
-    //        int array2
-    //        System.out.println(IntegerArray.toString("%3d", array));
-    //        System.out.println(Arrays.toString(mostFrequentExceptFor(array, -1)));
-    //        System.out.println(Arrays.toString(mostFrequent(array)));
-    //        System.out.println(Array.toString(padding(mostFrequent(array), 4, -1)));
-
-            double array1[] = {0.1, 0.2, 0.3};
-            double array2[] = {1, 2, 3};
-            List<double[]> list = new ArrayList<>();
-            list.add(array1);
-            list.add(array2);
-            System.out.println(distance(array1, array2));
-    //        System.out.println(Arrays.toString(average(list)));
-    //        System.out.println(cosineSimilarity(array1,array2));
-            //        System.out.println(Arrays.toString(insert(array2, 4)));
-        }
     }
 }

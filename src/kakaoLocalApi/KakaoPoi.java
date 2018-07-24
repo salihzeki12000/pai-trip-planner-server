@@ -1,5 +1,7 @@
 package kakaoLocalApi;
 
+import java.util.Objects;
+
 public class KakaoPoi {
     private int id;
     private String place_name;

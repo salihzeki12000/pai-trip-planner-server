@@ -54,9 +54,5 @@ public enum TouristAttractionType {
     public String toString() {
         return this.getValue();
     }
-
-//    public static void main(String[] args) {
-//        System.out.println(TouristAttractionType);
-//    }
 }
 

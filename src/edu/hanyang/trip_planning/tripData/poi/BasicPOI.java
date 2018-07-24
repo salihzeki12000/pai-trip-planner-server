@@ -16,7 +16,7 @@ import java.util.*;
  * <p/>
  * 장소의 선호도나, 다른 것들은 평균적인 선호도나 평점을 이용한다.
  */
-public class BasicPOI implements InterfacePOI {
+public class BasicPOI {
     private static Logger logger = Logger.getLogger(BasicPOI.class);
     private String id;                                  // 1. 위치 식별자
     private String title;
@@ -131,67 +131,42 @@ public class BasicPOI implements InterfacePOI {
         return this.score;
     }
 
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
     public String getTitle() {
         return title;
     }
 
-    @Override
     public Set<String> getNames() {
         return names;
     }
 
-    @Override
     public Address getAddress() {
         return address;
     }
 
-    @Override
     public POIType getPoiType() {
         return poiType;
     }
 
-    @Override
     public ProbabilisticDuration getSpendingTime(PersonalInfo personalInfo, String startTime) {
         return spendingTime;
     }
 
-    @Override
-    public Set<ActivityType> getAvailableActivities() {
-        return availableActivities;
-    }
-
-    @Override
     public Location getLocation() {
         return location;
     }
 
-    @Override
     public BusinessHour getBusinessHour() {
         return businessHour;
     }
 
-    @Override
-    public ClosingDays getClosingDays() {
-        return closingDays;
-    }
-
-    @Override
-    public Set<AdjacentPOI> getPubicTransportationAccess() {
-        return null;
-    }
-
-    @Override
     public Integer getParkingLotInfo() {
         return hasParkingLot;
     }
 
-    @Override
     public Double getSatisfaction(PersonalInfo personalInfo, TimeAndDuration timeAndDuration) {
         double defaultValue = 0.5;
         PreferenceOfPOIType preferenceOfPOIType = personalInfo.getPreferenceOfPOIType();
@@ -207,12 +182,11 @@ public class BasicPOI implements InterfacePOI {
         return defaultValue;
     }
 
-    @Override
+    
     public Integer getAverageCostPerPerson() {
         return averageCostPerPerson;
     }
 
-    @Override
     public Set<String> getAmbiences() {
         return null;
     }
@@ -240,7 +214,7 @@ public class BasicPOI implements InterfacePOI {
         strBuf.append("id: " + id + '\n');
         strBuf.append("Other names : " + names + '\n');
         strBuf.append("Address: " + address.toString() + '\n');
-        strBuf.append("InterfacePOI type : " + poiType + '\n');
+        strBuf.append("Poi type : " + poiType + '\n');
         strBuf.append("Available Activity: " + availableActivities + "\n");
         strBuf.append("location: " + location + '\n');
         if (businessHour != null) {
@@ -495,15 +469,15 @@ public class BasicPOI implements InterfacePOI {
     }
 
     private String toString(Set<String> strSet) {
-        StringBuilder strbuf = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         for (String str : strSet) {
-            strbuf.append(str);
-            strbuf.append(',');
+            builder.append(str);
+            builder.append(',');
         }
-        if (strbuf.length() > 0) {
-            strbuf.deleteCharAt(strbuf.length() - 1);
+        if (builder.length() > 0) {
+            builder.deleteCharAt(builder.length() - 1);
         }
-        return strbuf.toString();
+        return builder.toString();
     }
 
     @Override

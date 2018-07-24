@@ -98,5 +98,4 @@ public class SubsetPOIGen {
     public static void main(String[] args) {
         getJeju();
     }
-
 }

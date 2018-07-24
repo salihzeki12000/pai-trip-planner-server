@@ -203,27 +203,8 @@ public class WeatherProbability {
         return strbuf.toString();
     }
 
-    public static void test() {
-        WeatherProbability rain = WeatherProbability.getInstance();
-        logger.debug(rain.getWeatherEntry(2015, 12, 16, 9));
-        logger.debug(rain.getWeatherEntry(2015, 12, 16, 10));
-        logger.debug(rain.getWeatherEntry(2015, 12, 16, 11));
-        logger.debug(rain.getWeatherEntry(2015, 12, 16, 16));
-//        WeatherProbability weatherCPD = new WeatherProbability("W1");
-//        weatherCPD.setDay("2015-10-21");
-//        logger.debug(Arrays.toString(weatherCPD.getTableEntry(10)));
-    }
-
     private boolean checkFile(String filename) {
         File f = new File(filename);
-
         return f.isFile();
-
-    }
-
-    public static void main(String[] args) {
-        test();
-//        WeatherProbability rainProbability = new WeatherProbability();
-//        logger.debug(Arrays.toString(rainProbability.convertRainInfo(0.9, 1.0, .5)));
     }
 }

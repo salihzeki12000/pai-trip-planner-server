@@ -23,7 +23,6 @@ public class ArrayKey {
         for (int i = 0; i < cardinalities.length; i++) {
             totalCardinality *= cardinalities[i];
         }
-//        logger.debug("totalCardinality=" + totalCardinality);
     }
 
 
@@ -63,20 +62,11 @@ public class ArrayKey {
         }
         int valueIndices[] = new int[cardinalities.length];
         for (int i = 0; i < cardinalities.length; i++) {
-            int divisior = key / cardinalities[i];
+            int divisor = key / cardinalities[i];
             int remains = key % cardinalities[i];
             valueIndices[i] = remains;
-            key = divisior;
+            key = divisor;
         }
         return valueIndices;
     }
-
-
-    public static void main(String[] args) {
-        ArrayKey arrayKey = new ArrayKey(2, 3);
-        logger.debug("key=" + arrayKey.key(1, 2));
-        logger.debug("values=" + Arrays.toString(arrayKey.values(arrayKey.key(1, 2))));
-
-    }
-
 }

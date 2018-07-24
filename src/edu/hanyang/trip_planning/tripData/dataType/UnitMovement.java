@@ -10,13 +10,13 @@ package edu.hanyang.trip_planning.tripData.dataType;
 public class UnitMovement {
 
     /**
-     * 출발 위치 InterfacePOI id
+     * 출발 위치
      */
     public Location srcLocation;
     public String srcTitle;
 
     /**
-     * 도착위치 InterfacePOI id
+     * 도착위치
      */
     public Location destLocation;
     public String destTitle;

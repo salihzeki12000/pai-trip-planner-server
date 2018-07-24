@@ -58,26 +58,4 @@ public class MultiDayTripAnswer {
         }
         return strbuf.toString();
     }
-
-    public static void main(String[] args) {
-
-//        OneDayItinerary oneDayItinerary = new OneDayItinerary("2016-04-25", POIManager.getInstance().getPOIByTitle("제주신라호텔"), 9.00);
-//        oneDayItinerary.addEvent(POIManager.getInstance().getPOIByTitle("한화아쿠아플라넷 제주"), 10.0, 1.0);
-//        oneDayItinerary.addEvent(POIManager.getInstance().getPOIByTitle("환상숲곶자왈공원"), 12.0, 1.0);
-//        oneDayItinerary.addEvent(POIManager.getInstance().getPOIByTitle("제주신라호텔"), 15.0, 0);
-//
-//
-//        OneDayItinerary oneDayItinerary1 = new OneDayItinerary("2016-04-26", POIManager.getInstance().getPOIByTitle("제주신라호텔"), 9.00);
-//        oneDayItinerary1.addEvent(POIManager.getInstance().getPOIByTitle("한화아쿠아플라넷 제주"), 10.0, 1.0);
-//        oneDayItinerary1.addEvent(POIManager.getInstance().getPOIByTitle("환상숲곶자왈공원"), 12.0, 1.0);
-//        oneDayItinerary1.addEvent(POIManager.getInstance().getPOIByTitle("제주국제공항"), 15.0, 0);
-//
-//
-//        MultiDayTripAnswer multiDayTripAnswer = new MultiDayTripAnswer();
-//        multiDayTripAnswer.addItinerary(oneDayItinerary);
-//        multiDayTripAnswer.addItinerary(oneDayItinerary1);
-//        logger.debug(multiDayTripAnswer);
-
-    }
-
 }

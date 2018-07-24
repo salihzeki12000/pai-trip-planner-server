@@ -84,7 +84,6 @@ public class TrafficJamCPD implements InterfaceSoftmaxCPD {
         for (int i = 0; i < timeTable.size(); i++) {
             Pair<Double, double[]> entry = timeTable.get(i);
             if (refTime <= entry.first()) {
-//                logger.debug("refTIme=" +refTime + "\t timetable=" +entry.first());
                 return timeTable.get(i).second();
             }
         }
@@ -98,12 +97,5 @@ public class TrafficJamCPD implements InterfaceSoftmaxCPD {
             strbuf.append(t + "\t" + Arrays.toString(getTableEntry(t)) + "\n");
         }
         return strbuf.toString();
-    }
-
-
-
-    public static void main(String[] args) {
-//        test();
-
     }
 }

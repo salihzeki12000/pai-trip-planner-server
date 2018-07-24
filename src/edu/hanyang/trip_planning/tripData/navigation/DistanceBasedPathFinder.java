@@ -5,7 +5,7 @@ import edu.hanyang.trip_planning.tripData.dataType.Location;
 import edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration;
 import edu.hanyang.trip_planning.tripData.dataType.UnitMovement;
 import edu.hanyang.trip_planning.tripData.dataType.WayOfMovement;
-import edu.hanyang.trip_planning.tripData.poi.InterfacePOI;
+import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripData.poi.POIUtil;
 import org.apache.log4j.Logger;
 
@@ -19,32 +19,22 @@ import java.util.List;
  * Time: 오후 5:51
  * To change this template use File | Settings | File Templates.
  */
-public class DistanceBasedPathFinder implements InterfacePathFinder {
-    private static Logger logger = Logger.getLogger(DistanceBasedPathFinder.class);
-
-    @Override
-    public List<UnitMovement> findPath(InterfacePOI src, InterfacePOI dest) {
+public class DistanceBasedPathFinder {
+    public List<UnitMovement> findPath(BasicPOI src, BasicPOI dest) {
         return findPath(src.getTitle(), src.getLocation(), dest.getTitle(), dest.getLocation());
     }
 
-    public List<UnitMovement> findPath(InterfacePOI src, MinimalPOI dest) {
+    public List<UnitMovement> findPath(BasicPOI src, MinimalPOI dest) {
         return findPath(src.getTitle(), src.getLocation(), dest.getTitle(), dest.getLocation());
     }
 
-    public List<UnitMovement> findPath(MinimalPOI src, InterfacePOI dest) {
-        return findPath(src.getTitle(), src.getLocation(), dest.getTitle(), dest.getLocation());
-    }
-
-    public List<UnitMovement> findPath(MinimalPOI src, MinimalPOI dest) {
+    public List<UnitMovement> findPath(MinimalPOI src, BasicPOI dest) {
         return findPath(src.getTitle(), src.getLocation(), dest.getTitle(), dest.getLocation());
     }
 
     private List<UnitMovement> findPath(String srcTitle, Location srcLocation, String destTitle, Location destLocation) {
         double distance = POIUtil.distance(srcLocation, destLocation);
-//        double time = 60 * distance / 12.0;
         ProbabilisticDuration dur = calculateTime(srcLocation, destLocation);
-//        logger.debug(srcTitle + "->" + destTitle + ":" + dur);
-//        ProbabilisticDuration dur = new ProbabilisticDuration(time, time * 0.1);
         int cost = (int) (distance * 1.3 * 400) + 3000;
         UnitMovement unitMovement = new UnitMovement(srcTitle, srcLocation, destTitle, destLocation, WayOfMovement.Taxi, dur, cost);
         List<UnitMovement> list = new ArrayList<UnitMovement>();

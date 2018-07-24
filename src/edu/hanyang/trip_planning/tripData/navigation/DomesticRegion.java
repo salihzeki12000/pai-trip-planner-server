@@ -29,16 +29,6 @@ public class DomesticRegion {
         }
     }
 
-    public DomesticRegion(String filename) {
-        this.filename = filename;
-        try {
-            readCSVFile(filename);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
-
-
     private void readCSVFile(String csvFileName) throws IOException {
         CSVReader csvReader = new CSVReader(new FileReader(csvFileName), '\t');
         String header[] = csvReader.readNext();
@@ -60,14 +50,13 @@ public class DomesticRegion {
             }
             List<AddressCode> addressCodeList = regionMap.get(regionStr);
             if (addressCodeList == null) {
-                addressCodeList = new ArrayList<AddressCode>();
+                addressCodeList = new ArrayList<>();
             }
             addressCodeList.add(addressCode);
             regionMap.put(regionStr, addressCodeList);
         }
 
         csvReader.close();
-//        logger.debug(regionMap);
     }
 
     public boolean isSameRegion(AddressCode code1, AddressCode code2) {
@@ -105,26 +94,5 @@ public class DomesticRegion {
      */
 
     public static void main(String[] args) {
-        DomesticRegion domesticRegion = new DomesticRegion();
-        List<AddressCode> addressCodeList = new ArrayList<AddressCode>();
-        addressCodeList.add(new AddressCode("대한민국", "서울"));
-        addressCodeList.add(new AddressCode("대한민국", "경기도", "양주시"));
-
-        logger.debug(domesticRegion.contain(addressCodeList, new AddressCode("대한민국", "서울", "성동구")));
-        logger.debug(domesticRegion.contain(addressCodeList, new AddressCode("대한민국")));
-
-        logger.debug(domesticRegion.getRegion(new AddressCode("대한민국", "경기도", "양주시")));
-//        InterfacePOI poi1 = POIManager.getInstance().getPOIByTitle("창동주공4단지아파트");
-//        getRegion(poi1);
-//        logger.debug(POIManager.getInstance().getPOIByTitle("양주역 1호선").getAddress());
-//        logger.debug(POIManager.getInstance().getPOIByTitle("녹천역 1호선").getAddress());
-//        logger.debug(POIManager.getInstance().getPOIByTitle("창동주공4단지아파트").getAddress());
-//
-//        logger.debug(getRegion(POIManager.getInstance().getPOIByTitle("창동주공4단지아파트")));
-//        logger.debug(getRegion(POIManager.getInstance().getPOIByTitle("양주역 1호선")));
-//        logger.debug(getRegion(POIManager.getInstance().getPOIByTitle("올래국수")));
-//        logger.debug(getRegion(POIManager.getInstance().getPOIByTitle("제주국제공항")));
-//        logger.debug(poi1);
-
     }
 }

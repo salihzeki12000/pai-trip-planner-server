@@ -280,19 +280,6 @@ public class SubsetPOIs {
         }
         throw new RuntimeException(poiTitle + " is not found");
     }
-
-    public static SubsetPOIs dummy() {
-        SubsetPOIs subsetPOIs = new SubsetPOIs();
-        subsetPOIs.makeSubsetPOIsByTitle("분당서울대학교병원", "교보문고 광화문점", "뚝섬한강공원", "창동주공4단지아파트",
-                "한양대학교 정보통신관");
-        return subsetPOIs;
-    }
-
-    public static void main(String[] args) {
-        SubsetPOIs subsetPOIs = new SubsetPOIs();
-        subsetPOIs.makeSubsetPOIsByAreas("서귀포시");
-        subsetPOIs.addSubsetPOIsBytitle("메종글래드제주");
-    }
 }
 
 class CompareBasicPoiByScore implements Comparator<BasicPOI> {

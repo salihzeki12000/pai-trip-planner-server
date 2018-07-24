@@ -7,7 +7,7 @@ import edu.hanyang.trip_planning.tripData.dataType.Location;
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import kakaoLocalApi.KakaoLocalApiHelper;
-import kakaoLocalApi.WcongLocation;
+import kakaoLocalApi.Coord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,13 +73,13 @@ class JSONGenerator {
                 private String id;
                 private String title;
                 private POIType poiType;
-                private WcongLocation location;
+                private Coord location;
 
                 private SimplePOI(BasicPOI basicPOI) {
                     id = basicPOI.getId();
                     title = basicPOI.getTitle();
                     poiType = basicPOI.getPoiType();
-                    location = KakaoLocalApiHelper.wsg84ToWcongnamul(basicPOI.getLocation().longitude,basicPOI.getLocation().latitude) ;
+                    location = KakaoLocalApiHelper.transcoord(basicPOI.getLocation().longitude, basicPOI.getLocation().latitude, "WGS84", "WCONGNAMUL");
                 }
             }
         }

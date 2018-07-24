@@ -63,9 +63,4 @@ public class TripQuestion {
 //        logger.debug(tripQuestion);
         logger.debug(tripQuestion2HttpGet(tripQuestion));
     }
-
-    public static void main(String[] args) {
-//        test_encoding_decoding();
-        test();
-    }
 }

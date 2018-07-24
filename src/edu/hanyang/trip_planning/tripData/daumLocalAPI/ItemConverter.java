@@ -146,9 +146,4 @@ public class ItemConverter {
         }
 
     }
-
-//    public static void main(String[] args) {
-//        test();
-//
-//    }
 }
