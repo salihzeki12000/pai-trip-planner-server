@@ -1,30 +1,13 @@
-private static final Map<String, doublep[]> ARIA_COORD_MAP = 지역 대표 좌표 맵
+csv->basicPoiList->valid한지 체크->valid하지 않은것은 지우기(수동)
+validCsv->basicPoiList->poi조합->mobile에서 (시간/km/route)->json
+셀레니움 테스트
+basicPoi 불필요한것들 정리
+kakaoPoi->url->필요한정보 긁기->basicPoi
 
-aria, category =>
-double[] areaCoord = ARIA_COORD_MAP.get(aria);
-
-int prevSize = 0;
-Set<KakaoPoi> poiSet = getPoisByCategory(areaCoord,category);  // KakaoPoi hashCode(), equals() 구현 필요
-while (prevSize != poiSet.size()){
-  prevSize = poiSet.size();
-  poiSet = getPoisByCategory({poi.x,poi.y},category,poiSet);
-}
-
-List<BasicPoi> poiList = new ArrayList<>()
-for(KakaoPoi poi:poiSet){
-  poiList.add(poi.toBasicPoi)
-}
-
-updateDirections(poiList);
-
-
-
-
-지역 
-List poiList
-while 
--> 해당 좌표 주변으로 해당 카테고리 poi가져오기
-
+createPoiJsonFile
+updatePoiJsonFile
+createRouteJsonFile
+updateRouteJsonFile
 
 콩나물 경위도 및 인코딩 경위도 basicPOI 에 추가
 콩나물 경위도 simplePOI에 추가
