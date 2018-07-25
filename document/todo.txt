@@ -1,3 +1,31 @@
+private static final Map<String, doublep[]> ARIA_COORD_MAP = 지역 대표 좌표 맵
+
+aria, category =>
+double[] areaCoord = ARIA_COORD_MAP.get(aria);
+
+int prevSize = 0;
+Set<KakaoPoi> poiSet = getPoisByCategory(areaCoord,category);  // KakaoPoi hashCode(), equals() 구현 필요
+while (prevSize != poiSet.size()){
+  prevSize = poiSet.size();
+  poiSet = getPoisByCategory({poi.x,poi.y},category,poiSet);
+}
+
+List<BasicPoi> poiList = new ArrayList<>()
+for(KakaoPoi poi:poiSet){
+  poiList.add(poi.toBasicPoi)
+}
+
+updateDirections(poiList);
+
+
+
+
+지역 
+List poiList
+while 
+-> 해당 좌표 주변으로 해당 카테고리 poi가져오기
+
+
 콩나물 경위도 및 인코딩 경위도 basicPOI 에 추가
 콩나물 경위도 simplePOI에 추가
 
@@ -5,9 +33,8 @@ HTBN 살펴보기
 출 도착 포함한 플래닝
 mustlist daily->전체로 적용
 
-
-
 issues:
 KakaoLocalApiHelper에 restApiKey github 올라가면 보안 이슈 있음, 해결 필요
 
 daumMap iframe으로 넣는 방식
+KakaoLocalApiHelper에 restApiKey github 올라가면 보안 이슈 있음, 해결 필요
