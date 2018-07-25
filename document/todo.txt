@@ -9,6 +9,10 @@ updatePoiJsonFile
 createRouteJsonFile
 updateRouteJsonFile
 
+getPoisByCategory 문제있음
+- 섭지코지/천지연폭포 등 유명한 poi들을 코드로 못얻어옴
+- getPoisByKeyword(keyword="관광") 으로 바꿔야함
+
 콩나물 경위도 및 인코딩 경위도 basicPOI 에 추가
 콩나물 경위도 simplePOI에 추가
 

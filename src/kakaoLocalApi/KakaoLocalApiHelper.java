@@ -271,10 +271,12 @@ public class KakaoLocalApiHelper {
                     params.put("y", String.format("%.6f", curPoi.getY()));
 
                     uncheckedPoiSet = addNewPoisToSet(uncheckedPoiSet, params);
+                    System.out.println("unchecked: "+uncheckedPoiSet.size()+", checked: "+checkedPoiSet.size());
                 }
             }
             checkedPoiSet.addAll(tempPois);
-            uncheckedPoiSet.removeAll(tempPois);
+            uncheckedPoiSet.removeAll(checkedPoiSet);
+            System.out.println("unchecked: "+uncheckedPoiSet.size()+", checked: "+checkedPoiSet.size());
         }
 
         return checkedPoiSet;
@@ -309,34 +311,12 @@ public class KakaoLocalApiHelper {
 //        System.out.println(result.toString());
 
         /* getPoisByCategory */
-//        Set<KakaoPoi> poiSet = getPoiSetByCategory("제주특별자치도", "관광명소");
+        Set<KakaoPoi> poiSet = getPoiSetByCategory("관광명소","제주특별자치도");
 //        for (KakaoPoi poi : poiSet) {
 //            System.out.println(poi);
 //        }
+        poisToJsonFile(poiSet,"poiTest.json");
 
-
-
-//        getPoisByCategory("편의점", "제주도");
-
-
-//        String apiPath = SEARCH_CATEGORY_PATH;
-//        Map<String, String> params = Map.ofEntries(
-//                entry("category_group_code", "AT4"),
-//                entry("rect", "126.110534,33.575816,126.953735,33.188224"),
-//                entry("sort", "accuracy"),
-//                entry("page", "1"),
-//                entry("size", "15")
-//        );
-//
-//        KakaoLocalApiHelper helper = new KakaoLocalApiHelper();
-//        String jsonString = helper.request(apiPath, helper.mapToParams(params));
-//        jsonString = jsonString.substring(jsonString.indexOf("["), jsonString.indexOf("]") + 1);
-//
-//        System.out.println(jsonString);
-//
-//        KakaoPoi[] kakaoPoiList = GSON.fromJson(jsonString, KakaoPoi[].class);
-//
-//        System.out.println(kakaoPoiList[1].toString());
     }
 }
 
