@@ -85,13 +85,13 @@ public class KakaoLocalApiHelper {
 
             reader = new BufferedReader(isr);
 
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder builder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                buffer.append(line);
+                builder.append(line);
             }
             // System.out.println(buffer.toString());
-            return buffer.toString();
+            return builder.toString();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -172,7 +172,5 @@ public class KakaoLocalApiHelper {
 //        KakaoPoi[] kakaoPoiList = GSON.fromJson(jsonString, KakaoPoi[].class);
 //
 //        System.out.println(kakaoPoiList[1].toString());
-
-
     }
 }

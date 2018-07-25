@@ -22,30 +22,20 @@ import java.util.*;
 public class WeatherProbability {
 
     private static WeatherProbability instance = new WeatherProbability();
-    private static Logger logger = Logger.getLogger(TrafficJamCPD.class);
     private Map<Integer, Map<Integer, WeatherEntry>> weatherProbMap = new FastMap<>();
-//    private String nodename;
-//    private List<Pair<Double, double[]>> probTable = new ArrayList<Pair<Double, double[]>>();
-//    private String dayString;
-
-
     private Map<Integer, List<Pair<Integer, double[]>>> probTableMap = new FastMap<>();
 
-
     private WeatherProbability() {
-
     }
 
     public static WeatherProbability getInstance() {
-
         return instance;
     }
 
     public Map<Integer, WeatherEntry> readCSV(String filename) {
-        Map<Integer, WeatherEntry> dailyProbMap = new FastMap<Integer, WeatherEntry>();
-        CSVReader csvReader = null;
+        Map<Integer, WeatherEntry> dailyProbMap = new FastMap<>();
         try {
-            csvReader = new CSVReader(new FileReader(filename), '\t');
+            CSVReader csvReader = new CSVReader(new FileReader(filename), '\t');
             List<String[]> strArrayList = csvReader.readAll();
             for (String[] strArray : strArrayList) {
                 if (strArray.length == 0) {
@@ -187,7 +177,6 @@ public class WeatherProbability {
         for (int i = 0; i < probTable.size(); i++) {
             Pair<Double, double[]> entry = probTable.get(i);
             if (refTime <= entry.first()) {
-//                logger.debug("refTIme=" +refTime + "\t timetable=" +entry.first());
                 return probTable.get(i).second();
             }
         }
@@ -197,7 +186,6 @@ public class WeatherProbability {
     public String toString(List<Pair<Double, double[]>> probTable) {
         StringBuffer strbuf = new StringBuffer();
         for (double t = 0; t < 23.9; t = t + 1) {
-
             strbuf.append(t + "\t" + Arrays.toString(getTableEntry(probTable, t)) + "\n");
         }
         return strbuf.toString();

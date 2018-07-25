@@ -102,9 +102,8 @@ public class DailyTripEntryFactory {
         String endPOITitle = "켄싱턴제주호텔";          // 여정 종료장소
         String[] area = {"제주특별자치도"};             // 여정 지역
         Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr,returnTimeStr,area,startPOITitle,endPOITitle,physicalActivityLimit);
 
-        return dailyTripEntry;
+        return new DailyTripEntry(startTimeStr,returnTimeStr,area,startPOITitle,endPOITitle,physicalActivityLimit);
     }
     public static DailyTripEntry dailyTripEntryExample8() {
         String startTimeStr = "2017-01-16 10:00";       // 여정 시작시간
@@ -113,9 +112,8 @@ public class DailyTripEntryFactory {
         String endPOITitle = "제주퍼시픽호텔";          // 여정 종료장소
         String[] area = {"서귀포시"};                   // 여정 지역
         Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr,returnTimeStr,area,startPOITitle,endPOITitle,physicalActivityLimit);
 
-        return dailyTripEntry;
+        return new DailyTripEntry(startTimeStr,returnTimeStr,area,startPOITitle,endPOITitle,physicalActivityLimit);
     }
     public static DailyTripEntry dailyTripEntryExample9() {
         String startTimeStr = "2017-01-17 10:00";       // 여정 시작시간
@@ -124,9 +122,8 @@ public class DailyTripEntryFactory {
         String endPOITitle = "제주국제공항";            // 여정 종료장소
         String[] area = {"제주시"};                     // 여정 지역
         Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr,returnTimeStr,area,startPOITitle,endPOITitle,physicalActivityLimit);
 
-        return dailyTripEntry;
+        return new DailyTripEntry(startTimeStr,returnTimeStr,area,startPOITitle,endPOITitle,physicalActivityLimit);
     }
     public static DailyTripEntry dailyTripEntryExample10() {
         String startTimeStr = "2017-01-17 10:00";       // 여정 시작시간
@@ -135,9 +132,8 @@ public class DailyTripEntryFactory {
         String endPOITitle = "제주국제공항";            // 여정 종료장소
         String[] area = {"제주특별자치도"};             // 여정 지역
         Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr,returnTimeStr,area,startPOITitle,endPOITitle,physicalActivityLimit);
 
-        return dailyTripEntry;
+        return new DailyTripEntry(startTimeStr,returnTimeStr,area,startPOITitle,endPOITitle,physicalActivityLimit);
     }
     public static DailyTripEntry dailyTripEntryExample11() {
         String startTimeStr = "2017-01-15 10:00";       // 여정 시작시간

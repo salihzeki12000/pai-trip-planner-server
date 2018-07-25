@@ -1,7 +1,6 @@
 package edu.hanyang.trip_planning.tripData.navigation;
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.log4j.Logger;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,7 +18,6 @@ import java.util.Map;
 public class DomesticNavigationPOIsManager {
     private Map<String, MinimalPOI> minimalPOIMap = new HashMap<>();
     private String filename = "datafiles/movements/domesticNavigatgionPOIs.csv";
-    private static Logger logger = Logger.getLogger(DomesticNavigationPOIsManager.class);
 
     public DomesticNavigationPOIsManager() {
         try {
@@ -46,9 +44,5 @@ public class DomesticNavigationPOIsManager {
 
     public MinimalPOI getPOI(String title) {
         return minimalPOIMap.get(title);
-    }
-
-
-    public static void main(String[] args) {
     }
 }

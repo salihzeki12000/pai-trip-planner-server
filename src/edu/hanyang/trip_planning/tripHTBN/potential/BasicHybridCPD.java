@@ -28,26 +28,6 @@ public class BasicHybridCPD implements InterfaceHybridCPD {
     private ContinuousFactor factors[];
     private ArrayKey parentKey;
 
-    public BasicHybridCPD(int theNodeIdx, int discreteParentIndices[], int continuousParentIndices[]) {
-        this.theNodeIdx = theNodeIdx;
-        this.discreteParentIndices = discreteParentIndices.clone();
-        this.continuousParentIndices = continuousParentIndices.clone();
-        init();
-    }
-
-    public BasicHybridCPD(String theNodeName, String discreteParentNames[], String continuousParentNames[]) {
-        this.theNodeIdx = NodeDictionary.getInstance().nodeIdx(theNodeName);
-        discreteParentIndices = new int[discreteParentNames.length];
-        continuousParentIndices = new int[continuousParentNames.length];
-        for (int i = 0; i < discreteParentNames.length; i++) {
-            discreteParentIndices[i] = NodeDictionary.getInstance().nodeIdx(discreteParentNames[i]);
-        }
-        for (int i = 0; i < continuousParentNames.length; i++) {
-            continuousParentIndices[i] = NodeDictionary.getInstance().nodeIdx(continuousParentNames[i]);
-        }
-        init();
-    }
-
     /**
      * constructor if the node only have discrete parents
      * @param theNodeName
@@ -56,32 +36,6 @@ public class BasicHybridCPD implements InterfaceHybridCPD {
     public BasicHybridCPD(String theNodeName, String discreteParentNames[]) {
         this.theNodeIdx = NodeDictionary.getInstance().nodeIdx(theNodeName);
         discreteParentIndices = new int[discreteParentNames.length];
-        for (int i = 0; i < discreteParentNames.length; i++) {
-            discreteParentIndices[i] = NodeDictionary.getInstance().nodeIdx(discreteParentNames[i]);
-        }
-        init();
-    }
-
-    public BasicHybridCPD(String theNodeName, String discreteParentsStr, String continuousParentStr) {
-        String discreteParentNames[] = discreteParentsStr.split(",");
-        String continuousParentNames[] = continuousParentStr.split(",");
-        this.theNodeIdx = NodeDictionary.getInstance().nodeIdx(theNodeName);
-        discreteParentIndices = new int[discreteParentNames.length];
-        continuousParentIndices = new int[continuousParentNames.length];
-        for (int i = 0; i < discreteParentNames.length; i++) {
-            discreteParentIndices[i] = NodeDictionary.getInstance().nodeIdx(discreteParentNames[i]);
-        }
-        for (int i = 0; i < continuousParentNames.length; i++) {
-            continuousParentIndices[i] = NodeDictionary.getInstance().nodeIdx(continuousParentNames[i]);
-        }
-        init();
-    }
-
-    public BasicHybridCPD(String theNodeName, String discreteParentsStr) {
-        String discreteParentNames[] = discreteParentsStr.split(",");
-        this.theNodeIdx = NodeDictionary.getInstance().nodeIdx(theNodeName);
-        discreteParentIndices = new int[discreteParentNames.length];
-        continuousParentIndices = null;
         for (int i = 0; i < discreteParentNames.length; i++) {
             discreteParentIndices[i] = NodeDictionary.getInstance().nodeIdx(discreteParentNames[i]);
         }
@@ -108,14 +62,6 @@ public class BasicHybridCPD implements InterfaceHybridCPD {
         factors = new ContinuousFactor[totalParentCardinality];
         parentKey = new ArrayKey(parentCardinalities);
 //        logger.debug("parentCardinalities=" + Arrays.toString(parentCardinalities));
-    }
-
-    public void setDistribution(String discreteParentNodesStr, String discreteParentValuesStr, ContinuousFactor factor) {
-        String discreteParentNames[] = discreteParentNodesStr.split(",");
-        String discreteParentValues[] = discreteParentValuesStr.split(",");
-        int discreteParentNodeIndices[] = NodeUtil.nodeIndices(discreteParentNames);
-        int discreteParentValueIndices[] = NodeUtil.valueIndices(discreteParentNodeIndices, discreteParentValues);
-        setDistribution(discreteParentNodeIndices, discreteParentValueIndices, factor);
     }
 
     /**
@@ -169,25 +115,6 @@ public class BasicHybridCPD implements InterfaceHybridCPD {
             }
         }
         return getDistribution(this.discreteParentIndices, foundParentValues);
-    }
-
-    public ContinuousFactor getDistributionFromSuperset(String discreteParentNodeStr,
-                                                        String discreteParentValueStr) {
-        int discreteNodeIndices[] = NodeUtil.nodeIndices(discreteParentNodeStr);
-        int discreteValueIndices[] = NodeUtil.valueIndices(discreteNodeIndices,
-                discreteParentValueStr);
-        SortArrays.sort(discreteNodeIndices, discreteValueIndices);
-        return getDistributionFromSuperset(discreteNodeIndices, discreteValueIndices);
-    }
-
-    public ContinuousFactor getDistribution(String discreteParentNodesStr, String discreteParentValuesStr) {
-        String discreteParentNames[] = discreteParentNodesStr.split(",");
-        String discreteParentValues[] = discreteParentValuesStr.split(",");
-
-        int discreteParentNodeIndices[] = NodeUtil.nodeIndices(discreteParentNames);
-        int discreteParentValueIndices[] = NodeUtil.valueIndices(discreteParentNodeIndices, discreteParentValues);
-        SortArrays.sort(discreteParentNodeIndices, discreteParentValueIndices);
-        return getDistribution(discreteParentNodeIndices, discreteParentValueIndices);
     }
 
     public String toString() {

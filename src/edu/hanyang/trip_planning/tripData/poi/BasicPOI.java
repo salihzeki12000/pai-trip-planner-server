@@ -32,7 +32,6 @@ public class BasicPOI {
     private Set<AdjacentPOI> publicTransportationAccess;// 11. 대중교통 접근성 (예: XX 지하철 역에서 몇분거리)
     private ProbabilisticDuration spendingTime;         // 12. 머무는 시간
     private double score = -1;                          // 13. 사용자 만족도
-    private Set<String> ambiences;                      // 14. 분위기
     private Map<String, String> urlList = new HashMap<String, String>();
     private TouristAttractionType touristAttractionType = null;
     private boolean bRestaurant = false;
@@ -47,7 +46,6 @@ public class BasicPOI {
         this.location = location.deepCopy();
         names = new HashSet<>();
         availableActivities = new HashSet<>();
-        ambiences = new HashSet<>();
         publicTransportationAccess = new HashSet<>();
         address = new Address();
         // 기본 소요시간은 1시간  +- 10분

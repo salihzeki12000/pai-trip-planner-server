@@ -18,7 +18,7 @@ import java.util.Collection;
 public class Codebook {
 
     private static Logger logger = Logger.getLogger(Codebook.class);
-    private FastMap<String, Integer> nameMap = new FastMap<String, Integer>();
+    private FastMap<String, Integer> nameMap = new FastMap<>();
     private FastList<String> idxMap = new FastList<String>();
     int count = 0;
 
@@ -37,13 +37,6 @@ public class Codebook {
     }
 
     public void putNames(String... names) {
-        for (String string : names) {
-            addName(string);
-        }
-    }
-
-
-    public void putNames(Collection<String> names) {
         for (String string : names) {
             addName(string);
         }

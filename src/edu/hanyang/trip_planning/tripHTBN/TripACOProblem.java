@@ -188,7 +188,7 @@ public class TripACOProblem extends ItineraryPlanning {
     @Override
     public double getTotalValue() {
         for (boolean poiCC : poiConstraintCnt) {
-            if (poiCC == false){
+            if (!poiCC){
                 return 0.0;
             }
         }
@@ -373,17 +373,12 @@ public class TripACOProblem extends ItineraryPlanning {
             return false;                   // mgkim: no violation
         } else {                            // mgkim: destPOI가 constrain되어야 하는 type이 아닌 경우
             for (boolean poiCC : poiConstraintCnt) {
-                if (poiCC == false) {
+                if (!poiCC) {
                     return true;            // 아직 충족시키지 못한 poi constrain 되어야 하는 노드가 있으면 violation
                 }
             }
             return false;                   // 없으면 no violation
         }
-    }
-
-    public String dumpResult() {
-        StringBuffer strbuf = new StringBuffer();
-        return strbuf.toString();
     }
 
     public static void test() {

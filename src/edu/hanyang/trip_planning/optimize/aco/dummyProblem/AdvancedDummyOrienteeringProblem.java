@@ -36,7 +36,7 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
     private double profits[] = {0.0, 0.5, 0.15, 0.3, 0.4, 0.6};
     private double spendingHour[] = {0.0, 0.3, 0.4, 0.5, 0.6, 1.6};
 
-    private Set<Integer> avaliableNodes = new HashSet<>();
+    private Set<Integer> availableNodes = new HashSet<>();
     private int curNodeIdx;
     private boolean terminalCondition = false;
 
@@ -54,11 +54,11 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
     @Override
     public void init() {
         this.trail.clear();
-        this.avaliableNodes.clear();
+        this.availableNodes.clear();
         curNodeIdx = startNodeIdx;
         for (int i = 0; i < numNodes; i++) {
             if (i != startNodeIdx && i != endNodeIdx) {
-                avaliableNodes.add(i);
+                availableNodes.add(i);
             }
         }
         this.totalTime = 0.0;
@@ -70,10 +70,10 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
     public double[] heuristicValue() {
         // 선택 가능한 노드들은?
         double sum = 0.0;
-//        logger.debug("curNode="+curNodeIdx + "\tavaliable nodes: " + avaliableNodes);
+//        logger.debug("curNode="+curNodeIdx + "\tavaliable nodes: " + availableNodes);
 
         double retValues[] = new double[numNodes];
-        for (int destNodeIdx : avaliableNodes) {
+        for (int destNodeIdx : availableNodes) {
             double value = profits[destNodeIdx];
 //            double expectedTotalTime = totalTime + spendingHour[destNodeIdx] + movementTime(curNodeIdx, destNodeIdx);
 //            logger.debug(curNodeIdx + "->"+ destNodeIdx);
@@ -96,13 +96,13 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
     public void addNodeToTrail(int destNodeIdx) {
         logger.debug("add node " + destNodeIdx);
         trail.add(destNodeIdx);
-        avaliableNodes.remove(new Integer(destNodeIdx));
-        if (avaliableNodes.size() == 0) {
+        availableNodes.remove(new Integer(destNodeIdx));
+        if (availableNodes.size() == 0) {
             terminalCondition = true;
         }
         totalTime += movementTime(curNodeIdx, destNodeIdx) + spendingHour[destNodeIdx];
         totalValue += profits[destNodeIdx];
-        logger.debug("avaliable nodes = " + avaliableNodes);
+        logger.debug("available nodes = " + availableNodes);
         curNodeIdx = destNodeIdx;
 
     }
@@ -142,7 +142,7 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
             arrivalTime = departureTime + movementTime(curNode, nextNode);
             departureTime = arrivalTime + spendingHour[nextNode];
             logger.debug("movement time " + curNode + "->" + nextNode + "=" + movementTime(curNode, nextNode));
-            detailItinerary.addEntry( new BasicPOI(Integer.toString(path[t])), arrivalTime, 0.0,departureTime, 0.0,0.0);
+            detailItinerary.addEntry(new BasicPOI(Integer.toString(path[t])), arrivalTime, 0.0, departureTime, 0.0, 0.0);
 //            detailItinerary.addEntry(Integer.toString(path[t]), arrivalTime, departureTime, 0.0,0.0,0.0);
             curNode = nextNode;
         }
@@ -150,13 +150,12 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
         double endTime = departureTime + movementTime(curNode, endNodeIdx);
         logger.debug("movement time " + curNode + "->" + endNodeIdx + "=" + movementTime(curNode, endNodeIdx));
         double tmp[] = new double[2];
-        tmp[0]=endTime;
+        tmp[0] = endTime;
         detailItinerary.setEndTime(tmp);
 
 //        detailItinerary.addEntry(Integer.toString(endNodeIdx), lastTime, lastTime, 0.0);
         return detailItinerary;
     }
-
 
 
     public double getValue(int... path) {
@@ -183,7 +182,6 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
     public int getNumNodes() {
         return numNodes;
     }
-
 
 
     /**
@@ -236,16 +234,6 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
         }
     }
 
-    //    public boolean returnTimeConstraintViolation(int path[]) {
-//
-//        double expectedReturnTime = totalTime + movementTime(curNodeIdx, destNodeIdx) + spendingHour[destNodeIdx];
-//
-//        if (expectedReturnTime > timeLimit) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
     private double movementTime(int srcNodeIdx, int destNodeIdx) {
         double distance = distanceMatrix[srcNodeIdx][destNodeIdx];
 //        logger.debug("movement from " + srcNodeIdx + " to " + destNodeIdx + " = " + distance * 0.015);

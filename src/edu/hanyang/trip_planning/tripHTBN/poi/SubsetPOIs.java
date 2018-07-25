@@ -5,25 +5,16 @@ import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripData.poi.POIManager;
 
-import edu.hanyang.trip_planning.trip_question.DailyTripEntry;
 import javolution.util.FastMap;
-import org.apache.log4j.Logger;
 
 import java.util.*;
 
 public class SubsetPOIs {
-    private static Logger logger = Logger.getLogger(DailyTripEntry.class);
-    List<BasicPOI> poiList = new ArrayList<BasicPOI>();
+    List<BasicPOI> poiList = new ArrayList<>();
     String titleArray[];
     Map<String, Integer> nameIndexMap = new FastMap<>();
 
-    public SubsetPOIs(){};
-
-    public SubsetPOIs(BasicPOI pois[]){
-        for (int i=0; i<pois.length;i++){
-            poiList.add(pois[i]);
-        }
-    }
+    public SubsetPOIs(){}
 
     public SubsetPOIs(String... titles){
         makeSubsetPOIsByTitle(titles);
@@ -47,7 +38,6 @@ public class SubsetPOIs {
         }
     }
     public void makeSubsetPOIsByTitle(Collection<String>  titles) {
-//        logger.debug(titles);
         POIManager poiManager = POIManager.getInstance();
         int i = 0;
         for (String title : titles) {

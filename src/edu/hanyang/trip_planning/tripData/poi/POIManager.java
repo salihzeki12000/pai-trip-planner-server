@@ -162,7 +162,7 @@ public class POIManager {
                     match = true;   break;
                 }
             }
-            if (match == true) {
+            if (match) {
                 matchedPoiList.add(poi);
             }
         }

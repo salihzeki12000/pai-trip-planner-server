@@ -36,17 +36,4 @@ public class Address {
     public String toString() {
         return addressCode.toString() + ", " + detailedAddress;
     }
-
-    public String toShortString() {
-        return addressCode.toShortString();
-    }
-    public static Address dumyGen() {
-        Address address = new Address("대한민국", "서울특별시", "성동구", "왕십리로 222");
-        return address;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("dumyGen() = " + dumyGen());
-    }
-
 }
