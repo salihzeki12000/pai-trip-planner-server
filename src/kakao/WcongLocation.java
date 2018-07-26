@@ -1,4 +1,4 @@
-package kakaoLocalApi;
+package kakao;
 
 public class WcongLocation {
     private int x;

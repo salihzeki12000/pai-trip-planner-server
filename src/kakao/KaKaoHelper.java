@@ -1,4 +1,4 @@
-package kakaoLocalApi;
+package kakao;
 
 import java.io.*;
 import java.net.URL;
@@ -9,11 +9,12 @@ import java.util.*;
 import com.google.gson.Gson;
 
 
-public class KakaoLocalApiHelper {
+public class KaKaoHelper {
     private static final Gson GSON = new Gson();
     private static final String API_SERVER_HOST = "https://dapi.kakao.com";
     private static final String API_KEY = "4de6f3195493e6e3110c34c2b34d7c8a";    // 이거 이대로 github 올라가면 보안 이슈 있음, 해결 필요
     private static final String SEARCH_CATEGORY_PATH = "/v2/local/search/category.json?";
+    private static final String SEARCH_KEYWORD_PATH = "/v2/local/search/keyword.json?";
     private static final String TRANSCOORD_PATH = "/v2/local/geo/transcoord.json?";
     private static final Map<String, Coord> ARIA_COORDS = createAreaCoords();
     private static final Map<String, String> CATEGORY_GROUP_CODES = createCategoryGroupCodes();
@@ -234,12 +235,12 @@ public class KakaoLocalApiHelper {
         return GSON.fromJson(jsonStr, TranscoordResponse.class).getCoord();
     }
 
-    private static Set<KakaoPoi> addNewPoisToSet(Set<KakaoPoi> poiSet, Map<String, String> params) {
+    private static Set<KakaoPoi> addNewPoisToSet(Set<KakaoPoi> poiSet, Map<String, String> params, String apiPath) {
         boolean isEnd = false;
         int page = 1;
         while (!isEnd) {
             params.put("page", String.valueOf(page++));
-            String jsonStr = request(SEARCH_CATEGORY_PATH, params);
+            String jsonStr = request(apiPath, params);
             CategoryResponse response = GSON.fromJson(jsonStr, CategoryResponse.class);
             poiSet.addAll(Arrays.asList(response.getPois()));
             isEnd = response.isEnd();
@@ -247,9 +248,29 @@ public class KakaoLocalApiHelper {
         return poiSet;
     }
 
+    private static Set<KakaoPoi> recursivelyAddNewPoisToSet(Set<KakaoPoi> poiSet, Map<String, String> params, String apiPath, String area) {
+        Set<KakaoPoi> newPoiSet = new HashSet<>();
+        while (!poiSet.isEmpty()) {
+            List<KakaoPoi> tempPois = new ArrayList<>(poiSet);
+            for (KakaoPoi curPoi : tempPois) {
+                if (curPoi.checkAddress(area)) {
+                    params.put("x", String.format("%.6f", curPoi.getX()));
+                    params.put("y", String.format("%.6f", curPoi.getY()));
+
+                    poiSet = addNewPoisToSet(poiSet, params, apiPath);
+                    System.out.println("unchecked: " + poiSet.size() + ", checked: " + newPoiSet.size());
+                }
+            }
+            newPoiSet.addAll(tempPois);
+            poiSet.removeAll(newPoiSet);
+            System.out.println("unchecked: " + poiSet.size() + ", checked: " + newPoiSet.size());
+        }
+        return newPoiSet;
+    }
+
     public static Set<KakaoPoi> getPoiSetByCategory(String categoryName, String area) {
-        Coord ariaCoord = ARIA_COORDS.get(area);
         String categoryGroupCode = CATEGORY_GROUP_CODES.get(categoryName);
+        Coord ariaCoord = ARIA_COORDS.get(area);
 
         Map<String, String> params = new HashMap<>();
         params.put("category_group_code", categoryGroupCode);
@@ -259,27 +280,25 @@ public class KakaoLocalApiHelper {
         params.put("sort", "accuracy");
         params.put("size", String.valueOf(15));
 
-        Set<KakaoPoi> uncheckedPoiSet = new HashSet<>();
-        Set<KakaoPoi> checkedPoiSet = new HashSet<>();
+        Set<KakaoPoi> poiSet = addNewPoisToSet(new HashSet<>(), params, SEARCH_CATEGORY_PATH);
+        poiSet = recursivelyAddNewPoisToSet(poiSet, params, SEARCH_CATEGORY_PATH, area);
+        return poiSet;
+    }
 
-        uncheckedPoiSet = addNewPoisToSet(uncheckedPoiSet, params);
-        while (!uncheckedPoiSet.isEmpty()) {
-            List<KakaoPoi> tempPois = new ArrayList<>(uncheckedPoiSet);
-            for (KakaoPoi curPoi : tempPois) {
-                if (curPoi.checkAddress(area)) {
-                    params.put("x", String.format("%.6f", curPoi.getX()));
-                    params.put("y", String.format("%.6f", curPoi.getY()));
+    public static Set<KakaoPoi> getPoiSetByKeyword(String keyword, String area) {
+        Coord ariaCoord = ARIA_COORDS.get(area);
 
-                    uncheckedPoiSet = addNewPoisToSet(uncheckedPoiSet, params);
-                    System.out.println("unchecked: "+uncheckedPoiSet.size()+", checked: "+checkedPoiSet.size());
-                }
-            }
-            checkedPoiSet.addAll(tempPois);
-            uncheckedPoiSet.removeAll(checkedPoiSet);
-            System.out.println("unchecked: "+uncheckedPoiSet.size()+", checked: "+checkedPoiSet.size());
-        }
+        Map<String, String> params = new HashMap<>();
+        params.put("query", keyword);
+        params.put("x", String.format("%.6f", ariaCoord.getX()));
+        params.put("y", String.format("%.6f", ariaCoord.getY()));
+        params.put("radius", String.valueOf(20000));
+        params.put("sort", "accuracy");
+        params.put("size", String.valueOf(15));
 
-        return checkedPoiSet;
+        Set<KakaoPoi> poiSet = addNewPoisToSet(new HashSet<>(), params, SEARCH_KEYWORD_PATH);
+        poiSet = recursivelyAddNewPoisToSet(poiSet, params, SEARCH_KEYWORD_PATH, area);
+        return poiSet;
     }
 
     public static void poisToJsonFile(Set<KakaoPoi> pois, String fileName) {
@@ -307,16 +326,26 @@ public class KakaoLocalApiHelper {
 
     public static void main(String[] args) {
         /* transcoord example */
-//        Coord result = KakaoLocalApiHelper.transcoord(127.108212, 37.402056, "WGS84", "WCONGNAMUL");
+//        Coord result = KakaoHelper.transcoord(127.108212, 37.402056, "WGS84", "WCONGNAMUL");
 //        System.out.println(result.toString());
 
         /* getPoisByCategory */
-        Set<KakaoPoi> poiSet = getPoiSetByCategory("관광명소","제주특별자치도");
+//        Set<KakaoPoi> poiSet = getPoiSetByCategory("관광명소","제주특별자치도");
 //        for (KakaoPoi poi : poiSet) {
 //            System.out.println(poi);
 //        }
-        poisToJsonFile(poiSet,"poiTest.json");
 
+        /* getPoisByKeyword */
+        Set<KakaoPoi> poiSet = getPoiSetByKeyword("관광", "제주특별자치도");
+//        for (KakaoPoi poi : poiSet) {
+//            System.out.println(poi);
+//        }
+
+        /* poisToJsonFile */
+        poisToJsonFile(poiSet, "poiTestKeyword.json");
+
+        // agi? -> 사업구조? 매출은 어디서?
+        // ai 벤처로서 어려운 점
     }
 }
 

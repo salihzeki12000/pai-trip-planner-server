@@ -3,11 +3,10 @@ package server;
 import com.google.gson.Gson;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import edu.hanyang.trip_planning.optimize.MultiDayTripAnswer;
-import edu.hanyang.trip_planning.tripData.dataType.Location;
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import kakaoLocalApi.KakaoLocalApiHelper;
-import kakaoLocalApi.Coord;
+import kakao.KaKaoHelper;
+import kakao.Coord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +78,7 @@ class JSONGenerator {
                     id = basicPOI.getId();
                     title = basicPOI.getTitle();
                     poiType = basicPOI.getPoiType();
-                    location = KakaoLocalApiHelper.transcoord(basicPOI.getLocation().longitude, basicPOI.getLocation().latitude, "WGS84", "WCONGNAMUL");
+                    location = KaKaoHelper.transcoord(basicPOI.getLocation().longitude, basicPOI.getLocation().latitude, "WGS84", "WCONGNAMUL");
                 }
             }
         }
