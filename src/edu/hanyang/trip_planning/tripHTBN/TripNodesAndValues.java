@@ -34,17 +34,6 @@ public class TripNodesAndValues {
     public int M;
     public int D0;
     public int D;
-    public int Co;
-    public int PT;
-    public int Te;
-    public int Ra;
-    public int TS;
-    public int W;
-    public int S;
-    public int Gr;
-    public int C;
-    public int Ca;
-    public int Pa;
 
     private SubsetPOIs subsetPOIs;
     private int discreteTimeWidth;
@@ -97,63 +86,10 @@ public class TripNodesAndValues {
         nd.putNode("M");
         M = nd.nodeIdx("M");
         nd.putNode("E");
-//        logger.debug(nd);
-
-
-//        public int T1;
-//        public int T2;
-//        public int E1;
-//        public int E2;
-//        public int DT1;
-//        public int DT2;
-//
-//        public int M;
-//        public int E;
-//        public int Co;
-//        public int PT;
-//        public int Te;
-//        public int Ra;
-//        public int TS;
-//        public int W;
-//        public int S;
-//        public int Gr;
-//        public int C;
-//        public int Ca;
-//        public int Pa;
-
-//
-//        nd.putNode("M-");
-//        nd.putNode("M+");
-//
-//        nd.putNode("T-");
-//        nd.putNode("T+");
-//
-//        nd.putNode("D-");
-//        nd.putNode("D+");
-//
-//        nd.putValues("DT-", generateDiscreteTime(discreteTimeWidth));
-//        nd.putValues("DT+", generateDiscreteTime(discreteTimeWidth));
-
-//        logger.debug(nd);
-
-//        // 활동량 레벨 변수
-//        for (int i = 1; i < maximumSequence + 2; i++) {
-//            String values[] = {"VeryLow", "Low", "Normal","High","VeryHigh"};
-//            nd.putValues(("AL" + i), values);
-//        }
-//
-//        for (int i = 1; i < subsetPOIs.size(); i++) {
-//            String values[] = {"g", "mid", "bad"};
-//            nd.putValues(("J" + i ), values);
-//        }
     }
 
     public int getDiscreteTimeWidth() {
         return discreteTimeWidth;
-    }
-
-    public int getNumDiscreteTimeSlots() {
-        return discreteTimeValues.length;
     }
 
     private String[] generateDiscreteTime(int dMin) {
@@ -163,10 +99,7 @@ public class TripNodesAndValues {
         DateTime curDateTime = TimeStrHelper.parseFullDate("2000-01-01 00:00");
         int startDay = curDateTime.getDayOfYear();
         List<String> timeStrList = new ArrayList<>();
-        while (true) {
-            if (curDateTime.getDayOfYear() != startDay) {
-                break;
-            }
+        while (curDateTime.getDayOfYear() == startDay) {
             timeStrList.add(TimeStrHelper.printHourMin(curDateTime));
             curDateTime = curDateTime.plusMinutes(dMin);
         }
@@ -174,42 +107,13 @@ public class TripNodesAndValues {
         return retArray;
     }
 
-    public int hourMinToIdx(int hourOfDay, int minOfHour) {
-        int minOfDay = hourOfDay * 60 + minOfHour;
-        int idx = minOfDay / discreteTimeWidth;
-//        logger.debug(idx);
-        return idx;
-    }
-
-
     public int hourToIdx(double hourOfDay) {
         int minOfDay = (int) (hourOfDay * 60);
         int idx = minOfDay / discreteTimeWidth;
-//        logger.debug(idx);
         return idx;
-    }
-
-    private Pair<Integer, Integer> idxToHourMin(int idx) {
-        int minOfDay = idx * discreteTimeWidth;
-        int hourOfDay = minOfDay / 60;
-        int minOfHour = minOfDay % 60;
-        return new Pair<Integer, Integer>(hourOfDay, minOfHour);
     }
 
     public String[] getDiscreteTimeValue() {
         return discreteTimeValues;
-    }
-
-    public static void main(String[] args) {
-
-        TripNodesAndValues tripNodesAndValues = new TripNodesAndValues(SubsetPOIGen.getJeju10_(), 30);
-        for (int i = 0; i < tripNodesAndValues.discreteTimeValues.length; i++) {
-//            logger.debug(tripNodesAndValues.discreteTimeValues[i]);
-            Pair<Integer, Integer> hourmin = tripNodesAndValues.idxToHourMin(i);
-//            logger.debug(tripNodesAndValues.hourMinToIdx(hourmin.first(), hourmin.second()) + "\t" + hourmin + "\n");
-
-
-        }
-
     }
 }

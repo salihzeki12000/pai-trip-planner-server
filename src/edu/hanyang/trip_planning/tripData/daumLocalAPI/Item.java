@@ -37,9 +37,7 @@ public class Item {
 
         Item item = (Item) o;
 
-        if (!id.equals(item.id)) return false;
-
-        return true;
+        return id.equals(item.id);
     }
 
     @Override

@@ -1,7 +1,28 @@
+셀레니움 테스트
+basicPoi 불필요한것들 정리
+kakaoPoi->url->필요한정보 긁기->basicPoi
+
+csv->basicPoiList->valid한지 체크->valid하지 않은것은 지우기(수동)
+validCsv->basicPoiList->poi조합->mobile에서 (시간/km/route)->json
+
+createPoiJsonFile
+updatePoiJsonFile
+createRouteJsonFile
+updateRouteJsonFile
+
+getPoisByCategory 문제있음
+- 섭지코지/천지연폭포 등 유명한 poi들을 코드로 못얻어옴
+- getPoisByKeyword(keyword="관광") 으로 바꿔야함
+
 콩나물 경위도 및 인코딩 경위도 basicPOI 에 추가
 콩나물 경위도 simplePOI에 추가
 
 HTBN 살펴보기
 출 도착 포함한 플래닝
 mustlist daily->전체로 적용
+
+issues:
+KakaoLocalApiHelper에 restApiKey github 올라가면 보안 이슈 있음, 해결 필요
+
+daumMap iframe으로 넣는 방식
 KakaoLocalApiHelper에 restApiKey github 올라가면 보안 이슈 있음, 해결 필요

@@ -48,8 +48,4 @@ public class WeatherSuitabilityCPT {
         }
         return strbuf.toString();
     }
-
-    public static void main(String[] args) {
-
-    }
 }

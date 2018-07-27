@@ -200,8 +200,4 @@ public class WeatherSuitabilityGen {
 
         return cpt;
     }
-
-    public static void main(String[] args) {
-        System.out.println(WeatherSuitabilityGen.type4_sensitive());
-    }
 }

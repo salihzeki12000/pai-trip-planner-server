@@ -88,12 +88,4 @@ public class MyArrays {
             }
         }
     }
-
-    public static void main(String[] args) {
-        String array[] = {"A", "B", "C", "D"};
-        System.out.println(Arrays.toString(MyArrays.subArray(array, 1, 3)));
-
-        double array2[] = {0.000001, 0.0002, 0.0000001, 0.000001};
-        System.out.println(isFlat(array2));
-    }
 }

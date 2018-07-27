@@ -5,25 +5,16 @@ import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripData.poi.POIManager;
 
-import edu.hanyang.trip_planning.trip_question.DailyTripEntry;
 import javolution.util.FastMap;
-import org.apache.log4j.Logger;
 
 import java.util.*;
 
 public class SubsetPOIs {
-    private static Logger logger = Logger.getLogger(DailyTripEntry.class);
-    List<BasicPOI> poiList = new ArrayList<BasicPOI>();
+    List<BasicPOI> poiList = new ArrayList<>();
     String titleArray[];
     Map<String, Integer> nameIndexMap = new FastMap<>();
 
-    public SubsetPOIs(){};
-
-    public SubsetPOIs(BasicPOI pois[]){
-        for (int i=0; i<pois.length;i++){
-            poiList.add(pois[i]);
-        }
-    }
+    public SubsetPOIs(){}
 
     public SubsetPOIs(String... titles){
         makeSubsetPOIsByTitle(titles);
@@ -47,7 +38,6 @@ public class SubsetPOIs {
         }
     }
     public void makeSubsetPOIsByTitle(Collection<String>  titles) {
-//        logger.debug(titles);
         POIManager poiManager = POIManager.getInstance();
         int i = 0;
         for (String title : titles) {
@@ -279,19 +269,6 @@ public class SubsetPOIs {
             }
         }
         throw new RuntimeException(poiTitle + " is not found");
-    }
-
-    public static SubsetPOIs dummy() {
-        SubsetPOIs subsetPOIs = new SubsetPOIs();
-        subsetPOIs.makeSubsetPOIsByTitle("분당서울대학교병원", "교보문고 광화문점", "뚝섬한강공원", "창동주공4단지아파트",
-                "한양대학교 정보통신관");
-        return subsetPOIs;
-    }
-
-    public static void main(String[] args) {
-        SubsetPOIs subsetPOIs = new SubsetPOIs();
-        subsetPOIs.makeSubsetPOIsByAreas("서귀포시");
-        subsetPOIs.addSubsetPOIsBytitle("메종글래드제주");
     }
 }
 

@@ -20,23 +20,21 @@ import java.util.*;
 public class POIManager {
     private static Logger logger = Logger.getLogger(POIManager.class);
     private static POIManager poiManager = new POIManager();
-    private Map<String, BasicPOI> poiMapById = new HashMap<String, BasicPOI>();
-    private Map<String, BasicPOI> poiMapByTitle = new HashMap<String, BasicPOI>();
-    private List<BasicPOI> poiList = new ArrayList<BasicPOI>();
-    private String outFilename;
+    private Map<String, BasicPOI> poiMapById = new HashMap<>();
+    private Map<String, BasicPOI> poiMapByTitle = new HashMap<>();
+    private List<BasicPOI> poiList = new ArrayList<>();
+    private String outFilename= "datafiles/pois/updated.csv";
 
-    private Set<POIType> poiTypeSet = new HashSet<POIType>();
+    private Set<POIType> poiTypeSet = new HashSet<>();
 
     private POIManager() {
-        // getFromDaum();poiList
         try {
             // PathPOI라는 파일안에 pois.csv 파일의 경로및 이름이 있음.
             // 복수 갯수로 가능함
-            List<String> strList = Files.readAllLines(Paths.get("datafiles/pois/TestPathPois"));
+            List<String> filenames = Files.readAllLines(Paths.get("datafiles/pois/TestPathPois"));
 //            List<String> strList = Files.readAllLines(Paths.get("datafiles/pois/PathPOI"));
-            outFilename = "datafiles/pois/updated.csv";
 
-            for (String filename: strList) {
+            for (String filename: filenames) {
                 readBasicPOIFromCSV(filename, '\t');
             }
         } catch (IOException e) {
@@ -118,14 +116,6 @@ public class POIManager {
     }
 
     public void readBasicPOIFromCSV(String filename, char separator) throws IOException {
-//logger.debug("읽어");
-//        logger.debug(filename);
-        if (poiMapById==null) {
-            poiMapById = new HashMap<String, BasicPOI>();
-        }
-        if (poiMapByTitle==null){
-            poiMapByTitle = new HashMap<String,BasicPOI>();
-        }
         CSVReader csvReader = new CSVReader(new FileReader(filename), separator);
         List<String[]> strArrayList = csvReader.readAll();
         for (String[] strArray : strArrayList) {
@@ -137,12 +127,10 @@ public class POIManager {
             BasicPOI basicPOI = BasicPOI.parse(strArray);
 
             poiMapById.put(basicPOI.getId(), basicPOI);
-
             poiMapByTitle.put(basicPOI.getTitle(), basicPOI);
             for (String otherName : basicPOI.getNames()) {
                 poiMapByTitle.put(otherName, basicPOI);
             }
-
             poiList.add(basicPOI);
             poiTypeSet.add(basicPOI.getPoiType());
 //            logger.debug(basicPOI);
@@ -174,7 +162,7 @@ public class POIManager {
                     match = true;   break;
                 }
             }
-            if (match == true) {
+            if (match) {
                 matchedPoiList.add(poi);
             }
         }
@@ -202,8 +190,6 @@ public class POIManager {
         CSVWriter csvWriter = new CSVWriter(new FileWriter(csvFilename), '\t', CSVWriter.NO_QUOTE_CHARACTER);
         csvWriter.writeNext(BasicPOI.csvHeader());
         for (BasicPOI poi : poiMapById.values()) {
-//            logger.debug(poi);
-//            logger.debug(poi.getURL("place"));
             csvWriter.writeNext(poi.toStrArray());
         }
         csvWriter.close();
@@ -264,7 +250,7 @@ public class POIManager {
         return basicPOI;
     }
 
-    public double distance(InterfacePOI src, InterfacePOI dest) {
+    public double distance(BasicPOI src, BasicPOI dest) {
         return VincentyDistanceCalculator.getDistance(src.getLocation().latitude, src.getLocation().longitude,
                 dest.getLocation().latitude, dest.getLocation().longitude);
     }
@@ -287,71 +273,6 @@ public class POIManager {
         }
 
         return poiSet;
-    }
-
-    /**
-     * @param range 범위 : km
-     * @return
-     */
-
-    /**
-     * 일정 거리 이내의 가까운 POI의 목록을 반환함
-     *
-     * @param poiCategory
-     * @param range
-     * @param targetPOI
-     * @return
-     */
-    public List<InterfacePOI> getNearbyPOIList(String poiCategory, double range, InterfacePOI targetPOI) {
-        List<InterfacePOI> poiList = new ArrayList<InterfacePOI>();
-        logger.debug(poiCategory);
-        logger.debug(targetPOI);
-        for (InterfacePOI poi : poiMapById.values()) {
-            logger.debug(poi.getTitle() + " --> " + poi.getPoiType().category);
-            if (poi.getPoiType().category.equals(poiCategory)) {
-//                logger.debug(poi.getIdentifier().name + " --> " + poi.getPoiType().category);
-                double dist = POIUtil.distance(targetPOI.getLocation().latitude, targetPOI.getLocation().longitude,
-                        poi.getLocation().latitude, poi.getLocation().longitude);
-
-                if (dist < range) {
-                    poiList.add(poi);
-                }
-            }
-        }
-        return poiList;
-    }
-
-    /**
-     * @param range 범위 : km
-     * @return
-     */
-    public InterfacePOI getNearestPOI(String poiCategory, String poiSubCategory, double range, InterfacePOI targetPOI) {
-        List<InterfacePOI> poiList = new ArrayList<InterfacePOI>();
-        List<Double> distList = new ArrayList<Double>();
-        for (InterfacePOI poi : poiMapById.values()) {
-//            logger.debug(poi.getIdentifier().name + " --> " + poi.getPoiType().category);
-            if (poi.getPoiType().category.equals(poiCategory) && poi.getPoiType().subCategory.equals(poiSubCategory)) {
-//                logger.debug(poi.getIdentifier().name + " --> " + poi.getPoiType().category);
-                double dist = POIUtil.distance(targetPOI.getLocation().latitude, targetPOI.getLocation().longitude,
-                        poi.getLocation().latitude, poi.getLocation().longitude);
-                if (dist < range) {
-                    poiList.add(poi);
-                    distList.add(dist);
-                }
-            }
-        }
-
-
-        if (poiList.size() == 0) {
-            return null;
-        } else {
-            int argMin = MyCollections.argMin(distList);
-            if (argMin < 0) {
-                return null;
-            } else {
-                return poiList.get(argMin);
-            }
-        }
     }
 
     public void updatePlaceURLinfo() {

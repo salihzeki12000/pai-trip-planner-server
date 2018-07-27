@@ -39,24 +39,4 @@ public class BasicCLGCPD implements InterfaceCLGCPD {
 
         return strbuf.toString();
     }
-
-    public static void test() {
-        NodeDictionary nd = NodeDictionary.getInstance();
-        nd.putNode("X");
-        nd.putValues("D1", "T", "F");
-        nd.putValues("D2", "T", "F");
-        nd.putNode("C1");
-        nd.putNode("C2");
-        nd.putValues("D3", "T", "F");
-
-        String discreteParents[] = {"D1", "D2"};
-        String continuousParents[] = {"C1", "C2"};
-
-    }
-
-    public static void main(String[] args) {
-        test();
-    }
-
-
 }

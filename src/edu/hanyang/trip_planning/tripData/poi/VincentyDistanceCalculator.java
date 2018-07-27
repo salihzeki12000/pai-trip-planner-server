@@ -631,45 +631,18 @@ class Position {
 
 class Angle {
 
-    public static final double HALFPI = PI / 2;
-
     public static final double TWOPI = PI * 2;
 
     public Angle(double radians) {
         angleR = radians;
     }
 
-    public static Angle fromDegrees(double degrees) {
-        return new Angle(toRadians(degrees));
-    }
-
-    public static Angle fromDegrees(int d, int m, double s) {
-        boolean neg = d < 0 || m < 0 || s < 0;
-        double df = ((abs(s) / 60.0 + abs(m)) / 60.0 + abs(d));
-        return new Angle(toRadians(neg ? -df : df));
-    }
-
-    public static Angle fromRightAscension(int rh, int rm, double rs) {
-        boolean neg = rh < 0 || rm < 0 || rs < 0;
-        double ra = ((abs(rs) / 60.0 + abs(rm)) / 60.0 + abs(rh)) * 15.0;
-        return new Angle(toRadians(neg ? -ra : ra));
-    }
-
     public final double getRadians() {
         return angleR;
     }
 
-    public final double getDegrees() {
-        return toDegrees(angleR);
-    }
-
     public Angle add(double radians) {
         return new Angle(angleR + radians);
-    }
-
-    public static double modPi(double v) {
-        v %= PI;
-        return v < 0 ? v + PI : v;
     }
 
     public static double modTwoPi(double v) {
@@ -686,22 +659,8 @@ class Angle {
         return Angle.formatDegMin(toDegrees(angleR)) + '°';
     }
 
-    public String formatDegMinSec() {
-        return Angle.formatDegMinSec(toDegrees(angleR)) + '°';
-    }
-
     public String toString() {
         return formatDeg();
-    }
-
-    public static String formatFloat(double val, int frac) {
-        floatFormat.setMaximumFractionDigits(frac);
-        return floatFormat.format(val);
-    }
-
-
-    public static String formatBearing(double val) {
-        return Math.round(val) + "°";
     }
 
     public static String formatDegMin(double angle) {
@@ -763,33 +722,7 @@ class Angle {
         return String.format("%s%3d° %2d' %8.5f\"", sign, deg, min, sec);
     }
 
-    public static String formatLatLon(double lat, double lon) {
-        return formatDegMin(lat, 'N', 'S') + " " + formatDegMin(lon, 'E', 'W');
-    }
-
-    public static String formatRightAsc(double angle) {
-        if (angle < 0) angle += 360.0;
-        double hours = angle / 15.0;
-        int h = (int) hours;
-        hours = (hours - h) * 60.0;
-        int m = (int) hours;
-        hours = (hours - m) * 60.0;
-        double s = hours;
-        if (s >= 60.0) {
-            s = 0;
-            ++m;
-        }
-        if (m >= 60) {
-            m -= 60;
-            ++h;
-        }
-        if (h >= 24) {
-            h -= 24;
-        }
-        return String.format("%02dh %02d' %08.5f\"", h, m, s);
-    }
-
-    private static NumberFormat intFormat = null;
+    private static NumberFormat intFormat;
 
     static {
         intFormat = NumberFormat.getInstance();
@@ -798,7 +731,7 @@ class Angle {
         intFormat.setMaximumFractionDigits(0);
     }
 
-    private static NumberFormat floatFormat = null;
+    private static NumberFormat floatFormat;
 
     static {
         floatFormat = NumberFormat.getInstance();
@@ -806,7 +739,7 @@ class Angle {
         floatFormat.setMaximumFractionDigits(7);
     }
 
-    private static NumberFormat angleFormat = null;
+    private static NumberFormat angleFormat;
 
     static {
         angleFormat = NumberFormat.getInstance();
@@ -824,10 +757,6 @@ class Azimuth extends Angle {
         super(modTwoPi(radians));
     }
 
-    public static Azimuth fromDegrees(double degrees) {
-        return new Azimuth(toRadians(degrees));
-    }
-
     @Override
     public Azimuth add(double radians) {
         return new Azimuth(getRadians() + radians);
@@ -839,30 +768,12 @@ final class Distance {
 
     public static final Distance ZERO = new Distance(0);
 
-
     public Distance(double metres) {
         distanceM = metres;
     }
 
-    public static Distance fromFeet(double feet) {
-        return new Distance(feet * FOOT);
-    }
-
-    public static Distance fromNm(double nmiles) {
-        return new Distance(nmiles * NAUTICAL_MILE);
-    }
-
     public final double getMetres() {
         return distanceM;
-    }
-
-    public final double getFeet() {
-        return distanceM / FOOT;
-    }
-
-
-    public final double getNm() {
-        return distanceM / NAUTICAL_MILE;
     }
 
     public Distance add(Distance d) {
@@ -891,35 +802,16 @@ final class Distance {
         return formatNm(distanceM);
     }
 
-    public static final String describeNautical(double m) {
-        final double feet = m / FOOT;
-        if (feet < 1000) return "" + (int) Math.round(feet) + " feet";
-        final double nm = m / NAUTICAL_MILE;
-        if (nm < 10) {
-            floatFormat.setMaximumFractionDigits(1);
-            return floatFormat.format(nm) + " nm";
-        }
-        return "" + (int) Math.round(nm) + " nm";
-    }
-
-    public final String describeNautical() {
-        return describeNautical(distanceM);
-    }
-
     @Override
     public String toString() {
         return formatNm();
     }
 
-    // The length of an international standard foot, in metres.
-    private static final double FOOT = 0.3048;
-
     // The length of an international standard nautical mile, in metres.
     private static final double NAUTICAL_MILE = 1852;
 
     // Number formatter for floating-point values.
-    private static NumberFormat floatFormat = null;
-
+    private static NumberFormat floatFormat;
     static {
         floatFormat = NumberFormat.getInstance();
         floatFormat.setMinimumFractionDigits(0);
@@ -934,50 +826,17 @@ final class Distance {
 }
 
 final class Vector {
-
     public Vector(Distance distance, Azimuth azimuth) {
         this.distance = distance;
         this.azimuth = azimuth;
-    }
-
-    public static Vector fromMetresRadians(double metres, double radians) {
-        return new Vector(new Distance(metres), new Azimuth(radians));
-    }
-
-    public static Vector fromNmRadians(double nmiles, double radians) {
-        return new Vector(Distance.fromNm(nmiles), new Azimuth(radians));
-    }
-
-    public final Azimuth getAzimuth() {
-        return azimuth;
-    }
-
-    public final double getAzimuthRadians() {
-        return azimuth.getRadians();
-    }
-
-    public final double getAzimuthDegrees() {
-        return azimuth.getDegrees();
     }
 
     public final Distance getDistance() {
         return distance;
     }
 
-    public final double getDistanceMetres() {
-        return distance.getMetres();
-    }
-
-    public final double getDistanceNm() {
-        return distance.getNm();
-    }
-
     public String formatDegMin() {
         return distance.formatM() + ' ' + azimuth.formatDegMin();
-    }
-
-    public String formatDegMinSec() {
-        return distance.formatM() + ' ' + azimuth.formatDegMinSec();
     }
 
     @Override

@@ -38,7 +38,6 @@ public class TripACOProblem extends ItineraryPlanning {
     private int monthOfYear;
     private int dayOfMonth;
     private IncrementalInferenceResults incrementalInferenceResults;
-    private PreferenceOfPOIType preferenceOfPOIType;
     private List<CategoryConstraint> categoryConstraintList;
     private List<PoiConstraint> poiConstraintList = new ArrayList<>();
     private int categoryConstraintCnt[];
@@ -52,7 +51,6 @@ public class TripACOProblem extends ItineraryPlanning {
         this.startHour = startHour;
         this.returnHour = returnHour;
         this.numNodes = tripCPDs.getSubsetPOIs().size();
-        this.preferenceOfPOIType = preferenceOfPOIType;
         DateTime datetime = (DateTimeFormat.forPattern("yyyy-MM-dd")).parseDateTime(dateStr);
         this.year = datetime.getYear();
         this.monthOfYear = datetime.getMonthOfYear();
@@ -63,16 +61,22 @@ public class TripACOProblem extends ItineraryPlanning {
         this.inferenceOnNetwork = new IncrementalInferenceTripNetwork(tripCPDs, personalInfo, dateStr, startNodeIdx, endNodeIdx, startHour);
     }
 
-    public TripACOProblem(int year, int monthOfYear, int dayOfMonth, PersonalInfo personalInfo, List<CategoryConstraint> categoryConstraintList, List<PoiConstraint> poiConstraintList, TripCPDs tripCPDs, int startNodeIdx, int endNodeIdx, double startHour, double returnHour) {
+    public TripACOProblem(int[] startTimeArray, int[] returnTimeArray, PersonalInfo personalInfo, List<CategoryConstraint> categoryConstraintList, List<PoiConstraint> poiConstraintList, TripCPDs tripCPDs, int startNodeIdx, int endNodeIdx) {
         super(startNodeIdx, endNodeIdx, tripCPDs.getSubsetPOIs().size());
+
+        int start_hour = startTimeArray[3];        int start_minute = startTimeArray[4];
+        double startHour = start_hour + (double) start_minute / 60.0;
+        int return_hour = returnTimeArray[3];      int return_minute = returnTimeArray[4];
+        double returnHour = return_hour + (double) return_minute / 60.0;
+
         this.tripCPDs = tripCPDs;
         this.startHour = startHour;
         this.returnHour = returnHour;
         this.numNodes = tripCPDs.getSubsetPOIs().size();
         this.personalInfo = personalInfo;
-        this.year = year;
-        this.monthOfYear = monthOfYear;
-        this.dayOfMonth = dayOfMonth;
+        this.year = startTimeArray[0];
+        this.monthOfYear = startTimeArray[1];
+        this.dayOfMonth = startTimeArray[2];
         this.categoryConstraintList = categoryConstraintList;
         this.categoryConstraintCnt = new int[categoryConstraintList.size()];
         for (PoiConstraint poiConstraint : poiConstraintList) {
@@ -184,7 +188,7 @@ public class TripACOProblem extends ItineraryPlanning {
     @Override
     public double getTotalValue() {
         for (boolean poiCC : poiConstraintCnt) {
-            if (poiCC == false){
+            if (!poiCC){
                 return 0.0;
             }
         }
@@ -369,17 +373,12 @@ public class TripACOProblem extends ItineraryPlanning {
             return false;                   // mgkim: no violation
         } else {                            // mgkim: destPOI가 constrain되어야 하는 type이 아닌 경우
             for (boolean poiCC : poiConstraintCnt) {
-                if (poiCC == false) {
+                if (!poiCC) {
                     return true;            // 아직 충족시키지 못한 poi constrain 되어야 하는 노드가 있으면 violation
                 }
             }
             return false;                   // 없으면 no violation
         }
-    }
-
-    public String dumpResult() {
-        StringBuffer strbuf = new StringBuffer();
-        return strbuf.toString();
     }
 
     public static void test() {

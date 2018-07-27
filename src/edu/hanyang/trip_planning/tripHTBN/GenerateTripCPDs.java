@@ -199,16 +199,9 @@ public class GenerateTripCPDs {
     }
 
     public static void test() {
-
         GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(SubsetPOIGen.getJeju10_(), 30);
         generateTripCPDs.generate();
         logger.debug(generateTripCPDs.getTripCPDs());
-
-
-    }
-
-    public static void main(String[] args) {
-        test();
     }
 }
 

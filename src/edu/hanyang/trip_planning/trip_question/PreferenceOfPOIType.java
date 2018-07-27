@@ -51,10 +51,4 @@ public class PreferenceOfPOIType {
         PreferenceOfPOIType parsedPOIType = gson.fromJson(str,PreferenceOfPOIType.class);
         logger.debug(parsedPOIType);
     }
-
-    public static void main(String[] args) {
-        test();
-
-
-    }
 }

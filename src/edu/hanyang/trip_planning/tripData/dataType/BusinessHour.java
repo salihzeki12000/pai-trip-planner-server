@@ -220,17 +220,7 @@ public class BusinessHour {
         return new BusinessHour(this);
     }
 
-
-    private double parseHour(String hourMinuteStr) {
-        DateTime dateTime = DateTimeFormat.forPattern("HH:mm").parseDateTime(hourMinuteStr);
-        int h = dateTime.getHourOfDay();
-        int m = dateTime.getMinuteOfHour();
-        double hourDouble = h + (1 / 60.0) * m;
-        return hourDouble;
-    }
-
     public double getOpenHour(int year, int month, int day) {
-//        DateTime dateTime = new DateTime(year, month, day, 1, 1, 1);
         switch (dayOfWeek(year,month,day)) {
             case 6:
                 return saturdayOpenHour;
@@ -242,8 +232,6 @@ public class BusinessHour {
     }
 
     public double getCloseHour(int year, int month, int day) {
-//        DateTime dateTime = new DateTime(year, month, day, 1, 1, 1);
-//        switch (dateTime.getDayOfWeek()) {
         switch (dayOfWeek(year,month,day)) {
             case 6:
                 return saturdayCloseHour;

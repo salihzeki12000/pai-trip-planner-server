@@ -16,9 +16,5 @@ public class PersonalInfo {
         strBuf.append("선호도:" + preferenceOfPOIType);
         return strBuf.toString();
     }
-
-    public static void main(String[] args) {
-        System.out.println(PersonalInfoFactory.personalInfoExample1());
-    }
 }
 

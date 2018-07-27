@@ -28,7 +28,6 @@ import java.util.List;
  * Created by wykwon on 2016-11-02.
  */
 public class BatchInferenceTripNetwork {
-
     private boolean bDebug = false;
     private static Logger logger = Logger.getLogger(BatchInferenceTripNetwork.class);
     private TripCPDs tripCPDs;
@@ -91,22 +90,6 @@ public class BatchInferenceTripNetwork {
         previousDepartureTime[0] = startHour;
         previousDepartureTime[1] = 0.01;
     }
-
-    public void reset() {
-        previousDepartureTime[0] = startHour;
-        previousDepartureTime[1] = 0.01;
-        totalPA[0] = 0.0;
-        totalPA[1] = 0.0;
-        totalCost[0] = 0.0;
-        totalCost[1] = 0.0;
-        totalSatisfaction[0] = 0.0;
-        totalSatisfaction[1] = 0.0;
-    }
-
-    public TripCPDs getTripNetwork() {
-        return tripCPDs;
-    }
-
 
     /**
      * 단계별 추론 시작
@@ -180,10 +163,6 @@ public class BatchInferenceTripNetwork {
         ret[0] = pd.hour;
         ret[1] = pd.standardDeviation * pd.standardDeviation;
         return ret;
-    }
-
-    private String dumpDist(String title, double dist[]) {
-        return title + ": mean=" + dist[0] + ", var=" + dist[1];
     }
 
     public double[] inferenceMovement(int srcNodeIdx, int destNodeIdx, double discreteTimes[]) {
@@ -308,26 +287,10 @@ public class BatchInferenceTripNetwork {
 
     }
 
-    public double[] getTotalSatisfaction() {
-        return totalSatisfaction;
-    }
-
-
     public static void test() {
         GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(SubsetPOIGen.getJeju10_(), 30);
         TripCPDs tripCPDs = generateTripCPDs.generate();
-//        logger.debug(generateTripCPDs.getTripCPDs());
-
-
         PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample1();
         BatchInferenceTripNetwork in = new BatchInferenceTripNetwork(tripCPDs, personalInfo, "2016-5-1", 0, 0, 9.00);
-
-
     }
-
-    public static void main(String[] args) {
-        test();
-    }
-
-
 }

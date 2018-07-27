@@ -22,10 +22,6 @@ public class TripQuestion {
         dailyTripEntryList.add(dailyTripEntry);
     }
 
-    public boolean validateQuestion(){
-        throw new RuntimeException("Not Implemented");
-    }
-
     public PersonalInfo getPersonalInfo(){
         return personalInfo;
     }
@@ -66,10 +62,5 @@ public class TripQuestion {
 
 //        logger.debug(tripQuestion);
         logger.debug(tripQuestion2HttpGet(tripQuestion));
-    }
-
-    public static void main(String[] args) {
-//        test_encoding_decoding();
-        test();
     }
 }

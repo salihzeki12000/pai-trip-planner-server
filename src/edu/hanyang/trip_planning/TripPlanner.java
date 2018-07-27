@@ -30,11 +30,13 @@ public class TripPlanner {
     private int numPlan = 1;
     private int numTotalPoi = 50;
     private int numConstrainedTypePoi = 5;
-    private ACOParameters acoParameters = new ACOParameters(1.0,0.5,0.1,1000);
+    private ACOParameters acoParameters = new ACOParameters(1.0, 0.5, 0.1, 1000);
 
-    public TripPlanner(){};
+    public TripPlanner() {
+    }
+
     // mgkim:
-    public TripPlanner(int minuteTime, int numAcoSolution, int numPlan, int numTotalPoi, int numConstrainedTypePoi){
+    public TripPlanner(int minuteTime, int numAcoSolution, int numPlan, int numTotalPoi, int numConstrainedTypePoi) {
         this.minuteTime = minuteTime;
         this.numAcoSolution = numAcoSolution;
         this.numPlan = numPlan;
@@ -56,27 +58,21 @@ public class TripPlanner {
             /* mgkim: planner input arguments*/
             // mgkim: time
             int startTimeArray[] = dailyTripEntry.getStartTime();
-            int start_year = startTimeArray[0];        int start_month = startTimeArray[1];        int start_day = startTimeArray[2];
-            int start_hour = startTimeArray[3];        int start_minute = startTimeArray[4];
-            double startHour = start_hour + (double) start_minute / 60.0;
             int returnTimeArray[] = dailyTripEntry.getReturnTime();
-            int return_year = returnTimeArray[0];      int return_month = returnTimeArray[1];      int return_day = returnTimeArray[2];
-            int return_hour = returnTimeArray[3];      int return_minute = returnTimeArray[4];
-            double returnHour = return_hour + (double) return_minute / 60.0;
-            if ((start_year != return_year) || (start_month != return_month) || (start_day != return_day)) {
-                throw new RuntimeException("day mismatch");
-            }
             // mgkim: constraints
             List<CategoryConstraint> categoryConstraintList = dailyTripEntry.getCategoryConstraintList();
             List<PoiConstraint> poiConstraintList = dailyTripEntry.getPoiConstraintList();
             // mgkim: start & end PoiTitle
             String startPoiTitle = dailyTripEntry.getStartPOITitle();
             String endPoiTitle = dailyTripEntry.getEndPOITitle();
+
+            /* mgkim: planner setup & execution*/
+            // mgkim: tripCPDs
             // mgkim: subsetPOIs
             SubsetPOIs subsetPOIs = new SubsetPOIs();
             subsetPOIs.makeSubsetPOIsByAreas(dailyTripEntry.getAreas());                // mgkim: 해당 areas 전체
             subsetPOIs.reduceSubsetPoisByIdList(visitedPoiIdList);                      // mgkim: 들렀던 곳 제외
-            subsetPOIs.reduceSubsetPoisByScoreAndConstraint(numTotalPoi,numConstrainedTypePoi,categoryConstraintList); // mgkim: (numTotalPoi-5*numConstraint) 여행typePoi + (5*numConstraint) 각 constraintPoiType 남기고 줄이기
+            subsetPOIs.reduceSubsetPoisByScoreAndConstraint(numTotalPoi, numConstrainedTypePoi, categoryConstraintList); // mgkim: (numTotalPoi-5*numConstraint) 여행typePoi + (5*numConstraint) 각 constraintPoiType 남기고 줄이기
             for (PoiConstraint poiConstraint : poiConstraintList) {                     // mgkim: poiConstraint 처리
                 if (poiConstraint.isVisitOrNot()) {
                     subsetPOIs.addSubsetPOIsBytitle(poiConstraint.getPoiTitle());
@@ -85,16 +81,13 @@ public class TripPlanner {
                 }
             }
             subsetPOIs.addSubsetPOIsBytitle(new String[]{startPoiTitle, endPoiTitle});  // mgkim: 출발, 도착 장소 추가
+            GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(subsetPOIs, minuteTime);
+            TripCPDs tripCPDs = generateTripCPDs.generate();
             // mgkim: start & end PoiIdx
             int startNodeIdx = subsetPOIs.getPOIIdx(startPoiTitle);
             int endNodeIdx = subsetPOIs.getPOIIdx(endPoiTitle);
-
-            /* mgkim: planner setup & execution*/
-            // CPD 생성
-            GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(subsetPOIs, minuteTime);
-            TripCPDs tripCPDs = generateTripCPDs.generate();
             // Problem 생성
-            TripACOProblem tripACOProblem = new TripACOProblem(start_year, start_month, start_day, personalInfo, categoryConstraintList, poiConstraintList, tripCPDs, startNodeIdx, endNodeIdx, startHour, returnHour);
+            TripACOProblem tripACOProblem = new TripACOProblem(startTimeArray, returnTimeArray, personalInfo, categoryConstraintList, poiConstraintList, tripCPDs, startNodeIdx, endNodeIdx);
             // Optimizer 생성
             ACOptimizer acOptimizer = new ACOptimizer(tripACOProblem, acoParameters);
             // Solution 생성
@@ -103,7 +96,10 @@ public class TripPlanner {
 
             /* mgkim: 결과 정리*/
             DetailItinerary detailItinerary = tripACOProblem.result(solutions[0].getPath());
-//            detailItinerary.trimDetailItinerary(returnHour);    // 시간 맞추기
+            int return_hour = returnTimeArray[3];
+            int return_minute = returnTimeArray[4];
+            double returnHour = return_hour + (double) return_minute / 60.0;
+            detailItinerary.trimDetailItinerary(returnHour);    // 시간 맞추기
             multiDayTripAnswer.addItinerary(detailItinerary);
             for (BasicPOI visitedPoi : detailItinerary.getPoiList()) {
                 visitedPoiIdList.add(visitedPoi.getId());
@@ -118,7 +114,7 @@ public class TripPlanner {
     private static void test1() {
         TripQuestion tripQuestion = TripQuestionFactory.tripQuestionExample3();
 
-        TripPlanner tripPlanner = new TripPlanner(30, 1, 1, 50,5);
+        TripPlanner tripPlanner = new TripPlanner(30, 1, 1, 50, 5);
         MultiDayTripAnswer multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);
         logger.debug(multiDayTripAnswer);
         for (int i = 0; i < multiDayTripAnswer.size(); i++) {
@@ -129,11 +125,12 @@ public class TripPlanner {
             System.out.println(multiDayTripAnswer.getItinerary(i).getPoiTitles());
         }
     }
+
     // mgkim:
     private static void test2() {
         TripQuestion tripQuestion = TripQuestionFactory.tripQuestionExample3();
 
-        TripPlanner tripPlanner = new TripPlanner(30, 1, 1, 50,5);
+        TripPlanner tripPlanner = new TripPlanner(30, 1, 1, 50, 5);
         MultiDayTripAnswer multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);
         logger.debug(multiDayTripAnswer);
         for (int i = 0; i < multiDayTripAnswer.size(); i++) {
@@ -197,10 +194,10 @@ public class TripPlanner {
             test2();
             long end1 = System.currentTimeMillis();
             System.out.println();
-            logger.debug("1회 실행 시간: " + (end1-start1)/1000.0);
+            logger.debug("1회 실행 시간: " + (end1 - start1) / 1000.0);
         }
         long end = System.currentTimeMillis();
 
-        logger.debug("평균 실행 시간: " + (end-start)/1000.0/numRun);
+        logger.debug("평균 실행 시간: " + (end - start) / 1000.0 / numRun);
     }
 }

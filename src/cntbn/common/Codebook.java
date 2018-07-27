@@ -18,7 +18,7 @@ import java.util.Collection;
 public class Codebook {
 
     private static Logger logger = Logger.getLogger(Codebook.class);
-    private FastMap<String, Integer> nameMap = new FastMap<String, Integer>();
+    private FastMap<String, Integer> nameMap = new FastMap<>();
     private FastList<String> idxMap = new FastList<String>();
     int count = 0;
 
@@ -26,10 +26,8 @@ public class Codebook {
         //
         if (idxMap.contains(name)) {
             // 노드가 이미 정의되어 있으면, 기존 노드를 날리고, 새로 만들어
-
 //            logger.debug("Node " + name + " is redefined !");
 //            throw new RuntimeException("Node " + name + " is redefined !");
-
         } else {
             idxMap.add(name);
             nameMap.put(name, count);
@@ -39,13 +37,6 @@ public class Codebook {
     }
 
     public void putNames(String... names) {
-        for (String string : names) {
-            addName(string);
-        }
-    }
-
-
-    public void putNames(Collection<String> names) {
         for (String string : names) {
             addName(string);
         }
@@ -89,23 +80,5 @@ public class Codebook {
             strBuf.append(" ");
         }
         return strBuf.toString();
-    }
-
-    public static void main(String args[]) {
-        Codebook rvCodebook = new Codebook();
-        rvCodebook.putNames("X", "Y", "Z");
-        try {
-            logger.info(rvCodebook.getIndex("X"));
-            logger.info(rvCodebook.getIndex("Y"));
-            logger.info(rvCodebook.getIndex("Z"));
-            logger.info(rvCodebook.getName(2));
-            logger.info(rvCodebook.getName(1));
-            logger.info(rvCodebook.getName(0));
-            logger.info(rvCodebook);
-
-        } catch (NoSuchVariableException e) {
-            e.printStackTrace(); // To change body of catch statement use File |
-            // Settings | File Templates.
-        }
     }
 }

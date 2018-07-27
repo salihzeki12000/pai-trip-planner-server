@@ -28,14 +28,6 @@ public class WeightedRandomSelector {
 
     private double randUniformPositive() {
         // easiest implementation
-
         return random.nextDouble();
-    }
-
-    public static void main(String[] args) {
-        double weights[] = {0.1, 0.5, 0.0, 0.0, 1.0};
-        for (int i = 0; i < 50; i++) {
-//            System.out.println(WeightedRandomSelector.select(weights));
-        }
     }
 }

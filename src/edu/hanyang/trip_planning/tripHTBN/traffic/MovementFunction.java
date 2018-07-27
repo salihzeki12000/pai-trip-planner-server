@@ -35,7 +35,7 @@ public class MovementFunction {
         for (UnitMovement unitMovement : foundPath) {
             totalCost += unitMovement.cost;
         }
-        return new Pair<Double, Double>(totalCost, totalCost * 0.05);
+        return new Pair<>(totalCost, totalCost * 0.05);
     }
 
     /**
@@ -52,25 +52,6 @@ public class MovementFunction {
             totalTime = totalTime + unitMovement.spendingTime.hour;
             totalSD = totalSD + unitMovement.spendingTime.standardDeviation;
         }
-        return new Pair<Double, Double>(totalTime, totalSD);
-    }
-
-    public SubsetPOIs getSubsetPOIs() {
-        return subsetPOIs;
-    }
-
-    public String getName(int idx) {
-        return subsetPOIs.getPOI(idx).getTitle();
-    }
-
-    public static void main(String[] args) {
-        SubsetPOIs subsetPOIs = new SubsetPOIs();
-        subsetPOIs.makeSubsetPOIsByTitle("분당서울대학교병원", "교보문고 광화문점", "뚝섬한강공원", "창동주공4단지아파트", "한양대학교 정보통신관");
-        MovementFunction trafficCondition = new MovementFunction(subsetPOIs);
-        for (int i = 1; i < 4; i++) {
-            trafficCondition.findPath(0, i);
-        }
-        logger.debug("time=" + trafficCondition.getTime());
-        logger.debug("cost=" + trafficCondition.getCost());
+        return new Pair<>(totalTime, totalSD);
     }
 }

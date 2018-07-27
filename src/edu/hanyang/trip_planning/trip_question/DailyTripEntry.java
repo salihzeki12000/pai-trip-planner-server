@@ -5,7 +5,6 @@ import edu.hanyang.trip_planning.optimize.constraints.categoryConstraint.Categor
 import edu.hanyang.trip_planning.optimize.constraints.poiConstraint.PoiConstraint;
 import util.TimeStrHelper;
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.Arrays;
