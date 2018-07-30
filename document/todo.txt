@@ -1,3 +1,13 @@
+area
+
+->
+area keyword
+->kakaoPoi->check validity(area,category)->kakaoPoiPlus(+영업시간,휴일,비용,머무는시간,평점)->check validity(평점1아래)->BasicPoi
+
+PlusinitPoiSet
+
+
+
 셀레니움 테스트
 basicPoi 불필요한것들 정리
 kakaoPoi->url->필요한정보 긁기->basicPoi

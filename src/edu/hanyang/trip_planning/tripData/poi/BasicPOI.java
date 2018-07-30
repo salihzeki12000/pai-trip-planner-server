@@ -23,13 +23,13 @@ public class BasicPOI {
     private Set<String> names;                          // 2. 이름 (별칭 포함 1번째가 대표이름임)
     private Address address;                            // 3. 주소
     private POIType poiType;                            // 4. 장소의 종류
-    private Set<ActivityType> availableActivities;      // 5. 해당 장소에서 할수 있는 활동들
+    private Set<ActivityType> availableActivities;      // 5. 해당 장소에서 할수 있는 활동들                      ?
     private Location location;                          // 6. 위치 (경위도)
     private BusinessHour businessHour;                  // 7. 영업시간
     private ClosingDays closingDays;                    // 8. 휴일
-    private int hasParkingLot = -1;                     // 9. 주차가능 여부   (-1: Unknwon, 0: false, 1: true)
+    private int hasParkingLot = -1;                     // 9. 주차가능 여부   (-1: Unknwon, 0: false, 1: true)    ?
     private int averageCostPerPerson = -1;              // 10. 평균 비용
-    private Set<AdjacentPOI> publicTransportationAccess;// 11. 대중교통 접근성 (예: XX 지하철 역에서 몇분거리)
+    private Set<AdjacentPOI> publicTransportationAccess;// 11. 대중교통 접근성 (예: XX 지하철 역에서 몇분거리)    ?
     private ProbabilisticDuration spendingTime;         // 12. 머무는 시간
     private double score = -1;                          // 13. 사용자 만족도
     private Map<String, String> urlList = new HashMap<String, String>();

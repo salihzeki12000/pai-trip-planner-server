@@ -77,7 +77,6 @@ public class ItemConverter {
     }
 
     public static Map<String, BasicPOI> getPOIMap(ItemList itemList) {
-
         Map<String, BasicPOI> poiMap = new HashMap<String, BasicPOI>();
         Iterator<Item> it = itemList.getItemList().iterator();
 
@@ -86,31 +85,21 @@ public class ItemConverter {
             Location location = new Location(Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
             String id = "daum." + item.getId();
 
-
             BasicPOI basicPOI = new BasicPOI(id, item.getTitle(), location);
-
 
             basicPOI.setAddress(getAddress(item.getAddress()));
 
-
             POIType poiType = getType(item.getCategory());
             basicPOI.setPoiType(poiType);
-//            basicPOI.setLocation(item.getLatitude(), item.getLongitude());
             basicPOI.addURL("place", item.getPlaceUrl());
-//            logger.debug(basicPOI);
-//            logger.debug(item.getPlaceUrl());
             logger.debug(basicPOI.getId() + "\t" + basicPOI.getTitle());
             poiMap.put(basicPOI.getId(), basicPOI);
-
-
         }
-
         return poiMap;
     }
 
     private static POIType getType(String categoryStr) {
         String typeArray[] = categoryStr.split(" > ");
-//        logger.debug(Arrays.toString(typeArray));
         if (typeArray.length == 1) {
             return new POIType(typeArray[0], null, null);
         } else if (typeArray.length == 2) {
@@ -122,7 +111,6 @@ public class ItemConverter {
 
     private static Address getAddress(String addressStr) {
         String addressStrArray[] = addressStr.split(" ");
-//        logger.debug(addressStr + "\tlength=" + addressStrArray.length);
 
         Address address = null;
         if (addressStrArray.length == 2) {
