@@ -19,6 +19,13 @@ class DatabaseHelper {
     private static final String SEARCH_KEYWORD_PATH = "/v2/local/search/keyword.json?";
     private static final String TRANSCOORD_PATH = "/v2/local/geo/transcoord.json?";
     private static final Map<String, Coord> ARIA_COORDS = createAreaCoords();
+    private static final Map<String, Coord[]> ARIA_RECTS = createAreaRects();
+
+    private static Map<String, Coord[]> createAreaRects() {
+        Map<String, Coord[]> rects = new HashMap<>();
+        rects.put("제주특별자치도", new Coord[]{new Coord(126.977895, 37.566388), new Coord(126.977895, 37.566388)});
+        return rects;
+    }
 
     private static final String[] VALID_ATTRACTION_CATEGORIES = {"관광"};
     private static final String[] INVALID_ATTRACTION_CATEGORIES = {};

@@ -125,10 +125,6 @@ class KakaoPoi {
     }
 }
 
-class Poi {
-
-}
-
 class TranscoordResponse {
     private Coord[] documents;
     private Meta meta;
