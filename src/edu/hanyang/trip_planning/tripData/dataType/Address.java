@@ -13,11 +13,6 @@ public class Address {
         this.detailedAddress = "";
     }
 
-    public Address(String countryCode, String provinceCode, String cityCode, String detailedAddress) {
-        this.addressCode = new AddressCode(countryCode, provinceCode, cityCode);
-        this.detailedAddress = detailedAddress;
-    }
-
     public Address(AddressCode addressCode, String detailedAddress) {
         this.addressCode = addressCode.deepCopy();
         this.detailedAddress = detailedAddress;

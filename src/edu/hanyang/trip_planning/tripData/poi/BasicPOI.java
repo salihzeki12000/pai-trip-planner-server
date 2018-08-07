@@ -17,24 +17,23 @@ import java.util.*;
  * 장소의 선호도나, 다른 것들은 평균적인 선호도나 평점을 이용한다.
  */
 public class BasicPOI {
-    private static Logger logger = Logger.getLogger(BasicPOI.class);
-    private String id;                                  // 1. 위치 식별자
-    private String title;
-    private Set<String> names;                          // 2. 이름 (별칭 포함 1번째가 대표이름임)
-    private Address address;                            // 3. 주소
-    private POIType poiType;                            // 4. 장소의 종류
-    private Set<ActivityType> availableActivities;      // 5. 해당 장소에서 할수 있는 활동들                      ?
-    private Location location;                          // 6. 위치 (경위도)
-    private BusinessHour businessHour;                  // 7. 영업시간
-    private ClosingDays closingDays;                    // 8. 휴일
-    private int hasParkingLot = -1;                     // 9. 주차가능 여부   (-1: Unknwon, 0: false, 1: true)    ?
-    private int averageCostPerPerson = -1;              // 10. 평균 비용
-    private Set<AdjacentPOI> publicTransportationAccess;// 11. 대중교통 접근성 (예: XX 지하철 역에서 몇분거리)    ?
-    private ProbabilisticDuration spendingTime;         // 12. 머무는 시간
-    private double score = -1;                          // 13. 사용자 만족도
-    private Map<String, String> urlList = new HashMap<String, String>();
-    private TouristAttractionType touristAttractionType = null;
-    private boolean bRestaurant = false;
+    private String id;                                          // ID
+    private String title;                                       // 이름
+    private Set<String> names;                                  // 이름들 (별칭 포함 1번째가 대표이름임)              ?
+    private Address address;                                    // 주소
+    private POIType poiType;                                    // 장소의 종류
+    private Set<ActivityType> availableActivities;              // 해당 장소에서 할수 있는 활동들                     ?
+    private Location location;                                  // 위치 (경위도)
+    private BusinessHour businessHour;                          // 영업시간
+    private ClosingDays closingDays;                            // 휴일
+    private int hasParkingLot = -1;                             // 주차가능 여부   (-1: Unknwon, 0: false, 1: true)   ?
+    private int averageCostPerPerson = -1;                      // 평균 비용
+    private Set<AdjacentPOI> publicTransportationAccess;        // 대중교통 접근성 (예: XX 지하철 역에서 몇분거리)    ?
+    private ProbabilisticDuration spendingTime;                 // 머무는 시간
+    private double score = -1;                                  // 사용자 만족도
+    private Map<String, String> urlList = new HashMap<String, String>();     // ?
+    private TouristAttractionType touristAttractionType = null; // ?
+    private boolean bRestaurant = false;                        // ?
 
     public BasicPOI(String title) {
         this.title = title;
@@ -50,10 +49,6 @@ public class BasicPOI {
         address = new Address();
         // 기본 소요시간은 1시간  +- 10분
         spendingTime = new ProbabilisticDuration(0.5, 0.1);
-    }
-
-    public void addName(String name) {
-        names.add(name);
     }
 
     public void addNames(String nameArray[]) {
@@ -76,14 +71,6 @@ public class BasicPOI {
         bRestaurant = restaurantType.contain(poiType);
     }
 
-    public void setLocation(double latitude, double longtitude) {
-        this.location = new Location(latitude, longtitude);
-    }
-
-    public void addActivity(ActivityType activity) {
-        this.availableActivities.add(activity);
-    }
-
     public void setParking(int parkingFlag) {
         this.hasParkingLot = parkingFlag;
     }
@@ -100,10 +87,6 @@ public class BasicPOI {
         this.averageCostPerPerson = costPerPerson;
     }
 
-    public void addPublicTransportationAccess(String poiIdentifier, int walkTime) {
-        this.publicTransportationAccess.add(new AdjacentPOI(poiIdentifier, walkTime));
-    }
-
     public void addPublicTransportationAccess(AdjacentPOI adjacentPOI) {
         this.publicTransportationAccess.add(adjacentPOI);
     }
@@ -117,7 +100,6 @@ public class BasicPOI {
     }
 
     public void setTouristAttractionType(String type) {
-        logger.debug(this.title);
         this.touristAttractionType = TouristAttractionType.parse(type);
     }
 
@@ -185,10 +167,6 @@ public class BasicPOI {
         return averageCostPerPerson;
     }
 
-    public Set<String> getAmbiences() {
-        return null;
-    }
-
     /**
      * additional URL을 반환한다.
      *
@@ -197,10 +175,6 @@ public class BasicPOI {
      */
     public String getURL(String key) {
         return urlList.get(key);
-    }
-
-    public Set<String> urlKeySet() {
-        return urlList.keySet();
     }
 
     public void addURL(String key, String url) {
@@ -399,7 +373,6 @@ public class BasicPOI {
         int averageCostPerPerson = Integer.parseInt(array[15]);
         basicPOI.setAverageCostPerPerson(averageCostPerPerson);
         if (array[16].length() > 3) {
-            logger.debug(array[16] + "\t size=" + array[16].length());
             AdjacentPOI adjacentPOIs[] = gson.fromJson(gson.toJson(array[16]), AdjacentPOI[].class);
             for (AdjacentPOI adjacentPOI : adjacentPOIs) {
                 basicPOI.addPublicTransportationAccess(adjacentPOI);
@@ -426,44 +399,40 @@ public class BasicPOI {
     }
 
     public static void main(String[] args) {
-//1. ID로 이름 만들고
-        BasicPOI poi = new BasicPOI("daum.111", "하동관", new Location(111, 222));
-//2. 이름들 넣고
-        poi.addName("하동관");
-        poi.addName("하동관 본점");
-//3.  주소
-        poi.setAddress(new Address("대한민국", "서울특별시", "중구", "명동9길 12"));
-//4. 장소종류
-        poi.setPoiType(new POIType("음식점", "한식", "곰탕"));
-//5. 가능한 활동
-        poi.addActivity(ActivityType.Eat);
-//6. 좌표
-        poi.setLocation(39.564380, 126.984978);
-//7. 영업시간
-        poi.setBusinessHour(new BusinessHour("07:00", "16:30"));
-// 8. 휴일
-        ClosingDays closingDays = new ClosingDays();
-        closingDays.addMonthlyClosingDay(1, DayOfWeek.Sunday);
-        closingDays.addMonthlyClosingDay(3, DayOfWeek.Sunday);
-        poi.setClosingDays(closingDays);
-//9. 주차가능여부
-        poi.setParking(1);
-        // 10. 평균비용
-        poi.setAverageCostPerPerson(11000);
-        // 11 대중교통 접근성
-        poi.addPublicTransportationAccess("을지로입구역", 5);
-        poi.addPublicTransportationAccess("을지로3가역", 10);
-        poi.addPublicTransportationAccess("종각역", 15);
-        // 12. 만족도
-        poi.setScore(5.5);
-        // 소요시간
-        poi.setSpendingHour(40, 10);
-        System.out.println(poi);
-
-        for (String str : poi.toStrArray()) {
-            logger.debug(str);
-        }
-
+////1. ID로 이름 만들고
+//        BasicPOI poi = new BasicPOI("daum.111", "하동관", new Location(111, 222));
+////3.  주소
+//        poi.setAddress(new Address("대한민국", "서울특별시", "중구", "명동9길 12"));
+////4. 장소종류
+//        poi.setPoiType(new POIType("음식점", "한식", "곰탕"));
+////5. 가능한 활동
+//        poi.addActivity(ActivityType.Eat);
+////6. 좌표
+//        poi.setLocation(39.564380, 126.984978);
+////7. 영업시간
+//        poi.setBusinessHour(new BusinessHour("07:00", "16:30"));
+//// 8. 휴일
+//        ClosingDays closingDays = new ClosingDays();
+//        closingDays.addMonthlyClosingDay(1, DayOfWeek.Sunday);
+//        closingDays.addMonthlyClosingDay(3, DayOfWeek.Sunday);
+//        poi.setClosingDays(closingDays);
+////9. 주차가능여부
+//        poi.setParking(1);
+//        // 10. 평균비용
+//        poi.setAverageCostPerPerson(11000);
+//        // 11 대중교통 접근성
+//        poi.addPublicTransportationAccess("을지로입구역", 5);
+//        poi.addPublicTransportationAccess("을지로3가역", 10);
+//        poi.addPublicTransportationAccess("종각역", 15);
+//        // 12. 만족도
+//        poi.setScore(5.5);
+//        // 소요시간
+//        poi.setSpendingHour(40, 10);
+//        System.out.println(poi);
+//
+//        for (String str : poi.toStrArray()) {
+//            logger.debug(str);
+//        }
     }
 
     private String toString(Set<String> strSet) {

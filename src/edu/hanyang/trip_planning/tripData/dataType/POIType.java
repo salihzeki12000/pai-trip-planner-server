@@ -1,12 +1,9 @@
 package edu.hanyang.trip_planning.tripData.dataType;
 
-import org.apache.log4j.Logger;
-
 public class POIType {
     public String category;         // 장소 대분류
     public String subCategory;      // 장소 중분류
     public String subSubCategory;   // 장소 소분류
-    private static Logger logger = Logger.getLogger(POIType.class);
 
     @Override
     public boolean equals(Object o) {
@@ -109,11 +106,5 @@ public class POIType {
     }
 
     public static void main(String[] args) {
-        POIType poiType1 = new POIType("음식점", "아시아음식");
-        POIType poiType2 = new POIType("음식점");
-        System.out.println(poiType1.equals(poiType2));
-        System.out.println(poiType2.contain(poiType1));
-        logger.debug(poiType1);
-        logger.debug(poiType2);
     }
 }
