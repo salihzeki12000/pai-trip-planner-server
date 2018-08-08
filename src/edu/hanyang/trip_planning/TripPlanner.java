@@ -35,7 +35,6 @@ public class TripPlanner {
     public TripPlanner() {
     }
 
-    // mgkim:
     public TripPlanner(int minuteTime, int numAcoSolution, int numPlan, int numTotalPoi, int numConstrainedTypePoi) {
         this.minuteTime = minuteTime;
         this.numAcoSolution = numAcoSolution;
@@ -44,7 +43,6 @@ public class TripPlanner {
         this.numConstrainedTypePoi = numConstrainedTypePoi;
     }
 
-    // mgkim:
     public MultiDayTripAnswer tripPlanning(TripQuestion tripQuestion) {
         // mgkim: input arguments assignment
         PersonalInfo personalInfo = tripQuestion.getPersonalInfo();
@@ -52,7 +50,6 @@ public class TripPlanner {
         // mgkim: output argument declaration
         MultiDayTripAnswer multiDayTripAnswer = new MultiDayTripAnswer();
 
-//        long start, end;
         List<String> visitedPoiIdList = new ArrayList<>();         // mgkim: for visitedPoiId
         for (DailyTripEntry dailyTripEntry : dailyTripEntryList) {
             /* mgkim: planner input arguments*/
@@ -128,7 +125,7 @@ public class TripPlanner {
 
     // mgkim:
     private static void test2() {
-        TripQuestion tripQuestion = TripQuestionFactory.tripQuestionExample3();
+        TripQuestion tripQuestion = TripQuestionFactory.tripQuestionExample4();
 
         TripPlanner tripPlanner = new TripPlanner(30, 1, 1, 50, 5);
         MultiDayTripAnswer multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);

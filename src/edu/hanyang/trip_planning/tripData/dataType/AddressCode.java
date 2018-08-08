@@ -33,24 +33,6 @@ public class AddressCode {
         this.cityCode = cityCode;
     }
 
-    public AddressCode(String strs[]) {
-        if (strs.length==1){
-            this.countryCode = strs[0];
-            this.provinceCode = null;
-            this.cityCode = null;
-        }
-        else if (strs.length==2){
-            this.countryCode = strs[0];
-            this.provinceCode = strs[1];
-            this.cityCode = null;
-        }
-        else if (strs.length==3){
-            this.countryCode = strs[0];
-            this.provinceCode = strs[1];
-            this.cityCode =  strs[2];
-        }
-    }
-
     public AddressCode(AddressCode addressCode) {
         this.countryCode = addressCode.countryCode;
         this.provinceCode = addressCode.provinceCode;
@@ -86,16 +68,6 @@ public class AddressCode {
             return countryCode + "-" + provinceCode;
         } else {
             return countryCode + "-" + provinceCode + "-" + cityCode;
-        }
-    }
-
-    public String toShortString() {
-        if (provinceCode == null && cityCode == null) {
-            return "";
-        } else if (cityCode == null) {
-            return provinceCode;
-        } else {
-            return provinceCode + "-" + cityCode;
         }
     }
 

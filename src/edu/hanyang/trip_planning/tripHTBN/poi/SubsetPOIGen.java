@@ -58,13 +58,6 @@ public class SubsetPOIGen {
         return subsetPOIs;
     }
 
-    public static SubsetPOIs genSeoul() {
-        SubsetPOIs subsetPOIs = new SubsetPOIs();
-        subsetPOIs.makeSubsetPOIsByTitle("분당서울대학교병원", "교보문고 광화문점", "뚝섬한강공원", "창동주공4단지아파트",
-                "한양대학교 정보통신관");
-        return subsetPOIs;
-    }
-
     public static SubsetPOIs getJeju10_() {
         SubsetPOIs subsetPOIs = new SubsetPOIs();
         subsetPOIs.makeSubsetPOIsByTitle("메종글래드제주", "섭지코지", "산방굴사", "대포주상절리", "제주민속촌박물관", "비자림", "삼성혈", "만장굴", "성산일출봉", "용연구름다리", "정방폭포", "쇠소깍","돈사돈");
@@ -80,17 +73,6 @@ public class SubsetPOIGen {
                 ,"돈사돈","한성식당","모이세해장국","대촌회미락","흑돈가","천제연토속음식점","노형삼대국수회관","어진이네횟집","국수회관 본점","꺼멍흑돼지"
                 ,"롯데면세점 제주점","제주관광공사 지정면세점"
 
-        );
-        return subsetPOIs;
-    }
-    public static SubsetPOIs getJeju50() {
-        SubsetPOIs subsetPOIs = new SubsetPOIs();
-        subsetPOIs.makeSubsetPOIsByTitle("메종글래드제주", "섭지코지", "산방굴사", "대포주상절리", "제주민속촌박물관", "비자림", "삼성혈", "만장굴", "성산일출봉", "용연구름다리", "정방폭포", "그랜드호텔사거리"
-                ,"소인국테마파크"
-                ,               "천제연폭포","천제연난대림","제주마방목지","별빛누리 공원","제주박기사 승합차여행","영실기암","녹하지악","쇠소깍","제주중문관광단지"
-                ,               "1","2","3","4","5","6","7","8","9","10"
-                ,               "11","12","13","14","15","16","17","18","19","20"
-                ,               "21","22","23","24","25","26","27","28"
         );
         return subsetPOIs;
     }

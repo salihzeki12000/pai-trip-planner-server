@@ -7,8 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jmath" level="project" />
     <orderEntry type="library" name="cntbn" level="project" />
     <orderEntry type="library" name="general" level="project" />
+    <orderEntry type="library" name="jmath" level="project" />
+    <orderEntry type="library" name="databse" level="project" />
   </component>
 </module>

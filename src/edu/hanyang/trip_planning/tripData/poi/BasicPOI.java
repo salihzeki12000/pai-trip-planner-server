@@ -20,10 +20,10 @@ public class BasicPOI {
     private String id;                                          // ID
     private String title;                                       // 이름
     private Set<String> names;                                  // 이름들 (별칭 포함 1번째가 대표이름임)              ?
-    private Address address;                                    // 주소
-    private POIType poiType;                                    // 장소의 종류
+    private Address address;                                    // 주소                                               ? address class 필요한가?
+    private POIType poiType;                                    // 장소의 종류                                        ? poitype class 필요한가?
     private Set<ActivityType> availableActivities;              // 해당 장소에서 할수 있는 활동들                     ?
-    private Location location;                                  // 위치 (경위도)
+    private Location location;                                  // 위치 (경위도)                                      ?
     private BusinessHour businessHour;                          // 영업시간
     private ClosingDays closingDays;                            // 휴일
     private int hasParkingLot = -1;                             // 주차가능 여부   (-1: Unknwon, 0: false, 1: true)   ?

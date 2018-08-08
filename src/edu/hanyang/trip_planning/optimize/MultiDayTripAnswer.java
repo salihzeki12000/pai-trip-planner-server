@@ -10,14 +10,6 @@ import java.util.List;
  * Created by wykwon on 2016-04-25.
  */
 public class MultiDayTripAnswer {
-//    // 도착하는 장소
-//    String srcPOIName;
-//    // 떠나는 장소
-//    String sinkPOIName;
-//    // 머무는 장소
-//    String hotel;
-    private static Logger logger = Logger.getLogger(MultiDayTripAnswer.class);
-
     List<DetailItinerary> itineraryList = new ArrayList<DetailItinerary>();
     List<List<List<BasicPOI>>> nearbyDiningPoiListListList = new ArrayList<>();         // Day - Pois - NearbyPois
     List<List<List<BasicPOI>>> nearbyShoppingPoiListListList = new ArrayList<>();       // Day - Pois - NearbyPois
@@ -28,12 +20,6 @@ public class MultiDayTripAnswer {
     public DetailItinerary getItinerary(int idx){
         return itineraryList.get(idx);
     }
-//    public MultiDayTripAnswer(String srcPOIName, String sinkPOIName, String hotel) {
-//        this.srcPOIName = srcPOIName;
-//        this.sinkPOIName = sinkPOIName;
-//        this.hotel = hotel;
-//        itineraryList = new ArrayList<OneDayItinerary>();
-//    }
 
     public void addItinerary(DetailItinerary itinerary) {
         itineraryList.add(itinerary);
