@@ -25,7 +25,6 @@ public class BasicPOI {
     private BusinessHour businessHour;                          // 영업시간
     private ClosingDays closingDays;                            // 휴일
     private int averageCostPerPerson = -1;                      // 평균 비용
-    private Set<AdjacentPOI> publicTransportationAccess;        // 대중교통 접근성 (예: XX 지하철 역에서 몇분거리)    ?
     private ProbabilisticDuration spendingTime;                 // 머무는 시간
     private double score = -1;                                  // 사용자 만족도
     private String placeUrl;
@@ -41,7 +40,6 @@ public class BasicPOI {
         this.title = title;
         this.location = location.deepCopy();
         availableActivities = new HashSet<>();
-        publicTransportationAccess = new HashSet<>();
         address = new Address();
         // 기본 소요시간은 1시간  +- 10분
         spendingTime = new ProbabilisticDuration(0.5, 0.1);
@@ -71,10 +69,6 @@ public class BasicPOI {
 
     public void setAverageCostPerPerson(int costPerPerson) {
         this.averageCostPerPerson = costPerPerson;
-    }
-
-    public void addPublicTransportationAccess(AdjacentPOI adjacentPOI) {
-        this.publicTransportationAccess.add(adjacentPOI);
     }
 
     public void setSpendingHour(double hour, double standardDeviation) {
@@ -165,7 +159,6 @@ public class BasicPOI {
         strBuf.append("휴무일: " + closingDays + "\n");
         strBuf.append("주차여부: " + "\n");
         strBuf.append("평균비용: " + averageCostPerPerson + "\n");
-        strBuf.append("대중교통 접근여부: " + publicTransportationAccess + "\n");
         strBuf.append("만족도(평점): " + score + "\n");
         strBuf.append("소요시간:" + spendingTime + "\n");
         return strBuf.toString();
@@ -198,7 +191,7 @@ public class BasicPOI {
         array[13] = gson.toJson(closingDays);
         array[14] = "";
         array[15] = Integer.toString(averageCostPerPerson);
-        array[16] = gson.toJson(publicTransportationAccess);
+        array[16] = "";
         array[17] = Double.toString(score);
         if (spendingTime != null) {
             array[18] = Double.toString(spendingTime.hour);
@@ -339,12 +332,6 @@ public class BasicPOI {
 //        basicPOI.setParking(hasParkingLot);
         int averageCostPerPerson = Integer.parseInt(array[15]);
         basicPOI.setAverageCostPerPerson(averageCostPerPerson);
-        if (array[16].length() > 3) {
-            AdjacentPOI adjacentPOIs[] = gson.fromJson(gson.toJson(array[16]), AdjacentPOI[].class);
-            for (AdjacentPOI adjacentPOI : adjacentPOIs) {
-                basicPOI.addPublicTransportationAccess(adjacentPOI);
-            }
-        }
 
         if (array[17].length() > 0) {
             double satisfaction = Double.parseDouble(array[17]);
@@ -374,8 +361,6 @@ public class BasicPOI {
 //        poi.setPoiType(new POIType("음식점", "한식", "곰탕"));
 ////5. 가능한 활동
 //        poi.addActivity(ActivityType.Eat);
-////6. 좌표
-//        poi.setLocation(39.564380, 126.984978);
 ////7. 영업시간
 //        poi.setBusinessHour(new BusinessHour("07:00", "16:30"));
 //// 8. 휴일
@@ -383,8 +368,6 @@ public class BasicPOI {
 //        closingDays.addMonthlyClosingDay(1, DayOfWeek.Sunday);
 //        closingDays.addMonthlyClosingDay(3, DayOfWeek.Sunday);
 //        poi.setClosingDays(closingDays);
-////9. 주차가능여부
-//        poi.setParking(1);
 //        // 10. 평균비용
 //        poi.setAverageCostPerPerson(11000);
 //        // 11 대중교통 접근성
@@ -402,21 +385,8 @@ public class BasicPOI {
 //        }
     }
 
-    private String toString(Set<String> strSet) {
-        StringBuilder builder = new StringBuilder();
-        for (String str : strSet) {
-            builder.append(str);
-            builder.append(',');
-        }
-        if (builder.length() > 0) {
-            builder.deleteCharAt(builder.length() - 1);
-        }
-        return builder.toString();
-    }
-
     @Override
     public int hashCode() {
         return id.hashCode();
     }
-
 }
