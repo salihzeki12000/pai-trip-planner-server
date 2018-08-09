@@ -13,17 +13,17 @@ public class ItemConverter {
         String placeUrl = item.getPlaceUrl();
 
         UpdatePlaceURLInfo updatePlaceURLInfo = new UpdatePlaceURLInfo(placeUrl);
-        double satisfaction = updatePlaceURLInfo.getSatisfaction();
-        BusinessHour businessHour = updatePlaceURLInfo.businessTime();
-        ClosingDays closingDays = updatePlaceURLInfo.cLosingDays();
+        double score = updatePlaceURLInfo.getScore();
+        BusinessHour businessHour = updatePlaceURLInfo.getBusinessTime();
+        ClosingDays closingDays = updatePlaceURLInfo.getClosingDays();
 
         BasicPOI basicPOI = new BasicPOI(id, title, location);
         basicPOI.setAddress(address);
         basicPOI.setPoiType(poiType);
-        basicPOI.setPlaceUrl(placeUrl);
-        basicPOI.setScore(satisfaction);
         basicPOI.setBusinessHour(businessHour);
         basicPOI.setClosingDays(closingDays);
+        basicPOI.setScore(score);
+        basicPOI.setPlaceUrl(placeUrl);
 
         return basicPOI;
     }

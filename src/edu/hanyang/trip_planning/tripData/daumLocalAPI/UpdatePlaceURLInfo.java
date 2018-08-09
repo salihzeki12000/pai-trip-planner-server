@@ -27,7 +27,7 @@ public class UpdatePlaceURLInfo {
         }
     }
 
-    public double getSatisfaction() {
+    public double getScore() {
         // 첫번째 나온게 별점이고, 마지막 나오는건 아니다.
         Elements num_em = doc.select(".num_em");
         double sum = 0.0;
@@ -43,7 +43,7 @@ public class UpdatePlaceURLInfo {
         return sum / num;
     }
 
-    public BusinessHour businessTime() {
+    public BusinessHour getBusinessTime() {
         Elements tit_list = doc.select("dl.list_info dt.tit");
         Elements cont_list = doc.select("dl.list_info dd.cont");
         int size = tit_list.size();
@@ -57,7 +57,7 @@ public class UpdatePlaceURLInfo {
         return new BusinessHour();
     }
 
-    public ClosingDays cLosingDays() {
+    public ClosingDays getClosingDays() {
         Elements tit_list = doc.select("dl.list_info dt.tit");
         Elements cont_list = doc.select("dl.list_info dd.cont");
         int size = tit_list.size();
@@ -122,8 +122,8 @@ public class UpdatePlaceURLInfo {
         for (BasicPOI poi : poiManager.getAll()) {
             String placeUrl = poi.getPlaceUrl();
             UpdatePlaceURLInfo u = new UpdatePlaceURLInfo(placeUrl);
-            if (u.cLosingDays().toString().length() > 0) {
-                logger.debug(u.cLosingDays());
+            if (u.getClosingDays().toString().length() > 0) {
+                logger.debug(u.getClosingDays());
             }
         }
     }

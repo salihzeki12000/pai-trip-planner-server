@@ -53,13 +53,13 @@ public class POIManager {
         String placeURL = basicPOI.getPlaceUrl();
         UpdatePlaceURLInfo updatePlaceInfo = new UpdatePlaceURLInfo(placeURL);
 
-        double satisfaction = updatePlaceInfo.getSatisfaction();
+        double satisfaction = updatePlaceInfo.getScore();
         basicPOI.setScore(satisfaction);
-        BusinessHour businessHour = updatePlaceInfo.businessTime();
+        BusinessHour businessHour = updatePlaceInfo.getBusinessTime();
         if (businessHour != null) {
             basicPOI.setBusinessHour(businessHour);
         }
-        ClosingDays closingDays = updatePlaceInfo.cLosingDays();
+        ClosingDays closingDays = updatePlaceInfo.getClosingDays();
         if (closingDays != null) {
             basicPOI.setClosingDays(closingDays);
         }
@@ -194,15 +194,15 @@ public class POIManager {
             String placeURL = poi.getPlaceUrl();
 //            logger.debug(placeURL);
             UpdatePlaceURLInfo updatePlaceInfo = new UpdatePlaceURLInfo(placeURL);
-            double satisfaction = updatePlaceInfo.getSatisfaction();
+            double satisfaction = updatePlaceInfo.getScore();
             poi.setScore(satisfaction);
 //            logger.debug(poi.getIdentifier().name + " \t별점="+satisfaction);
-            BusinessHour businessHour = updatePlaceInfo.businessTime();
+            BusinessHour businessHour = updatePlaceInfo.getBusinessTime();
             if (businessHour != null) {
                 logger.debug("영업시간:" + businessHour);
                 poi.setBusinessHour(businessHour);
             }
-            ClosingDays closingDays = updatePlaceInfo.cLosingDays();
+            ClosingDays closingDays = updatePlaceInfo.getClosingDays();
             if (closingDays != null) {
                 logger.debug("휴무일:" + closingDays);
                 poi.setClosingDays(closingDays);
