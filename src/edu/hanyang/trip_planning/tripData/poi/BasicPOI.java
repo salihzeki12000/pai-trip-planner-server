@@ -8,14 +8,11 @@ import edu.hanyang.trip_planning.tripData.preference.TouristAttractionType;
 import edu.hanyang.trip_planning.trip_question.PreferenceOfPOIType;
 import util.Pair;
 
-import java.util.*;
-
 public class BasicPOI {
     private String id;                                          // ID
     private String title;                                       // 이름
     private Address address;                                    // 주소                                               ? address class 필요한가?
     private POIType poiType;                                    // 장소의 종류                                        ? poitype class 필요한가?
-    private Set<ActivityType> availableActivities;              // 해당 장소에서 할수 있는 활동들                     ?
     private Location location;                                  // 위치 (경위도)                                      ?
     private BusinessHour businessHour;                          // 영업시간
     private ClosingDays closingDays;                            // 휴일
@@ -34,7 +31,6 @@ public class BasicPOI {
         this.id = id;
         this.title = title;
         this.location = location.deepCopy();
-        availableActivities = new HashSet<>();
         address = new Address();
         // 기본 소요시간은 1시간  +- 10분
         spendingTime = new ProbabilisticDuration(0.5, 0.1);
@@ -143,7 +139,6 @@ public class BasicPOI {
         strBuf.append("id: " + id + '\n');
         strBuf.append("Address: " + address.toString() + '\n');
         strBuf.append("Poi type : " + poiType + '\n');
-        strBuf.append("Available Activity: " + availableActivities + "\n");
         strBuf.append("location: " + location + '\n');
         if (businessHour != null) {
             strBuf.append(businessHour.toString() + '\n');
