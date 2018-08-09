@@ -5,7 +5,6 @@ import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import edu.hanyang.trip_planning.optimize.MultiDayTripAnswer;
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import kakao.Coord;
 import kr.hyosang.coordinate.CoordPoint;
 import kr.hyosang.coordinate.TransCoord;
 
@@ -73,7 +72,6 @@ class JSONGenerator {
                 private String id;
                 private String title;
                 private POIType poiType;
-                private Coord location;
                 private double x;
                 private double y;
 
@@ -82,10 +80,9 @@ class JSONGenerator {
                     title = basicPOI.getTitle();
                     poiType = basicPOI.getPoiType();
                     CoordPoint wsgCoord = new CoordPoint(basicPOI.getLocation().longitude, basicPOI.getLocation().latitude);
-                    CoordPoint wcongCoord = TransCoord.getTransCoord(wsgCoord, TransCoord.COORD_TYPE_WGS84, TransCoord.COORD_TYPE_WCONGNAMUL);
-                    location = new Coord(wcongCoord.x, wcongCoord.y);   //TODO: delete Coord
-                    x = wcongCoord.x;
-                    y = wcongCoord.y;
+                    CoordPoint wcoCoord = TransCoord.getTransCoord(wsgCoord, TransCoord.COORD_TYPE_WGS84, TransCoord.COORD_TYPE_WCONGNAMUL);
+                    x = wcoCoord.x;
+                    y = wcoCoord.y;
                 }
             }
         }

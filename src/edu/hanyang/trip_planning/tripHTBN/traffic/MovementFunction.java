@@ -1,17 +1,14 @@
 package edu.hanyang.trip_planning.tripHTBN.traffic;
 
-
 import edu.hanyang.trip_planning.tripData.dataType.UnitMovement;
 import edu.hanyang.trip_planning.tripData.navigation.Navigation;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
-import org.apache.log4j.Logger;
 import util.Pair;
 
 import java.util.List;
 
 public class MovementFunction {
-    private static Logger logger = Logger.getLogger(MovementFunction.class);
     SubsetPOIs subsetPOIs;
     Navigation navigation = Navigation.getInstance();
     List<UnitMovement> foundPath;
