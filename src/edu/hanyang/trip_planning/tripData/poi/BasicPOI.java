@@ -129,20 +129,23 @@ public class BasicPOI {
         this.placeUrl = placeUrl;
     }
 
+    @Override
     public String toString() {
-        StringBuilder strBuf = new StringBuilder();
-        strBuf.append("id: " + id + '\n');
-        strBuf.append("Address: " + address.toString() + '\n');
-        strBuf.append("Poi type : " + poiType + '\n');
-        strBuf.append("location: " + location + '\n');
-        if (businessHour != null) {
-            strBuf.append(businessHour.toString() + '\n');
-        }
-        strBuf.append("휴무일: " + closingDays + "\n");
-        strBuf.append("평균비용: " + averageCostPerPerson + "\n");
-        strBuf.append("만족도(평점): " + score + "\n");
-        strBuf.append("소요시간:" + spendingTime + "\n");
-        return strBuf.toString();
+        return "BasicPOI{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", address=" + address +
+                ", poiType=" + poiType +
+                ", location=" + location +
+                ", businessHour=" + businessHour +
+                ", closingDays=" + closingDays +
+                ", averageCostPerPerson=" + averageCostPerPerson +
+                ", spendingTime=" + spendingTime +
+                ", score=" + score +
+                ", placeUrl='" + placeUrl + '\'' +
+                ", touristAttractionType=" + touristAttractionType +
+                ", isRestaurant=" + isRestaurant +
+                '}';
     }
 
     public static String[] csvHeader() {
