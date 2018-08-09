@@ -50,20 +50,6 @@ public class POIManager {
     public void addDaumItem(Item item) {
         BasicPOI basicPOI = ItemConverter.getPOI(item);
 
-        String placeURL = basicPOI.getPlaceUrl();
-        UpdatePlaceURLInfo updatePlaceInfo = new UpdatePlaceURLInfo(placeURL);
-
-        double satisfaction = updatePlaceInfo.getScore();
-        basicPOI.setScore(satisfaction);
-        BusinessHour businessHour = updatePlaceInfo.getBusinessTime();
-        if (businessHour != null) {
-            basicPOI.setBusinessHour(businessHour);
-        }
-        ClosingDays closingDays = updatePlaceInfo.getClosingDays();
-        if (closingDays != null) {
-            basicPOI.setClosingDays(closingDays);
-        }
-
         poiMapById.put(basicPOI.getId(), basicPOI);
         poiMapByTitle.put(basicPOI.getTitle(), basicPOI);
         poiList.add(basicPOI);

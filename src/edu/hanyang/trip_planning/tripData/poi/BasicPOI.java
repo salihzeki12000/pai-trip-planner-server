@@ -23,25 +23,22 @@ public class BasicPOI {
     private TouristAttractionType touristAttractionType = null; // ?
     private boolean isRestaurant = false;                       // ?
 
-    public BasicPOI(String id, String title, Location location) {
+    public BasicPOI(String id, String title, Address address, POIType poiType, Location location, BusinessHour businessHour, ClosingDays closingDays, double score, String placeUrl) {
         this.id = id;
         this.title = title;
-        this.location = location.deepCopy();
-        address = new Address();
-        spendingTime = new ProbabilisticDuration(1.0, 0.05); // default spendingTime = 1hour +- 10min = 95%
-    }
-
-    public void setAddress(Address address) {
-        this.address = address.deepCopy();
+        this.address = address;
+        this.poiType = poiType;
+        this.location = location;
+        this.businessHour = businessHour;
+        this.closingDays = closingDays;
+        this.score = score;
+        this.placeUrl = placeUrl;
+        this.spendingTime = new ProbabilisticDuration(1.0, 0.05); // default spendingTime = 1hour +- 10min = 95%
+        this.isRestaurant = this.poiType.category.equals("음식점");
     }
 
     public boolean getIsRestaurant() {
         return isRestaurant;
-    }
-
-    public void setPoiType(POIType poiType) {
-        this.poiType = poiType.deepCopy();
-        this.isRestaurant = this.poiType.category.equals("음식점");
     }
 
     public void setBusinessHour(BusinessHour businessHour) {
@@ -58,14 +55,6 @@ public class BasicPOI {
 
     private void setSpendingHour(double hour, double standardDeviation) {
         this.spendingTime = new ProbabilisticDuration(hour, standardDeviation);
-    }
-
-    public void setSpendingMinutes(double minute, double standardDeviation) {
-        this.spendingTime = new ProbabilisticDuration(minute / 60.0, standardDeviation / 60.0);
-    }
-
-    public void setTouristAttractionType(String type) {
-        this.touristAttractionType = TouristAttractionType.parse(type);
     }
 
     public void setScore(double value) {
@@ -123,10 +112,6 @@ public class BasicPOI {
 
     public String getPlaceUrl() {
         return placeUrl;
-    }
-
-    public void setPlaceUrl(String placeUrl) {
-        this.placeUrl = placeUrl;
     }
 
     @Override
@@ -282,43 +267,23 @@ public class BasicPOI {
         String title = array[1];
         double latitude = Double.parseDouble(array[2]);
         double longitude = Double.parseDouble(array[3]);
-
-        BasicPOI basicPOI = new BasicPOI(id, title, new Location(latitude, longitude));
-
-        basicPOI.setPoiType(new POIType(array[5], array[6], array[7]));
-
+        Location location = new Location(latitude, longitude);
+        POIType poiType = new POIType(array[5], array[6], array[7]);
         AddressCode addressCode = new AddressCode(array[8], array[9], array[10]);
         Address address = new Address(addressCode, array[11]);
-
-        basicPOI.setAddress(address);
-
         BusinessHour businessHour = gson.fromJson(array[12], BusinessHour.class);
         businessHour.boot();
-        if (businessHour != null) {
-            basicPOI.setBusinessHour(businessHour);
-        }
-
         ClosingDays closingDays = gson.fromJson(array[13], ClosingDays.class);
-        if (closingDays != null) {
-            basicPOI.setClosingDays(closingDays);
-        }
-
         int averageCostPerPerson = Integer.parseInt(array[15]);
+        double score = Double.parseDouble(array[17]);
+        double spendingTime = Double.parseDouble(array[18]);
+        double spendingSD = Double.parseDouble(array[19]);
+        String placeUrl = array[20];
+
+        BasicPOI basicPOI = new BasicPOI(id, title, address, poiType, location, businessHour, closingDays, score, placeUrl);
+
         basicPOI.setAverageCostPerPerson(averageCostPerPerson);
-
-        if (array[17].length() > 0) {
-            double satisfaction = Double.parseDouble(array[17]);
-            basicPOI.setScore(satisfaction);
-        }
-        if (array[17].length() > 0 && array[18].length() > 0) {
-            double spendingTime = Double.parseDouble(array[18]);
-            double spendingSD = Double.parseDouble(array[19]);
-            basicPOI.setSpendingHour(spendingTime, spendingSD);
-        }
-        if (array.length > 20) {
-            basicPOI.setPlaceUrl(array[20]);
-        }
-
+        basicPOI.setSpendingHour(spendingTime, spendingSD);
         basicPOI.initTouristAttractionType();
 
         return basicPOI;
