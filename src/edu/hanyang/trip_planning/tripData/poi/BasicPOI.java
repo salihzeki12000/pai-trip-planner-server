@@ -119,8 +119,6 @@ public class BasicPOI {
 
         for (int i = 0; i < preferenceOfPOIType.size(); i++) {
             Pair<POIType, Double> preferredPOITypePair = preferenceOfPOIType.getPOITypePreference(i);
-
-            // poiType 이 match 되면?
             if (preferredPOITypePair.first().contain(this.poiType)) {
                 return preferredPOITypePair.second();
             }

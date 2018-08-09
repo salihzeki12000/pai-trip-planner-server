@@ -21,9 +21,7 @@ public class ACOptimizer {
         pheromone = DoubleArray.fill(nodeSize, nodeSize, 0.5);
     }
 
-    List<ScoredPath> results = new ArrayList<>();
-
-    //top K의 solution을 반환
+    //top K의 solution 반환
     public ScoredPath[] optimize(int topK) {
         TopKScoredPaths topKScoredPaths = new TopKScoredPaths(topK);
         for (int i = 0; i < acoParameters.getNumberOfIteration(); i++) {
