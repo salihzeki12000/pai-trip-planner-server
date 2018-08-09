@@ -23,17 +23,12 @@ public class BasicPOI {
     private TouristAttractionType touristAttractionType = null; // ?
     private boolean isRestaurant = false;                       // ?
 
-    public BasicPOI(String title) {
-        this.title = title;
-    }
-
     public BasicPOI(String id, String title, Location location) {
         this.id = id;
         this.title = title;
         this.location = location.deepCopy();
         address = new Address();
-        // 기본 소요시간은 1시간  +- 10분
-        spendingTime = new ProbabilisticDuration(0.5, 0.1);
+        spendingTime = new ProbabilisticDuration(1.0, 0.05); // default spendingTime = 1hour +- 10min = 95%
     }
 
     public void setAddress(Address address) {
@@ -61,7 +56,7 @@ public class BasicPOI {
         this.averageCostPerPerson = costPerPerson;
     }
 
-    public void setSpendingHour(double hour, double standardDeviation) {
+    private void setSpendingHour(double hour, double standardDeviation) {
         this.spendingTime = new ProbabilisticDuration(hour, standardDeviation);
     }
 
@@ -151,11 +146,10 @@ public class BasicPOI {
     }
 
     public static String[] csvHeader() {
-        String header[] = {"#id", "title", "latitude", "longitude", "othernames", "category",
+        return new String[]{"#id", "title", "latitude", "longitude", "othernames", "category",
                 "subcategory", "subsubcategory", "Addresscode_1", "AddressCode_2", "AddressCode_3", "Detailed_address", "BusinessHours", "closingdays", "parkingLot", "cost",
                 "publicTransportationAccess", "satisfaction", "spendingTime", "placeURL"
         };
-        return header;
     }
 
     public String[] toStrArray() {
@@ -197,35 +191,19 @@ public class BasicPOI {
     }
 
     public double[] getPhysicalActivity() {
-        return getPhysicalActivity(70);
-    }
+        double bodyWeight = 70;
+        // 1MET = 1 * kcal / (kg * h)
+        // kcal = MET*kg * h
 
-    public double[] getPhysicalActivity(double bodyWeight) {
         double ret[] = new double[2];
         if (this.touristAttractionType == null) {
             ret[0] = 0.0;
             ret[1] = 1.0;
             return ret;
         }
-        // 1MET = 1 * kcal / (kg * h)
-        // kcal = MET*kg * h
-        Pair<Double, Double> met = getMETPerHour();
-        double newMean = spendingTime.hour * met.first() * bodyWeight;
-        // 새로운 SD는 mean 에 대한 비율로 처리하는게 나을것 같군.
-        double metSDRatio = met.second() / met.first();
-        double durationRatio = spendingTime.standardDeviation / spendingTime.hour;
-        double sdRatio = Math.sqrt((metSDRatio * durationRatio) / (metSDRatio + spendingTime.hour));
 
-        double newSD = newMean * sdRatio;
-        ret[0] = newMean;
-        ret[1] = newSD * newSD;
-        return ret;
-    }
-
-    public Pair<Double, Double> getMETPerHour() {
         double mean = 0.0;
         double var = 1.0;
-
         switch (this.touristAttractionType) {
             case MountaineeringTrail:
                 mean = 6.5;
@@ -270,11 +248,21 @@ public class BasicPOI {
                 var = 0.1;
                 break;
         }
+        Pair<Double, Double> met = new Pair<>(mean, var);
 
-        return new Pair<>(mean, var);
+        double newMean = spendingTime.hour * met.first() * bodyWeight;
+        // 새로운 SD는 mean 에 대한 비율로 처리하는게 나을것 같군.
+        double metSDRatio = met.second() / met.first();
+        double durationRatio = spendingTime.standardDeviation / spendingTime.hour;
+        double sdRatio = Math.sqrt((metSDRatio * durationRatio) / (metSDRatio + spendingTime.hour));
+
+        double newSD = newMean * sdRatio;
+        ret[0] = newMean;
+        ret[1] = newSD * newSD;
+        return ret;
     }
 
-    public void initTouristAttractionType() {
+    private void initTouristAttractionType() {
         if (poiType.subSubCategory == null && poiType.subSubCategory.isEmpty()) {
             return;
         }
