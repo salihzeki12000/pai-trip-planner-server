@@ -1,5 +1,6 @@
 package edu.hanyang.trip_planning.tripData.navigation;
 
+
 import edu.hanyang.trip_planning.tripData.dataType.Location;
 import edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration;
 import edu.hanyang.trip_planning.tripData.dataType.UnitMovement;
@@ -10,16 +11,26 @@ import edu.hanyang.trip_planning.tripData.poi.POIUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DistanceBasedPathFinder {
+/**
+ * Created with IntelliJ IDEA.
+ * User: wykwon
+ * Date: 15. 7. 19
+ * Time: 오후 3:37
+ * To change this template use File | Settings | File Templates.
+ */
+public class Navigation {
+    private static Navigation instance = null;
+
+    private Navigation() {}
+
+    public static Navigation getInstance() {
+        if (instance == null) {
+            instance = new Navigation();
+        }
+        return instance;
+    }
+
     public List<UnitMovement> findPath(BasicPOI src, BasicPOI dest) {
-        return findPath(src.getTitle(), src.getLocation(), dest.getTitle(), dest.getLocation());
-    }
-
-    public List<UnitMovement> findPath(BasicPOI src, MinimalPOI dest) {
-        return findPath(src.getTitle(), src.getLocation(), dest.getTitle(), dest.getLocation());
-    }
-
-    public List<UnitMovement> findPath(MinimalPOI src, BasicPOI dest) {
         return findPath(src.getTitle(), src.getLocation(), dest.getTitle(), dest.getLocation());
     }
 
@@ -28,12 +39,17 @@ public class DistanceBasedPathFinder {
         ProbabilisticDuration dur = calculateTime(srcLocation, destLocation);
         int cost = (int) (distance * 1.3 * 400) + 3000;
         UnitMovement unitMovement = new UnitMovement(srcTitle, srcLocation, destTitle, destLocation, WayOfMovement.Taxi, dur, cost);
-        List<UnitMovement> list = new ArrayList<UnitMovement>();
+        List<UnitMovement> list = new ArrayList<>();
         list.add(unitMovement);
         return list;
-
     }
 
+    /**
+     * dist/ (D km/h)
+     * 1. 진출입 시간 - 앞뒤로 500 m 씩 빼보자고,  4km/h
+     * 2. worming up - 2km, 2km                 14km/h
+     * 3.
+     */
     private ProbabilisticDuration calculateTime(Location srcLocation, Location destLocation) {
         double distance = POIUtil.distance(srcLocation, destLocation);
 
@@ -45,12 +61,6 @@ public class DistanceBasedPathFinder {
         double speed_3 = 45;
 
         double walk = 4 / 60.0;
-        /**
-         * dist/ (D km/h)
-         * 1. 진출입 시간 - 앞뒤로 500 m 씩 빼보자고,  4km/h
-         * 2. worming up - 2km, 2km                 14km/h
-         * 3.
-         */
 
         double hour;
         double hour_sd = 0.0;
