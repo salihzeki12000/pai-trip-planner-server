@@ -1,8 +1,8 @@
 package server;
 
 import edu.hanyang.trip_planning.optimize.MultiDayTripAnswer;
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import edu.hanyang.trip_planning.tripData.poi.POIManager;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
+import edu.hanyang.trip_planning.tripData.poi.PoiManager;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 
 public class HTMLGenerator {
@@ -58,12 +58,12 @@ public class HTMLGenerator {
 
     private String generateScriptForDay(int idx, DetailItinerary itinerary) {
         StringBuilder scriptForDay = new StringBuilder();
-        BasicPOI startPOI = itinerary.getStartPOI();
+        BasicPoi startPoi = itinerary.getStartPoi();
 
-        scriptForDay.append("var poi" + (idx + 1) + "1 = {lat:" + Double.toString(startPOI.getLocation().latitude) + ", lng:" + Double.toString(startPOI.getLocation().longitude) + "};\n");
+        scriptForDay.append("var poi" + (idx + 1) + "1 = {lat:" + Double.toString(startPoi.getLocation().latitude) + ", lng:" + Double.toString(startPoi.getLocation().longitude) + "};\n");
         int size = itinerary.getPoiTitles().size();
         for (int i = 1; i < size; i++) {
-            BasicPOI poi = POIManager.getInstance().getPOIByTitle(itinerary.getPoiTitles().get(i));
+            BasicPoi poi = PoiManager.getInstance().getPoiByTitle(itinerary.getPoiTitles().get(i));
             double lat = poi.getLocation().latitude;
             double lng = poi.getLocation().longitude;
             scriptForDay.append("var poi" + (idx + 1) + (i + 1) + " = {lat:" + Double.toString(lat) + ", lng:" + Double.toString(lng) + "};\n");

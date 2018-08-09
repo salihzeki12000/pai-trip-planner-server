@@ -2,8 +2,8 @@ package edu.hanyang.trip_planning.tripData.daumLocalAPI;
 
 import edu.hanyang.trip_planning.tripData.dataType.BusinessHour;
 import edu.hanyang.trip_planning.tripData.dataType.ClosingDays;
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import edu.hanyang.trip_planning.tripData.poi.POIManager;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
+import edu.hanyang.trip_planning.tripData.poi.PoiManager;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -118,8 +118,8 @@ public class UpdatePlaceURLInfo {
     }
 
     public static void testAll() {
-        POIManager poiManager = POIManager.getInstance();
-        for (BasicPOI poi : poiManager.getAll()) {
+        PoiManager poiManager = PoiManager.getInstance();
+        for (BasicPoi poi : poiManager.getAll()) {
             String placeUrl = poi.getPlaceUrl();
             UpdatePlaceURLInfo u = new UpdatePlaceURLInfo(placeUrl);
             if (u.getClosingDays().toString().length() > 0) {

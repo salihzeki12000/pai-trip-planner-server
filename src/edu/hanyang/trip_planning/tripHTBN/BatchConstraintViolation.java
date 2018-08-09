@@ -4,8 +4,8 @@ package edu.hanyang.trip_planning.tripHTBN;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import edu.hanyang.trip_planning.optimize.constraints.ChanceConstraint;
 import edu.hanyang.trip_planning.optimize.constraints.categoryConstraint.CategoryConstraint;
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
+import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPois;
 import edu.hanyang.trip_planning.tripHTBN.potential.TripACOParameters;
 import org.apache.log4j.Logger;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by wykwon on 2016-11-11.
  */
 public class BatchConstraintViolation {
-    private SubsetPOIs subsetPOIs;
+    private SubsetPois subsetPois;
     private int year;
     private int monthOfYear;
     private int dayOfMonth;
@@ -25,8 +25,8 @@ public class BatchConstraintViolation {
     private boolean bConstraintViolation = false;
     private static Logger logger = Logger.getLogger(BatchConstraintViolation.class);
 
-    public BatchConstraintViolation(SubsetPOIs subsetPOIs, double returnHour, int year, int monthOfYear, int dayOfMonth) {
-        this.subsetPOIs = subsetPOIs;
+    public BatchConstraintViolation(SubsetPois subsetPois, double returnHour, int year, int monthOfYear, int dayOfMonth) {
+        this.subsetPois = subsetPois;
         this.year = year;
         this.monthOfYear = monthOfYear;
         this.dayOfMonth = dayOfMonth;
@@ -53,14 +53,14 @@ public class BatchConstraintViolation {
         return ChanceConstraint.inequalityValue(expectedReturnTime, returnHour, ChanceConstraint.LimitType.Lower, TripACOParameters.returnTimeLimitConfidenceLevel);
     }
 
-    private double openTimePenalty(double arrivalTime[], BasicPOI poi) {
+    private double openTimePenalty(double arrivalTime[], BasicPoi poi) {
         double openHour = poi.getBusinessHour().getOpenHour(this.year, this.monthOfYear, this.dayOfMonth);
 //        logger.debug("openTimePenalty 제한=" + arrivalTime[0] + "\t" + openHour);
         return ChanceConstraint.inequalityValue(arrivalTime, openHour, ChanceConstraint.LimitType.Upper, TripACOParameters.openTimeConfidenceInterval);
 //        return ChanceConstraint.inequalityValue(tripNetwork.marg_T[path.length - 1], endHour, ChanceConstraint.LimitType.Lower, returnTimeLimitConfidenceLevel);
     }
 
-    private double closeTimePenalty(double departureTime[], BasicPOI poi) {
+    private double closeTimePenalty(double departureTime[], BasicPoi poi) {
 
         double closeHour = poi.getBusinessHour().getCloseHour(this.year, this.monthOfYear, this.dayOfMonth);
 //        logger.debug("closeHour 제한=" + departureTime[0] + "\t" + closeHour);
@@ -80,7 +80,7 @@ public class BatchConstraintViolation {
     private boolean categoryConstraintsViolation(DetailItinerary detailItinerary, List<CategoryConstraint> categoryConstraintList) {
         List<double[]> arrivalTimes = detailItinerary.getArrivalTimes();
         List<double[]> departuraTimes = detailItinerary.getDepartureTimes();
-        List<BasicPOI> poiList = detailItinerary.getPoiList();
+        List<BasicPoi> poiList = detailItinerary.getPoiList();
 
         return false;
     }

@@ -6,16 +6,16 @@ import edu.hanyang.trip_planning.optimize.aco.ACOptimizer;
 import edu.hanyang.trip_planning.optimize.aco.ScoredPath;
 import edu.hanyang.trip_planning.optimize.constraints.categoryConstraint.CategoryConstraint;
 import edu.hanyang.trip_planning.optimize.constraints.poiConstraint.PoiConstraint;
-import edu.hanyang.trip_planning.tripData.dataType.POIType;
+import edu.hanyang.trip_planning.tripData.dataType.PoiType;
 import edu.hanyang.trip_planning.optimize.MultiDayTripAnswer;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
 import edu.hanyang.trip_planning.trip_question.PersonalInfo;
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import edu.hanyang.trip_planning.tripData.poi.POIManager;
+import edu.hanyang.trip_planning.tripData.poi.PoiManager;
 import edu.hanyang.trip_planning.tripData.poi.VincentyDistanceCalculator;
 import edu.hanyang.trip_planning.tripHTBN.GenerateTripCPDs;
 import edu.hanyang.trip_planning.tripHTBN.TripACOProblem;
 import edu.hanyang.trip_planning.tripHTBN.TripCPDs;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
+import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPois;
 import edu.hanyang.trip_planning.trip_question.DailyTripEntry;
 import edu.hanyang.trip_planning.trip_question.TripQuestion;
 import edu.hanyang.trip_planning.trip_question.TripQuestionFactory;
@@ -60,29 +60,29 @@ public class TripPlanner {
             List<CategoryConstraint> categoryConstraintList = dailyTripEntry.getCategoryConstraintList();
             List<PoiConstraint> poiConstraintList = dailyTripEntry.getPoiConstraintList();
             // mgkim: start & end PoiTitle
-            String startPoiTitle = dailyTripEntry.getStartPOITitle();
-            String endPoiTitle = dailyTripEntry.getEndPOITitle();
+            String startPoiTitle = dailyTripEntry.getStartPoiTitle();
+            String endPoiTitle = dailyTripEntry.getEndPoiTitle();
 
             /* mgkim: planner setup & execution*/
             // mgkim: tripCPDs
-            // mgkim: subsetPOIs
-            SubsetPOIs subsetPOIs = new SubsetPOIs();
-            subsetPOIs.makeSubsetPOIsByAreas(dailyTripEntry.getAreas());                // mgkim: 해당 areas 전체
-            subsetPOIs.reduceSubsetPoisByIdList(visitedPoiIdList);                      // mgkim: 들렀던 곳 제외
-            subsetPOIs.reduceSubsetPoisByScoreAndConstraint(numTotalPoi, numConstrainedTypePoi, categoryConstraintList); // mgkim: (numTotalPoi-5*numConstraint) 여행typePoi + (5*numConstraint) 각 constraintPoiType 남기고 줄이기
+            // mgkim: subsetPois
+            SubsetPois subsetPois = new SubsetPois();
+            subsetPois.makeSubsetPoisByAreas(dailyTripEntry.getAreas());                // mgkim: 해당 areas 전체
+            subsetPois.reduceSubsetPoisByIdList(visitedPoiIdList);                      // mgkim: 들렀던 곳 제외
+            subsetPois.reduceSubsetPoisByScoreAndConstraint(numTotalPoi, numConstrainedTypePoi, categoryConstraintList); // mgkim: (numTotalPoi-5*numConstraint) 여행typePoi + (5*numConstraint) 각 constraintPoiType 남기고 줄이기
             for (PoiConstraint poiConstraint : poiConstraintList) {                     // mgkim: poiConstraint 처리
                 if (poiConstraint.isVisitOrNot()) {
-                    subsetPOIs.addSubsetPOIsByTitle(poiConstraint.getPoiTitle());
+                    subsetPois.addSubsetPoisByTitle(poiConstraint.getPoiTitle());
                 } else {
-                    subsetPOIs.reduceSubsetPoisByTitles(poiConstraint.getPoiTitle());
+                    subsetPois.reduceSubsetPoisByTitles(poiConstraint.getPoiTitle());
                 }
             }
-            subsetPOIs.addSubsetPOIsByTitle(startPoiTitle, endPoiTitle);  // mgkim: 출발, 도착 장소 추가
-            GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(subsetPOIs, minuteTime);
+            subsetPois.addSubsetPoisByTitle(startPoiTitle, endPoiTitle);  // mgkim: 출발, 도착 장소 추가
+            GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(subsetPois, minuteTime);
             TripCPDs tripCPDs = generateTripCPDs.generate();
             // mgkim: start & end PoiIdx
-            int startNodeIdx = subsetPOIs.getPOIIdx(startPoiTitle);
-            int endNodeIdx = subsetPOIs.getPOIIdx(endPoiTitle);
+            int startNodeIdx = subsetPois.getPoiIdx(startPoiTitle);
+            int endNodeIdx = subsetPois.getPoiIdx(endPoiTitle);
             // Problem 생성
             TripACOProblem tripACOProblem = new TripACOProblem(startTimeArray, returnTimeArray, personalInfo, categoryConstraintList, poiConstraintList, tripCPDs, startNodeIdx, endNodeIdx);
             // Optimizer 생성
@@ -98,7 +98,7 @@ public class TripPlanner {
             double returnHour = return_hour + (double) return_minute / 60.0;
             detailItinerary.trimDetailItinerary(returnHour);    // 시간 맞추기
             multiDayTripAnswer.addItinerary(detailItinerary);
-            for (BasicPOI visitedPoi : detailItinerary.getPoiList()) {
+            for (BasicPoi visitedPoi : detailItinerary.getPoiList()) {
                 visitedPoiIdList.add(visitedPoi.getId());
             }
         }
@@ -108,22 +108,22 @@ public class TripPlanner {
     }
 
     private MultiDayTripAnswer setNearbyPois(MultiDayTripAnswer multiDayTripAnswer) {
-        POIManager poiManager = POIManager.getInstance();
+        PoiManager poiManager = PoiManager.getInstance();
 
-        List<List<List<BasicPOI>>> nearbyDiningPoiListListList = new ArrayList<>();         // Day - Pois - NearbyPois
-        List<List<List<BasicPOI>>> nearbyShoppingPoiListListList = new ArrayList<>();       // Day - Pois - NearbyPois
+        List<List<List<BasicPoi>>> nearbyDiningPoiListListList = new ArrayList<>();         // Day - Pois - NearbyPois
+        List<List<List<BasicPoi>>> nearbyShoppingPoiListListList = new ArrayList<>();       // Day - Pois - NearbyPois
         for (int i = 0; i < multiDayTripAnswer.size(); i++) {
-            List<List<BasicPOI>> nearbyDiningPoiListList = new ArrayList<>();               // Pois - NearbyPois
-            List<List<BasicPOI>> nearbyShoppingPoiListList = new ArrayList<>();             // Pois - NearbyPois
+            List<List<BasicPoi>> nearbyDiningPoiListList = new ArrayList<>();               // Pois - NearbyPois
+            List<List<BasicPoi>> nearbyShoppingPoiListList = new ArrayList<>();             // Pois - NearbyPois
             DetailItinerary detailItinerary = multiDayTripAnswer.getItinerary(i);
-            List<BasicPOI> poiList = new ArrayList<>();
-            poiList.add(detailItinerary.getStartPOI());
+            List<BasicPoi> poiList = new ArrayList<>();
+            poiList.add(detailItinerary.getStartPoi());
             poiList.addAll(detailItinerary.getPoiList());
-            poiList.add(detailItinerary.getEndPOI());
-            for (BasicPOI srcPoi : poiList) {
-                List<BasicPOI> nearbyDiningPoiList = new ArrayList<>();                     // NearbyPois
-                List<BasicPOI> nearbyShoppingPoiList = new ArrayList<>();                   // NearbyPois
-                for (BasicPOI destPoi : poiManager.getPoiByType(new POIType("음식점"))) {
+            poiList.add(detailItinerary.getEndPoi());
+            for (BasicPoi srcPoi : poiList) {
+                List<BasicPoi> nearbyDiningPoiList = new ArrayList<>();                     // NearbyPois
+                List<BasicPoi> nearbyShoppingPoiList = new ArrayList<>();                   // NearbyPois
+                for (BasicPoi destPoi : poiManager.getPoiByType(new PoiType("음식점"))) {
                     double distance = VincentyDistanceCalculator.getDistance(srcPoi.getLocation().latitude, srcPoi.getLocation().longitude,
                             destPoi.getLocation().latitude, destPoi.getLocation().longitude);
                     if (distance < 1) {
@@ -131,7 +131,7 @@ public class TripPlanner {
                     }
 
                 }
-                for (BasicPOI destPoi : poiManager.getPoiByType(new POIType("쇼핑"))) {
+                for (BasicPoi destPoi : poiManager.getPoiByType(new PoiType("쇼핑"))) {
                     double distance = VincentyDistanceCalculator.getDistance(srcPoi.getLocation().latitude, srcPoi.getLocation().longitude,
                             destPoi.getLocation().latitude, destPoi.getLocation().longitude);
                     if (distance < 1) {

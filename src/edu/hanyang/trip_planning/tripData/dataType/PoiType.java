@@ -1,6 +1,6 @@
 package edu.hanyang.trip_planning.tripData.dataType;
 
-public class POIType {
+public class PoiType {
     public String category;         // 장소 대분류
     public String subCategory;      // 장소 중분류
     public String subSubCategory;   // 장소 소분류
@@ -8,9 +8,9 @@ public class POIType {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof POIType)) return false;
+        if (!(o instanceof PoiType)) return false;
 
-        POIType poiType = (POIType) o;
+        PoiType poiType = (PoiType) o;
         if (!category.equals(poiType.category)) {
             return false;
         }
@@ -46,31 +46,31 @@ public class POIType {
         return result;
     }
 
-    public POIType(POIType poiType) {
+    public PoiType(PoiType poiType) {
         this.category = poiType.category;
         this.subCategory = poiType.subCategory;
         this.subSubCategory = poiType.subSubCategory;
     }
 
-    public POIType(String category) {
+    public PoiType(String category) {
         this.category = category;
         this.subCategory = null;
         this.subSubCategory = null;
     }
 
-    public POIType(String category, String subCategory) {
+    public PoiType(String category, String subCategory) {
         this.category = category;
         this.subCategory = subCategory;
         this.subSubCategory = null;
     }
 
-    public POIType(String category, String subCategory, String subSubCategory) {
+    public PoiType(String category, String subCategory, String subSubCategory) {
         this.category = category;
         this.subCategory = subCategory;
         this.subSubCategory = subSubCategory;
     }
 
-    public boolean contain(POIType type) {
+    public boolean contain(PoiType type) {
         if (this.category.equals(type.category)) {
             if (this.subCategory == null || this.subCategory.length() == 0) {
                 return true;
@@ -87,18 +87,18 @@ public class POIType {
         }
     }
 
-    public POIType deepCopy() {
-        return new POIType(this.category, this.subCategory, this.subSubCategory);
+    public PoiType deepCopy() {
+        return new PoiType(this.category, this.subCategory, this.subSubCategory);
     }
 
     @Override
     public String toString() {
         if (subCategory == null) {
-            return "POIType:" + category;
+            return "PoiType:" + category;
         } else if (subSubCategory == null) {
-            return "POIType:" + category + "." + subCategory;
+            return "PoiType:" + category + "." + subCategory;
         } else {
-            return "POIType:" + category + "." + subCategory + "." + subSubCategory;
+            return "PoiType:" + category + "." + subCategory + "." + subSubCategory;
         }
 
     }

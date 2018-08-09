@@ -2,24 +2,24 @@ package edu.hanyang.trip_planning.tripHTBN.traffic;
 
 import edu.hanyang.trip_planning.tripData.dataType.UnitMovement;
 import edu.hanyang.trip_planning.tripData.navigation.Navigation;
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
+import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPois;
 import util.Pair;
 
 import java.util.List;
 
 public class MovementFunction {
-    SubsetPOIs subsetPOIs;
+    SubsetPois subsetPois;
     Navigation navigation = Navigation.getInstance();
     List<UnitMovement> foundPath;
 
-    public MovementFunction(SubsetPOIs subsetPOIs) {
-        this.subsetPOIs = subsetPOIs;
+    public MovementFunction(SubsetPois subsetPois) {
+        this.subsetPois = subsetPois;
     }
 
     public List<UnitMovement> findPath(int srcId, int destId) {
-        BasicPOI src = subsetPOIs.getPOI(srcId);
-        BasicPOI dest = subsetPOIs.getPOI(destId);
+        BasicPoi src = subsetPois.getPoi(srcId);
+        BasicPoi dest = subsetPois.getPoi(destId);
         foundPath = navigation.findPath(src, dest);
         return foundPath;
     }

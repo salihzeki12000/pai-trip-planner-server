@@ -60,11 +60,6 @@ public class DaumPoiIO {
         itemList.addItems(additionalItems);
         writeItemList(fileName, itemList);
         logger.debug(itemList);
-
-
-        // 1. 이전 POI를 읽어들인다.
-//            ItemList itemList =
-        // 2.
     }
 
 
@@ -121,27 +116,16 @@ public class DaumPoiIO {
     }
 
     public static void testRead() {
-        DaumPoiIO daumPOIWriter = new DaumPoiIO("datafiles/pois/daum/daum_pois.json");
-        ItemList itemList = daumPOIWriter.readItemSet("datafiles/pois/daum/daum_pois.json");
+        DaumPoiIO daumPoiWriter = new DaumPoiIO("datafiles/pois/daum/daum_pois.json");
+        ItemList itemList = daumPoiWriter.readItemSet("datafiles/pois/daum/daum_pois.json");
         logger.debug("size=" + itemList.getItemList().size());
 
     }
 
-
-    public static void testWrite() {
-        DaumPoiIO daumPOIWriter = new DaumPoiIO("datafiles/pois/daum/daum_pois3.json");
-        List<Item> list = DaumLocalAPI.getPOIs("평양면옥", 20);
-        logger.debug(list);
-//        Item item = list.get(0);
-//        item.setTitle("가산디지털단지 1호선");
-//        logger.debug(list);
-        daumPOIWriter.writeItemList(list);
-    }
-
     public static void subway2() {
         try {
-            List<Item> list = new ArrayList<Item>();
-            DaumPoiIO daumPOIWriter = new DaumPoiIO();
+            List<Item> list = new ArrayList<>();
+            DaumPoiIO daumPoiWriter = new DaumPoiIO();
 
             CSVReader csvReader = new CSVReader(new FileReader("documents/subwayStations.csv"), '\t');
             List<String[]> rowStrList = csvReader.readAll();
@@ -149,42 +133,15 @@ public class DaumPoiIO {
                 String str = strs[1] + ' ' + strs[0] + "역 ";
                 System.out.println(str);
 
-                list.addAll(DaumLocalAPI.getPOIs(str, 3));
+                list.addAll(DaumLocalAPI.getPois(str, 3));
 
 
             }
-            daumPOIWriter.writeItemList(list);
+            daumPoiWriter.writeItemList(list);
         } catch (FileNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-
-//
-//        DaumPoiIO daumPOIWriter = new DaumPoiIO();
-//        for (String sta : subway2) {
-//            List<Item> list = DaumLocalAPI.getPOIs(sta, 1);
-//            daumPOIWriter.writeItemList(list);
-//        }
-
-    }
-
-    public static void main(String[] args) {
-
-        testWrite();
-
-//
-//        testRead();
-//        subway2();
-//        List<Item> list = DaumLocalAPI.getPOIs("한양대학교");
-//        for (Item infoPOI : list) {
-//            logger.debug(infoPOI);
-//        }
-//        ItemList itemlist = new ItemList();
-
-//        writeItem(DaumLocalAPI.dummyItem());
-//        initDirectory("datafiles/pois/daum/");
-
-
     }
 }

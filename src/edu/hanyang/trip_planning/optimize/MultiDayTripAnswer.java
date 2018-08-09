@@ -1,7 +1,6 @@
 package edu.hanyang.trip_planning.optimize;
 
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import org.apache.log4j.Logger;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +10,8 @@ import java.util.List;
  */
 public class MultiDayTripAnswer {
     List<DetailItinerary> itineraryList = new ArrayList<DetailItinerary>();
-    List<List<List<BasicPOI>>> nearbyDiningPoiListListList = new ArrayList<>();         // Day - Pois - NearbyPois
-    List<List<List<BasicPOI>>> nearbyShoppingPoiListListList = new ArrayList<>();       // Day - Pois - NearbyPois
+    List<List<List<BasicPoi>>> nearbyDiningPoiListListList = new ArrayList<>();         // Day - Pois - NearbyPois
+    List<List<List<BasicPoi>>> nearbyShoppingPoiListListList = new ArrayList<>();       // Day - Pois - NearbyPois
 
     public int size() {
         return itineraryList.size();
@@ -26,11 +25,11 @@ public class MultiDayTripAnswer {
         itineraryList.add(itinerary);
     }
 
-    public void setNearbyDiningPoiListListList(List<List<List<BasicPOI>>> nearbyDiningPoiListListList) {
+    public void setNearbyDiningPoiListListList(List<List<List<BasicPoi>>> nearbyDiningPoiListListList) {
         this.nearbyDiningPoiListListList = nearbyDiningPoiListListList;
     }
 
-    public void setNearbyShoppingPoiListListList(List<List<List<BasicPOI>>> nearbyShoppingPoiListListList) {
+    public void setNearbyShoppingPoiListListList(List<List<List<BasicPoi>>> nearbyShoppingPoiListListList) {
         this.nearbyShoppingPoiListListList = nearbyShoppingPoiListListList;
     }
 

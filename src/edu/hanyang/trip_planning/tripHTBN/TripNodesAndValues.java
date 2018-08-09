@@ -1,7 +1,7 @@
 package edu.hanyang.trip_planning.tripHTBN;
 
 import cntbn.common.NodeDictionary;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
+import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPois;
 import util.TimeStrHelper;
 import org.joda.time.DateTime;
 import util.MyCollections;
@@ -32,13 +32,13 @@ public class TripNodesAndValues {
     public int D0;
     public int D;
 
-    private SubsetPOIs subsetPOIs;
+    private SubsetPois subsetPois;
     private int discreteTimeWidth;
     private String discreteTimeValues[];
 
 
-    public TripNodesAndValues(SubsetPOIs subsetPOIs, int discreteTimeWidth) {
-        this.subsetPOIs = subsetPOIs;
+    public TripNodesAndValues(SubsetPois subsetPois, int discreteTimeWidth) {
+        this.subsetPois = subsetPois;
         this.discreteTimeWidth = discreteTimeWidth;
         discreteTimeValues = generateDiscreteTime(this.discreteTimeWidth);
         generateNodes();
@@ -50,8 +50,8 @@ public class TripNodesAndValues {
         TMP = nd.nodeIdx("TMP");
 
 
-        nd.putValues("X1", subsetPOIs.getTitles());
-        nd.putValues("X2", subsetPOIs.getTitles());
+        nd.putValues("X1", subsetPois.getTitles());
+        nd.putValues("X2", subsetPois.getTitles());
         X1 = nd.nodeIdx("X1");
         X2 = nd.nodeIdx("X2");
 

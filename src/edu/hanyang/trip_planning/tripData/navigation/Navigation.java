@@ -5,8 +5,8 @@ import edu.hanyang.trip_planning.tripData.dataType.Location;
 import edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration;
 import edu.hanyang.trip_planning.tripData.dataType.UnitMovement;
 import edu.hanyang.trip_planning.tripData.dataType.WayOfMovement;
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import edu.hanyang.trip_planning.tripData.poi.POIUtil;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
+import edu.hanyang.trip_planning.tripData.poi.PoiUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +30,12 @@ public class Navigation {
         return instance;
     }
 
-    public List<UnitMovement> findPath(BasicPOI src, BasicPOI dest) {
+    public List<UnitMovement> findPath(BasicPoi src, BasicPoi dest) {
         return findPath(src.getTitle(), src.getLocation(), dest.getTitle(), dest.getLocation());
     }
 
     private List<UnitMovement> findPath(String srcTitle, Location srcLocation, String destTitle, Location destLocation) {
-        double distance = POIUtil.distance(srcLocation, destLocation);
+        double distance = PoiUtil.distance(srcLocation, destLocation);
         ProbabilisticDuration dur = calculateTime(srcLocation, destLocation);
         int cost = (int) (distance * 1.3 * 400) + 3000;
         UnitMovement unitMovement = new UnitMovement(srcTitle, srcLocation, destTitle, destLocation, WayOfMovement.Taxi, dur, cost);
@@ -51,7 +51,7 @@ public class Navigation {
      * 3.
      */
     private ProbabilisticDuration calculateTime(Location srcLocation, Location destLocation) {
-        double distance = POIUtil.distance(srcLocation, destLocation);
+        double distance = PoiUtil.distance(srcLocation, destLocation);
 
         double dist_1 = 0.4;
         double dist_2 = 4;

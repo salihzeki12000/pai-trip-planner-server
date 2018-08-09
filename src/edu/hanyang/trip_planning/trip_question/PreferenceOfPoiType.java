@@ -1,15 +1,15 @@
 package edu.hanyang.trip_planning.trip_question;
 
-import edu.hanyang.trip_planning.tripData.dataType.POIType;
+import edu.hanyang.trip_planning.tripData.dataType.PoiType;
 import util.Pair;
 
 import java.util.*;
 
-public class PreferenceOfPOIType {
-    List<POIType> poiTypeList = new ArrayList<>();
+public class PreferenceOfPoiType {
+    List<PoiType> poiTypeList = new ArrayList<>();
     List<Double> preferenceValueList = new ArrayList<>();
 
-    public void addPreference(POIType poiType, double preference) {
+    public void addPreference(PoiType poiType, double preference) {
         poiTypeList.add(poiType);
         preferenceValueList.add(preference);
     }
@@ -18,18 +18,18 @@ public class PreferenceOfPOIType {
         return poiTypeList.size();
     }
 
-    public Pair<POIType, Double> getPOITypePreference(int idx) {
+    public Pair<PoiType, Double> getPoiTypePreference(int idx) {
         if (idx >= poiTypeList.size()) {
             throw new RuntimeException("No such element with index " + idx);
         }
-        POIType poiType = poiTypeList.get(idx);
+        PoiType poiType = poiTypeList.get(idx);
         Double value = preferenceValueList.get(idx);
         return new Pair<>(poiType, value);
     }
 
     public String toString() {
         StringBuffer strbuf = new StringBuffer();
-        strbuf.append("Preference of POIs\n");
+        strbuf.append("Preference of Pois\n");
         for (int i = 0; i < poiTypeList.size(); i++) {
             strbuf.append("\t" + poiTypeList.get(i) + "=" + preferenceValueList.get(i) + "\n");
         }

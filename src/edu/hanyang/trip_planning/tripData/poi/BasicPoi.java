@@ -5,25 +5,25 @@ import com.google.gson.Gson;
 import edu.hanyang.trip_planning.tripData.dataType.*;
 import edu.hanyang.trip_planning.trip_question.PersonalInfo;
 import edu.hanyang.trip_planning.tripData.preference.TouristAttractionType;
-import edu.hanyang.trip_planning.trip_question.PreferenceOfPOIType;
+import edu.hanyang.trip_planning.trip_question.PreferenceOfPoiType;
 import util.Pair;
 
-public class BasicPOI {
+public class BasicPoi {
     private String id;                                          // ID
     private String title;                                       // 이름
     private Address address;                                    // 주소                                               ? address class 필요한가?
-    private POIType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
+    private PoiType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
     private Location location;                                  // 위치 (경위도)                                      ?
     private BusinessHour businessHour;                          // 영업시간
     private ClosingDays closingDays;                            // 휴일
     private int averageCostPerPerson = -1;                      // 평균 비용
     private ProbabilisticDuration spendingTime;                 // 머무는 시간
-    private double score = -1;                                  // 사용자 만족도
+    private double score;                                       // 사용자 만족도
     private String placeUrl;
     private TouristAttractionType touristAttractionType = null; // ?
-    private boolean isRestaurant = false;                       // ?
+    private boolean isRestaurant;
 
-    public BasicPOI(String id, String title, Address address, POIType poiType, Location location, BusinessHour businessHour, ClosingDays closingDays, double score, String placeUrl) {
+    public BasicPoi(String id, String title, Address address, PoiType poiType, Location location, BusinessHour businessHour, ClosingDays closingDays, double score, String placeUrl) {
         this.id = id;
         this.title = title;
         this.address = address;
@@ -35,18 +35,11 @@ public class BasicPOI {
         this.placeUrl = placeUrl;
         this.spendingTime = new ProbabilisticDuration(1.0, 0.05); // default spendingTime = 1hour +- 10min = 95%
         this.isRestaurant = this.poiType.category.equals("음식점");
+        this.initTouristAttractionType();
     }
 
     public boolean getIsRestaurant() {
         return isRestaurant;
-    }
-
-    public void setBusinessHour(BusinessHour businessHour) {
-        this.businessHour = businessHour.deepCopy();
-    }
-
-    public void setClosingDays(ClosingDays closingDays) {
-        this.closingDays = closingDays.deepCopy();
     }
 
     public void setAverageCostPerPerson(int costPerPerson) {
@@ -55,10 +48,6 @@ public class BasicPOI {
 
     private void setSpendingHour(double hour, double standardDeviation) {
         this.spendingTime = new ProbabilisticDuration(hour, standardDeviation);
-    }
-
-    public void setScore(double value) {
-        this.score = value;
     }
 
     public double getScore() {
@@ -77,7 +66,7 @@ public class BasicPOI {
         return address;
     }
 
-    public POIType getPoiType() {
+    public PoiType getPoiType() {
         return poiType;
     }
 
@@ -95,12 +84,12 @@ public class BasicPOI {
 
     public Double getSatisfaction(PersonalInfo personalInfo) {
         double defaultValue = 0.5;
-        PreferenceOfPOIType preferenceOfPOIType = personalInfo.getPreferenceOfPOIType();
+        PreferenceOfPoiType preferenceOfPoiType = personalInfo.getPreferenceOfPoiType();
 
-        for (int i = 0; i < preferenceOfPOIType.size(); i++) {
-            Pair<POIType, Double> preferredPOITypePair = preferenceOfPOIType.getPOITypePreference(i);
-            if (preferredPOITypePair.first().contain(this.poiType)) {
-                return preferredPOITypePair.second();
+        for (int i = 0; i < preferenceOfPoiType.size(); i++) {
+            Pair<PoiType, Double> preferredPoiTypePair = preferenceOfPoiType.getPoiTypePreference(i);
+            if (preferredPoiTypePair.first().contain(this.poiType)) {
+                return preferredPoiTypePair.second();
             }
         }
         return defaultValue;
@@ -116,7 +105,7 @@ public class BasicPOI {
 
     @Override
     public String toString() {
-        return "BasicPOI{" +
+        return "BasicPoi{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", address=" + address +
@@ -261,14 +250,14 @@ public class BasicPOI {
         this.touristAttractionType = TouristAttractionType.parse(poiType.subSubCategory);
     }
 
-    public static BasicPOI parse(String array[]) {
+    public static BasicPoi parse(String array[]) {
         Gson gson = new Gson();
         String id = array[0];
         String title = array[1];
         double latitude = Double.parseDouble(array[2]);
         double longitude = Double.parseDouble(array[3]);
         Location location = new Location(latitude, longitude);
-        POIType poiType = new POIType(array[5], array[6], array[7]);
+        PoiType poiType = new PoiType(array[5], array[6], array[7]);
         AddressCode addressCode = new AddressCode(array[8], array[9], array[10]);
         Address address = new Address(addressCode, array[11]);
         BusinessHour businessHour = gson.fromJson(array[12], BusinessHour.class);
@@ -280,22 +269,22 @@ public class BasicPOI {
         double spendingSD = Double.parseDouble(array[19]);
         String placeUrl = array[20];
 
-        BasicPOI basicPOI = new BasicPOI(id, title, address, poiType, location, businessHour, closingDays, score, placeUrl);
+        BasicPoi basicPoi = new BasicPoi(id, title, address, poiType, location, businessHour, closingDays, score, placeUrl);
 
-        basicPOI.setAverageCostPerPerson(averageCostPerPerson);
-        basicPOI.setSpendingHour(spendingTime, spendingSD);
-        basicPOI.initTouristAttractionType();
+        basicPoi.setAverageCostPerPerson(averageCostPerPerson);
+        basicPoi.setSpendingHour(spendingTime, spendingSD);
+        basicPoi.initTouristAttractionType();
 
-        return basicPOI;
+        return basicPoi;
     }
 
     public static void main(String[] args) {
 ////1. ID로 이름 만들고
-//        BasicPOI poi = new BasicPOI("daum.111", "하동관", new Location(111, 222));
+//        BasicPoi poi = new BasicPoi("daum.111", "하동관", new Location(111, 222));
 ////3.  주소
 //        poi.setAddress(new Address("대한민국", "서울특별시", "중구", "명동9길 12"));
 ////4. 장소종류
-//        poi.setPoiType(new POIType("음식점", "한식", "곰탕"));
+//        poi.setPoiType(new PoiType("음식점", "한식", "곰탕"));
 ////5. 가능한 활동
 //        poi.addActivity(ActivityType.Eat);
 ////7. 영업시간

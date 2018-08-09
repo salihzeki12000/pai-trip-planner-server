@@ -2,7 +2,7 @@ package edu.hanyang.trip_planning.tripHTBN.dynamicPotential;
 
 import au.com.bytecode.opencsv.CSVReader;
 import cntbn.common.NodeDictionary;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
+import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPois;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceSoftmaxCPD;
 import util.Pair;
 
@@ -16,7 +16,7 @@ public class TrafficJamCPD implements InterfaceSoftmaxCPD {
     private String nodename;
     private List<Pair<Double, double[]>> timeTable = new ArrayList<>();
 
-    public TrafficJamCPD(String nodename, SubsetPOIs subsetPOIs) {
+    public TrafficJamCPD(String nodename, SubsetPois subsetPois) {
         this.nodename = nodename;
         try {
             readFile("datafiles/movements/jeju_traffic_jam.csv");

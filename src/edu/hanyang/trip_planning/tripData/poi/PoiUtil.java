@@ -3,7 +3,7 @@ package edu.hanyang.trip_planning.tripData.poi;
 
 import edu.hanyang.trip_planning.tripData.dataType.Location;
 
-public class POIUtil {
+public class PoiUtil {
     public static final double POI_NEAR_THRESHOLD = 1;
     public static final double POI_SAME_THRESHOLD = 0.1;
 
@@ -43,14 +43,6 @@ public class POIUtil {
 
     public static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
-    }
-
-    public static void test() {
-        System.out.println(distance(37.555404, 127.043538, 37.557565, 127.050061));
-    }
-
-    public static void main(String[] args) {
-        test();
     }
 
 }

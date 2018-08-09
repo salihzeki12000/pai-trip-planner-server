@@ -11,18 +11,18 @@ import java.util.List;
 public class DailyTripEntry {
     private String startTimeStr;        // 여정 시작시간
     private String returnTimeStr;       // 여정 종료시간
-    private String startPOITitle;       // 여정 시작장소
-    private String endPOITitle;         // 여정 종료장소
+    private String startPoiTitle;       // 여정 시작장소
+    private String endPoiTitle;         // 여정 종료장소
     private String[] areas;               // 여정 지역
     private Double physicalActivityLimit; // 활동량 상한
     private List<CategoryConstraint> categoryConstraintList = new ArrayList<>();
     private List<PoiConstraint> poiConstraintList = new ArrayList<>();
 
-    public DailyTripEntry(String startTimeStr, String returnTimeStr, String[] areas, String startPOITitle, String endPOITitle, double physicalActivityLimit) {
+    public DailyTripEntry(String startTimeStr, String returnTimeStr, String[] areas, String startPoiTitle, String endPoiTitle, double physicalActivityLimit) {
         this.startTimeStr = startTimeStr;
         this.returnTimeStr = returnTimeStr;
-        this.startPOITitle = startPOITitle;
-        this.endPOITitle = endPOITitle;
+        this.startPoiTitle = startPoiTitle;
+        this.endPoiTitle = endPoiTitle;
         this.areas = areas;
         this.physicalActivityLimit = physicalActivityLimit;
     }
@@ -43,12 +43,12 @@ public class DailyTripEntry {
         return TimeStrHelper.fullDateStr2IntArray(returnTimeStr);
     }
 
-    public String getStartPOITitle() {
-        return startPOITitle;
+    public String getStartPoiTitle() {
+        return startPoiTitle;
     }
 
-    public String getEndPOITitle() {
-        return endPOITitle;
+    public String getEndPoiTitle() {
+        return endPoiTitle;
     }
 
     public String[] getAreas() {
@@ -67,7 +67,7 @@ public class DailyTripEntry {
     public String toString() {
         StringBuffer strbuf = new StringBuffer();
         strbuf.append("daily itinerary [" + startTimeStr + "--" + returnTimeStr + "]\n");
-        strbuf.append("\tareas=" + areas + " from " + startPOITitle + " to " + endPOITitle + "\n");
+        strbuf.append("\tareas=" + areas + " from " + startPoiTitle + " to " + endPoiTitle + "\n");
         strbuf.append("\tphysical activity limit=" + physicalActivityLimit + "\n");
         for (CategoryConstraint categoryConstraint : categoryConstraintList) {
             strbuf.append("\t" + categoryConstraint + "\n");

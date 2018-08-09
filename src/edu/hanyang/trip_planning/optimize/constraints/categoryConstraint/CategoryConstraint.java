@@ -1,13 +1,13 @@
 package edu.hanyang.trip_planning.optimize.constraints.categoryConstraint;
 
-import edu.hanyang.trip_planning.tripData.dataType.POIType;
+import edu.hanyang.trip_planning.tripData.dataType.PoiType;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
 public class CategoryConstraint {
-    private Set<POIType> poiTypes;
+    private Set<PoiType> poiTypes;
     private double startHour;
     private double endHour;
     private int minCount;
@@ -22,13 +22,13 @@ public class CategoryConstraint {
             StringTokenizer stringTokenizer = new StringTokenizer(s, ".");
             int countToken = stringTokenizer.countTokens();
 
-            POIType poiType;
+            PoiType poiType;
             if (countToken == 1) {
-                poiType = new POIType(stringTokenizer.nextToken());
+                poiType = new PoiType(stringTokenizer.nextToken());
             } else if (countToken == 2) {
-                poiType = new POIType(stringTokenizer.nextToken(), stringTokenizer.nextToken());
+                poiType = new PoiType(stringTokenizer.nextToken(), stringTokenizer.nextToken());
             } else if (countToken == 3) {
-                poiType = new POIType(stringTokenizer.nextToken(), stringTokenizer.nextToken(), stringTokenizer.nextToken());
+                poiType = new PoiType(stringTokenizer.nextToken(), stringTokenizer.nextToken(), stringTokenizer.nextToken());
             } else {
                 throw new RuntimeException("Parsing error with: " + s);
             }
@@ -40,7 +40,7 @@ public class CategoryConstraint {
         this.maxCount = maxCount;
     }
 
-    public Set<POIType> getPOIType() {
+    public Set<PoiType> getPoiType() {
         return poiTypes;
     }
 

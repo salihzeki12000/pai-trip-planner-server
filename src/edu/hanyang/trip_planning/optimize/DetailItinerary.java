@@ -1,7 +1,7 @@
 package edu.hanyang.trip_planning.optimize;
 
 
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -10,8 +10,8 @@ import java.util.*;
  * Created by wykwon on 2016-02-04.
  */
 public class DetailItinerary {
-    private BasicPOI startPOI;
-    private BasicPOI endPOI;
+    private BasicPoi startPoi;
+    private BasicPoi endPoi;
 
     public String getDate() {
         return date;
@@ -29,7 +29,7 @@ public class DetailItinerary {
     private double startTime;
     private double endTime[];
 
-    private List<BasicPOI> poiList = new ArrayList<>();
+    private List<BasicPoi> poiList = new ArrayList<>();
     private List<double[]> arrivalTimes = new ArrayList<>();
     private List<double[]> durations = new ArrayList<>();
     private List<double[]> departureTimes = new ArrayList<>();
@@ -38,21 +38,21 @@ public class DetailItinerary {
     DecimalFormat df = new DecimalFormat("00");
     public double value;
 
-    public DetailItinerary(String date, double startTime, BasicPOI startPOI, BasicPOI endPOI) {
+    public DetailItinerary(String date, double startTime, BasicPoi startPoi, BasicPoi endPoi) {
         this.date = date;
         this.startTime = startTime;
-        this.startPOI = startPOI;
-        this.endPOI = endPOI;
+        this.startPoi = startPoi;
+        this.endPoi = endPoi;
     }
 
-    public DetailItinerary(int year, int monthOfYear, int dayOfMonth, double startTime, BasicPOI startPOI, BasicPOI endPOI) {
+    public DetailItinerary(int year, int monthOfYear, int dayOfMonth, double startTime, BasicPoi startPoi, BasicPoi endPoi) {
         this.date = year + "-" + monthOfYear + "-" + dayOfMonth;
         this.startTime = startTime;
-        this.startPOI = startPOI;
-        this.endPOI = endPOI;
+        this.startPoi = startPoi;
+        this.endPoi = endPoi;
     }
 
-    public void addEntry(BasicPOI poi, double arrivalTime[], double duration[], double departureTime[], double cost[], double pa[]) {
+    public void addEntry(BasicPoi poi, double arrivalTime[], double duration[], double departureTime[], double cost[], double pa[]) {
         poiList.add(poi);
         arrivalTimes.add(arrivalTime.clone());
         departureTimes.add(departureTime.clone());
@@ -61,17 +61,8 @@ public class DetailItinerary {
         PAs.add(pa.clone());
     }
 
-    /**
-     * deterministic version
-     *
-     * @param poi
-     * @param arrivalTime
-     * @param duration
-     * @param departureTime
-     * @param cost
-     * @param pa
-     */
-    public void addEntry(BasicPOI poi, double arrivalTime, double duration, double departureTime, double cost, double pa) {
+    //deterministic version
+    public void addEntry(BasicPoi poi, double arrivalTime, double duration, double departureTime, double cost, double pa) {
         poiList.add(poi);
         double tmp[] = new double[2];
         tmp[0] = arrivalTime;
@@ -86,16 +77,16 @@ public class DetailItinerary {
         PAs.add(tmp.clone());
     }
 
-    public List<BasicPOI> getPoiList() {
+    public List<BasicPoi> getPoiList() {
         return poiList;
     }
 
-    public BasicPOI getStartPOI() {
-        return startPOI;
+    public BasicPoi getStartPoi() {
+        return startPoi;
     }
 
-    public BasicPOI getEndPOI() {
-        return endPOI;
+    public BasicPoi getEndPoi() {
+        return endPoi;
     }
 
     public List<double[]> getArrivalTimes() {
@@ -134,13 +125,13 @@ public class DetailItinerary {
         return this.value;
     }
 
-    public Set<String> getPOITitleSet() {
+    public Set<String> getPoiTitleSet() {
         Set<String> retList = new HashSet<>();
-        retList.add(startPOI.getTitle());
-        for (BasicPOI poi : poiList) {
+        retList.add(startPoi.getTitle());
+        for (BasicPoi poi : poiList) {
             retList.add(poi.getTitle());
         }
-        retList.add(endPOI.getTitle());
+        retList.add(endPoi.getTitle());
         return retList;
     }
 
@@ -169,26 +160,26 @@ public class DetailItinerary {
 
     public List<String> getPoiTitles() {
         List<String> retList = new ArrayList<String>();
-        retList.add(startPOI.getTitle());
-        for (BasicPOI poi : poiList) {
+        retList.add(startPoi.getTitle());
+        for (BasicPoi poi : poiList) {
             retList.add(poi.getTitle());
         }
-        retList.add(endPOI.getTitle());
+        retList.add(endPoi.getTitle());
         return retList;
     }
 
     public String toString() {
         StringBuffer strbuf = new StringBuffer();
-        strbuf.append(startPOI.getTitle());
+        strbuf.append(startPoi.getTitle());
         strbuf.append("->");
-        for (BasicPOI poi : poiList) {
+        for (BasicPoi poi : poiList) {
             strbuf.append(poi.getTitle());
             strbuf.append("(" + poi.getPoiType() + ")");
             strbuf.append("->");
         }
-        if (endPOI != null) {
-            strbuf.append(endPOI.getTitle());
-            strbuf.append("(" + endPOI.getPoiType() + ")");
+        if (endPoi != null) {
+            strbuf.append(endPoi.getTitle());
+            strbuf.append("(" + endPoi.getPoiType() + ")");
         } else {
             strbuf.deleteCharAt(strbuf.length() - 1);
             strbuf.deleteCharAt(strbuf.length() - 1);
@@ -199,7 +190,7 @@ public class DetailItinerary {
     //    public String toHTMLString() {
 //        StringBuffer strbuf = new StringBuffer();
 //        strbuf.append("날짜:" + date+ "<br>\n");
-//        strbuf.append(startPOITitle + "에서 " + timeStr(startTime) + "에 출발<br>\n");
+//        strbuf.append(startPoiTitle + "에서 " + timeStr(startTime) + "에 출발<br>\n");
 //        for (int i = 0; i < poiTitles.size()-1; i++) {
 //            strbuf.append((i+1) + ": "+poiTitles.get(i) + "에 " +timeStr(arrivalTimes.get(i))+"에 도착, " + durationStr(durations.get(i)) +"동안 방문<br>\n" );
 //        }
@@ -282,14 +273,14 @@ public class DetailItinerary {
 
     public String toDetailString() {
         StringBuffer strbuf = new StringBuffer();
-        strbuf.append(startPOI.getTitle() + "에서 " + timeStr(startTime) + "에 출발\n");
+        strbuf.append(startPoi.getTitle() + "에서 " + timeStr(startTime) + "에 출발\n");
 
         for (int i = 0; i < poiList.size(); i++) {
             strbuf.append(poiList.get(i).getTitle() + "에서 " + timeStr(arrivalTimes.get(i)[0]) + "에 도착 해서 " + durationStr(durations.get(i)[0]) + "분 동안 머물고 " + timeStr(departureTimes.get(i)[0]) + "에 출발\n");
         }
 
 
-        strbuf.append(endPOI.getTitle() + "에 " + timeStr(endTime[0]) + "에 도착\n");
+        strbuf.append(endPoi.getTitle() + "에 " + timeStr(endTime[0]) + "에 도착\n");
         return strbuf.toString();
     }
 
@@ -298,13 +289,13 @@ public class DetailItinerary {
 
         strbuf.append("<p>\n");
         strbuf.append("날짜:" + date + "<br>\n");
-        strbuf.append("1. " + startPOI.getTitle() + "에서 " + timeStr(startTime) + "에 출발<br>\n");
+        strbuf.append("1. " + startPoi.getTitle() + "에서 " + timeStr(startTime) + "에 출발<br>\n");
 
         for (int i = 0; i < poiList.size(); i++) {
             strbuf.append((i + 2) + ". " + poiList.get(i).getTitle() + "에서 " + timeStr(arrivalTimes.get(i)[0]) + "에 도착해서 " + durationStr(durations.get(i)[0]) + "분 동안 머물고 " + timeStr(departureTimes.get(i)[0]) + "에 출발<br>\n");
         }
 
-        strbuf.append((poiList.size() + 2) + ". " + endPOI.getTitle() + "에 " + timeStr(endTime[0]) + "에 도착<br>\n");
+        strbuf.append((poiList.size() + 2) + ". " + endPoi.getTitle() + "에 " + timeStr(endTime[0]) + "에 도착<br>\n");
         strbuf.append("</p>\n");
         return strbuf.toString();
     }

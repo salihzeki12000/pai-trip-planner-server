@@ -1,14 +1,14 @@
 package edu.hanyang.trip_planning.tripData.daumLocalAPI;
 
 import edu.hanyang.trip_planning.tripData.dataType.*;
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
 
 public class ItemConverter {
-    public static BasicPOI getPOI(Item item) {
+    public static BasicPoi getPoi(Item item) {
         String id = "daum." + item.getId();
         String title = item.getTitle();
         Address address = getAddress(item.getAddress());
-        POIType poiType = getType(item.getCategory());
+        PoiType poiType = getType(item.getCategory());
         Location location = new Location(Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
         String placeUrl = item.getPlaceUrl();
 
@@ -17,19 +17,19 @@ public class ItemConverter {
         BusinessHour businessHour = updatePlaceURLInfo.getBusinessTime();
         ClosingDays closingDays = updatePlaceURLInfo.getClosingDays();
 
-        BasicPOI basicPOI = new BasicPOI(id, title, address, poiType, location, businessHour, closingDays, score, placeUrl);
+        BasicPoi basicPoi = new BasicPoi(id, title, address, poiType, location, businessHour, closingDays, score, placeUrl);
 
-        return basicPOI;
+        return basicPoi;
     }
 
-    private static POIType getType(String categoryStr) {
+    private static PoiType getType(String categoryStr) {
         String typeArray[] = categoryStr.split(" > ");
         if (typeArray.length == 1) {
-            return new POIType(typeArray[0], null, null);
+            return new PoiType(typeArray[0], null, null);
         } else if (typeArray.length == 2) {
-            return new POIType(typeArray[0], typeArray[1], null);
+            return new PoiType(typeArray[0], typeArray[1], null);
         } else {
-            return new POIType(typeArray[0], typeArray[1], typeArray[2]);
+            return new PoiType(typeArray[0], typeArray[1], typeArray[2]);
         }
     }
 

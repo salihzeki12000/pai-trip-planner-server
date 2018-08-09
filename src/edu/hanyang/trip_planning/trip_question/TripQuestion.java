@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TripQuestion {
-    private PersonalInfo personalInfo;                                      // POI type에 대한 constraints
+    private PersonalInfo personalInfo;                                      // Poi type에 대한 constraints
     private List<DailyTripEntry> dailyTripEntryList = new ArrayList<>();    // 하루하루의 trip plan을 위한 변수들
 
     public TripQuestion(PersonalInfo personalInfo) {

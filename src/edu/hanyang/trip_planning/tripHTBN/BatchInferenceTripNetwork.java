@@ -3,8 +3,8 @@ package edu.hanyang.trip_planning.tripHTBN;
 import cntbn.terms_factors.ContinuousFactor;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
 import edu.hanyang.trip_planning.trip_question.PersonalInfo;
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripData.preference.TouristAttractionType;
 import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.PDFtoPMF;
 import edu.hanyang.trip_planning.tripHTBN.potential.domain_specific.Temperature;
@@ -93,7 +93,7 @@ public class BatchInferenceTripNetwork {
      * 단계별 추론 시작
      */
     public DetailItinerary inference(List<Integer> trail) {
-        DetailItinerary detailItinerary = new DetailItinerary(dateStr, startHour, tripCPDs.getPOI(startNodeIdx), tripCPDs.getPOI(endNodeIdx));
+        DetailItinerary detailItinerary = new DetailItinerary(dateStr, startHour, tripCPDs.getPoi(startNodeIdx), tripCPDs.getPoi(endNodeIdx));
         int srcNodeIdx, destNodeIdx;
         previousDepartureTime = new double[2];
         previousDepartureTime[0] = startHour;
@@ -114,7 +114,7 @@ public class BatchInferenceTripNetwork {
 //        public void addEntry(String poiTitle, double arrivalTime[], double duration[], double departureTime[], double cost[], double pa[])
 
 
-            detailItinerary.addEntry(tripCPDs.getPOI(destNodeIdx), arrivalTime, duration, departureTime, cost, pa);
+            detailItinerary.addEntry(tripCPDs.getPoi(destNodeIdx), arrivalTime, duration, departureTime, cost, pa);
             previousDepartureTime = departureTime.clone();
 
             totalPA[0] += pa[0];
@@ -156,7 +156,7 @@ public class BatchInferenceTripNetwork {
      * @return 1st element: mean, 2nd element: var
      */
     private double[] inferenceDuration(int destNodeIdx) {
-        ProbabilisticDuration pd = tripCPDs.getPOI(destNodeIdx).getSpendingTime();
+        ProbabilisticDuration pd = tripCPDs.getPoi(destNodeIdx).getSpendingTime();
         double ret[] = new double[2];
         ret[0] = pd.hour;
         ret[1] = pd.standardDeviation * pd.standardDeviation;
@@ -197,14 +197,14 @@ public class BatchInferenceTripNetwork {
         ret[0] = pref[0] * weatherSuit;
         ret[1] = 0.1;
 
-        if (tripCPDs.getPOI(destNodeIdx).getIsRestaurant()) {
+        if (tripCPDs.getPoi(destNodeIdx).getIsRestaurant()) {
             ret[0] = ret[0] + 0.75;
         }
         return ret;
     }
 
     private double[] inferencePreference(int destNodeIdx) {
-        BasicPOI poi = tripCPDs.getPOI(destNodeIdx);
+        BasicPoi poi = tripCPDs.getPoi(destNodeIdx);
         double ret[] = new double[2];
         ret[0] = poi.getSatisfaction(personalInfo);
         ret[1] = 0.1;
@@ -213,7 +213,7 @@ public class BatchInferenceTripNetwork {
     }
 
     private double[] inferenceCost(int destNodeIdx) {
-        BasicPOI poi = tripCPDs.getPOI(destNodeIdx);
+        BasicPoi poi = tripCPDs.getPoi(destNodeIdx);
         double ret[] = new double[2];
         ret[0] = (double) poi.getAverageCostPerPerson();
         ret[1] = 0.1;
@@ -224,7 +224,7 @@ public class BatchInferenceTripNetwork {
     }
 
     private double[] inferencePhysicalActivity(int destNodeIdx) {
-        BasicPOI poi = tripCPDs.getPOI(destNodeIdx);
+        BasicPoi poi = tripCPDs.getPoi(destNodeIdx);
         double ret[] = poi.getPhysicalActivity();
 //        logger.debug("poi=" + poi.getTitle() + " physical activity=" + ret[0]);
         return ret;
@@ -239,7 +239,7 @@ public class BatchInferenceTripNetwork {
     private double[] weatherSuitability(int destNodeIdx, double arrivalTime[]) {
         // 주어진 날짜의 날짜는 위에 있고
 //        double hour = tripNetwork.marg_T[order].getMean();
-        BasicPOI poi = tripCPDs.getPOI(destNodeIdx);
+        BasicPoi poi = tripCPDs.getPoi(destNodeIdx);
 
         double hour = MyArrays.argMax(arrivalTime) * ((double) tripNodesAndValues.getDiscreteTimeWidth() / 60.0);
         WeatherEntry weatherEntry = WeatherProbability.getInstance().getWeatherEntry(year, monthOfYear, dayOfMonth, (int) hour);

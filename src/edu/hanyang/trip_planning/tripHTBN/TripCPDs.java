@@ -1,8 +1,8 @@
 package edu.hanyang.trip_planning.tripHTBN;
 
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
 import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.DiscreteTimeCPD;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
+import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPois;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceCLGCPD;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceHybridCPD;
 
@@ -18,24 +18,24 @@ public class TripCPDs {
     public InterfaceHybridCPD physicalActivity;
 
     // 보조변수들
-    private SubsetPOIs subsetPOIs;
+    private SubsetPois subsetPois;
     private TripNodesAndValues tripNodesAndValues;
 
-    public TripCPDs(SubsetPOIs subsetPOIs, TripNodesAndValues tripNodesAndValues) {
-        this.subsetPOIs = subsetPOIs;
+    public TripCPDs(SubsetPois subsetPois, TripNodesAndValues tripNodesAndValues) {
+        this.subsetPois = subsetPois;
         this.tripNodesAndValues = tripNodesAndValues;
     }
 
-    public BasicPOI getPOI(int idx) {
-        return subsetPOIs.getPOI(idx);
+    public BasicPoi getPoi(int idx) {
+        return subsetPois.getPoi(idx);
     }
 
-    public String[] getTitleOfPOIs() {
-        return subsetPOIs.getTitles();
+    public String[] getTitleOfPois() {
+        return subsetPois.getTitles();
     }
 
-    public SubsetPOIs getSubsetPOIs() {
-        return subsetPOIs;
+    public SubsetPois getSubsetPois() {
+        return subsetPois;
     }
 
     public InterfaceHybridCPD getMovementCPDs() {

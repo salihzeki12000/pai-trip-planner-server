@@ -1,7 +1,7 @@
 package edu.hanyang.trip_planning.optimize.constraints.poiConstraint;
 
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import edu.hanyang.trip_planning.tripData.poi.POIManager;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
+import edu.hanyang.trip_planning.tripData.poi.PoiManager;
 
 public class PoiConstraint {
     private String poiId;
@@ -9,12 +9,12 @@ public class PoiConstraint {
     private boolean visitOrNot;
 
     public PoiConstraint(String inputString, boolean visitOrNot) {
-        POIManager poiManager = POIManager.getInstance();
-        BasicPOI basicPOI = poiManager.getPOIByTitle(inputString);
+        PoiManager poiManager = PoiManager.getInstance();
+        BasicPoi basicPoi = poiManager.getPoiByTitle(inputString);
 
-        if (basicPOI != null) {
-            this.poiId = basicPOI.getId();
-            this.poiTitle = basicPOI.getTitle();
+        if (basicPoi != null) {
+            this.poiId = basicPoi.getId();
+            this.poiTitle = basicPoi.getTitle();
             this.visitOrNot = visitOrNot;
         } else {
             throw new RuntimeException("The corresponding POI does not exist:" + inputString);
@@ -35,10 +35,10 @@ public class PoiConstraint {
 
     @Override
     public String toString() {
-        StringBuffer strbuf = new StringBuffer();
-        strbuf.append("POI Id: " + poiId + "\t");
-        strbuf.append("POI Title: " + poiTitle + "\t");
-        strbuf.append("VisitOrNot: " + visitOrNot + "\t");
-        return strbuf.toString();
+        return "PoiConstraint{" +
+                "poiId='" + poiId + '\'' +
+                ", poiTitle='" + poiTitle + '\'' +
+                ", visitOrNot=" + visitOrNot +
+                '}';
     }
 }

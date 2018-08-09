@@ -3,8 +3,8 @@ package server;
 import com.google.gson.Gson;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import edu.hanyang.trip_planning.optimize.MultiDayTripAnswer;
-import edu.hanyang.trip_planning.tripData.dataType.POIType;
-import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
+import edu.hanyang.trip_planning.tripData.dataType.PoiType;
+import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
 import kr.hyosang.coordinate.CoordPoint;
 import kr.hyosang.coordinate.TransCoord;
 
@@ -37,7 +37,7 @@ class JSONGenerator {
             private String date;
             private double startTime;
             private double endTime;
-            private List<SimplePOI> poiList = new ArrayList<>();
+            private List<SimplePoi> poiList = new ArrayList<>();
             private List<Double> arrivalTimes = new ArrayList<>();
             private List<Double> durations = new ArrayList<>();
             private List<Double> departureTimes = new ArrayList<>();
@@ -48,11 +48,11 @@ class JSONGenerator {
                 startTime = detailItinerary.getStartTime();
                 endTime = detailItinerary.getEndTime()[0];
 
-                poiList.add(new SimplePOI(detailItinerary.getStartPOI()));
-                for (BasicPOI basicPOI : detailItinerary.getPoiList()) {
-                    poiList.add(new SimplePOI(basicPOI));
+                poiList.add(new SimplePoi(detailItinerary.getStartPoi()));
+                for (BasicPoi basicPoi : detailItinerary.getPoiList()) {
+                    poiList.add(new SimplePoi(basicPoi));
                 }
-                poiList.add(new SimplePOI(detailItinerary.getEndPOI()));
+                poiList.add(new SimplePoi(detailItinerary.getEndPoi()));
 
                 for (double[] arrivalTime : detailItinerary.getArrivalTimes()) {
                     arrivalTimes.add(arrivalTime[0]);
@@ -68,18 +68,18 @@ class JSONGenerator {
                 }
             }
 
-            private class SimplePOI {
+            private class SimplePoi {
                 private String id;
                 private String title;
-                private POIType poiType;
+                private PoiType poiType;
                 private double x;
                 private double y;
 
-                private SimplePOI(BasicPOI basicPOI) {
-                    id = basicPOI.getId();
-                    title = basicPOI.getTitle();
-                    poiType = basicPOI.getPoiType();
-                    CoordPoint wsgCoord = new CoordPoint(basicPOI.getLocation().longitude, basicPOI.getLocation().latitude);
+                private SimplePoi(BasicPoi basicPoi) {
+                    id = basicPoi.getId();
+                    title = basicPoi.getTitle();
+                    poiType = basicPoi.getPoiType();
+                    CoordPoint wsgCoord = new CoordPoint(basicPoi.getLocation().longitude, basicPoi.getLocation().latitude);
                     CoordPoint wcoCoord = TransCoord.getTransCoord(wsgCoord, TransCoord.COORD_TYPE_WGS84, TransCoord.COORD_TYPE_WCONGNAMUL);
                     x = wcoCoord.x;
                     y = wcoCoord.y;

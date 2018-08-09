@@ -1,19 +1,19 @@
 package edu.hanyang.trip_planning.trip_question;
 
 public class PersonalInfo {
-    public PreferenceOfPOIType preferenceOfPOIType;
+    public PreferenceOfPoiType preferenceOfPoiType;
 
-    public void setPreferenceOfPOIType(PreferenceOfPOIType preferenceOfPOIType) {
-        this.preferenceOfPOIType = preferenceOfPOIType;
+    public void setPreferenceOfPoiType(PreferenceOfPoiType preferenceOfPoiType) {
+        this.preferenceOfPoiType = preferenceOfPoiType;
     }
 
-    public PreferenceOfPOIType getPreferenceOfPOIType() {
-        return preferenceOfPOIType;
+    public PreferenceOfPoiType getPreferenceOfPoiType() {
+        return preferenceOfPoiType;
     }
 
     public String toString() {
         StringBuffer strBuf = new StringBuffer();
-        strBuf.append("선호도:" + preferenceOfPOIType);
+        strBuf.append("선호도:" + preferenceOfPoiType);
         return strBuf.toString();
     }
 }

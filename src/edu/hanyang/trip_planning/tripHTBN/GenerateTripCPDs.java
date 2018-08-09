@@ -7,7 +7,7 @@ import cntbn.terms_factors.SimpleGaussian;
 import edu.hanyang.trip_planning.tripHTBN.traffic.MovementFunction;
 import edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration;
 import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.DiscreteTimeCPD;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
+import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPois;
 import edu.hanyang.trip_planning.tripHTBN.potential.BasicCLGCPD;
 import edu.hanyang.trip_planning.tripHTBN.potential.BasicHybridCPD;
 import util.Pair;
@@ -27,10 +27,10 @@ public class GenerateTripCPDs {
     private int nodeSize;
     private TripCPDs tripCPDs;
 
-    public GenerateTripCPDs(SubsetPOIs subsetPOIs, int discreteTimeWidth) {
-        tripNodesAndValues = new TripNodesAndValues(subsetPOIs, discreteTimeWidth);
-        tripCPDs = new TripCPDs(subsetPOIs, tripNodesAndValues);
-        this.nodeSize = subsetPOIs.size();
+    public GenerateTripCPDs(SubsetPois subsetPois, int discreteTimeWidth) {
+        tripNodesAndValues = new TripNodesAndValues(subsetPois, discreteTimeWidth);
+        tripCPDs = new TripCPDs(subsetPois, tripNodesAndValues);
+        this.nodeSize = subsetPois.size();
         this.discreteTimeWidth = discreteTimeWidth;
     }
 
@@ -48,7 +48,7 @@ public class GenerateTripCPDs {
     }
 
     private void generateCPD_Movement() {
-        MovementFunction movementFunction = new MovementFunction(tripCPDs.getSubsetPOIs());
+        MovementFunction movementFunction = new MovementFunction(tripCPDs.getSubsetPois());
         String parentsNames[] = new String[3];
 
         parentsNames[0] = "X1";
@@ -95,9 +95,9 @@ public class GenerateTripCPDs {
         int pNodes[] = new int[1];
         pNodes[0] = NodeDictionary.getInstance().nodeIdx(parentsNames[0]);
         int pValues[] = new int[1];
-        for (int i = 0; i < tripCPDs.getSubsetPOIs().size(); i++) {
+        for (int i = 0; i < tripCPDs.getSubsetPois().size(); i++) {
             pValues[0] = i;
-            ProbabilisticDuration pDur = tripCPDs.getSubsetPOIs().getPOI(i).getSpendingTime();
+            ProbabilisticDuration pDur = tripCPDs.getSubsetPois().getPoi(i).getSpendingTime();
             duration.setDistribution(pNodes, pValues, new SimpleGaussian(1, "D", pDur.hour, pDur.standardDeviation));
         }
         tripCPDs.setDurationCPDs(duration);
