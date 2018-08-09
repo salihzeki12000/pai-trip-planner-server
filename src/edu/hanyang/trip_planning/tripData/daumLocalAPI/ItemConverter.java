@@ -1,83 +1,31 @@
 package edu.hanyang.trip_planning.tripData.daumLocalAPI;
 
-
-import edu.hanyang.trip_planning.tripData.dataType.Address;
-import edu.hanyang.trip_planning.tripData.dataType.AddressCode;
-import edu.hanyang.trip_planning.tripData.dataType.Location;
-import edu.hanyang.trip_planning.tripData.dataType.POIType;
+import edu.hanyang.trip_planning.tripData.dataType.*;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
-import org.apache.log4j.Logger;
-
-import java.util.*;
 
 public class ItemConverter {
-    private static Logger logger = Logger.getLogger(ItemConverter.class);
-
     public static BasicPOI getPOI(Item item) {
-        Location location = new Location(Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
         String id = "daum." + item.getId();
-        BasicPOI basicPOI = new BasicPOI(id, item.getTitle(), location);
-        basicPOI.setAddress(getAddress(item.getAddress()));
+        String title = item.getTitle();
+        Address address = getAddress(item.getAddress());
         POIType poiType = getType(item.getCategory());
-        basicPOI.setPoiType(poiType);
-        basicPOI.addURL("place", item.getPlaceUrl());
+        Location location = new Location(Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
+        String placeUrl = item.getPlaceUrl();
 
-        UpdatePlaceURLInfo updatePlaceURLInfo = new UpdatePlaceURLInfo(item.getPlaceUrl());
-        basicPOI.setBusinessHour(updatePlaceURLInfo.businessTime());
-        basicPOI.setScore(updatePlaceURLInfo.getSatisfication());
-        basicPOI.setClosingDays(updatePlaceURLInfo.cLosingDays());
+        UpdatePlaceURLInfo updatePlaceURLInfo = new UpdatePlaceURLInfo(placeUrl);
+        double satisfaction = updatePlaceURLInfo.getSatisfaction();
+        BusinessHour businessHour = updatePlaceURLInfo.businessTime();
+        ClosingDays closingDays = updatePlaceURLInfo.cLosingDays();
+
+        BasicPOI basicPOI = new BasicPOI(id, title, location);
+        basicPOI.setAddress(address);
+        basicPOI.setPoiType(poiType);
+        basicPOI.addURL("place", placeUrl);
+        basicPOI.setScore(satisfaction);
+        basicPOI.setBusinessHour(businessHour);
+        basicPOI.setClosingDays(closingDays);
 
         return basicPOI;
-    }
-
-    public static List<BasicPOI> getPOIList(List<Item> itemList) {
-        List<BasicPOI> poiList = new ArrayList<BasicPOI>();
-        for (Item item : itemList) {
-            poiList.add(getPOI(item));
-        }
-        return poiList;
-    }
-
-    public static Set<BasicPOI> getPOISet(ItemList itemList) {
-
-        Set<BasicPOI> poiSet = new HashSet<BasicPOI>();
-        Iterator<Item> it = itemList.getItemList().iterator();
-
-        while (it.hasNext()) {
-            Item item = it.next();
-            Location location = new Location(Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
-            String id = "daum." + item.getId();
-            BasicPOI basicPOI = new BasicPOI(id, item.getTitle(), location);
-            basicPOI.setAddress(getAddress(item.getAddress()));
-
-            POIType poiType = getType(item.getCategory());
-            basicPOI.setPoiType(poiType);
-            basicPOI.addURL("place", item.getPlaceUrl());
-            poiSet.add(basicPOI);
-        }
-
-        return poiSet;
-    }
-
-    public static Map<String, BasicPOI> getPOIMap(ItemList itemList) {
-        Map<String, BasicPOI> poiMap = new HashMap<>();
-        Iterator<Item> it = itemList.getItemList().iterator();
-
-        while (it.hasNext()) {
-            Item item = it.next();
-            Location location = new Location(Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
-            String id = "daum." + item.getId();
-
-            BasicPOI basicPOI = new BasicPOI(id, item.getTitle(), location);
-            basicPOI.setAddress(getAddress(item.getAddress()));
-
-            POIType poiType = getType(item.getCategory());
-            basicPOI.setPoiType(poiType);
-            basicPOI.addURL("place", item.getPlaceUrl());
-            logger.debug(basicPOI.getId() + "\t" + basicPOI.getTitle());
-            poiMap.put(basicPOI.getId(), basicPOI);
-        }
-        return poiMap;
     }
 
     private static POIType getType(String categoryStr) {

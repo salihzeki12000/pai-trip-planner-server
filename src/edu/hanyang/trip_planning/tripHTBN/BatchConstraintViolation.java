@@ -74,10 +74,6 @@ public class BatchConstraintViolation {
     }
 
     private double physicalActivityUpperPenalty(double totalPA[]) {
-//        logger.debug("활동량제한=" + sg);
-//        if (bDebug) {
-//        logger.debug("활동량 UPPer 제한=" + totalPA[0] + "\t" + TripACOParameters.physicalActivityUpperLimit);
-//        }
         return ChanceConstraint.inequalityValue(totalPA, TripACOParameters.physicalActivityUpperLimit, ChanceConstraint.LimitType.Lower, TripACOParameters.physicalActivityLimitConfidenceLevel);
     }
 
@@ -87,22 +83,6 @@ public class BatchConstraintViolation {
         List<BasicPOI> poiList = detailItinerary.getPoiList();
 
         return false;
-//        int restaurantCount=0;
-//        for (int i = 0; i < poiList.size(); i++) {
-//            if( poiList.get(i).isbRestaurant()){
-//                logger.debug(poiList.get(i).getTitle());
-//                restaurantCount++;
-//            }
-
-//            if (categoryConstraintsViolation(poiList.get(i), arrivalTimes.get(i), departuraTimes.get(i))) {
-//                return true;
-//            }
-
-//            logger.debug(poiList.get(i).getTitle());
-//        }
-
-//        logger.debug("restaurantCount="+restaurantCount);
-//        return restaurantCount != 1;
     }
 }
 

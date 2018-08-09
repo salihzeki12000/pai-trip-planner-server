@@ -32,3 +32,144 @@
 
 
 2018-08-08 16:56:57,406 [HTTP-Dispatcher] DEBUG server.PlanningHttpServer - 켄싱턴제주호텔->박물관은살아있다 제주중문점(POIType:여행.문화시설.미술관/박물관)->국수바다 본점(POIType:음식점.한식.국수)->중문색달해변(POIType:여행.관광/명소.해수욕장/해변)->요트투어샹그릴라(POIType:여행.관광/명소.투어버스/유람선/관광열차)->퍼시픽랜드 돌고래쇼(POIType:여행.관광/명소.테마파크)->이중섭미술관(POIType:여행.관광/명소.미술관/박물관)->소정방폭포(POIType:여행.관광/명소.폭포/계곡)->우정횟집(POIType:음식점.한식.해물/생선)->용연구름다리(POIType:여행.관광/명소.자연경관)->켄싱턴제주호텔(POIType:여행.숙박.호텔)
+2018-08-09 12:35:07,915 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - getPOI:롯데면세점 제주점
+2018-08-09 12:35:07,922 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=%EB%A1%AF%EB%8D%B0%EB%A9%B4%EC%84%B8%EC%A0%90+%EC%A0%9C%EC%A3%BC%EC%A0%90
+2018-08-09 12:35:08,769 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - 롯데면세점 제주점	edu.hanyang.trip_planning.tripData.daumLocalAPI.Item@35a3d49f[phone=064-793-3000,newAddress=제주특별자치도 제주시 도령로 83,imageUrl=,direction=,zipcode=690818,placeUrl=http://place.map.daum.net/7856240,id=7856240,title=롯데면세점 제주점,category=가정,생활 > 면세점 > 롯데면세점,distance=,address=제주특별자치도 제주시 연동 2324-6,longitude=126.48658875956184,latitude=33.49089602446397,addressBCode=5011013700]
+2018-08-09 12:35:09,315 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - getPOI:제주관광공사 지정면세점
+2018-08-09 12:35:09,318 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=%EC%A0%9C%EC%A3%BC%EA%B4%80%EA%B4%91%EA%B3%B5%EC%82%AC+%EC%A7%80%EC%A0%95%EB%A9%B4%EC%84%B8%EC%A0%90
+2018-08-09 12:35:09,368 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - 제주관광공사 지정면세점	edu.hanyang.trip_planning.tripData.daumLocalAPI.Item@291a7e3c[phone=064-780-7700,newAddress=제주특별자치도 서귀포시 중문관광로 224,imageUrl=http://t1.daumcdn.net/place/11A32D3A5A4243B39215C6FD76548D08,direction=,zipcode=697858,placeUrl=http://place.map.daum.net/9405562,id=9405562,title=제주관광공사 지정면세점,category=가정,생활 > 면세점,distance=,address=제주특별자치도 서귀포시 중문동 2700,longitude=126.42442960427908,latitude=33.2413401469147,addressBCode=5013011200]
+2018-08-09 12:35:09,632 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - getPOI:월척횟집
+2018-08-09 12:35:09,632 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=%EC%9B%94%EC%B2%99%ED%9A%9F%EC%A7%91
+2018-08-09 12:35:09,663 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - 월척수산 본점	edu.hanyang.trip_planning.tripData.daumLocalAPI.Item@21337f7b[phone=064-721-6308,newAddress=제주특별자치도 제주시 동한두기길 42-1,imageUrl=http://t1.daumcdn.net/cfile/246F083556415DCC2D,direction=,zipcode=690819,placeUrl=http://place.map.daum.net/26940122,id=26940122,title=월척수산 본점,category=음식점 > 한식 > 해물,생선 > 회,distance=,address=제주특별자치도 제주시 용담1동 386,longitude=126.51506336313803,latitude=33.515797464397245,addressBCode=5011010800]
+2018-08-09 12:35:09,895 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - getPOI:어머니와고등어
+2018-08-09 12:35:09,895 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=%EC%96%B4%EB%A8%B8%EB%8B%88%EC%99%80%EA%B3%A0%EB%93%B1%EC%96%B4
+2018-08-09 12:35:09,944 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - 어머니와고등어 본점	edu.hanyang.trip_planning.tripData.daumLocalAPI.Item@4ae9cfc1[phone=064-744-2882,newAddress=제주특별자치도 제주시 도두봉2길 43,imageUrl=http://t1.daumcdn.net/place/B48D6CF12ED1418093D5F6A66E673414,direction=,zipcode=,placeUrl=http://place.map.daum.net/19065619,id=19065619,title=어머니와고등어 본점,category=음식점 > 한식 > 해물,생선,distance=,address=제주특별자치도 제주시 도두1동 1705-2,longitude=126.47324324214206,latitude=33.506235346996846,addressBCode=5011012700]
+2018-08-09 12:35:10,144 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - getPOI:바다정원
+2018-08-09 12:35:10,145 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=%EB%B0%94%EB%8B%A4%EC%A0%95%EC%9B%90
+2018-08-09 12:35:10,214 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - 바다정원	edu.hanyang.trip_planning.tripData.daumLocalAPI.Item@5ddf0d24[phone=033-636-1096,newAddress=강원 고성군 토성면 버리깨길 31,imageUrl=http://t1.daumcdn.net/cfile/265A854A55C2E08820,direction=,zipcode=219832,placeUrl=http://place.map.daum.net/26917595,id=26917595,title=바다정원,category=음식점 > 카페 > 테마카페 > 디저트카페,distance=,address=강원 고성군 토성면 용촌리 59-1,longitude=128.58353010261067,latitude=38.23102609706709,addressBCode=4282033034]
+2018-08-09 12:35:10,427 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - getPOI:제주 조천 이어도횟집
+2018-08-09 12:35:10,427 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=%EC%A0%9C%EC%A3%BC+%EC%A1%B0%EC%B2%9C+%EC%9D%B4%EC%96%B4%EB%8F%84%ED%9A%9F%EC%A7%91
+2018-08-09 12:39:51,338 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - getPOI:제주이디
+2018-08-09 12:39:58,798 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=%EC%A0%9C%EC%A3%BC%EC%9D%B4%EB%94%94
+2018-08-09 12:40:03,770 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - 제주이디펜션	edu.hanyang.trip_planning.tripData.daumLocalAPI.Item@35a3d49f[phone=064-762-8790,newAddress=제주특별자치도 서귀포시 칠십리로91번길 24,imageUrl=http://t1.daumcdn.net/place/F88846B8145C4FA39B96176B614C8F87,direction=,zipcode=697840,placeUrl=http://place.map.daum.net/27491583,id=27491583,title=제주이디펜션,category=여행 > 숙박 > 펜션,distance=,address=제주특별자치도 서귀포시 서귀동 698-1,longitude=126.56293333469513,latitude=33.24107591803449,addressBCode=5013010100]
+2018-08-09 12:40:18,388 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - getPOI:제주이디
+2018-08-09 12:40:32,578 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=%EC%A0%9C%EC%A3%BC%EC%9D%B4%EB%94%94
+2018-08-09 12:40:53,145 [main] DEBUG edu.hanyang.trip_planning.tripData.daumLocalAPI.DaumLocalAPI - 제주이디펜션	edu.hanyang.trip_planning.tripData.daumLocalAPI.Item@74f6c5d8[phone=064-762-8790,newAddress=제주특별자치도 서귀포시 칠십리로91번길 24,imageUrl=http://t1.daumcdn.net/place/F88846B8145C4FA39B96176B614C8F87,direction=,zipcode=697840,placeUrl=http://place.map.daum.net/27491583,id=27491583,title=제주이디펜션,category=여행 > 숙박 > 펜션,distance=,address=제주특별자치도 서귀포시 서귀동 698-1,longitude=126.56293333469513,latitude=33.24107591803449,addressBCode=5013010100]
+2018-08-09 13:11:40,374 [HTTP-Dispatcher] DEBUG server.PlanningHttpServer - <p>
+날짜:2018-8-9<br>
+1. 켄싱턴제주호텔에서 09:11에 출발<br>
+2. 박물관은살아있다 제주중문점에서 09:21에 도착해서 109분 동안 머물고 11:11에 출발<br>
+3. 중문색달해변에서 11:26에 도착해서 30분 동안 머물고 11:56에 출발<br>
+4. 퍼시픽랜드 돌고래쇼에서 12:09에 도착해서 70분 동안 머물고 13:19에 출발<br>
+5. 국수바다 본점에서 13:35에 도착해서 30분 동안 머물고 14:05에 출발<br>
+6. 요트투어샹그릴라에서 14:22에 도착해서 60분 동안 머물고 15:22에 출발<br>
+7. 소정방폭포에서 16:06에 도착해서 30분 동안 머물고 16:36에 출발<br>
+8. 정방폭포에서 16:49에 도착해서 30분 동안 머물고 17:19에 출발<br>
+9. 이중섭미술관에서 17:33에 도착해서 60분 동안 머물고 18:33에 출발<br>
+10. 우정횟집에서 18:46에 도착해서 30분 동안 머물고 19:16에 출발<br>
+11. 이호테우해변에서 20:24에 도착해서 30분 동안 머물고 20:54에 출발<br>
+12. 켄싱턴제주호텔에 22:00에 도착<br>
+</p>
+
+
+2018-08-09 13:11:40,410 [HTTP-Dispatcher] DEBUG server.PlanningHttpServer - 켄싱턴제주호텔->박물관은살아있다 제주중문점(POIType:여행.문화시설.미술관/박물관)->중문색달해변(POIType:여행.관광/명소.해수욕장/해변)->퍼시픽랜드 돌고래쇼(POIType:여행.관광/명소.테마파크)->국수바다 본점(POIType:음식점.한식.국수)->요트투어샹그릴라(POIType:여행.관광/명소.투어버스/유람선/관광열차)->소정방폭포(POIType:여행.관광/명소.폭포/계곡)->정방폭포(POIType:여행.관광/명소.폭포/계곡)->이중섭미술관(POIType:여행.관광/명소.미술관/박물관)->우정횟집(POIType:음식점.한식.해물/생선)->이호테우해변(POIType:여행.관광/명소.해수욕장/해변)->켄싱턴제주호텔(POIType:여행.숙박.호텔)
+2018-08-09 13:12:51,887 [HTTP-Dispatcher] DEBUG server.PlanningHttpServer - <p>
+날짜:2018-8-9<br>
+1. 켄싱턴제주호텔에서 09:11에 출발<br>
+2. 박물관은살아있다 제주중문점에서 09:22에 도착해서 109분 동안 머물고 11:12에 출발<br>
+3. 국수바다 본점에서 11:27에 도착해서 30분 동안 머물고 11:57에 출발<br>
+4. 쇠소깍에서 12:56에 도착해서 40분 동안 머물고 13:36에 출발<br>
+5. 이중섭미술관에서 14:05에 도착해서 60분 동안 머물고 15:05에 출발<br>
+6. 소정방폭포에서 15:22에 도착해서 30분 동안 머물고 15:52에 출발<br>
+7. 정방폭포에서 16:07에 도착해서 30분 동안 머물고 16:37에 출발<br>
+8. 엉또폭포에서 17:10에 도착해서 19분 동안 머물고 17:30에 출발<br>
+9. 삼무국수에서 18:37에 도착해서 30분 동안 머물고 19:07에 출발<br>
+10. 용연구름다리에서 19:31에 도착해서 15분 동안 머물고 19:46에 출발<br>
+11. 이호테우해변에서 20:17에 도착해서 30분 동안 머물고 20:47에 출발<br>
+12. 켄싱턴제주호텔에 22:00에 도착<br>
+</p>
+
+<p>
+날짜:2018-8-10<br>
+1. 켄싱턴제주호텔에서 09:00에 출발<br>
+2. 중문색달해변에서 09:13에 도착해서 30분 동안 머물고 09:43에 출발<br>
+3. 요트투어샹그릴라에서 09:55에 도착해서 60분 동안 머물고 10:55에 출발<br>
+4. 퍼시픽랜드 돌고래쇼에서 11:04에 도착해서 70분 동안 머물고 12:14에 출발<br>
+5. 신옛촌에서 12:47에 도착해서 30분 동안 머물고 13:17에 출발<br>
+6. 용머리해안에서 13:29에 도착해서 30분 동안 머물고 13:59에 출발<br>
+7. 송악산에서 14:21에 도착해서 40분 동안 머물고 15:01에 출발<br>
+8. 송악공원에서 15:08에 도착해서 60분 동안 머물고 16:08에 출발<br>
+9. 제주현대미술관에서 16:50에 도착해서 49분 동안 머물고 17:40에 출발<br>
+10. 곽지과물해변에서 18:17에 도착해서 30분 동안 머물고 18:47에 출발<br>
+11. 천해천 제주점에서 19:28에 도착해서 30분 동안 머물고 19:58에 출발<br>
+12. 새섬에서 21:00에 도착해서 19분 동안 머물고 21:20에 출발<br>
+13. 켄싱턴제주호텔에 22:00에 도착<br>
+</p>
+
+<p>
+날짜:2018-8-11<br>
+1. 켄싱턴제주호텔에서 09:00에 출발<br>
+2. 협재해변에서 09:47에 도착해서 30분 동안 머물고 10:17에 출발<br>
+3. 금능석물원에서 10:30에 도착해서 60분 동안 머물고 11:30에 출발<br>
+4. 도두해녀의집에서 12:23에 도착해서 30분 동안 머물고 12:53에 출발<br>
+5. 한라수목원에서 13:14에 도착해서 60분 동안 머물고 14:14에 출발<br>
+6. 제주관음사에서 14:40에 도착해서 60분 동안 머물고 15:40에 출발<br>
+7. 별빛누리 공원에서 15:56에 도착해서 79분 동안 머물고 17:16에 출발<br>
+8. 삼양검은모래해변에서 17:44에 도착해서 30분 동안 머물고 18:14에 출발<br>
+9. 춘심이네 3호점에서 18:41에 도착해서 30분 동안 머물고 19:11에 출발<br>
+10. 월정리해수욕장에서 19:42에 도착해서 49분 동안 머물고 20:32에 출발<br>
+11. 켄싱턴제주호텔에 22:00에 도착<br>
+</p>
+
+<p>
+날짜:2018-8-12<br>
+1. 켄싱턴제주호텔에서 09:00에 출발<br>
+2. 대포주상절리에서 09:16에 도착해서 40분 동안 머물고 09:56에 출발<br>
+3. 외돌개에서 10:30에 도착해서 30분 동안 머물고 11:00에 출발<br>
+4. 천지연폭포에서 11:14에 도착해서 40분 동안 머물고 11:54에 출발<br>
+5. 우정횟집에서 12:08에 도착해서 30분 동안 머물고 12:38에 출발<br>
+6. 한라산 웃세붉은오름에서 13:14에 도착해서 60분 동안 머물고 14:14에 출발<br>
+7. 돈내코유원지에서 14:45에 도착해서 40분 동안 머물고 15:25에 출발<br>
+8. 김영갑갤러리두모악에서 16:23에 도착해서 30분 동안 머물고 16:53에 출발<br>
+9. 섭지코지에서 17:24에 도착해서 49분 동안 머물고 18:14에 출발<br>
+10. 성산일출봉에서 18:36에 도착해서 55분 동안 머물고 19:31에 출발<br>
+11. 성산바다에서 19:51에 도착해서 30분 동안 머물고 20:21에 출발<br>
+12. 켄싱턴제주호텔에 22:00에 도착<br>
+</p>
+
+<p>
+날짜:2018-8-13<br>
+1. 켄싱턴제주호텔에서 09:00에 출발<br>
+2. 아프리카박물관에서 09:19에 도착해서 60분 동안 머물고 10:19에 출발<br>
+3. 서귀포자연휴양림에서 10:54에 도착해서 60분 동안 머물고 11:54에 출발<br>
+4. 착한튀김에서 12:59에 도착해서 30분 동안 머물고 13:29에 출발<br>
+5. 국립제주박물관에서 13:47에 도착해서 40분 동안 머물고 14:27에 출발<br>
+6. 신산공원에서 14:45에 도착해서 30분 동안 머물고 15:15에 출발<br>
+7. 제주도립미술관에서 15:46에 도착해서 49분 동안 머물고 16:36에 출발<br>
+8. 미로공원에서 17:47에 도착해서 36분 동안 머물고 18:23에 출발<br>
+9. 이어도횟집에서 18:59에 도착해서 30분 동안 머물고 19:29에 출발<br>
+10. 함덕서우봉해변에서 19:40에 도착해서 45분 동안 머물고 20:25에 출발<br>
+11. 켄싱턴제주호텔에 22:00에 도착<br>
+</p>
+
+<p>
+날짜:2018-8-14<br>
+1. 켄싱턴제주호텔에서 09:00에 출발<br>
+2. 천제연폭포에서 09:21에 도착해서 40분 동안 머물고 10:01에 출발<br>
+3. 환상숲곶자왈공원에서 11:09에 도착해서 60분 동안 머물고 12:09에 출발<br>
+4. 오설록티뮤지엄에서 12:39에 도착해서 60분 동안 머물고 13:39에 출발<br>
+5. 만복횟집에서 14:25에 도착해서 30분 동안 머물고 14:55에 출발<br>
+6. 화순금모래해변에서 15:16에 도착해서 30분 동안 머물고 15:46에 출발<br>
+7. 산방산사랑의유람선에서 16:04에 도착해서 60분 동안 머물고 17:04에 출발<br>
+8. 감귤 박물관에서 18:36에 도착해서 60분 동안 머물고 19:36에 출발<br>
+9. 요네상회에서 20:07에 도착해서 30분 동안 머물고 20:37에 출발<br>
+10. 켄싱턴제주호텔에 22:00에 도착<br>
+</p>
+
+
+2018-08-09 13:12:51,933 [HTTP-Dispatcher] DEBUG server.PlanningHttpServer - 켄싱턴제주호텔->박물관은살아있다 제주중문점(POIType:여행.문화시설.미술관/박물관)->국수바다 본점(POIType:음식점.한식.국수)->쇠소깍(POIType:여행.관광/명소.자연경관)->이중섭미술관(POIType:여행.관광/명소.미술관/박물관)->소정방폭포(POIType:여행.관광/명소.폭포/계곡)->정방폭포(POIType:여행.관광/명소.폭포/계곡)->엉또폭포(POIType:여행.관광/명소.폭포/계곡)->삼무국수(POIType:음식점.한식.국수)->용연구름다리(POIType:여행.관광/명소.자연경관)->이호테우해변(POIType:여행.관광/명소.해수욕장/해변)->켄싱턴제주호텔(POIType:여행.숙박.호텔)
+2018-08-09 13:12:51,942 [HTTP-Dispatcher] DEBUG server.PlanningHttpServer - 켄싱턴제주호텔->중문색달해변(POIType:여행.관광/명소.해수욕장/해변)->요트투어샹그릴라(POIType:여행.관광/명소.투어버스/유람선/관광열차)->퍼시픽랜드 돌고래쇼(POIType:여행.관광/명소.테마파크)->신옛촌(POIType:음식점.한식.)->용머리해안(POIType:여행.관광/명소.자연경관)->송악산(POIType:여행.관광/명소.산봉우리/등산로)->송악공원(POIType:여행.관광/명소.공원)->제주현대미술관(POIType:여행.문화시설.미술관/박물관)->곽지과물해변(POIType:여행.관광/명소.해수욕장/해변)->천해천 제주점(POIType:음식점.샤브샤브.)->새섬(POIType:여행.관광/명소.자연경관)->켄싱턴제주호텔(POIType:여행.숙박.호텔)
+2018-08-09 13:12:51,942 [HTTP-Dispatcher] DEBUG server.PlanningHttpServer - 켄싱턴제주호텔->협재해변(POIType:여행.관광/명소.해수욕장/해변)->금능석물원(POIType:여행.관광/명소.미술관/박물관)->도두해녀의집(POIType:음식점.한식.해물/생선)->한라수목원(POIType:여행.관광/명소.수목원/식물원)->제주관음사(POIType:여행.관광/명소.종교시설)->별빛누리 공원(POIType:여행.관광/명소.공원)->삼양검은모래해변(POIType:여행.관광/명소.해수욕장/해변)->춘심이네 3호점(POIType:음식점.한식.국수)->월정리해수욕장(POIType:여행.관광/명소.해수욕장/해변)->켄싱턴제주호텔(POIType:여행.숙박.호텔)
+2018-08-09 13:12:51,943 [HTTP-Dispatcher] DEBUG server.PlanningHttpServer - 켄싱턴제주호텔->대포주상절리(POIType:여행.관광/명소.자연경관)->외돌개(POIType:여행.관광/명소.자연경관)->천지연폭포(POIType:여행.관광/명소.폭포/계곡)->우정횟집(POIType:음식점.한식.해물/생선)->한라산 웃세붉은오름(POIType:여행.관광/명소.산봉우리/등산로)->돈내코유원지(POIType:여행.관광/명소.폭포/계곡)->김영갑갤러리두모악(POIType:여행.문화시설.미술관/박물관)->섭지코지(POIType:여행.관광/명소.자연경관)->성산일출봉(POIType:여행.관광/명소.산봉우리/등산로)->성산바다(POIType:음식점.한식.해물/생선)->켄싱턴제주호텔(POIType:여행.숙박.호텔)
+2018-08-09 13:12:51,943 [HTTP-Dispatcher] DEBUG server.PlanningHttpServer - 켄싱턴제주호텔->아프리카박물관(POIType:여행.관광/명소.미술관/박물관)->서귀포자연휴양림(POIType:여행.관광/명소.휴양림/숲길걷기)->착한튀김(POIType:음식점.분식.)->국립제주박물관(POIType:여행.문화시설.미술관/박물관)->신산공원(POIType:여행.관광/명소.공원)->제주도립미술관(POIType:여행.문화시설.미술관/박물관)->미로공원(POIType:여행.관광/명소.테마파크)->이어도횟집(POIType:음식점.한식.해물/생선)->함덕서우봉해변(POIType:여행.관광/명소.해수욕장/해변)->켄싱턴제주호텔(POIType:여행.숙박.호텔)
+2018-08-09 13:12:51,943 [HTTP-Dispatcher] DEBUG server.PlanningHttpServer - 켄싱턴제주호텔->천제연폭포(POIType:여행.관광/명소.폭포/계곡)->환상숲곶자왈공원(POIType:여행.관광/명소.공원)->오설록티뮤지엄(POIType:여행.관광/명소.미술관/박물관)->만복횟집(POIType:음식점.한식.해물/생선)->화순금모래해변(POIType:여행.관광/명소.해수욕장/해변)->산방산사랑의유람선(POIType:여행.관광/명소.투어버스/유람선/관광열차)->감귤 박물관(POIType:여행.문화시설.미술관/박물관)->요네상회(POIType:음식점.양식.해산물)->켄싱턴제주호텔(POIType:여행.숙박.호텔)

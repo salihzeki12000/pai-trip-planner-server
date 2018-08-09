@@ -28,12 +28,10 @@ public enum TouristAttractionType {
     BotanicalGarden("수목원/식물원");
 
     private String value;
-//        식사, 운동, 회의, 관광, 산책, 공연, 쇼핑, 일
 
     TouristAttractionType(final String value) {
         this.value = value;
     }
-
 
     public static TouristAttractionType parse(String str) {
         for (TouristAttractionType type : TouristAttractionType.values()) {
@@ -41,9 +39,7 @@ public enum TouristAttractionType {
                 return type;
             }
         }
-
         return null;
-
     }
 
     public String getValue() {

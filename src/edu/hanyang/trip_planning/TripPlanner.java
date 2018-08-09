@@ -77,7 +77,7 @@ public class TripPlanner {
                     subsetPOIs.reduceSubsetPoisByTitles(poiConstraint.getPoiTitle());
                 }
             }
-            subsetPOIs.addSubsetPOIsByTitle(new String[]{startPoiTitle, endPoiTitle});  // mgkim: 출발, 도착 장소 추가
+            subsetPOIs.addSubsetPOIsByTitle(startPoiTitle, endPoiTitle);  // mgkim: 출발, 도착 장소 추가
             GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(subsetPOIs, minuteTime);
             TripCPDs tripCPDs = generateTripCPDs.generate();
             // mgkim: start & end PoiIdx

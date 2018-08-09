@@ -13,17 +13,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-/**
- * POI instance 들 관리하는 클래스
- */
+// POI instance 들 관리하는 클래스
 public class POIManager {
     private static Logger logger = Logger.getLogger(POIManager.class);
+
     private static POIManager poiManager = new POIManager();
     private Map<String, BasicPOI> poiMapById = new HashMap<>();
     private Map<String, BasicPOI> poiMapByTitle = new HashMap<>();
     private List<BasicPOI> poiList = new ArrayList<>();
     private String outFilename = "datafiles/pois/updated.csv";
-
     private Set<POIType> poiTypeSet = new HashSet<>();
 
     private POIManager() {
@@ -49,57 +47,26 @@ public class POIManager {
         return poiMapByTitle.values();
     }
 
-    public void addDaumItemList(ItemList itemList) {
-        Set<BasicPOI> poiSet = ItemConverter.getPOISet(itemList);
-        for (BasicPOI basicPOI : poiSet) {
-            String placeURL = basicPOI.getURL("place");
-            UpdatePlaceURLInfo updatePlaceInfo = new UpdatePlaceURLInfo(placeURL);
-            double satisfication = updatePlaceInfo.getSatisfication();
-            basicPOI.setScore(satisfication);
-//            logger.debug(poi.getIdentifier().name + " \t별점="+satisfication);
-            BusinessHour businessHour = updatePlaceInfo.businessTime();
-            if (businessHour != null) {
-//                logger.debug("영업시간:" + businessHour);
-                basicPOI.setBusinessHour(businessHour);
-            }
-            ClosingDays closingDays = updatePlaceInfo.cLosingDays();
-            if (closingDays != null) {
-//                logger.debug("휴무일:" + closingDays);
-                basicPOI.setClosingDays(closingDays);
-            }
-            poiMapById.put(basicPOI.getId(), basicPOI);
-            poiMapByTitle.put(basicPOI.getTitle(), basicPOI);
-            for (String otherName : basicPOI.getNames()) {
-                poiMapByTitle.put(otherName, basicPOI);
-            }
-            poiList.add(basicPOI);
-        }
-    }
-
     public void addDaumItem(Item item) {
         BasicPOI basicPOI = ItemConverter.getPOI(item);
+
         String placeURL = basicPOI.getURL("place");
         UpdatePlaceURLInfo updatePlaceInfo = new UpdatePlaceURLInfo(placeURL);
-        double satisfication = updatePlaceInfo.getSatisfication();
-        basicPOI.setScore(satisfication);
-//            logger.debug(poi.getIdentifier().name + " \t별점="+satisfication);
+
+        double satisfaction = updatePlaceInfo.getSatisfaction();
+        basicPOI.setScore(satisfaction);
         BusinessHour businessHour = updatePlaceInfo.businessTime();
         if (businessHour != null) {
-//                logger.debug("영업시간:" + businessHour);
             basicPOI.setBusinessHour(businessHour);
         }
         ClosingDays closingDays = updatePlaceInfo.cLosingDays();
         if (closingDays != null) {
-//      logger.debug("휴무일:" + closingDays);
             basicPOI.setClosingDays(closingDays);
         }
+
         poiMapById.put(basicPOI.getId(), basicPOI);
         poiMapByTitle.put(basicPOI.getTitle(), basicPOI);
-        for (String otherName : basicPOI.getNames()) {
-            poiMapByTitle.put(otherName, basicPOI);
-        }
         poiList.add(basicPOI);
-
     }
 
     public void writeBasicPOItoCSV(String filename, char separator) throws IOException {
@@ -127,17 +94,11 @@ public class POIManager {
 
             poiMapById.put(basicPOI.getId(), basicPOI);
             poiMapByTitle.put(basicPOI.getTitle(), basicPOI);
-            for (String otherName : basicPOI.getNames()) {
-                poiMapByTitle.put(otherName, basicPOI);
-            }
             poiList.add(basicPOI);
             poiTypeSet.add(basicPOI.getPoiType());
         }
     }
 
-    /**
-     * 만족도 재수정
-     */
     public int size() {
         return poiList.size();
     }
@@ -146,8 +107,7 @@ public class POIManager {
         return poiList.get(idx);
     }
 
-    // mgkim
-    public List<BasicPOI> getPoiByAddresses(String... addresses) {
+    public List<BasicPOI> getPoiListByAddresses(String... addresses) {
         List<BasicPOI> matchedPoiList = new ArrayList<>();
         for (BasicPOI poi : poiList) {
             boolean match = false;  //false
@@ -170,7 +130,6 @@ public class POIManager {
         return matchedPoiList;
     }
 
-    // mgkim
     public List<BasicPOI> getPoiByType(POIType poiType) {
         List<BasicPOI> newPoiList = new ArrayList<>();
         for (int j = 0; j < poiList.size(); j++) {                  // 각각의 poiList 내 basicPoi에 대해서
@@ -179,12 +138,6 @@ public class POIManager {
             }
         }
         return newPoiList;
-    }
-
-    private void getFromDaum() {
-        DaumPoiIO daumPoiIO = new DaumPoiIO();
-        ItemList itemList = daumPoiIO.readItemList();
-        poiMapById = ItemConverter.getPOIMap(itemList);
     }
 
     public void write2CSV(String csvFilename) throws IOException {
@@ -201,23 +154,6 @@ public class POIManager {
         CSVWriter csvWriter = new CSVWriter(new FileWriter(this.outFilename), '\t', CSVWriter.NO_QUOTE_CHARACTER);
         csvWriter.writeNext(BasicPOI.csvHeader());
         for (BasicPOI poi : poiMapById.values()) {
-            csvWriter.writeNext(poi.toStrArray());
-        }
-        csvWriter.close();
-
-    }
-
-    public static void convertItemlist2CSV(String daumPOIFilename, String csvFilename) throws IOException {
-        CSVWriter csvWriter = new CSVWriter(new FileWriter(csvFilename), '\t', CSVWriter.NO_QUOTE_CHARACTER);
-        csvWriter.writeNext(BasicPOI.csvHeader());
-
-        DaumPoiIO daumPoiIO = new DaumPoiIO(daumPOIFilename);
-        ItemList itemList = daumPoiIO.readItemList();
-        logger.debug(itemList.getItemList().size());
-        Set<BasicPOI> poiSet = ItemConverter.getPOISet(itemList);
-
-        for (BasicPOI poi : poiSet) {
-            logger.debug(poi.getURL("place"));
             csvWriter.writeNext(poi.toStrArray());
         }
         csvWriter.close();
@@ -258,7 +194,7 @@ public class POIManager {
             String placeURL = poi.getURL("place");
 //            logger.debug(placeURL);
             UpdatePlaceURLInfo updatePlaceInfo = new UpdatePlaceURLInfo(placeURL);
-            double satisfaction = updatePlaceInfo.getSatisfication();
+            double satisfaction = updatePlaceInfo.getSatisfaction();
             poi.setScore(satisfaction);
 //            logger.debug(poi.getIdentifier().name + " \t별점="+satisfaction);
             BusinessHour businessHour = updatePlaceInfo.businessTime();
@@ -274,12 +210,7 @@ public class POIManager {
         }
     }
 
-    /**
-     * daum에서 키워드 검색을 통해 POI를 업데이트 함
-     *
-     * @param keywords      장소 키워드
-     * @param numCandidates 키워드당 장소 후보 갯수
-     */
+    // daum에서 키워드 검색을 통해 POI를 업데이트 함
     public void updatePOIsFromDaum(int numCandidates, String... keywords) {
         for (String keyword : keywords) {
             List<Item> itemList = DaumLocalAPI.getPOIs(keyword, numCandidates);
@@ -287,28 +218,6 @@ public class POIManager {
                 addDaumItem(item);
             }
         }
-    }
-
-    public static void updatePOIsFromFile(String filename) {
-        Set<String> titleSet = new HashSet<String>();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(filename));
-            String thisLine;
-            while ((thisLine = br.readLine()) != null) {
-                if (!thisLine.isEmpty()) {
-                    System.out.println(thisLine);
-                    POIManager.getInstance().getPOIByTitle(thisLine);
-                    titleSet.add(thisLine);
-                }
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        logger.debug(titleSet.size());
     }
 
     public POIType getPOIType(String name) {
@@ -334,16 +243,7 @@ public class POIManager {
     }
 
     public static void main(String[] args) {
-        POIManager.updatePOIsFromFile("datafiles/pois/제주식당갱신.txt");
-        Set<POIType> poiTypes = new HashSet<POIType>();
-        for (BasicPOI basicPOI : POIManager.getInstance().getAll()) {
-            if (basicPOI.getPoiType().category.equals("음식점")) {
-                poiTypes.add(basicPOI.getPoiType());
-            }
-        }
-
-        for (POIType poiType : poiTypes) {
-            System.out.println(poiType.subCategory + "\t" + poiType.subSubCategory);
-        }
+        BasicPOI testPoi = POIManager.getInstance().getPOIByTitle("제주이디");
+        System.out.println(testPoi);
     }
 }

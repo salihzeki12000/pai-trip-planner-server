@@ -1,7 +1,6 @@
 package edu.hanyang.trip_planning.tripData.poi;
 
 import com.google.gson.Gson;
-import org.apache.log4j.Logger;
 
 import edu.hanyang.trip_planning.tripData.dataType.*;
 import edu.hanyang.trip_planning.trip_question.PersonalInfo;
@@ -19,7 +18,6 @@ import java.util.*;
 public class BasicPOI {
     private String id;                                          // ID
     private String title;                                       // 이름
-    private Set<String> names;                                  // 이름들 (별칭 포함 1번째가 대표이름임)              ?
     private Address address;                                    // 주소                                               ? address class 필요한가?
     private POIType poiType;                                    // 장소의 종류                                        ? poitype class 필요한가?
     private Set<ActivityType> availableActivities;              // 해당 장소에서 할수 있는 활동들                     ?
@@ -31,9 +29,9 @@ public class BasicPOI {
     private Set<AdjacentPOI> publicTransportationAccess;        // 대중교통 접근성 (예: XX 지하철 역에서 몇분거리)    ?
     private ProbabilisticDuration spendingTime;                 // 머무는 시간
     private double score = -1;                                  // 사용자 만족도
-    private Map<String, String> urlList = new HashMap<String, String>();     // ?
+    private Map<String, String> urlList = new HashMap<>();     // ?
     private TouristAttractionType touristAttractionType = null; // ?
-    private boolean bRestaurant = false;                        // ?
+    private boolean isRestaurant = false;                        // ?
 
     public BasicPOI(String title) {
         this.title = title;
@@ -43,7 +41,6 @@ public class BasicPOI {
         this.id = id;
         this.title = title;
         this.location = location.deepCopy();
-        names = new HashSet<>();
         availableActivities = new HashSet<>();
         publicTransportationAccess = new HashSet<>();
         address = new Address();
@@ -51,24 +48,18 @@ public class BasicPOI {
         spendingTime = new ProbabilisticDuration(0.5, 0.1);
     }
 
-    public void addNames(String nameArray[]) {
-        for (String name : nameArray) {
-            this.names.add(name);
-        }
-    }
-
     public void setAddress(Address address) {
         this.address = address.deepCopy();
     }
 
-    public boolean isbRestaurant() {
-        return bRestaurant;
+    public boolean getIsRestaurant() {
+        return isRestaurant;
     }
 
     public void setPoiType(POIType poiType) {
         this.poiType = poiType.deepCopy();
         POIType restaurantType = new POIType("음식점");
-        bRestaurant = restaurantType.contain(poiType);
+        isRestaurant = restaurantType.contain(poiType);
     }
 
     public void setParking(int parkingFlag) {
@@ -117,10 +108,6 @@ public class BasicPOI {
 
     public String getTitle() {
         return title;
-    }
-
-    public Set<String> getNames() {
-        return names;
     }
 
     public Address getAddress() {
@@ -184,7 +171,6 @@ public class BasicPOI {
     public String toString() {
         StringBuilder strBuf = new StringBuilder();
         strBuf.append("id: " + id + '\n');
-        strBuf.append("Other names : " + names + '\n');
         strBuf.append("Address: " + address.toString() + '\n');
         strBuf.append("Poi type : " + poiType + '\n');
         strBuf.append("Available Activity: " + availableActivities + "\n");
@@ -216,7 +202,7 @@ public class BasicPOI {
         array[1] = title;
         array[2] = Double.toString(location.latitude);
         array[3] = Double.toString(location.longitude);
-        array[4] = toString(names);
+        array[4] = "";
         array[5] = poiType.category;
         array[6] = poiType.subCategory;
         array[7] = poiType.subSubCategory;
@@ -336,7 +322,7 @@ public class BasicPOI {
     private void initRestaurantType() {
         this.poiType = poiType.deepCopy();
         POIType restaurantType = new POIType("음식점");
-        bRestaurant = restaurantType.contain(poiType);
+        isRestaurant = restaurantType.contain(poiType);
     }
 
     public static BasicPOI parse(String array[]) {
@@ -347,8 +333,6 @@ public class BasicPOI {
         double longitude = Double.parseDouble(array[3]);
 
         BasicPOI basicPOI = new BasicPOI(id, title, new Location(latitude, longitude));
-
-        basicPOI.addNames(array[4].split(","));
 
         basicPOI.setPoiType(new POIType(array[5], array[6], array[7]));
 

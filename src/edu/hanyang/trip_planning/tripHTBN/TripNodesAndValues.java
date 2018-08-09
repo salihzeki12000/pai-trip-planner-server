@@ -5,7 +5,6 @@ import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import util.TimeStrHelper;
 import org.joda.time.DateTime;
 import util.MyCollections;
-import util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.List;
  * NodeDictionary와 연동됨
  */
 public class TripNodesAndValues {
-    //    private static Logger logger = Logger.getLogger(TripNodesAndValues.class);
     public int TMP;
     public int X1;
     public int X2;

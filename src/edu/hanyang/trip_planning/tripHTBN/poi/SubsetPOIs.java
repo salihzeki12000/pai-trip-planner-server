@@ -17,55 +17,15 @@ public class SubsetPOIs {
     public SubsetPOIs() {
     }
 
-    public SubsetPOIs(String... titles) {
-        makeSubsetPOIsByTitle(titles);
-    }
-
-    public void makeSubsetPOIsByTitle(String... titles) {
-        POIManager poiManager = POIManager.getInstance();
-        int i = 0;
-        for (String title : titles) {
-            BasicPOI basicPOI = poiManager.getPOIByTitle(title);
-            if (basicPOI == null) {
-                throw new RuntimeException("cannot find " + title);
-            }
-            poiList.add(basicPOI);
-            nameIndexMap.put(basicPOI.getTitle(), i);
-            i++;
-        }
-        titleArray = new String[titles.length];
-        for (int j = 0; j < poiList.size(); j++) {
-            titleArray[j] = poiList.get(j).getTitle();
-        }
-    }
-
-    public void makeSubsetPOIsByTitle(Collection<String> titles) {
-        POIManager poiManager = POIManager.getInstance();
-        int i = 0;
-        for (String title : titles) {
-            BasicPOI basicPOI = poiManager.getPOIByTitle(title);
-            if (basicPOI == null) {
-                throw new RuntimeException("cannot find " + title);
-            }
-            poiList.add(basicPOI);
-            nameIndexMap.put(basicPOI.getTitle(), i);
-            i++;
-        }
-        titleArray = new String[titles.size()];
-        for (int j = 0; j < poiList.size(); j++) {
-            titleArray[j] = poiList.get(j).getTitle();
-        }
-    }
-
     public void makeSubsetPOIsByAreas(String... areas) {
         // {서귀포시, 부산}->서귀포시+부산 / {성산읍,제주시}->성산읍+제주시 / {성산읍,서귀포시}->서귀포시
         POIManager poiManager = POIManager.getInstance();
-        poiList.addAll(poiManager.getPoiByAddresses(areas));
+        poiList.addAll(poiManager.getPoiListByAddresses(areas));
         titleArray = new String[poiList.size()];
         nameIndexMap = new FastMap<>();
         for (int i = 0; i < poiList.size(); i++) {
-            nameIndexMap.put(poiList.get(i).getTitle(), i);
             titleArray[i] = poiList.get(i).getTitle();
+            nameIndexMap.put(poiList.get(i).getTitle(), i);
         }
     }
 
@@ -95,20 +55,8 @@ public class SubsetPOIs {
     }
 
     // mgkim:
-    public void reduceSubsetPoisByIdxes(int... idxes) {
-        Arrays.sort(idxes);
-        ArrayList<String> titleList = new ArrayList<String>(Arrays.asList(titleArray));
-        for (int i = idxes.length; i > 0; i--) {
-            poiList.remove(idxes[i - 1]);
-            nameIndexMap.remove(titleList.get(idxes[i - 1]));
-            titleList.remove(idxes[i - 1]);
-        }
-        titleArray = titleList.toArray(new String[titleList.size()]);
-    }
-
-    // mgkim:
     public void reduceSubsetPoisByIdList(Collection<String> idList) {
-        ArrayList<String> titleList = new ArrayList<String>(Arrays.asList(titleArray));
+        ArrayList<String> titleList = new ArrayList<>(Arrays.asList(titleArray));
         for (String id : idList) {
             for (int poiIdx = 0; poiIdx < poiList.size(); poiIdx++) {
                 BasicPOI basicPOI = poiList.get(poiIdx);
@@ -194,7 +142,6 @@ public class SubsetPOIs {
         for (int i = 0; i < numTotalPoi; i++) {
             titleArray[i] = poiList.get(i).getTitle();
             nameIndexMap.put(poiList.get(i).getTitle(), i);
-//            System.out.println(poiList.get(i).getTitle()+": "+poiList.get(i).getPoiType());
         }
     }
 

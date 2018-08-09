@@ -1,30 +1,17 @@
 package edu.hanyang.trip_planning.tripHTBN;
 
-
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.DiscreteTimeCPD;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceCLGCPD;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceHybridCPD;
-import util.TimeStrHelper;
-import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
-import util.MyCollections;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by wykwon on 2015-10-08.
- */
 public class TripCPDs {
-    private static Logger logger = Logger.getLogger(TripCPDs.class);
     public InterfaceHybridCPD movementCPDs;
     public InterfaceHybridCPD costCPDs;
     public InterfaceHybridCPD durationCPDs;
     public InterfaceCLGCPD timeCPDs;
     public DiscreteTimeCPD discreteTimeCPD;
-
 
     public InterfaceCLGCPD endTimeCPDs;
     public InterfaceHybridCPD weatherCPDs;
@@ -36,11 +23,6 @@ public class TripCPDs {
 
     public TripCPDs(SubsetPOIs subsetPOIs, TripNodesAndValues tripNodesAndValues) {
         this.subsetPOIs = subsetPOIs;
-        this.tripNodesAndValues = tripNodesAndValues;
-    }
-
-    public TripCPDs(String titleOfPOIs[], TripNodesAndValues tripNodesAndValues) {
-        this.subsetPOIs = new SubsetPOIs(titleOfPOIs);
         this.tripNodesAndValues = tripNodesAndValues;
     }
 
@@ -71,7 +53,6 @@ public class TripCPDs {
     public void setCostCPDs(InterfaceHybridCPD costCPDs) {
         this.costCPDs = costCPDs;
     }
-
 
     public DiscreteTimeCPD getDiscreteTimeCPD() {
         return discreteTimeCPD;

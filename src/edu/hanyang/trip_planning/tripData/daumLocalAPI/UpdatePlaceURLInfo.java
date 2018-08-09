@@ -14,13 +14,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created with IntelliJ IDEA.
- * User: wykwon
- * Date: 15. 7. 21
- * Time: 오후 4:25
- * To change this template use File | Settings | File Templates.
- */
 public class UpdatePlaceURLInfo {
     private static Logger logger = Logger.getLogger(UpdatePlaceURLInfo.class);
     private Document doc;
@@ -34,7 +27,7 @@ public class UpdatePlaceURLInfo {
         }
     }
 
-    public double getSatisfication() {
+    public double getSatisfaction() {
         // 첫번째 나온게 별점이고, 마지막 나오는건 아니다.
         Elements num_em = doc.select(".num_em");
         double sum = 0.0;

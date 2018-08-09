@@ -197,7 +197,7 @@ public class BatchInferenceTripNetwork {
         ret[0] = pref[0] * weatherSuit;
         ret[1] = 0.1;
 
-        if (tripCPDs.getPOI(destNodeIdx).isbRestaurant()) {
+        if (tripCPDs.getPOI(destNodeIdx).getIsRestaurant()) {
             ret[0] = ret[0] + 0.75;
         }
         return ret;
