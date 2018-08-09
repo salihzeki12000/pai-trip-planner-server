@@ -24,14 +24,13 @@ public class BasicPOI {
     private Location location;                                  // 위치 (경위도)                                      ?
     private BusinessHour businessHour;                          // 영업시간
     private ClosingDays closingDays;                            // 휴일
-    private int hasParkingLot = -1;                             // 주차가능 여부   (-1: Unknwon, 0: false, 1: true)   ?
     private int averageCostPerPerson = -1;                      // 평균 비용
     private Set<AdjacentPOI> publicTransportationAccess;        // 대중교통 접근성 (예: XX 지하철 역에서 몇분거리)    ?
     private ProbabilisticDuration spendingTime;                 // 머무는 시간
     private double score = -1;                                  // 사용자 만족도
-    private Map<String, String> urlList = new HashMap<>();     // ?
+    private Map<String, String> urlList = new HashMap<>();      // ?
     private TouristAttractionType touristAttractionType = null; // ?
-    private boolean isRestaurant = false;                        // ?
+    private boolean isRestaurant = false;                       // ?
 
     public BasicPOI(String title) {
         this.title = title;
@@ -60,10 +59,6 @@ public class BasicPOI {
         this.poiType = poiType.deepCopy();
         POIType restaurantType = new POIType("음식점");
         isRestaurant = restaurantType.contain(poiType);
-    }
-
-    public void setParking(int parkingFlag) {
-        this.hasParkingLot = parkingFlag;
     }
 
     public void setBusinessHour(BusinessHour businessHour) {
@@ -130,25 +125,20 @@ public class BasicPOI {
         return businessHour;
     }
 
-    public Integer getParkingLotInfo() {
-        return hasParkingLot;
-    }
-
     public Double getSatisfaction(PersonalInfo personalInfo, TimeAndDuration timeAndDuration) {
         double defaultValue = 0.5;
         PreferenceOfPOIType preferenceOfPOIType = personalInfo.getPreferenceOfPOIType();
 
         for (int i = 0; i < preferenceOfPOIType.size(); i++) {
-            Pair<POIType, Double> preferedPOITypePair = preferenceOfPOIType.getPOITypePreference(i);
+            Pair<POIType, Double> preferredPOITypePair = preferenceOfPOIType.getPOITypePreference(i);
 
             // poiType 이 match 되면?
-            if (preferedPOITypePair.first().contain(this.poiType)) {
-                return preferedPOITypePair.second();
+            if (preferredPOITypePair.first().contain(this.poiType)) {
+                return preferredPOITypePair.second();
             }
         }
         return defaultValue;
     }
-
 
     public Integer getAverageCostPerPerson() {
         return averageCostPerPerson;
@@ -179,7 +169,7 @@ public class BasicPOI {
             strBuf.append(businessHour.toString() + '\n');
         }
         strBuf.append("휴무일: " + closingDays + "\n");
-        strBuf.append("주차여부: " + getParkingLotInfo() + "\n");
+        strBuf.append("주차여부: " + "\n");
         strBuf.append("평균비용: " + averageCostPerPerson + "\n");
         strBuf.append("대중교통 접근여부: " + publicTransportationAccess + "\n");
         strBuf.append("만족도(평점): " + score + "\n");
@@ -212,7 +202,7 @@ public class BasicPOI {
         array[11] = address.detailedAddress;
         array[12] = gson.toJson(businessHour);
         array[13] = gson.toJson(closingDays);
-        array[14] = Integer.toString(hasParkingLot);
+        array[14] = "";
         array[15] = Integer.toString(averageCostPerPerson);
         array[16] = gson.toJson(publicTransportationAccess);
         array[17] = Double.toString(score);
@@ -235,7 +225,6 @@ public class BasicPOI {
 
     public double[] getPhysicalActivity() {
         return getPhysicalActivity(70);
-
     }
 
     public double[] getPhysicalActivity(double bodyWeight) {
@@ -352,8 +341,8 @@ public class BasicPOI {
             basicPOI.setClosingDays(closingDays);
         }
 
-        int hasParkingLot = Integer.parseInt(array[14]);
-        basicPOI.setParking(hasParkingLot);
+//        int hasParkingLot = Integer.parseInt(array[14]);
+//        basicPOI.setParking(hasParkingLot);
         int averageCostPerPerson = Integer.parseInt(array[15]);
         basicPOI.setAverageCostPerPerson(averageCostPerPerson);
         if (array[16].length() > 3) {
