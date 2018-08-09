@@ -10,11 +10,6 @@ import util.Pair;
 
 import java.util.*;
 
-/**
- * 장소(Point Of Interest) 클래스
- * <p/>
- * 장소의 선호도나, 다른 것들은 평균적인 선호도나 평점을 이용한다.
- */
 public class BasicPOI {
     private String id;                                          // ID
     private String title;                                       // 이름
@@ -55,8 +50,7 @@ public class BasicPOI {
 
     public void setPoiType(POIType poiType) {
         this.poiType = poiType.deepCopy();
-        POIType restaurantType = new POIType("음식점");
-        isRestaurant = restaurantType.contain(poiType);
+        this.isRestaurant = this.poiType.category.equals("음식점");
     }
 
     public void setBusinessHour(BusinessHour businessHour) {
@@ -157,7 +151,6 @@ public class BasicPOI {
             strBuf.append(businessHour.toString() + '\n');
         }
         strBuf.append("휴무일: " + closingDays + "\n");
-        strBuf.append("주차여부: " + "\n");
         strBuf.append("평균비용: " + averageCostPerPerson + "\n");
         strBuf.append("만족도(평점): " + score + "\n");
         strBuf.append("소요시간:" + spendingTime + "\n");
@@ -295,12 +288,6 @@ public class BasicPOI {
         this.touristAttractionType = TouristAttractionType.parse(poiType.subSubCategory);
     }
 
-    private void initRestaurantType() {
-        this.poiType = poiType.deepCopy();
-        POIType restaurantType = new POIType("음식점");
-        isRestaurant = restaurantType.contain(poiType);
-    }
-
     public static BasicPOI parse(String array[]) {
         Gson gson = new Gson();
         String id = array[0];
@@ -328,8 +315,6 @@ public class BasicPOI {
             basicPOI.setClosingDays(closingDays);
         }
 
-//        int hasParkingLot = Integer.parseInt(array[14]);
-//        basicPOI.setParking(hasParkingLot);
         int averageCostPerPerson = Integer.parseInt(array[15]);
         basicPOI.setAverageCostPerPerson(averageCostPerPerson);
 
@@ -347,7 +332,6 @@ public class BasicPOI {
         }
 
         basicPOI.initTouristAttractionType();
-        basicPOI.initRestaurantType();
 
         return basicPOI;
     }
@@ -370,12 +354,6 @@ public class BasicPOI {
 //        poi.setClosingDays(closingDays);
 //        // 10. 평균비용
 //        poi.setAverageCostPerPerson(11000);
-//        // 11 대중교통 접근성
-//        poi.addPublicTransportationAccess("을지로입구역", 5);
-//        poi.addPublicTransportationAccess("을지로3가역", 10);
-//        poi.addPublicTransportationAccess("종각역", 15);
-//        // 12. 만족도
-//        poi.setScore(5.5);
 //        // 소요시간
 //        poi.setSpendingHour(40, 10);
 //        System.out.println(poi);
