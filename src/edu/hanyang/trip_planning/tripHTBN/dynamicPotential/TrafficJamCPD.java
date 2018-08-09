@@ -4,7 +4,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import cntbn.common.NodeDictionary;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import edu.hanyang.trip_planning.tripHTBN.potential.InterfaceSoftmaxCPD;
-import org.apache.log4j.Logger;
 import util.Pair;
 
 import java.io.FileReader;
@@ -13,11 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by wykwon on 2015-10-08.
- */
 public class TrafficJamCPD implements InterfaceSoftmaxCPD {
-    private static Logger logger = Logger.getLogger(TrafficJamCPD.class);
     private String nodename;
     private List<Pair<Double, double[]>> timeTable = new ArrayList<>();
 

@@ -1,7 +1,5 @@
 package edu.hanyang.trip_planning.optimize.aco;
 
-import edu.hanyang.trip_planning.optimize.aco.dummyProblem.AdvancedDummyOrienteeringProblem;
-import org.apache.log4j.Logger;
 import org.math.array.DoubleArray;
 import util.Erf;
 import util.MyFunction;
@@ -9,11 +7,7 @@ import util.WeightedRandomSelector;
 
 import java.util.*;
 
-/**
- * Created by dummyProblem on 2016-10-28.
- */
 public class ACOptimizer {
-    private static Logger logger = Logger.getLogger(ACOptimizer.class);
     private WeightedRandomSelector selection = new WeightedRandomSelector();
     private ACOProblem agent;
     private ACOParameters acoParameters;
@@ -84,18 +78,5 @@ public class ACOptimizer {
             p[i] = p[i] / sum;
         }
         return p;
-    }
-
-    public static void main(String[] args) {
-        AdvancedDummyOrienteeringProblem op = new AdvancedDummyOrienteeringProblem(0, 1);
-        ACOParameters acoParameters = new ACOParameters();
-        ACOptimizer ants = new ACOptimizer(op, acoParameters);
-
-        ScoredPath solutions[] = ants.optimize(10);
-
-        for (ScoredPath p : solutions) {
-//            logger.debug(p);
-            logger.debug(op.result(p.getPath()).toDetailString());
-        }
     }
 }
