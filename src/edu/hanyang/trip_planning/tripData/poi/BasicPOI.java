@@ -12,7 +12,7 @@ public class BasicPOI {
     private String id;                                          // ID
     private String title;                                       // 이름
     private Address address;                                    // 주소                                               ? address class 필요한가?
-    private POIType poiType;                                    // 장소의 종류                                        ? poitype class 필요한가?
+    private POIType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
     private Location location;                                  // 위치 (경위도)                                      ?
     private BusinessHour businessHour;                          // 영업시간
     private ClosingDays closingDays;                            // 휴일
@@ -195,8 +195,8 @@ public class BasicPOI {
 
     public double[] getPhysicalActivity() {
         double bodyWeight = 70;
-        // 1MET = 1 * kcal / (kg * h)
-        // kcal = MET*kg * h
+        // 1MET = 1 * kCal / (kg * h)
+        // kCal = MET*kg * h
 
         double ret[] = new double[2];
         if (this.touristAttractionType == null) {
@@ -205,8 +205,8 @@ public class BasicPOI {
             return ret;
         }
 
-        double mean = 0.0;
-        double var = 1.0;
+        double mean;
+        double var;
         switch (this.touristAttractionType) {
             case MountaineeringTrail:
                 mean = 6.5;
@@ -249,6 +249,10 @@ public class BasicPOI {
             case HotSpring:
                 mean = 1.1;
                 var = 0.1;
+                break;
+            default:
+                mean = 0.0;
+                var = 1.0;
                 break;
         }
         Pair<Double, Double> met = new Pair<>(mean, var);
