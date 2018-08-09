@@ -4,11 +4,9 @@ import cntbn.terms_factors.ContinuousFactor;
 
 import edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration;
 import edu.hanyang.trip_planning.trip_question.PersonalInfo;
-import edu.hanyang.trip_planning.trip_question.PersonalInfoFactory;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripData.preference.TouristAttractionType;
 import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.PDFtoPMF;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIGen;
 import edu.hanyang.trip_planning.tripHTBN.potential.domain_specific.Temperature;
 import edu.hanyang.trip_planning.tripHTBN.potential.domain_specific.WeatherEntry;
 import edu.hanyang.trip_planning.tripHTBN.potential.domain_specific.WeatherProbability;
@@ -29,8 +27,6 @@ import java.util.List;
  * Created by wykwon on 2016-11-02.
  */
 public class IncrementalInferenceTripNetwork {
-
-    private boolean bDebug = false;
     private static Logger logger = Logger.getLogger(IncrementalInferenceTripNetwork.class);
     private TripCPDs tripCPDs;
     private PersonalInfo personalInfo;
@@ -76,7 +72,7 @@ public class IncrementalInferenceTripNetwork {
         previousDepartureTime[1] = 0.01;
     }
 
-    public IncrementalInferenceTripNetwork(TripCPDs tripCPDs, PersonalInfo personalInfo,int year,int monthOfYear, int dayOfMonth, int startNodeIdx, int endNodeIdx, double startHour) {
+    public IncrementalInferenceTripNetwork(TripCPDs tripCPDs, PersonalInfo personalInfo, int year, int monthOfYear, int dayOfMonth, int startNodeIdx, int endNodeIdx, double startHour) {
         this.tripCPDs = tripCPDs;
         this.personalInfo = personalInfo;
         this.year = year;
@@ -104,14 +100,7 @@ public class IncrementalInferenceTripNetwork {
         totalSatisfaction = 0.0;
     }
 
-    public TripCPDs getTripNetwork() {
-        return tripCPDs;
-    }
-
-
-    /**
-     * 단계별 추론 시작
-     */
+    // 단계별 추론 시작
     public IncrementalInferenceResults inferenceNext(int destNodeIdx) {
         int srcNodeIdx;
         if (trail.size() == 0) {
@@ -134,10 +123,9 @@ public class IncrementalInferenceTripNetwork {
 /////////////////////////////////////////////////
 //        Satisfaction 계산
         Triple<double[], Integer, Integer> discretizedTime = PDFtoPMF.getGaussianPMFDayTime(arrivalTime[0], arrivalTime[1], tripNodesAndValues.getDiscreteTimeWidth());
-        double satisfication[] = inferenceSatisfaction(destNodeIdx, discretizedTime.first());
+        double satisfaction[] = inferenceSatisfaction(destNodeIdx, discretizedTime.first());
         double pa[] = inferencePhysicalActivity(destNodeIdx);
         double cost[] = inferenceCost(destNodeIdx);
-
 
 
         double returnMovement[] = inferenceMovement(destNodeIdx, endNodeIdx, null);
@@ -148,12 +136,12 @@ public class IncrementalInferenceTripNetwork {
         inferenceResults.setDestNodeIdx(destNodeIdx);
         inferenceResults.setArrivalTime(arrivalTime);
         inferenceResults.setDepartureTime(departureTime);
-        inferenceResults.setSatisfaction(satisfication);
+        inferenceResults.setSatisfaction(satisfaction);
 
         inferenceResults.addPA(totalPA, pa);
         inferenceResults.addTotalCosts(totalCost, cost);
         inferenceResults.setExpectedReturnTime(expectedReturnTime);
-//        logger.debug(inferenceResults);
+
         return inferenceResults;
     }
 
@@ -166,13 +154,12 @@ public class IncrementalInferenceTripNetwork {
         totalPA = inferenceResults.getTotalPA().clone();
         totalSatisfaction += inferenceResults.getSatisfaction()[0];
 //        logger.debug(dumpDist("previousDepartureTime", previousDepartureTime));
-        curNodeIdx= nextNodeIdx;
+        curNodeIdx = nextNodeIdx;
         return inferenceResults;
     }
 
 
     private double[] inferenceArrivalTime(double movement[], double endtime[]) {
-
         double ret[] = new double[2];
         ret[0] = movement[0] + endtime[0];
         ret[1] = movement[1] + endtime[1];
@@ -191,15 +178,11 @@ public class IncrementalInferenceTripNetwork {
      * @return 1st element: mean, 2nd element: var
      */
     private double[] inferenceDuration(int destNodeIdx) {
-        ProbabilisticDuration pd = tripCPDs.getPOI(destNodeIdx).getSpendingTime(personalInfo,null);
+        ProbabilisticDuration pd = tripCPDs.getPOI(destNodeIdx).getSpendingTime(personalInfo, null);
         double ret[] = new double[2];
         ret[0] = pd.hour;
         ret[1] = pd.standardDeviation * pd.standardDeviation;
         return ret;
-    }
-
-    private String dumpDist(String title, double dist[]) {
-        return title + ": mean=" + String.format("%2.2f",dist[0]) + ", var=" + String.format("%2.2f",dist[1]);
     }
 
     public double[] inferenceMovement(int srcNodeIdx, int destNodeIdx, double discreteTimes[]) {
@@ -317,34 +300,9 @@ public class IncrementalInferenceTripNetwork {
             default:
                 return weatherType4_sensitive.getProbability(rainCondition, tempCondition);
         }
-//        logger.debug(hour);
-//        logger.debug("tempCondition="+tempCondition + "\trainCondition="+rainCondition);
-
-
     }
 
     public double getTotalSatisfaction() {
         return totalSatisfaction;
     }
-
-    public static void test() {
-        GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(SubsetPOIGen.getJeju10_(), 30);
-        TripCPDs tripCPDs = generateTripCPDs.generate();
-//        logger.debug(generateTripCPDs.getTripCPDs());
-
-        PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample1();
-/// String dateStr, int startNodeIdx, int endNodeIdx, double startHour)
-        IncrementalInferenceTripNetwork in = new IncrementalInferenceTripNetwork(tripCPDs, personalInfo, "2016-5-1", 0, 0, 9.00);
-
-        in.inferenceNext(1);
-        in.setNextNodeIdx(1);
-        in.inferenceNext(2);
-
-    }
-
-    public static void main(String[] args) {
-        test();
-    }
-
-
 }

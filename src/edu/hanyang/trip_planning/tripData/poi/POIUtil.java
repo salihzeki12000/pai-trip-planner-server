@@ -6,6 +6,7 @@ import edu.hanyang.trip_planning.tripData.dataType.Location;
 public class POIUtil {
     public static final double POI_NEAR_THRESHOLD = 1;
     public static final double POI_SAME_THRESHOLD = 0.1;
+
     /**
      * 경위도 좌표 km로 표현함.
      *

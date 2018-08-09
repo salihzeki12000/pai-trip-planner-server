@@ -1,8 +1,6 @@
 package edu.hanyang.trip_planning.tripData.dataType;
 
 
-
-
 /**
  * 장소에서 장소로 이동하는 요소
  * 일단 지식 베이스 기준임.

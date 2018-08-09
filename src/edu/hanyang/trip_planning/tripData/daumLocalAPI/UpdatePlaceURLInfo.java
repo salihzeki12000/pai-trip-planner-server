@@ -40,17 +40,12 @@ public class UpdatePlaceURLInfo {
         double sum = 0.0;
         double num = 0.0;
         for (Element e : num_em) {
-//            logger.debug(e.html()+ "\t textlength="+e.text().length()+ "\t idlength="+e.id().length());
             if (e.text().length() > 0) {
                 if (e.id().length() == 0) {
-//                    logger.debug(e.text());
                     sum += Double.parseDouble(e.text());
                     num += 1.0;
                 }
             }
-//            logger.debug(e.text());
-//            logger.debug(e.className());
-//            logger.debug(e.id());
         }
         return sum / num;
     }
@@ -62,9 +57,7 @@ public class UpdatePlaceURLInfo {
         for (int i = 0; i < size; i++) {
             String title = tit_list.get(i).text();
             String content = cont_list.get(i).text();
-//            logger.debug(title+"="+content);
             if (title.equals("이용시간")) {
-//                logger.debug("이건이용시간이라고, " + content);
                 return parseBusinessHour(content);
             }
         }
@@ -78,9 +71,7 @@ public class UpdatePlaceURLInfo {
         for (int i = 0; i < size; i++) {
             String title = tit_list.get(i).text();
             String content = cont_list.get(i).text();
-//            logger.debug(title+"="+content);
             if (title.equals("휴무일")) {
-//                logger.debug("휴무일 , " + content);
                 return parseClosingDays(content);
             }
         }
@@ -117,11 +108,6 @@ public class UpdatePlaceURLInfo {
                 }
             }
         }
-
-
-//        logger.debug(businessHour);
-
-
         // case 1. 00:00 ~ 24:00
         // case 2. 평일(월~금) 09:30 ~ 19:00, 09:30 ~ 21:00, 주말 09:30 ~ 16:00
 
@@ -129,63 +115,27 @@ public class UpdatePlaceURLInfo {
         return businessHour;
     }
 
+    /**
+     * 매주 일요일
+     */
     private ClosingDays parseClosingDays(String str) {
-
-        /**
-         * 매주 일요일
-         */
         String strs[] = str.split(", ");
         ClosingDays closingDays = ClosingDays.parse(strs);
         return closingDays;
-
     }
-
-    public void test() {
-
-    }
-
-    public static void regrextest() {
-        Pattern p = Pattern.compile("\\d\\d\\d");
-        Matcher m = p.matcher("a123b");
-        System.out.println(m.find());
-        System.out.println(m.matches());
-
-        p = Pattern.compile("^\\d\\d\\d$");
-        m = p.matcher("123");
-        System.out.println(m.find());
-        System.out.println(m.matches());
-    }
-
 
     public static void testAll() {
         POIManager poiManager = POIManager.getInstance();
         for (BasicPOI poi : poiManager.getAll()) {
             String placeUrl = poi.getURL("place");
             UpdatePlaceURLInfo u = new UpdatePlaceURLInfo(placeUrl);
-//            logger.debug(u.businessTime());
             if (u.cLosingDays().toString().length() > 0) {
                 logger.debug(u.cLosingDays());
             }
-//            logger.debug(placeUrl);
         }
     }
 
     public static void main(String[] args) {
-//        regrextest();
         testAll();
-//        UpdatePlaceURLInfo u = new UpdatePlaceURLInfo("http://place.map.daum.net/9078153");
-//        u.parseBusinessHour("평일(월~금) 11:30 ~ 21:30, 주말 11:30 ~ 21:00");
-//        UpdatePlaceURLInfo u = new UpdatePlaceURLInfo("http://place.map.daum.net/9078153");
-//        logger.debug(u.getSatisfication());
-
-
     }
-
-/* output:
-true
-false
-true
-true
-*/
-
 }

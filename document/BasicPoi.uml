@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="114.0" y="170.0">edu.hanyang.trip_planning.tripData.dataType.ClosingDays</node>
+    <node x="545.0869565217391" y="170.0">edu.hanyang.trip_planning.tripData.dataType.BusinessHour</node>
+    <node x="797.086956521739" y="170.0">edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration</node>
+    <node x="430.0" y="170.0">edu.hanyang.trip_planning.tripData.dataType.Address</node>
+    <node x="0.0" y="170.0">edu.hanyang.trip_planning.tripData.dataType.Location</node>
+    <node x="685.086956521739" y="170.0">edu.hanyang.trip_planning.tripData.dataType.POIType</node>
+    <node x="1110.086956521739" y="170.0">edu.hanyang.trip_planning.tripData.dataType.AdjacentPOI</node>
+    <node x="31.99107142857133" y="80.0">edu.hanyang.trip_planning.tripData.dataType.DayOfWeekInMonth</node>
+    <node x="483.71666235334715" y="360.0">edu.hanyang.trip_planning.tripData.poi.BasicPOI</node>
+    <node x="977.0869565217391" y="170.0">edu.hanyang.trip_planning.tripData.dataType.ActivityType</node>
+    <node x="170.47826086956513" y="0.0">edu.hanyang.trip_planning.tripData.dataType.DayOfWeek</node>
+    <node x="442.79999999999995" y="80.0">edu.hanyang.trip_planning.tripData.dataType.AddressCode</node>
+    <node x="247.99999999999997" y="170.0">edu.hanyang.trip_planning.tripData.preference.TouristAttractionType</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="edu.hanyang.trip_planning.tripData.poi.BasicPOI" target="edu.hanyang.trip_planning.tripData.preference.TouristAttractionType">
+      <point x="-24.52173913043481" y="-15.0" />
+      <point x="506.1949232229124" y="290.0" />
+      <point x="288.5" y="290.0" />
+      <point x="-40.5" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.poi.BasicPOI" target="edu.hanyang.trip_planning.tripData.dataType.BusinessHour">
+      <point x="8.173913043478251" y="-15.0" />
+      <point x="538.8905753968254" y="250.0" />
+      <point x="635.0869565217391" y="250.0" />
+      <point x="30.0" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.dataType.Address" target="edu.hanyang.trip_planning.tripData.dataType.AddressCode">
+      <point x="0.0" y="-15.0" />
+      <point x="475.0" y="150.0" />
+      <point x="478.19999999999993" y="150.0" />
+      <point x="-23.600000000000023" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.poi.BasicPOI" target="edu.hanyang.trip_planning.tripData.dataType.AddressCode">
+      <point x="0.0" y="-15.0" />
+      <point x="530.7166623533471" y="230.0" />
+      <point x="534.5869565217391" y="230.0" />
+      <point x="534.5869565217391" y="150.0" />
+      <point x="549.0" y="150.0" />
+      <point x="47.19999999999999" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.poi.BasicPOI" target="edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration">
+      <point x="28.608695652173935" y="-15.0" />
+      <point x="559.3253580055211" y="300.0" />
+      <point x="877.086956521739" y="300.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.dataType.ClosingDays" target="edu.hanyang.trip_planning.tripData.dataType.DayOfWeekInMonth">
+      <point x="-16.285714285714334" y="-15.0" />
+      <point x="154.71428571428567" y="130.0" />
+      <point x="130.11607142857133" y="130.0" />
+      <point x="19.625" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.poi.BasicPOI" target="edu.hanyang.trip_planning.tripData.dataType.Address">
+      <point x="-12.260869565217433" y="-15.0" />
+      <point x="518.4557927881298" y="260.0" />
+      <point x="475.0" y="260.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.dataType.ClosingDays" target="edu.hanyang.trip_planning.tripData.dataType.DayOfWeek">
+      <point x="48.85714285714289" y="-15.0" />
+      <point x="219.8571428571429" y="150.0" />
+      <point x="268.77758367839886" y="150.0" />
+      <point x="268.77758367839886" y="60.0" />
+      <point x="270.3782608695651" y="60.0" />
+      <point x="44.39999999999998" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.poi.BasicPOI" target="edu.hanyang.trip_planning.tripData.dataType.ActivityType">
+      <point x="36.782608695652186" y="-15.0" />
+      <point x="567.4992710489994" y="320.0" />
+      <point x="1033.586956521739" y="320.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.poi.BasicPOI" target="edu.hanyang.trip_planning.tripData.dataType.ClosingDays">
+      <point x="-28.608695652173935" y="-15.0" />
+      <point x="502.10796670117327" y="300.0" />
+      <point x="199.5" y="300.0" />
+      <point x="28.5" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.dataType.DayOfWeekInMonth" target="edu.hanyang.trip_planning.tripData.dataType.DayOfWeek">
+      <point x="39.25" y="-15.0" />
+      <point x="149.74107142857133" y="60.0" />
+      <point x="203.7782608695651" y="60.0" />
+      <point x="-22.200000000000045" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.poi.BasicPOI" target="edu.hanyang.trip_planning.tripData.dataType.AdjacentPOI">
+      <point x="44.95652173913044" y="-15.0" />
+      <point x="575.6731840924776" y="340.0" />
+      <point x="1195.586956521739" y="340.0" />
+      <point x="28.5" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.poi.BasicPOI" target="edu.hanyang.trip_planning.tripData.dataType.Location">
+      <point x="-40.86956521739131" y="-15.0" />
+      <point x="489.8470971359559" y="330.0" />
+      <point x="47.0" y="330.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.hanyang.trip_planning.tripData.poi.BasicPOI" target="edu.hanyang.trip_planning.tripData.dataType.POIType">
+      <point x="20.434782608695627" y="-15.0" />
+      <point x="551.1514449620428" y="280.0" />
+      <point x="761.7536231884058" y="280.0" />
+      <point x="30.66666666666667" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7073170731707317" x="1007.0" y="748.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

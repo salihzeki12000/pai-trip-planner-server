@@ -72,12 +72,12 @@ public class TripPlanner {
             subsetPOIs.reduceSubsetPoisByScoreAndConstraint(numTotalPoi, numConstrainedTypePoi, categoryConstraintList); // mgkim: (numTotalPoi-5*numConstraint) 여행typePoi + (5*numConstraint) 각 constraintPoiType 남기고 줄이기
             for (PoiConstraint poiConstraint : poiConstraintList) {                     // mgkim: poiConstraint 처리
                 if (poiConstraint.isVisitOrNot()) {
-                    subsetPOIs.addSubsetPOIsBytitle(poiConstraint.getPoiTitle());
+                    subsetPOIs.addSubsetPOIsByTitle(poiConstraint.getPoiTitle());
                 } else {
                     subsetPOIs.reduceSubsetPoisByTitles(poiConstraint.getPoiTitle());
                 }
             }
-            subsetPOIs.addSubsetPOIsBytitle(new String[]{startPoiTitle, endPoiTitle});  // mgkim: 출발, 도착 장소 추가
+            subsetPOIs.addSubsetPOIsByTitle(new String[]{startPoiTitle, endPoiTitle});  // mgkim: 출발, 도착 장소 추가
             GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(subsetPOIs, minuteTime);
             TripCPDs tripCPDs = generateTripCPDs.generate();
             // mgkim: start & end PoiIdx
@@ -105,39 +105,6 @@ public class TripPlanner {
 
         multiDayTripAnswer = setNearbyPois(multiDayTripAnswer);
         return multiDayTripAnswer;
-    }
-
-    // mgkim:
-    private static void test1() {
-        TripQuestion tripQuestion = TripQuestionFactory.tripQuestionExample3();
-
-        TripPlanner tripPlanner = new TripPlanner(30, 1, 1, 50, 5);
-        MultiDayTripAnswer multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);
-        logger.debug(multiDayTripAnswer);
-        for (int i = 0; i < multiDayTripAnswer.size(); i++) {
-            logger.debug(multiDayTripAnswer.getItinerary(i));
-            System.out.println(multiDayTripAnswer.getItinerary(i).value);
-        }
-        for (int i = 0; i < multiDayTripAnswer.size(); i++) {
-            System.out.println(multiDayTripAnswer.getItinerary(i).getPoiTitles());
-        }
-    }
-
-    // mgkim:
-    private static void test2() {
-        TripQuestion tripQuestion = TripQuestionFactory.tripQuestionExample4();
-
-        TripPlanner tripPlanner = new TripPlanner(30, 1, 1, 50, 5);
-        MultiDayTripAnswer multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);
-        logger.debug(multiDayTripAnswer);
-        for (int i = 0; i < multiDayTripAnswer.size(); i++) {
-            logger.debug(multiDayTripAnswer.getItinerary(i));
-            System.out.println(multiDayTripAnswer.getItinerary(i).value);
-        }
-        for (int i = 0; i < multiDayTripAnswer.size(); i++) {
-            System.out.println(multiDayTripAnswer.getItinerary(i).getPoiTitles());
-        }
-
     }
 
     private MultiDayTripAnswer setNearbyPois(MultiDayTripAnswer multiDayTripAnswer) {
@@ -183,15 +150,27 @@ public class TripPlanner {
     }
 
     public static void main(String[] args) {
-        int numRun = 50;
+        TripQuestion tripQuestion = TripQuestionFactory.tripQuestionExample4();
+        TripPlanner tripPlanner = new TripPlanner(30, 1, 1, 50, 5);
 
+        int numRun = 1;
         long start = System.currentTimeMillis();
         for (int i = 0; i < numRun; i++) {
             long start1 = System.currentTimeMillis();
-            test2();
+            MultiDayTripAnswer multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);
             long end1 = System.currentTimeMillis();
-            System.out.println();
+
+            logger.debug(multiDayTripAnswer);
             logger.debug("1회 실행 시간: " + (end1 - start1) / 1000.0);
+
+//            for (int j = 0; j < multiDayTripAnswer.size(); j++) {
+//                logger.debug(multiDayTripAnswer.getItinerary(j));
+//                System.out.println(multiDayTripAnswer.getItinerary(j).value);
+//            }
+//            for (int j = 0; j < multiDayTripAnswer.size(); j++) {
+//                System.out.println(multiDayTripAnswer.getItinerary(j).getPoiTitles());
+//            }
+//            System.out.println();
         }
         long end = System.currentTimeMillis();
 

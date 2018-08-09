@@ -32,7 +32,7 @@ public class ArrayKey {
      * @param values
      * @return
      */
-    public int key(int... values) throws RuntimeException{
+    public int key(int... values) throws RuntimeException {
         if (values.length != cardinalities.length) {
             throw new RuntimeException("Array size mismatch");
         }

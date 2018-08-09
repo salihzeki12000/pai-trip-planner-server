@@ -26,11 +26,11 @@ public class DummyOrienteeringProblem implements ACOProblem {
     private List<Integer> trail = new ArrayList<>();
 
     private double distanceMatrix[][] = {{0, 83, 42, 165, 90, 145},
-                                         {83, 0, 52, 84, 81, 116},
-                                         {42, 52, 0, 128, 54, 107},
-                                         {165, 84, 128, 0, 124, 120},
-                                         {90, 81, 54, 124, 0, 55},
-                                         {145, 116, 107, 120, 55, 0}};
+            {83, 0, 52, 84, 81, 116},
+            {42, 52, 0, 128, 54, 107},
+            {165, 84, 128, 0, 124, 120},
+            {90, 81, 54, 124, 0, 55},
+            {145, 116, 107, 120, 55, 0}};
     private double profits[] = {0.0, 0.5, 0.15, 0.3, 0.4, 0.6};
     private double spendingHour[] = {0.0, 0.3, 0.4, 0.5, 0.6, 1.6};
 
@@ -122,8 +122,6 @@ public class DummyOrienteeringProblem implements ACOProblem {
     }
 
 
-
-
     public double getValue(int... path) {
         if (path.length >= numNodes) {
             throw new RuntimeException("path length error");
@@ -148,7 +146,6 @@ public class DummyOrienteeringProblem implements ACOProblem {
     public int getNumNodes() {
         return 0;
     }
-
 
 
     private double computeTotalTime(int... path) {

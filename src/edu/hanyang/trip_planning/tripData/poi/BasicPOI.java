@@ -162,7 +162,7 @@ public class BasicPOI {
         return defaultValue;
     }
 
-    
+
     public Integer getAverageCostPerPerson() {
         return averageCostPerPerson;
     }

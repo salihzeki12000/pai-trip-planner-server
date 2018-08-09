@@ -812,6 +812,7 @@ final class Distance {
 
     // Number formatter for floating-point values.
     private static NumberFormat floatFormat;
+
     static {
         floatFormat = NumberFormat.getInstance();
         floatFormat.setMinimumFractionDigits(0);

@@ -36,12 +36,12 @@ public class TripCPDs {
 
     public TripCPDs(SubsetPOIs subsetPOIs, TripNodesAndValues tripNodesAndValues) {
         this.subsetPOIs = subsetPOIs;
-        this.tripNodesAndValues= tripNodesAndValues;
+        this.tripNodesAndValues = tripNodesAndValues;
     }
 
     public TripCPDs(String titleOfPOIs[], TripNodesAndValues tripNodesAndValues) {
         this.subsetPOIs = new SubsetPOIs(titleOfPOIs);
-        this.tripNodesAndValues= tripNodesAndValues;
+        this.tripNodesAndValues = tripNodesAndValues;
     }
 
     public BasicPOI getPOI(int idx) {
@@ -125,13 +125,13 @@ public class TripCPDs {
         return tripNodesAndValues;
     }
 
-    public String toString(){
+    public String toString() {
         StringBuffer strbuf = new StringBuffer();
-        strbuf.append("movement CPDs\n"+movementCPDs);
-        strbuf.append("duration CPDs\n"+durationCPDs);
-        strbuf.append("time CPDs\n"+timeCPDs);
-        strbuf.append("end time CPDs\n"+endTimeCPDs);
-        strbuf.append("discrete time CPDs\n"+ discreteTimeCPD);
+        strbuf.append("movement CPDs\n" + movementCPDs);
+        strbuf.append("duration CPDs\n" + durationCPDs);
+        strbuf.append("time CPDs\n" + timeCPDs);
+        strbuf.append("end time CPDs\n" + endTimeCPDs);
+        strbuf.append("discrete time CPDs\n" + discreteTimeCPD);
 
 
         return strbuf.toString();

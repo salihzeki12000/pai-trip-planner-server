@@ -4,11 +4,9 @@ import cntbn.terms_factors.ContinuousFactor;
 import edu.hanyang.trip_planning.optimize.DetailItinerary;
 import edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration;
 import edu.hanyang.trip_planning.trip_question.PersonalInfo;
-import edu.hanyang.trip_planning.trip_question.PersonalInfoFactory;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripData.preference.TouristAttractionType;
 import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.PDFtoPMF;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIGen;
 import edu.hanyang.trip_planning.tripHTBN.potential.domain_specific.Temperature;
 import edu.hanyang.trip_planning.tripHTBN.potential.domain_specific.WeatherEntry;
 import edu.hanyang.trip_planning.tripHTBN.potential.domain_specific.WeatherProbability;
@@ -285,12 +283,5 @@ public class BatchInferenceTripNetwork {
 //        logger.debug("tempCondition="+tempCondition + "\trainCondition="+rainCondition);
 
 
-    }
-
-    public static void test() {
-        GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(SubsetPOIGen.getJeju10_(), 30);
-        TripCPDs tripCPDs = generateTripCPDs.generate();
-        PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample1();
-        BatchInferenceTripNetwork in = new BatchInferenceTripNetwork(tripCPDs, personalInfo, "2016-5-1", 0, 0, 9.00);
     }
 }

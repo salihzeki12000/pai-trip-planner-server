@@ -88,23 +88,18 @@ public class POIType {
     }
 
     public POIType deepCopy() {
-        return new  POIType(this.category, this.subCategory, this.subSubCategory);
+        return new POIType(this.category, this.subCategory, this.subSubCategory);
     }
 
     @Override
     public String toString() {
-        if (subCategory==null){
-            return "POIType:" +category ;
-        }
-        else if (subSubCategory==null){
-            return "POIType:" +category +"."+subCategory;
-        }
-        else {
+        if (subCategory == null) {
+            return "POIType:" + category;
+        } else if (subSubCategory == null) {
+            return "POIType:" + category + "." + subCategory;
+        } else {
             return "POIType:" + category + "." + subCategory + "." + subSubCategory;
         }
 
-    }
-
-    public static void main(String[] args) {
     }
 }

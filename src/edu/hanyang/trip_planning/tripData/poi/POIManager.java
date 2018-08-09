@@ -7,7 +7,6 @@ import edu.hanyang.trip_planning.tripData.dataType.ClosingDays;
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
 import edu.hanyang.trip_planning.tripData.daumLocalAPI.*;
 import org.apache.log4j.Logger;
-import util.MyCollections;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -23,7 +22,7 @@ public class POIManager {
     private Map<String, BasicPOI> poiMapById = new HashMap<>();
     private Map<String, BasicPOI> poiMapByTitle = new HashMap<>();
     private List<BasicPOI> poiList = new ArrayList<>();
-    private String outFilename= "datafiles/pois/updated.csv";
+    private String outFilename = "datafiles/pois/updated.csv";
 
     private Set<POIType> poiTypeSet = new HashSet<>();
 
@@ -34,7 +33,7 @@ public class POIManager {
             List<String> filenames = Files.readAllLines(Paths.get("datafiles/pois/TestPathPois"));
 //            List<String> strList = Files.readAllLines(Paths.get("datafiles/pois/PathPOI"));
 
-            for (String filename: filenames) {
+            for (String filename : filenames) {
                 readBasicPOIFromCSV(filename, '\t');
             }
         } catch (IOException e) {
@@ -133,7 +132,6 @@ public class POIManager {
             }
             poiList.add(basicPOI);
             poiTypeSet.add(basicPOI.getPoiType());
-//            logger.debug(basicPOI);
         }
     }
 
@@ -155,11 +153,14 @@ public class POIManager {
             boolean match = false;  //false
             for (String add : addresses) {
                 if (add.equals(poi.getAddress().addressCode.countryCode)) {
-                    match = true;   break;
+                    match = true;
+                    break;
                 } else if (add.equals(poi.getAddress().addressCode.provinceCode)) {
-                    match = true;   break;
+                    match = true;
+                    break;
                 } else if (add.equals(poi.getAddress().addressCode.cityCode)) {
-                    match = true;   break;
+                    match = true;
+                    break;
                 }
             }
             if (match) {
@@ -200,8 +201,6 @@ public class POIManager {
         CSVWriter csvWriter = new CSVWriter(new FileWriter(this.outFilename), '\t', CSVWriter.NO_QUOTE_CHARACTER);
         csvWriter.writeNext(BasicPOI.csvHeader());
         for (BasicPOI poi : poiMapById.values()) {
-//            logger.debug(poi);
-//            logger.debug(poi.getURL("place"));
             csvWriter.writeNext(poi.toStrArray());
         }
         csvWriter.close();
@@ -209,7 +208,6 @@ public class POIManager {
     }
 
     public static void convertItemlist2CSV(String daumPOIFilename, String csvFilename) throws IOException {
-
         CSVWriter csvWriter = new CSVWriter(new FileWriter(csvFilename), '\t', CSVWriter.NO_QUOTE_CHARACTER);
         csvWriter.writeNext(BasicPOI.csvHeader());
 
@@ -219,7 +217,6 @@ public class POIManager {
         Set<BasicPOI> poiSet = ItemConverter.getPOISet(itemList);
 
         for (BasicPOI poi : poiSet) {
-//            logger.debug(poi);
             logger.debug(poi.getURL("place"));
             csvWriter.writeNext(poi.toStrArray());
         }
@@ -255,35 +252,15 @@ public class POIManager {
                 dest.getLocation().latitude, dest.getLocation().longitude);
     }
 
-    /**
-     * @param range      범위 : km
-     * @param longtitude
-     * @param lattitude
-     * @return
-     */
-    public Set<BasicPOI> getNearby(POIType poiType, double range, double lattitude, double longtitude) {
-        Set<BasicPOI> poiSet = new HashSet<BasicPOI>();
-        for (BasicPOI poi : poiMapById.values()) {
-            if (poiType.contain(poi.getPoiType())) {
-                double dist = POIUtil.distance(lattitude, longtitude, poi.getLocation().latitude, poi.getLocation().longitude);
-                if (dist < range) {
-                    poiSet.add(poi);
-                }
-            }
-        }
-
-        return poiSet;
-    }
-
     public void updatePlaceURLinfo() {
         Collection<BasicPOI> pois = poiMapById.values();
         for (BasicPOI poi : pois) {
             String placeURL = poi.getURL("place");
 //            logger.debug(placeURL);
             UpdatePlaceURLInfo updatePlaceInfo = new UpdatePlaceURLInfo(placeURL);
-            double satisfication = updatePlaceInfo.getSatisfication();
-            poi.setScore(satisfication);
-//            logger.debug(poi.getIdentifier().name + " \t별점="+satisfication);
+            double satisfaction = updatePlaceInfo.getSatisfication();
+            poi.setScore(satisfaction);
+//            logger.debug(poi.getIdentifier().name + " \t별점="+satisfaction);
             BusinessHour businessHour = updatePlaceInfo.businessTime();
             if (businessHour != null) {
                 logger.debug("영업시간:" + businessHour);
@@ -316,7 +293,7 @@ public class POIManager {
         Set<String> titleSet = new HashSet<String>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
-            String thisLine ;
+            String thisLine;
             while ((thisLine = br.readLine()) != null) {
                 if (!thisLine.isEmpty()) {
                     System.out.println(thisLine);
@@ -356,34 +333,17 @@ public class POIManager {
         return null;
     }
 
-    public String dumpPOIType() {
-        StringBuffer strbuf = new StringBuffer();
-
-        for (BasicPOI poi : poiList) {
-            strbuf.append(poi.getTitle() + "\t" + poi.getTouristAttractionType() + "\n");
-        }
-//        for (POIType poiType: poiTypeSet){
-//            strbuf.append(poiType.category + "\t"+ poiType.subCategory +"\t"+ poiType.subSubCategory+"\n");
-//        }
-        return strbuf.toString();
-    }
-
     public static void main(String[] args) {
-            POIManager.updatePOIsFromFile("datafiles/pois/제주식당갱신.txt");
+        POIManager.updatePOIsFromFile("datafiles/pois/제주식당갱신.txt");
         Set<POIType> poiTypes = new HashSet<POIType>();
-        for (BasicPOI basicPOI: POIManager.getInstance().getAll())
-        {
-            if (basicPOI.getPoiType().category.equals("음식점")){
+        for (BasicPOI basicPOI : POIManager.getInstance().getAll()) {
+            if (basicPOI.getPoiType().category.equals("음식점")) {
                 poiTypes.add(basicPOI.getPoiType());
-//                System.out.println(basicPOI.getPoiTy?pe());
-//                logger.debug(basicPOI.getTitle());
-
             }
         }
 
-        for (POIType poiType: poiTypes){
-            System.out.println(poiType.subCategory + "\t"+ poiType.subSubCategory);
+        for (POIType poiType : poiTypes) {
+            System.out.println(poiType.subCategory + "\t" + poiType.subSubCategory);
         }
-
     }
 }

@@ -49,12 +49,12 @@ public class PDFtoPMF {
                 }
                 upperIdx = idx;
 //                logger.debug(t + "\t" + normalDistribution.density(t));
-                double prob = normalDensity(mean,sd,t) * hourStep;
+                double prob = normalDensity(mean, sd, t) * hourStep;
                 retValues[idx] = prob;
                 sum += prob;
                 if (prob > maxValue) {
                     maxValue = prob;
-                       }
+                }
             }
             idx++;
         }
@@ -86,17 +86,15 @@ public class PDFtoPMF {
         return new Triple<>(retValues, lowerIdx, upperIdx);
     }
 
-    public  static double normalDensity(double mean, double sd, double x) {
+    public static double normalDensity(double mean, double sd, double x) {
         double x0 = x - mean;
         double x1 = x0 / sd;
-        double lsdphl2Pi= FastMath.log(sd) + 0.5D * FastMath.log(6.283185307179586D);
+        double lsdphl2Pi = FastMath.log(sd) + 0.5D * FastMath.log(6.283185307179586D);
         double logD = -0.5D * x1 * x1 - lsdphl2Pi;
         return FastMath.exp(logD);
 
 
     }
-
-
 
 
     public static void main(String[] args) {

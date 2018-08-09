@@ -8,7 +8,7 @@ package cntbn.terms_factors;
  * To change this template use File | Settings | File Templates.
  */
 public enum GaussianType {
-    CLG,  SimpleGaussian
+    CLG, SimpleGaussian
 
     /**
      * 구분빙법-

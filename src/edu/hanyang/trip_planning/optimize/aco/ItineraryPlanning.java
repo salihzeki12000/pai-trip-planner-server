@@ -30,6 +30,7 @@ public abstract class ItineraryPlanning implements ACOProblem {
 
     /**
      * numNode를 나중에 초기화할때 사용됨
+     *
      * @param startNodeIdx
      * @param endNodeIdx
      */
@@ -72,8 +73,6 @@ public abstract class ItineraryPlanning implements ACOProblem {
 
     @Override
     public abstract double getTotalValue();
-
-
 
 
 }

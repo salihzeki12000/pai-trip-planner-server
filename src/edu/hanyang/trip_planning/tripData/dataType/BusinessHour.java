@@ -221,7 +221,7 @@ public class BusinessHour {
     }
 
     public double getOpenHour(int year, int month, int day) {
-        switch (dayOfWeek(year,month,day)) {
+        switch (dayOfWeek(year, month, day)) {
             case 6:
                 return saturdayOpenHour;
             case 7:
@@ -232,7 +232,7 @@ public class BusinessHour {
     }
 
     public double getCloseHour(int year, int month, int day) {
-        switch (dayOfWeek(year,month,day)) {
+        switch (dayOfWeek(year, month, day)) {
             case 6:
                 return saturdayCloseHour;
             case 7:

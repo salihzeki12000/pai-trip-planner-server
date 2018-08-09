@@ -3,7 +3,7 @@ package edu.hanyang.trip_planning.trip_question;
 public class PersonalInfo {
     public PreferenceOfPOIType preferenceOfPOIType;
 
-    public void setPreferenceOfPOIType(PreferenceOfPOIType preferenceOfPOIType){
+    public void setPreferenceOfPOIType(PreferenceOfPOIType preferenceOfPOIType) {
         this.preferenceOfPOIType = preferenceOfPOIType;
     }
 

@@ -45,7 +45,7 @@ public class AttractionUpdate {
             basicPOI.setAverageCostPerPerson(cost);
             basicPOI.setSpendingMinutes(durationMin, durationMinSD);
 
-            BusinessHour businessHour = new BusinessHour(openTime,closeTime);
+            BusinessHour businessHour = new BusinessHour(openTime, closeTime);
             basicPOI.setBusinessHour(businessHour);
             logger.debug(title + "\t" + category + "\t" + subCategory + "\t" + subsubCategory);
             basicPOI.setTouristAttractionType(subsubCategory);

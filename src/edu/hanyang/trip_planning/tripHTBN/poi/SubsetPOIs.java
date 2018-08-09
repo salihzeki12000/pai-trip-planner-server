@@ -14,9 +14,10 @@ public class SubsetPOIs {
     String titleArray[];
     Map<String, Integer> nameIndexMap = new FastMap<>();
 
-    public SubsetPOIs(){}
+    public SubsetPOIs() {
+    }
 
-    public SubsetPOIs(String... titles){
+    public SubsetPOIs(String... titles) {
         makeSubsetPOIsByTitle(titles);
     }
 
@@ -37,7 +38,8 @@ public class SubsetPOIs {
             titleArray[j] = poiList.get(j).getTitle();
         }
     }
-    public void makeSubsetPOIsByTitle(Collection<String>  titles) {
+
+    public void makeSubsetPOIsByTitle(Collection<String> titles) {
         POIManager poiManager = POIManager.getInstance();
         int i = 0;
         for (String title : titles) {
@@ -54,41 +56,7 @@ public class SubsetPOIs {
             titleArray[j] = poiList.get(j).getTitle();
         }
     }
-    public void makeSubsetPOIsByIdentifiers(String... identifiers) {
-        POIManager poiManager = POIManager.getInstance();
-        int i = 0;
-        for (String identifier : identifiers) {
-            BasicPOI basicPOI = poiManager.getPOIByID(identifier);
-            if (basicPOI == null) {
-                throw new RuntimeException("cannot find " + identifier);
-            }
-            poiList.add(basicPOI);
-            nameIndexMap.put(basicPOI.getTitle(), i);
-            i++;
-        }
-        titleArray = new String[identifiers.length];
-        for (int j = 0; j < poiList.size(); j++) {
-            titleArray[j] = poiList.get(j).getTitle();
-        }
-    }
-    public void makeSubsetPOIsByIndices(int indices[]) {
-        POIManager poiManager = POIManager.getInstance();
-        int i = 0;
-        for (int idx : indices) {
-            BasicPOI basicPOI = poiManager.getPOIByIndex(idx);
-            if (basicPOI == null) {
-                throw new RuntimeException("cannot find " + idx);
-            }
-            poiList.add(basicPOI);
-            nameIndexMap.put(basicPOI.getTitle(), i);
-            i++;
-        }
-        titleArray = new String[indices.length];
-        for (int j = 0; j < poiList.size(); j++) {
-            titleArray[j] = poiList.get(j).getTitle();
-        }
-    }
-    // mgkim:
+
     public void makeSubsetPOIsByAreas(String... areas) {
         // {서귀포시, 부산}->서귀포시+부산 / {성산읍,제주시}->성산읍+제주시 / {성산읍,서귀포시}->서귀포시
         POIManager poiManager = POIManager.getInstance();
@@ -100,23 +68,23 @@ public class SubsetPOIs {
             titleArray[i] = poiList.get(i).getTitle();
         }
     }
-    // mgkim:
-    public void addSubsetPOIsBytitle(String... titles) {
-        ArrayList<String> titleList = new ArrayList<String>(Arrays.asList(titleArray));
-        for (String title:titles) {
+
+    public void addSubsetPOIsByTitle(String... titles) {
+        ArrayList<String> titleList = new ArrayList<>(Arrays.asList(titleArray));
+        for (String title : titles) {
             if (!titleList.contains(title)) {
                 poiList.add(POIManager.getInstance().getPOIByTitle(title));
-                nameIndexMap.put(poiList.get(poiList.size()-1).getTitle(), poiList.size()-1);
+                nameIndexMap.put(poiList.get(poiList.size() - 1).getTitle(), poiList.size() - 1);
                 titleList.add(title);
             }
         }
         titleArray = titleList.toArray(new String[titleList.size()]);
     }
-    // mgkim:
-    public void reduceSubsetPoisByTitleList(Collection<String> titles){
+
+    public void reduceSubsetPoisByTitles(String... titles) {
         ArrayList<String> titleList = new ArrayList<String>(Arrays.asList(titleArray));
         for (String title : titles) {
-            if (!titleList.contains(title)){
+            if (titleList.contains(title)) {
                 int poiIdx = getPOIIdx(title);
                 poiList.remove(poiIdx);
                 nameIndexMap.remove(title);
@@ -125,30 +93,19 @@ public class SubsetPOIs {
         }
         titleArray = titleList.toArray(new String[titleList.size()]);
     }
+
     // mgkim:
-    public void reduceSubsetPoisByTitles(String... titles){
-        ArrayList<String> titleList = new ArrayList<String>(Arrays.asList(titleArray));
-        for (String title : titles) {
-            if (titleList.contains(title)){
-                int poiIdx = getPOIIdx(title);
-                poiList.remove(poiIdx);
-                nameIndexMap.remove(title);
-                titleList.remove(poiIdx);
-            }
-        }
-        titleArray = titleList.toArray(new String[titleList.size()]);
-    }
-    // mgkim:
-    public void reduceSubsetPoisByIdxes(int... idxes){
+    public void reduceSubsetPoisByIdxes(int... idxes) {
         Arrays.sort(idxes);
         ArrayList<String> titleList = new ArrayList<String>(Arrays.asList(titleArray));
         for (int i = idxes.length; i > 0; i--) {
-            poiList.remove(idxes[i-1]);
-            nameIndexMap.remove(titleList.get(idxes[i-1]));
-            titleList.remove(idxes[i-1]);
+            poiList.remove(idxes[i - 1]);
+            nameIndexMap.remove(titleList.get(idxes[i - 1]));
+            titleList.remove(idxes[i - 1]);
         }
         titleArray = titleList.toArray(new String[titleList.size()]);
     }
+
     // mgkim:
     public void reduceSubsetPoisByIdList(Collection<String> idList) {
         ArrayList<String> titleList = new ArrayList<String>(Arrays.asList(titleArray));
@@ -165,6 +122,7 @@ public class SubsetPOIs {
         }
         titleArray = titleList.toArray(new String[titleList.size()]);
     }
+
     // mgkim:
     public void reduceSubsetPoisByScore(int NumSubsetPois) {
         Collections.sort(poiList, new CompareBasicPoiByScore());
@@ -179,13 +137,14 @@ public class SubsetPOIs {
             nameIndexMap.put(poiList.get(i).getTitle(), i);
         }
     }
+
     // mgkim:
     public void reduceSubsetPoisByScoreAndConstraint(int numTotalPoi, int numConstrainedTypePoi, List<CategoryConstraint> categoryConstraintList) {
         Collections.sort(poiList, new CompareBasicPoiByScore());
         int numCategoryConstraint = categoryConstraintList.size();
 
         List<BasicPOI> newPoiList = new ArrayList<>();
-        for (int i = 0; i < numCategoryConstraint+1; i++) {
+        for (int i = 0; i < numCategoryConstraint + 1; i++) {
             Set<POIType> poiTypeSet = new HashSet<>();
             if (i < numCategoryConstraint) {                    // constrainedTypePoi 추가
                 CategoryConstraint categoryConstraint = categoryConstraintList.get(i);
@@ -199,7 +158,7 @@ public class SubsetPOIs {
                             addedPoiIndex.add(j);                               // poiList상의 인덱스를 기억해 두었다가
                         }
                         if (addedPoiIndex.size() == numConstrainedTypePoi) {    // numConstrainedTypePoi만큼 추가됬으면
-                            for (int k = numConstrainedTypePoi-1; k > -1; k--) {
+                            for (int k = numConstrainedTypePoi - 1; k > -1; k--) {
                                 poiList.remove(addedPoiIndex.get(k).intValue());           // 기존 poiList에서 제거 (중복 추가 방지)
                             }
                             break;                                              // break
@@ -208,7 +167,7 @@ public class SubsetPOIs {
                 }
             } else {                                    // 일반 poi 추가
                 POIType normalPoiType = new POIType("여행");
-                POIType accommodationPoiType = new POIType("여행","숙박");
+                POIType accommodationPoiType = new POIType("여행", "숙박");
                 poiTypeSet.add(normalPoiType);
 
                 for (POIType argPoiType : poiTypeSet) {                         // poiTypeSet 안의 모든 poiType에 대해서
@@ -218,8 +177,8 @@ public class SubsetPOIs {
                             newPoiList.add(poiList.get(j));
                             addedPoiIndex.add(j);
                         }
-                        if (addedPoiIndex.size() == (numTotalPoi-numConstrainedTypePoi*numCategoryConstraint)) {
-                            for (int k = numConstrainedTypePoi-1; k > -1; k--) {
+                        if (addedPoiIndex.size() == (numTotalPoi - numConstrainedTypePoi * numCategoryConstraint)) {
+                            for (int k = numConstrainedTypePoi - 1; k > -1; k--) {
                                 poiList.remove(addedPoiIndex.get(k));
                             }
                             break;                                              // break
@@ -262,9 +221,9 @@ public class SubsetPOIs {
         return poiList.get(i);
     }
 
-    public int getPOIIdx(String poiTitle){
-        for (int i=0; i<poiList.size();i++){
-            if (poiTitle.equals(poiList.get(i).getTitle())){
+    public int getPOIIdx(String poiTitle) {
+        for (int i = 0; i < poiList.size(); i++) {
+            if (poiTitle.equals(poiList.get(i).getTitle())) {
                 return i;
             }
         }
@@ -281,6 +240,6 @@ class CompareBasicPoiByScore implements Comparator<BasicPOI> {
 //        } else {
 //            return 0;
 //        }
-        return basicPOI1.getScore() > basicPOI2.getScore()? -1 : (basicPOI1.getScore() == basicPOI2.getScore() ? 0 : 1);
+        return basicPOI1.getScore() > basicPOI2.getScore() ? -1 : (basicPOI1.getScore() == basicPOI2.getScore() ? 0 : 1);
     }
 }

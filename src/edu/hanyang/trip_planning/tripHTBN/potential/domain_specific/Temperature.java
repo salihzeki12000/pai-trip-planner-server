@@ -13,8 +13,7 @@ public class Temperature {
         return instance;
     }
 
-    public static int condition(double temp)
-    {
+    public static int condition(double temp) {
         if (temp > 30) {
             return 4;
         } else if (temp > 24) {

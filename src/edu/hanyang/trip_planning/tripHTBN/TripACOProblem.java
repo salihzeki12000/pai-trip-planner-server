@@ -9,11 +9,10 @@ import edu.hanyang.trip_planning.optimize.constraints.poiConstraint.PoiConstrain
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 import edu.hanyang.trip_planning.tripData.poi.VincentyDistanceCalculator;
 import edu.hanyang.trip_planning.tripData.dataType.POIType;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIGen;
+import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import edu.hanyang.trip_planning.tripHTBN.potential.TripACOParameters;
 import edu.hanyang.trip_planning.trip_question.PersonalInfo;
 import edu.hanyang.trip_planning.trip_question.PersonalInfoFactory;
-import edu.hanyang.trip_planning.trip_question.PreferenceOfPOIType;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -64,9 +63,11 @@ public class TripACOProblem extends ItineraryPlanning {
     public TripACOProblem(int[] startTimeArray, int[] returnTimeArray, PersonalInfo personalInfo, List<CategoryConstraint> categoryConstraintList, List<PoiConstraint> poiConstraintList, TripCPDs tripCPDs, int startNodeIdx, int endNodeIdx) {
         super(startNodeIdx, endNodeIdx, tripCPDs.getSubsetPOIs().size());
 
-        int start_hour = startTimeArray[3];        int start_minute = startTimeArray[4];
+        int start_hour = startTimeArray[3];
+        int start_minute = startTimeArray[4];
         double startHour = start_hour + (double) start_minute / 60.0;
-        int return_hour = returnTimeArray[3];      int return_minute = returnTimeArray[4];
+        int return_hour = returnTimeArray[3];
+        int return_minute = returnTimeArray[4];
         double returnHour = return_hour + (double) return_minute / 60.0;
 
         this.tripCPDs = tripCPDs;
@@ -93,10 +94,10 @@ public class TripACOProblem extends ItineraryPlanning {
         if (inferenceOnNetwork != null) {
             inferenceOnNetwork.reset();
         }
-        if (categoryConstraintCnt!=null) {
+        if (categoryConstraintCnt != null) {
             Arrays.fill(categoryConstraintCnt, 0);
         }
-        if (poiConstraintCnt!=null) {
+        if (poiConstraintCnt != null) {
             Arrays.fill(poiConstraintCnt, false);
         }
     }
@@ -124,19 +125,17 @@ public class TripACOProblem extends ItineraryPlanning {
                     isSrcPoiMustVisited = true;
                 }
             }
-//            else {
-                if (!constraintViolation(destNodeIdx) && (distance < distanceLimit || isDestPoiMustVisited || isSrcPoiMustVisited)) {
-                    if (isDestPoiMustVisited) {
-                        value = 1;
-                    } else if (distanceRatio == 0){
-                        value = incrementalInferenceResults.getSatisfaction()[0];
-                    } else if (distanceRatio < 0) {
-                        throw new RuntimeException("distanceRatio should be >= 0, distanceRatio: " + distanceRatio);
-                    } else {
-                        value = incrementalInferenceResults.getSatisfaction()[0]/(distance*distance*distanceRatio);
-                    }
+            if (!constraintViolation(destNodeIdx) && (distance < distanceLimit || isDestPoiMustVisited || isSrcPoiMustVisited)) {
+                if (isDestPoiMustVisited) {
+                    value = 1;
+                } else if (distanceRatio == 0) {
+                    value = incrementalInferenceResults.getSatisfaction()[0];
+                } else if (distanceRatio < 0) {
+                    throw new RuntimeException("distanceRatio should be >= 0, distanceRatio: " + distanceRatio);
+                } else {
+                    value = incrementalInferenceResults.getSatisfaction()[0] / (distance * distance * distanceRatio);
                 }
-//            }
+            }
             retValues[destNodeIdx] = value;
             sum += value;
         }
@@ -159,7 +158,7 @@ public class TripACOProblem extends ItineraryPlanning {
         curNodeIdx = destNodeIdx;
         BasicPOI destPOI = tripCPDs.getPOI(destNodeIdx);
 
-        for (int i=0; i<categoryConstraintList.size();i++) {                        // mgkim: 모든 constraint들에 대해서
+        for (int i = 0; i < categoryConstraintList.size(); i++) {                        // mgkim: 모든 constraint들에 대해서
             CategoryConstraint categoryConstraint = categoryConstraintList.get(i);
             Set<POIType> poiTypeSet = categoryConstraint.getPOIType();
 
@@ -172,7 +171,7 @@ public class TripACOProblem extends ItineraryPlanning {
                 }
             }
         }
-        for (int i=0; i < poiConstraintList.size();i++) {                        // mgkim: 모든 constraint들에 대해서
+        for (int i = 0; i < poiConstraintList.size(); i++) {                        // mgkim: 모든 constraint들에 대해서
             PoiConstraint poiConstraint = poiConstraintList.get(i);
             if (poiConstraint.getPoiId().equals(destPOI.getId())) {     // mgkim: destPOI와 일치하면서
                 poiConstraintCnt[i] = true;
@@ -188,13 +187,13 @@ public class TripACOProblem extends ItineraryPlanning {
     @Override
     public double getTotalValue() {
         for (boolean poiCC : poiConstraintCnt) {
-            if (!poiCC){
+            if (!poiCC) {
                 return 0.0;
             }
         }
         int i = 0;
         for (int categoryCC : categoryConstraintCnt) {
-            if (categoryCC < categoryConstraintList.get(i).getMinCount() || categoryCC > categoryConstraintList.get(i).getMaxCount() ){
+            if (categoryCC < categoryConstraintList.get(i).getMinCount() || categoryCC > categoryConstraintList.get(i).getMaxCount()) {
                 return 0.0;
             }
         }
@@ -237,24 +236,25 @@ public class TripACOProblem extends ItineraryPlanning {
         if (openTimeConstraint < 0) {
             return true;
         }
-        double closeTimeConsraint = closeTimePenalty(incrementalInferenceResults.getDepartureTime(), destPOI);
-        if (closeTimeConsraint < 0) {
+        double closeTimeConstraint = closeTimePenalty(incrementalInferenceResults.getDepartureTime(), destPOI);
+        if (closeTimeConstraint < 0) {
             return true;
         }
         double costConstraint = costPenalty(incrementalInferenceResults.getTotalCosts());
         if (costConstraint < 0) {
             return true;
         }
-        double paUpperConstrant = physicalActivityUpperPenalty(incrementalInferenceResults.getTotalPA());
-        if (paUpperConstrant < 0) {
+        double paUpperConstraint = physicalActivityUpperPenalty(incrementalInferenceResults.getTotalPA());
+        if (paUpperConstraint < 0) {
             return true;
         }
-        boolean catecoryConstraint = categoryConstraintsViolation(destPOI, incrementalInferenceResults.getArrivalTime(), incrementalInferenceResults.getDepartureTime());
-        if (catecoryConstraint) {
+        boolean categoryConstraint = categoryConstraintsViolation(destPOI, incrementalInferenceResults.getArrivalTime(), incrementalInferenceResults.getDepartureTime());
+        if (categoryConstraint) {
             return true;
         }
         return poiConstraintsViolation(destPOI, incrementalInferenceResults.getArrivalTime(), incrementalInferenceResults.getDepartureTime());
     }
+
     protected boolean constraintViolation(IncrementalInferenceResults argResult, BasicPOI destPOI) {
         double returnTimeConstraint = returnTimePenalty(argResult.getExpectedReturnTime());
 
@@ -285,23 +285,29 @@ public class TripACOProblem extends ItineraryPlanning {
     private double returnTimePenalty(double expectedReturnTime[]) {
         return ChanceConstraint.inequalityValue(expectedReturnTime, returnHour, ChanceConstraint.LimitType.Lower, TripACOParameters.returnTimeLimitConfidenceLevel);
     }
+
     private double openTimePenalty(double arrivalTime[], BasicPOI poi) {
         double openHour = poi.getBusinessHour().getOpenHour(this.year, this.monthOfYear, this.dayOfMonth);
         return ChanceConstraint.inequalityValue(arrivalTime, openHour, ChanceConstraint.LimitType.Upper, TripACOParameters.openTimeConfidenceInterval);
     }
+
     private double closeTimePenalty(double departureTime[], BasicPOI poi) {
         double closeHour = poi.getBusinessHour().getCloseHour(this.year, this.monthOfYear, this.dayOfMonth);
         return ChanceConstraint.inequalityValue(departureTime, closeHour, ChanceConstraint.LimitType.Lower, TripACOParameters.closeTimeConfidenceInterval);
     }
+
     private double costPenalty(double totalCost[]) {
         return ChanceConstraint.inequalityValue(totalCost, TripACOParameters.costLimit, ChanceConstraint.LimitType.Lower, TripACOParameters.costLimitConfidenceInterval);
     }
+
     private double physicalActivityUpperPenalty(double totalPA[]) {
         return ChanceConstraint.inequalityValue(totalPA, TripACOParameters.physicalActivityUpperLimit, ChanceConstraint.LimitType.Lower, TripACOParameters.physicalActivityLimitConfidenceLevel);
     }
+
     private double physicalActivityLowerPenalty(double totalPA[]) {
         return ChanceConstraint.inequalityValue(totalPA, TripACOParameters.physicalActivityLowerLimit, ChanceConstraint.LimitType.Upper, TripACOParameters.physicalActivityLimitConfidenceLevel);
     }
+
     private boolean categoryConstraintsViolation(BasicPOI destPOI, double arrivalTime[], double departureTime[]) {
         boolean isDestPoiConstrainedType = false;
         boolean isTypeAffordableAtThatTime = false;
@@ -330,13 +336,13 @@ public class TripACOProblem extends ItineraryPlanning {
                 }
             }
 
-            if (isTypeAffordableAtThatTime){    // mgkim: destPOI에 도착하는 시간에 affordable한 constraint가 있으면
+            if (isTypeAffordableAtThatTime) {    // mgkim: destPOI에 도착하는 시간에 affordable한 constraint가 있으면
                 int affordableCategoryConstraintIdx = categoryConstraintList.indexOf(affordableCategoryConstraint);
                 // 해당 constraint type에 들를 수 있는 회수가 이미 꽉 찾으면 constraint violation
 //                    logger.debug(destPOI.getTitle()+": "+destPOI.getPoiType()+"-"+arrivalTime[0]);
 // 해당 constraint type에 들를 수 있는 회수가 남아 있으면 no violation
                 return categoryConstraintCnt[affordableCategoryConstraintIdx] == affordableCategoryConstraint.getMaxCount();
-            }else {
+            } else {
                 return true;                    // mgkim: destPOI에 도착하는 시간에 affordable한 constraint가 없으면 constraint violation
             }
         } else {                            // mgkim: destPOI가 constrain되어야 하는 type이 아닌 경우
@@ -351,6 +357,7 @@ public class TripACOProblem extends ItineraryPlanning {
             return false;           // mgkim: 없다면 no violation
         }
     }
+
     private boolean poiConstraintsViolation(BasicPOI destPOI, double arrivalTime[], double departureTime[]) {
         // destPOI가 poi constrain 되어야 하는 노드인데
         // 아직 안들렀으면서                                                // destPOI 후보에 올랐다는것 자체가 아직 안들른것
@@ -389,7 +396,9 @@ public class TripACOProblem extends ItineraryPlanning {
         double startHour = 9.00;
         double returnHour = 21.00;
 
-        GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(SubsetPOIGen.getJeju30(), minuteStep);
+        SubsetPOIs subsetPOIs = new SubsetPOIs();
+        subsetPOIs.makeSubsetPOIsByAreas("제주특별자치도");                // mgkim: 해당 areas 전체
+        GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(subsetPOIs, minuteStep);
         TripCPDs tripCPDs = generateTripCPDs.generate();
         PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample1();
         List<CategoryConstraint> categoryConstraintList = new ArrayList<>();

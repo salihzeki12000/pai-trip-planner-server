@@ -7,11 +7,9 @@ import cntbn.terms_factors.SimpleGaussian;
 import edu.hanyang.trip_planning.tripHTBN.traffic.MovementFunction;
 import edu.hanyang.trip_planning.tripData.dataType.ProbabilisticDuration;
 import edu.hanyang.trip_planning.tripHTBN.dynamicPotential.DiscreteTimeCPD;
-import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIGen;
 import edu.hanyang.trip_planning.tripHTBN.poi.SubsetPOIs;
 import edu.hanyang.trip_planning.tripHTBN.potential.BasicCLGCPD;
 import edu.hanyang.trip_planning.tripHTBN.potential.BasicHybridCPD;
-import org.apache.log4j.Logger;
 import util.Pair;
 
 import java.util.Arrays;
@@ -24,37 +22,22 @@ import java.util.Arrays;
  * DBN node기준은 현재가 X2 이전이 X1 이런식으로 정의됨
  */
 public class GenerateTripCPDs {
-
-    //    private SubsetPOIs subsetPOIs;
-    private static Logger logger = Logger.getLogger(GenerateTripCPDs.class);
     private TripNodesAndValues tripNodesAndValues;
     private int discreteTimeWidth;
     private int nodeSize;
-
-    // CPD와 marginal 두개로 나누어서 해야함 .
     private TripCPDs tripCPDs;
 
     public GenerateTripCPDs(SubsetPOIs subsetPOIs, int discreteTimeWidth) {
         tripNodesAndValues = new TripNodesAndValues(subsetPOIs, discreteTimeWidth);
-        tripCPDs = new TripCPDs(subsetPOIs,tripNodesAndValues );
+        tripCPDs = new TripCPDs(subsetPOIs, tripNodesAndValues);
         this.nodeSize = subsetPOIs.size();
-
         this.discreteTimeWidth = discreteTimeWidth;
     }
 
-    public GenerateTripCPDs(String poiTitles[], int discreteTimeWidth) {
-        SubsetPOIs subsetPOIs = new SubsetPOIs(poiTitles);
-        this.nodeSize = subsetPOIs.size();
-        tripNodesAndValues = new TripNodesAndValues(subsetPOIs, discreteTimeWidth);
-        tripCPDs = new TripCPDs(poiTitles,tripNodesAndValues );
-    }
-
     public TripCPDs generate() {
-        // 1. Node 이름들 만들어서 ND에 쳐박을것.!!
         generateCPDs();
         return tripCPDs;
     }
-
 
     private void generateCPDs() {
         generateCPD_Movement();
@@ -62,42 +45,7 @@ public class GenerateTripCPDs {
         generateCPD_Time();
         generateCPD_EndTime();
         generateCPD_DiscreteTime();
-
-
-/*
-        logger.debug(durationCPDs[1]);
-        logger.debug(timeCPDs[1]);
-        logger.debug(timeCPDs[2]);
-*/
-//        logger.debug(movementCPDs[1]);
-//        logger.debug(movementCPDs[1]);
-//        for (int i=0; i<movementCPDs.length; i++){
-//            logger.debug(movementCPDs);
-//
-//        }
     }
-
-//    private void generateCPD_PhysicalActivity(int orderIdx) {
-//        if (orderIdx == 0) {
-//            return;
-//        } else if (orderIdx >= tripNetwork.getSubsetPOIs().size()) {
-//            return;
-//        }
-//
-//        String parentsNames[] = new String[1];
-//        parentsNames[0] = "D" + (orderIdx);
-//        BasicHybridCPD duration = new BasicHybridCPD("D" + orderIdx, parentsNames);
-//
-//        int pNodes[] = new int[1];
-//        pNodes[0] = NodeDictionary.getInstance().nodeIdx(parentsNames[0]);
-//        int pValues[] = new int[1];
-//        for (int i = 0; i < tripNetwork.getSubsetPOIs().size(); i++) {
-//            pValues[0] = i;
-//            ProbabilisticDuration pDur = tripNetwork.getSubsetPOIs().getPOI(i).getSpendingTime(null, null);
-//            duration.setDistribution(pNodes, pValues, new SimpleGaussian(1, "D" + orderIdx, pDur.hour, pDur.standardDeviation));
-//        }
-//        tripNetwork.durationCPDs[orderIdx] = duration;
-//    }
 
     private void generateCPD_Movement() {
         MovementFunction movementFunction = new MovementFunction(tripCPDs.getSubsetPOIs());
@@ -119,7 +67,6 @@ public class GenerateTripCPDs {
             for (int j = 0; j < nodeSize; j++) {
                 for (int t = 0; t < discreteTimeSize; t++) {
                     if (i == j) {
-//                        logger.debug(tripNetwork.subsetPOIs.getPOI(i).getTitle() + "=>" + tripNetwork.subsetPOIs.getPOI(j).getTitle() + ", time=" + 0 + ", cost=" + 0);
                         pValues[0] = i;
                         pValues[1] = j;
                         pValues[2] = t;
@@ -129,17 +76,14 @@ public class GenerateTripCPDs {
                         movementFunction.findPath(i, j);
                         Pair<Double, Double> costPair = movementFunction.getCost();
                         Pair<Double, Double> timePair = movementFunction.getTime();
-//                        logger.debug(tripCPDs.getSubsetPOIs().getPOI(i).getTitle() + "=>" + tripCPDs.getSubsetPOIs().getPOI(j).getTitle() + ", time=" + timePair.first() + ", cost=" + costPair);
                         pValues[0] = i;
                         pValues[1] = j;
                         pValues[2] = t;
                         movement.setDistribution(pNodes, pValues, new SimpleGaussian(1, "M", timePair.first(), timePair.second() * timePair.second()));
-//                        cost.setDistribution(pNodes, pValues, new SimpleGaussian(1, "C" + orderIdx, costPair.first(), costPair.second() * costPair.second()));
                     }
                 }
             }
         }
-//        logger.debug(movement);
         tripCPDs.setMovementCPDs(movement);
     }
 
@@ -174,7 +118,6 @@ public class GenerateTripCPDs {
         tripCPDs.setTimeCPDs(timeCPD);
     }
 
-
     private void generateCPD_EndTime() {
         String theNodeName = "E";
         String parentsNames[] = new String[2];
@@ -192,16 +135,6 @@ public class GenerateTripCPDs {
     private void generateCPD_DiscreteTime() {
         DiscreteTimeCPD discreteTimeCPD = new DiscreteTimeCPD("DT", this.discreteTimeWidth);
         tripCPDs.setDiscreteTimeCPD(discreteTimeCPD);
-    }
-
-    public TripCPDs getTripCPDs() {
-        return tripCPDs;
-    }
-
-    public static void test() {
-        GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(SubsetPOIGen.getJeju10_(), 30);
-        generateTripCPDs.generate();
-        logger.debug(generateTripCPDs.getTripCPDs());
     }
 }
 

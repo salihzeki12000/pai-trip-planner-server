@@ -51,6 +51,7 @@ public class ChanceConstraint {
     /**
      * Debbs 의 constraint 함수
      * 0보다 작으면 constraint 해당됨
+     *
      * @param referenceValue
      * @param limitType
      * @param confidenceLevel
@@ -77,7 +78,7 @@ public class ChanceConstraint {
 
     public static double inequalityValue(double mean, double variance, double referenceValue, LimitType limitType, double confidenceLevel) {
         //        logger.debug(NodeDictionary.getInstance());
-        logger.debug("mean="+mean + "\treference value="+referenceValue);
+        logger.debug("mean=" + mean + "\treference value=" + referenceValue);
 
         double culminativeProbability = 0.5 * (1 + Erf.erf((referenceValue - mean) / Math.sqrt(2 * variance)));
 

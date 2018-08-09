@@ -31,6 +31,6 @@ public class Triple<T1, T2, T3> {
     }
 
     public String toString() {
-        return new String("<" + first + "," + second + "," + third +">");
+        return new String("<" + first + "," + second + "," + third + ">");
     }
 }

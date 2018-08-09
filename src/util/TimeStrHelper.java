@@ -16,33 +16,39 @@ public class TimeStrHelper {
     public static DateTimeFormatter hourMinFormatter = DateTimeFormat.forPattern(TimeStrHelper.hourMin);
     public static DateTimeFormatter dayHourMinFormatter = DateTimeFormat.forPattern(TimeStrHelper.dayHourMin);
 
-    public static DateTime parseFullDate(String str){
+    public static DateTime parseFullDate(String str) {
         return fullDateFormatter.parseDateTime(str);
     }
-    public static DateTime parseDate(String str){
+
+    public static DateTime parseDate(String str) {
         return yearMonthDayFormatter.parseDateTime(str);
     }
-    public static DateTime parseHourMin(String str){
+
+    public static DateTime parseHourMin(String str) {
         return hourMinFormatter.parseDateTime(str);
     }
+
     public static DateTime parseDayHourMin(String str) {
         return dayHourMinFormatter.parseDateTime(str);
     }
 
-    public static String printFullDate(DateTime dateTime){
+    public static String printFullDate(DateTime dateTime) {
         return fullDateFormatter.print(dateTime);
     }
-    public static String printDate(DateTime dateTime){
+
+    public static String printDate(DateTime dateTime) {
         return yearMonthDayFormatter.print(dateTime);
     }
-    public static String printHourMin(DateTime dateTime){
+
+    public static String printHourMin(DateTime dateTime) {
         return hourMinFormatter.print(dateTime);
     }
-    public static String printDayHourMin(DateTime dateTime){
+
+    public static String printDayHourMin(DateTime dateTime) {
         return dayHourMinFormatter.print(dateTime);
     }
 
-    public static int[] fullDateStr2IntArray(String str){
+    public static int[] fullDateStr2IntArray(String str) {
         DateTime dateTime = TimeStrHelper.parseFullDate(str);
         int ret[] = new int[5];
         ret[0] = dateTime.getYear();            // year

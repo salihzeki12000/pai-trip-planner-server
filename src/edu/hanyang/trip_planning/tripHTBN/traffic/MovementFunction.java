@@ -40,6 +40,7 @@ public class MovementFunction {
 
     /**
      * 시간 단위는 hour임
+     *
      * @return
      */
     public Pair<Double, Double> getTime() {

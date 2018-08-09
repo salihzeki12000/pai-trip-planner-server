@@ -1,7 +1,6 @@
 package edu.hanyang.trip_planning.tripData.navigation;
 
 
-
 import edu.hanyang.trip_planning.tripData.dataType.AddressCode;
 import edu.hanyang.trip_planning.tripData.dataType.Location;
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;

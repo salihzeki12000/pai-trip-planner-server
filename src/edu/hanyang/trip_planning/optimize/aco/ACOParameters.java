@@ -9,7 +9,7 @@ public class ACOParameters {
     public ACOParameters() {
     }
 
-    public ACOParameters(double alpha, double beta, double evaporation, int numberOfIteration){
+    public ACOParameters(double alpha, double beta, double evaporation, int numberOfIteration) {
         this.alpha = alpha;
         this.beta = beta;
         this.evaporation = evaporation;
@@ -19,13 +19,16 @@ public class ACOParameters {
     public double getAlpha() {
         return alpha;
     }
+
     public double getBeta() {
         return beta;
     }
+
     public double getEvaporation() {
         return evaporation;
     }
-    public int getNumberOfIteration(){
+
+    public int getNumberOfIteration() {
         return numberOfIteration;
     }
 }

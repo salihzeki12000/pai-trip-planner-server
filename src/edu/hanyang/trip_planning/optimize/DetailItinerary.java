@@ -1,7 +1,6 @@
 package edu.hanyang.trip_planning.optimize;
 
 
-
 import edu.hanyang.trip_planning.tripData.poi.BasicPOI;
 
 import java.text.DecimalFormat;
@@ -45,8 +44,9 @@ public class DetailItinerary {
         this.startPOI = startPOI;
         this.endPOI = endPOI;
     }
+
     public DetailItinerary(int year, int monthOfYear, int dayOfMonth, double startTime, BasicPOI startPOI, BasicPOI endPOI) {
-        this.date = year+"-"+monthOfYear + "-"+dayOfMonth;
+        this.date = year + "-" + monthOfYear + "-" + dayOfMonth;
         this.startTime = startTime;
         this.startPOI = startPOI;
         this.endPOI = endPOI;
@@ -105,6 +105,7 @@ public class DetailItinerary {
     public List<double[]> getDepartureTimes() {
         return departureTimes;
     }
+
     // mgkim:
     public List<double[]> getDurations() {
         return durations;
@@ -123,8 +124,9 @@ public class DetailItinerary {
     public void setValue(double value) {
         this.value = value;
     }
+
     // mgkim:
-    public void setArrivalTimes(List<double[]> arrivalTimes)  {
+    public void setArrivalTimes(List<double[]> arrivalTimes) {
         this.arrivalTimes = arrivalTimes;
     }
 
@@ -181,12 +183,12 @@ public class DetailItinerary {
         strbuf.append("->");
         for (BasicPOI poi : poiList) {
             strbuf.append(poi.getTitle());
-            strbuf.append("("+poi.getPoiType()+")");
+            strbuf.append("(" + poi.getPoiType() + ")");
             strbuf.append("->");
         }
         if (endPOI != null) {
             strbuf.append(endPOI.getTitle());
-            strbuf.append("("+endPOI.getPoiType()+")");
+            strbuf.append("(" + endPOI.getPoiType() + ")");
         } else {
             strbuf.deleteCharAt(strbuf.length() - 1);
             strbuf.deleteCharAt(strbuf.length() - 1);
@@ -219,16 +221,16 @@ public class DetailItinerary {
 
         // remainTime, travelTime, totalTravelTime
         double remainTime = returnHour - endTime[0];
-        double[] travelTime = new double[arrivalTimes.size()+1];
+        double[] travelTime = new double[arrivalTimes.size() + 1];
         double totalTravelTime = 0;
-        travelTime[0] = arrivalTimes.get(0)[0]-startTime;
+        travelTime[0] = arrivalTimes.get(0)[0] - startTime;
         totalTravelTime += travelTime[0];
-        for (int i = 1; i < travelTime.length-1; i++) {
-            travelTime[i] = arrivalTimes.get(i)[0] - departureTimes.get(i-1)[0];
+        for (int i = 1; i < travelTime.length - 1; i++) {
+            travelTime[i] = arrivalTimes.get(i)[0] - departureTimes.get(i - 1)[0];
             totalTravelTime += travelTime[i];
         }
-        travelTime[travelTime.length-1] = endTime[0] - departureTimes.get(travelTime.length-2)[0];
-        totalTravelTime += travelTime[travelTime.length-1];
+        travelTime[travelTime.length - 1] = endTime[0] - departureTimes.get(travelTime.length - 2)[0];
+        totalTravelTime += travelTime[travelTime.length - 1];
 
         // newEndTime, newArrivalTimes, newDepartureTimes
         double[] newEndTime = {returnHour, endTime[1]};
@@ -241,7 +243,7 @@ public class DetailItinerary {
                 temp[0] = startTime + travelTime[0] + remainTime * travelTime[0] / totalTravelTime;
                 temp[1] = arrivalTimes.get(0)[1];
             } else {
-                temp[0] = newDepartureTimes.get(i-1)[0] + travelTime[i] + remainTime * travelTime[i] / totalTravelTime;
+                temp[0] = newDepartureTimes.get(i - 1)[0] + travelTime[i] + remainTime * travelTime[i] / totalTravelTime;
                 temp[1] = arrivalTimes.get(i)[1];
             }
             newArrivalTimes.add(temp);

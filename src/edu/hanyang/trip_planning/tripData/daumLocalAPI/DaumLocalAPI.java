@@ -16,7 +16,7 @@ public class DaumLocalAPI {
     private static Logger logger = Logger.getLogger(DaumLocalAPI.class);
 
     public static Item getPOI(String name) {
-        logger.debug("getPOI:"+name);
+        logger.debug("getPOI:" + name);
         String str = null;
         try {
             str = "https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=" + URLEncoder.encode(name, "UTF-8");

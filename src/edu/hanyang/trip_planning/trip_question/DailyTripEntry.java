@@ -1,13 +1,10 @@
 package edu.hanyang.trip_planning.trip_question;
 
 import edu.hanyang.trip_planning.optimize.constraints.categoryConstraint.CategoryConstraint;
-import edu.hanyang.trip_planning.optimize.constraints.categoryConstraint.CategoryConstraintFactory;
 import edu.hanyang.trip_planning.optimize.constraints.poiConstraint.PoiConstraint;
 import util.TimeStrHelper;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 // 하루 일정에 대한 질문 구조체
@@ -20,20 +17,20 @@ public class DailyTripEntry {
     private Double physicalActivityLimit; // 활동량 상한
     private List<CategoryConstraint> categoryConstraintList = new ArrayList<>();
     private List<PoiConstraint> poiConstraintList = new ArrayList<>();
-    private static Logger logger = Logger.getLogger(DailyTripEntry.class);
 
     public DailyTripEntry(String startTimeStr, String returnTimeStr, String[] areas, String startPOITitle, String endPOITitle, double physicalActivityLimit) {
         this.startTimeStr = startTimeStr;
         this.returnTimeStr = returnTimeStr;
-        this.areas = areas;
         this.startPOITitle = startPOITitle;
         this.endPOITitle = endPOITitle;
+        this.areas = areas;
         this.physicalActivityLimit = physicalActivityLimit;
     }
 
     public void addCategoryConstraint(CategoryConstraint categoryConstraint) {
         categoryConstraintList.add(categoryConstraint);
     }
+
     public void addPoiConstraint(PoiConstraint poiConstraint) {
         poiConstraintList.add(poiConstraint);
     }
@@ -41,26 +38,32 @@ public class DailyTripEntry {
     public int[] getStartTime() {
         return TimeStrHelper.fullDateStr2IntArray(startTimeStr);
     }
+
     public int[] getReturnTime() {
         return TimeStrHelper.fullDateStr2IntArray(returnTimeStr);
     }
+
     public String getStartPOITitle() {
         return startPOITitle;
     }
+
     public String getEndPOITitle() {
         return endPOITitle;
     }
-    public String[] getAreas() {return areas;}
-    public double getPhysicalActivityLimit() {
-        return physicalActivityLimit;
+
+    public String[] getAreas() {
+        return areas;
     }
+
     public List<CategoryConstraint> getCategoryConstraintList() {
         return categoryConstraintList;
     }
+
     public List<PoiConstraint> getPoiConstraintList() {
         return poiConstraintList;
     }
 
+    @Override
     public String toString() {
         StringBuffer strbuf = new StringBuffer();
         strbuf.append("daily itinerary [" + startTimeStr + "--" + returnTimeStr + "]\n");
@@ -71,26 +74,4 @@ public class DailyTripEntry {
         }
         return strbuf.toString();
     }
-
-    public static void test() {
-        String[] Areas = {"서귀포시"};
-        DailyTripEntry dailyTripEntry = new DailyTripEntry("2016-12-15 09:00", "2016-12-15 18:00",
-                Areas, "켄싱턴제주호텔", "켄싱턴제주호텔", 2000);
-
-        CategoryConstraint lunchConstraint = CategoryConstraintFactory.createLunchConstraint();
-        CategoryConstraint shoppingConstraint = CategoryConstraintFactory.createShoppingConstraint();
-        dailyTripEntry.addCategoryConstraint(lunchConstraint);
-        dailyTripEntry.addCategoryConstraint(shoppingConstraint);
-        logger.debug(dailyTripEntry);
-        logger.debug(Arrays.toString(dailyTripEntry.getStartTime()));
-        logger.debug(Arrays.toString(dailyTripEntry.getReturnTime()));
-        logger.debug(dailyTripEntry.getStartPOITitle());
-        logger.debug(dailyTripEntry.getEndPOITitle());
-        logger.debug(dailyTripEntry.getPhysicalActivityLimit());
-    }
-
-    public static void main(String[] args) {
-        test();
-    }
-
 }

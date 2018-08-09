@@ -15,6 +15,7 @@ public class TripQuestionFactory {
         tripQuestion.addDailyTripEntryList(DailyTripEntryFactory.dailyTripEntryExample3()); // 10-15, 제주퍼시픽호텔, 제주국제공항, 제주시, LS
         return tripQuestion;
     }
+
     public static TripQuestion tripQuestionExample2() {
         PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample2();             // 육류/고기, 미술관/박물관, 테마파크
         TripQuestion tripQuestion = new TripQuestion(personalInfo);
@@ -23,6 +24,7 @@ public class TripQuestionFactory {
         tripQuestion.addDailyTripEntryList(DailyTripEntryFactory.dailyTripEntryExample3()); // 10-15, 제주퍼시픽호텔, 제주국제공항, 제주시, LS
         return tripQuestion;
     }
+
     public static TripQuestion tripQuestionExample3() {
         PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample1();             // 해물/생선, 자연경관, 해수욕장/해변, 폭포/계곡
         TripQuestion tripQuestion = new TripQuestion(personalInfo);
@@ -31,6 +33,7 @@ public class TripQuestionFactory {
         tripQuestion.addDailyTripEntryList(DailyTripEntryFactory.dailyTripEntryExample6()); // 10-15, 제주퍼시픽호텔, 제주국제공항, 제주시, LS, 테디베어뮤지엄 제주점
         return tripQuestion;
     }
+
     public static TripQuestion tripQuestionExample4() {
         PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample2();             // 육류/고기, 미술관/박물관, 테마파크
         TripQuestion tripQuestion = new TripQuestion(personalInfo);
@@ -39,6 +42,7 @@ public class TripQuestionFactory {
         tripQuestion.addDailyTripEntryList(DailyTripEntryFactory.dailyTripEntryExample6()); // 10-15, 제주퍼시픽호텔, 제주국제공항, 제주시, LS, 테디베어뮤지엄 제주점
         return tripQuestion;
     }
+
     public static TripQuestion tripQuestionExample5() {
         PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample3();             // 해물/생선
         TripQuestion tripQuestion = new TripQuestion(personalInfo);
@@ -47,6 +51,7 @@ public class TripQuestionFactory {
         tripQuestion.addDailyTripEntryList(DailyTripEntryFactory.dailyTripEntryExample3()); // 10-15, 제주퍼시픽호텔, 제주국제공항, 제주시, LS
         return tripQuestion;
     }
+
     public static TripQuestion tripQuestionExample6() {
         PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample3();             // 해물/생선
         TripQuestion tripQuestion = new TripQuestion(personalInfo);
@@ -55,12 +60,14 @@ public class TripQuestionFactory {
         tripQuestion.addDailyTripEntryList(DailyTripEntryFactory.dailyTripEntryExample9()); // 10-15, 제주퍼시픽호텔, 제주국제공항, 제주시
         return tripQuestion;
     }
+
     public static TripQuestion tripQuestionExample7() {
         PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample4();             //
         TripQuestion tripQuestion = new TripQuestion(personalInfo);
         tripQuestion.addDailyTripEntryList(DailyTripEntryFactory.dailyTripEntryExample10()); // 10-20, 제주국제공항, 제주국제공항, 제주특별자치도
         return tripQuestion;
     }
+
     public static TripQuestion tripQuestionExample8() {
         PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample4();             //
         TripQuestion tripQuestion = new TripQuestion(personalInfo);
@@ -70,14 +77,14 @@ public class TripQuestionFactory {
         return tripQuestion;
     }
 
-    public static String tripQuestion2HttpGet (TripQuestion tripQuestion) {
+    public static String tripQuestion2HttpGet(TripQuestion tripQuestion) {
         Gson gson = new Gson();
 
         String str = gson.toJson(tripQuestion);
-        str = str.replaceAll("\\{","<");
-        str = str.replaceAll( "}",">");
+        str = str.replaceAll("\\{", "<");
+        str = str.replaceAll("}", ">");
 
-        return "get?type=trip_json_question&body="+str;
+        return "get?type=trip_json_question&body=" + str;
     }
 
     public static void main(String[] args) {

@@ -61,7 +61,7 @@ public class PlanningHttpServer {
             StringBuilder response = new StringBuilder();
             if (typeStr.equals("html") || typeStr.equals("json")) {
                 TripQuestion tripQuestion = gson.fromJson(tripQuestionStr, TripQuestion.class);
-                TripPlanner tripPlanner = new TripPlanner();
+                TripPlanner tripPlanner = new TripPlanner(30, 1, 1, 50, 5);
                 MultiDayTripAnswer multiDayTripAnswer = tripPlanner.tripPlanning(tripQuestion);
 
                 logger.debug(multiDayTripAnswer);

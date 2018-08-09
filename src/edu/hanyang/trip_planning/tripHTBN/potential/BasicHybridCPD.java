@@ -30,6 +30,7 @@ public class BasicHybridCPD implements InterfaceHybridCPD {
 
     /**
      * constructor if the node only have discrete parents
+     *
      * @param theNodeName
      * @param discreteParentNames
      */
@@ -49,10 +50,10 @@ public class BasicHybridCPD implements InterfaceHybridCPD {
         totalParentCardinality = 1;
         for (int i = 0; i < discreteParentIndices.length; i++) {
             int parentIdx = discreteParentIndices[i];
-            if (NodeDictionary.getInstance().nodeName(theNodeIdx).equals("M1")){
-                if(NodeDictionary.getInstance().nodeName(theNodeIdx).equals("x1")){
-                    int x= nd.cardinality(parentIdx);
-                    logger.debug("Cardinality= " +nd.cardinality(parentIdx));
+            if (NodeDictionary.getInstance().nodeName(theNodeIdx).equals("M1")) {
+                if (NodeDictionary.getInstance().nodeName(theNodeIdx).equals("x1")) {
+                    int x = nd.cardinality(parentIdx);
+                    logger.debug("Cardinality= " + nd.cardinality(parentIdx));
                 }
             }
             int tmpCar = nd.cardinality(parentIdx);

@@ -13,6 +13,7 @@ public interface ACOProblem {
 
     /**
      * return number of nodes;
+     *
      * @return
      */
     int getNumNodes();
@@ -37,7 +38,6 @@ public interface ACOProblem {
      * @return
      */
     int getCurNode();
-
 
 
     /**

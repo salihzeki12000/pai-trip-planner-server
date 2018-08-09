@@ -66,13 +66,13 @@ public class TopKScoredPaths {
 
     public ScoredPath[] getPaths() {
         List<ScoredPath> list = new ArrayList<>();
-        for (ScoredPath p : topKelements){
-            if (p!=null) {
+        for (ScoredPath p : topKelements) {
+            if (p != null) {
                 list.add(p);
             }
         }
         ScoredPath retArray[] = new ScoredPath[list.size()];
-        for (int i=0;i<list.size();i++){
+        for (int i = 0; i < list.size(); i++) {
             retArray[i] = list.get(i);
         }
         return retArray;
@@ -89,7 +89,7 @@ public class TopKScoredPaths {
     public static void main(String[] args) {
         TopKScoredPaths x = new TopKScoredPaths(3);
         x.add(new ScoredPath(0.1, 14, 23, 53));
-        x.add(new ScoredPath(0.1, 64, 21, 63 ,12));
+        x.add(new ScoredPath(0.1, 64, 21, 63, 12));
         x.add(new ScoredPath(0.1, 13, 0, 18));
         x.add(new ScoredPath(0.3, 1, 2));       //이것
         x.add(new ScoredPath(0.4, 1, 2, 3));    //이것

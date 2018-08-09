@@ -55,7 +55,6 @@ public class ConditionalLinearGaussian implements GaussianFunction {
     }
 
     /**
-     *
      * @param weight
      * @param variableName
      * @param conditionalVariableNames

@@ -20,6 +20,7 @@ public class BasicCLGCPD implements InterfaceCLGCPD {
         this.theNodeIdx = theNodeIdx;
         this.factor = factor;
     }
+
     public BasicCLGCPD(String theNodeName, ContinuousFactor factor) {
         this.theNodeIdx = NodeDictionary.getInstance().nodeIdx(theNodeName);
         this.factor = factor;
@@ -35,7 +36,7 @@ public class BasicCLGCPD implements InterfaceCLGCPD {
         StringBuffer strbuf = new StringBuffer();
         NodeDictionary nd = NodeDictionary.getInstance();
         strbuf.append("CPD of " + nd.nodeName(theNodeIdx) + "\n");
-        strbuf.append( factor + "\n");
+        strbuf.append(factor + "\n");
 
         return strbuf.toString();
     }

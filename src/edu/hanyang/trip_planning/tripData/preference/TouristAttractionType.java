@@ -37,7 +37,7 @@ public enum TouristAttractionType {
 
     public static TouristAttractionType parse(String str) {
         for (TouristAttractionType type : TouristAttractionType.values()) {
-            if (type.getValue().equals(str)){
+            if (type.getValue().equals(str)) {
                 return type;
             }
         }

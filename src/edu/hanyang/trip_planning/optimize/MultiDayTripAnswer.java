@@ -14,10 +14,11 @@ public class MultiDayTripAnswer {
     List<List<List<BasicPOI>>> nearbyDiningPoiListListList = new ArrayList<>();         // Day - Pois - NearbyPois
     List<List<List<BasicPOI>>> nearbyShoppingPoiListListList = new ArrayList<>();       // Day - Pois - NearbyPois
 
-    public int size(){
+    public int size() {
         return itineraryList.size();
     }
-    public DetailItinerary getItinerary(int idx){
+
+    public DetailItinerary getItinerary(int idx) {
         return itineraryList.get(idx);
     }
 
