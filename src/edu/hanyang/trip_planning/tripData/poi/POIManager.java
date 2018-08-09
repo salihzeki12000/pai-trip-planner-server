@@ -50,7 +50,7 @@ public class POIManager {
     public void addDaumItem(Item item) {
         BasicPOI basicPOI = ItemConverter.getPOI(item);
 
-        String placeURL = basicPOI.getURL("place");
+        String placeURL = basicPOI.getPlaceUrl();
         UpdatePlaceURLInfo updatePlaceInfo = new UpdatePlaceURLInfo(placeURL);
 
         double satisfaction = updatePlaceInfo.getSatisfaction();
@@ -191,7 +191,7 @@ public class POIManager {
     public void updatePlaceURLinfo() {
         Collection<BasicPOI> pois = poiMapById.values();
         for (BasicPOI poi : pois) {
-            String placeURL = poi.getURL("place");
+            String placeURL = poi.getPlaceUrl();
 //            logger.debug(placeURL);
             UpdatePlaceURLInfo updatePlaceInfo = new UpdatePlaceURLInfo(placeURL);
             double satisfaction = updatePlaceInfo.getSatisfaction();

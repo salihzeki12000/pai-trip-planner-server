@@ -20,7 +20,7 @@ public class ItemConverter {
         BasicPOI basicPOI = new BasicPOI(id, title, location);
         basicPOI.setAddress(address);
         basicPOI.setPoiType(poiType);
-        basicPOI.addURL("place", placeUrl);
+        basicPOI.setPlaceUrl(placeUrl);
         basicPOI.setScore(satisfaction);
         basicPOI.setBusinessHour(businessHour);
         basicPOI.setClosingDays(closingDays);

@@ -120,7 +120,7 @@ public class UpdatePlaceURLInfo {
     public static void testAll() {
         POIManager poiManager = POIManager.getInstance();
         for (BasicPOI poi : poiManager.getAll()) {
-            String placeUrl = poi.getURL("place");
+            String placeUrl = poi.getPlaceUrl();
             UpdatePlaceURLInfo u = new UpdatePlaceURLInfo(placeUrl);
             if (u.cLosingDays().toString().length() > 0) {
                 logger.debug(u.cLosingDays());

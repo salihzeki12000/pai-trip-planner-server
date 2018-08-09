@@ -28,7 +28,7 @@ public class BasicPOI {
     private Set<AdjacentPOI> publicTransportationAccess;        // 대중교통 접근성 (예: XX 지하철 역에서 몇분거리)    ?
     private ProbabilisticDuration spendingTime;                 // 머무는 시간
     private double score = -1;                                  // 사용자 만족도
-    private Map<String, String> urlList = new HashMap<>();      // ?
+    private String placeUrl;
     private TouristAttractionType touristAttractionType = null; // ?
     private boolean isRestaurant = false;                       // ?
 
@@ -144,18 +144,12 @@ public class BasicPOI {
         return averageCostPerPerson;
     }
 
-    /**
-     * additional URL을 반환한다.
-     *
-     * @param key
-     * @return
-     */
-    public String getURL(String key) {
-        return urlList.get(key);
+    public String getPlaceUrl() {
+        return placeUrl;
     }
 
-    public void addURL(String key, String url) {
-        urlList.put(key, url);
+    public void setPlaceUrl(String placeUrl) {
+        this.placeUrl = placeUrl;
     }
 
     public String toString() {
@@ -210,7 +204,7 @@ public class BasicPOI {
             array[18] = Double.toString(spendingTime.hour);
             array[19] = Double.toString(spendingTime.standardDeviation);
         }
-        array[20] = urlList.get("place");
+        array[20] = placeUrl;
 
         return array;
     }
@@ -362,7 +356,7 @@ public class BasicPOI {
             basicPOI.setSpendingHour(spendingTime, spendingSD);
         }
         if (array.length > 20) {
-            basicPOI.addURL("place", array[20]);
+            basicPOI.setPlaceUrl(array[20]);
         }
 
         basicPOI.initTouristAttractionType();
