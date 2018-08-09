@@ -56,7 +56,6 @@ public class BusinessHour {
     }
 
     public BusinessHour(String open_close) {
-
         setWeekDay(open_close);
         setSaturday(open_close);
         setSunday(open_close);
@@ -75,7 +74,6 @@ public class BusinessHour {
         this.saturdayCloseHour = arg.saturdayCloseHour;
         this.sundayOpenHour = arg.sundayOpenHour;
         this.sundayCloseHour = arg.sundayCloseHour;
-
     }
 
     public void boot() {
@@ -144,7 +142,6 @@ public class BusinessHour {
     public void setSaturday(String open, String close) {
         this.saturdayOpen = open;
         this.saturdayClose = close;
-//        logger.debug("open="+open+"\tclose="+close);
         if (close.equals("24:00")) {
             close = "23:59";
         }

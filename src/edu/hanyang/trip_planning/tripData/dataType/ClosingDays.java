@@ -11,9 +11,9 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class ClosingDays {
-    private Set<DayOfWeek> weeklyClosingDays = new HashSet<DayOfWeek>();
-    private Set<DayOfWeekInMonth> monthlyClosingDayOfWeeks = new HashSet<DayOfWeekInMonth>();
-    private Set<String> yearlyClosingDays = new HashSet<String>();
+    private Set<DayOfWeek> weeklyClosingDays = new HashSet<>();
+    private Set<DayOfWeekInMonth> monthlyClosingDayOfWeeks = new HashSet<>();
+    private Set<String> yearlyClosingDays = new HashSet<>();
 
 
     public void addWeeklyClosingDay(DayOfWeek dayOfWeek) {
@@ -37,7 +37,6 @@ public class ClosingDays {
         return monthlyClosingDayOfWeeks;
     }
 
-
     public Set<String> getYearlyClosingDays() {
         return yearlyClosingDays;
     }
@@ -54,7 +53,6 @@ public class ClosingDays {
         for (String yearlyClosingDay : yearlyClosingDays) {
             newClosingDays.addYearlyClosingDay(yearlyClosingDay);
         }
-
 
         return newClosingDays;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -122,7 +120,6 @@ public class ClosingDays {
                 closingDays.addYearlyClosingDay("추석");
             } else {
                 closingDays.addYearlyClosingDay(str);
-
             }
         }
         return closingDays;
