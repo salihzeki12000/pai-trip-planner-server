@@ -101,7 +101,7 @@ public class BasicPOI {
         return poiType;
     }
 
-    public ProbabilisticDuration getSpendingTime(PersonalInfo personalInfo, String startTime) {
+    public ProbabilisticDuration getSpendingTime() {
         return spendingTime;
     }
 
@@ -113,7 +113,7 @@ public class BasicPOI {
         return businessHour;
     }
 
-    public Double getSatisfaction(PersonalInfo personalInfo, TimeAndDuration timeAndDuration) {
+    public Double getSatisfaction(PersonalInfo personalInfo) {
         double defaultValue = 0.5;
         PreferenceOfPOIType preferenceOfPOIType = personalInfo.getPreferenceOfPOIType();
 

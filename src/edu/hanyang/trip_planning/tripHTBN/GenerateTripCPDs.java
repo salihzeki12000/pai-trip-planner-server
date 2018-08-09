@@ -97,7 +97,7 @@ public class GenerateTripCPDs {
         int pValues[] = new int[1];
         for (int i = 0; i < tripCPDs.getSubsetPOIs().size(); i++) {
             pValues[0] = i;
-            ProbabilisticDuration pDur = tripCPDs.getSubsetPOIs().getPOI(i).getSpendingTime(null, null);
+            ProbabilisticDuration pDur = tripCPDs.getSubsetPOIs().getPOI(i).getSpendingTime();
             duration.setDistribution(pNodes, pValues, new SimpleGaussian(1, "D", pDur.hour, pDur.standardDeviation));
         }
         tripCPDs.setDurationCPDs(duration);

@@ -178,7 +178,7 @@ public class IncrementalInferenceTripNetwork {
      * @return 1st element: mean, 2nd element: var
      */
     private double[] inferenceDuration(int destNodeIdx) {
-        ProbabilisticDuration pd = tripCPDs.getPOI(destNodeIdx).getSpendingTime(personalInfo, null);
+        ProbabilisticDuration pd = tripCPDs.getPOI(destNodeIdx).getSpendingTime();
         double ret[] = new double[2];
         ret[0] = pd.hour;
         ret[1] = pd.standardDeviation * pd.standardDeviation;
@@ -227,7 +227,7 @@ public class IncrementalInferenceTripNetwork {
     private double[] inferencePreference(int destNodeIdx) {
         BasicPOI poi = tripCPDs.getPOI(destNodeIdx);
         double ret[] = new double[2];
-        ret[0] = poi.getSatisfaction(personalInfo, null);
+        ret[0] = poi.getSatisfaction(personalInfo);
         ret[1] = 0.1;
 //        logger.debug("poi=" + poi.getTitle() + " preference=" + ret[0]);
         return ret;
