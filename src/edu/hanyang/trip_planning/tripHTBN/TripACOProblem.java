@@ -148,7 +148,7 @@ public class TripACOProblem extends ItineraryPlanning {
     @Override
     public void addNodeToTrail(int destNodeIdx) {
         trail.add(destNodeIdx);
-        avaliableNodes.remove(new Integer(destNodeIdx));
+        avaliableNodes.remove(destNodeIdx);
         if (avaliableNodes.size() == 0) {
             bTerminalCondition = true;
         }

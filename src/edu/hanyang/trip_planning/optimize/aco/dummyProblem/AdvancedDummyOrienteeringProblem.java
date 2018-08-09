@@ -96,7 +96,7 @@ public class AdvancedDummyOrienteeringProblem implements ACOProblem {
     public void addNodeToTrail(int destNodeIdx) {
         logger.debug("add node " + destNodeIdx);
         trail.add(destNodeIdx);
-        availableNodes.remove(new Integer(destNodeIdx));
+        availableNodes.remove(destNodeIdx);
         if (availableNodes.size() == 0) {
             terminalCondition = true;
         }

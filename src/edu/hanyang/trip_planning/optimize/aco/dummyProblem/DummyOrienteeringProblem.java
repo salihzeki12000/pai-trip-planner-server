@@ -91,7 +91,7 @@ public class DummyOrienteeringProblem implements ACOProblem {
     @Override
     public void addNodeToTrail(int destNodeIdx) {
         trail.add(destNodeIdx);
-        availableNodes.remove(new Integer(destNodeIdx));
+        availableNodes.remove(destNodeIdx);
         if (availableNodes.size() == 0) {
             terminalCondition = true;
         }
