@@ -3,13 +3,6 @@ package edu.hanyang.trip_planning.tripData.dataType;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created with IntelliJ IDEA.
- * User: wykwon
- * Date: 15. 5. 19
- * Time: 오후 5:30
- * To change this template use File | Settings | File Templates.
- */
 public class ClosingDays {
     private Set<DayOfWeek> weeklyClosingDays = new HashSet<>();
     private Set<DayOfWeekInMonth> monthlyClosingDayOfWeeks = new HashSet<>();
@@ -129,7 +122,6 @@ public class ClosingDays {
         ClosingDays closingDays = new ClosingDays();
         closingDays.addMonthlyClosingDay(1, DayOfWeek.Sunday);
         closingDays.addMonthlyClosingDay(3, DayOfWeek.Sunday);
-//        closingDays.addWeeklyClosingDay(DayOfWeek.Sunday);
         System.out.println("closingDays = " + closingDays);
     }
 

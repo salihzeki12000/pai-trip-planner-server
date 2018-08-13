@@ -1,7 +1,5 @@
 package edu.hanyang.trip_planning.tripData.poi;
 
-import com.google.gson.Gson;
-
 import edu.hanyang.trip_planning.tripData.dataType.*;
 import edu.hanyang.trip_planning.trip_question.PersonalInfo;
 import edu.hanyang.trip_planning.tripData.preference.TouristAttractionType;
@@ -13,7 +11,7 @@ import java.util.Objects;
 public class BasicPoi {
     private String id;                                          // ID
     private String title;                                       // 이름
-    private String address;
+    private String address;                                     // 주소
     private PoiType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
     private Location location;                                  // 위치 (경위도)                                      ? location class 필요한가?
     private BusinessHour businessHour;                          // 영업시간
@@ -42,14 +40,6 @@ public class BasicPoi {
 
     public boolean getIsRestaurant() {
         return isRestaurant;
-    }
-
-    public void setAverageCostPerPerson(int costPerPerson) {
-        this.averageCostPerPerson = costPerPerson;
-    }
-
-    private void setSpendingHour(double hour, double standardDeviation) {
-        this.spendingTime = new ProbabilisticDuration(hour, standardDeviation);
     }
 
     public double getScore() {
@@ -103,43 +93,6 @@ public class BasicPoi {
 
     public String getPlaceUrl() {
         return placeUrl;
-    }
-
-    public static String[] csvHeader() {
-        return new String[]{"#id", "title", "latitude", "longitude", "othernames", "category",
-                "subcategory", "subsubcategory", "Addresscode_1", "AddressCode_2", "AddressCode_3", "Detailed_address", "BusinessHours", "closingdays", "parkingLot", "cost",
-                "publicTransportationAccess", "satisfaction", "spendingTime", "placeURL"
-        };
-    }
-
-    public String[] toStrArray() {
-        Gson gson = new Gson();
-        String array[] = new String[22];
-        array[0] = id;
-        array[1] = title;
-        array[2] = Double.toString(location.latitude);
-        array[3] = Double.toString(location.longitude);
-        array[4] = "";
-        array[5] = poiType.category;
-        array[6] = poiType.subCategory;
-        array[7] = poiType.subSubCategory;
-        array[8] = "";
-        array[9] = "";
-        array[10] = "";
-        array[11] = "";
-        array[12] = gson.toJson(businessHour);
-        array[13] = gson.toJson(closingDays);
-        array[14] = "";
-        array[15] = Integer.toString(averageCostPerPerson);
-        array[16] = "";
-        array[17] = Double.toString(score);
-        if (spendingTime != null) {
-            array[18] = Double.toString(spendingTime.hour);
-            array[19] = Double.toString(spendingTime.standardDeviation);
-        }
-        array[20] = placeUrl;
-
-        return array;
     }
 
     public TouristAttractionType getTouristAttractionType() {
@@ -231,33 +184,6 @@ public class BasicPoi {
             return;
         }
         this.touristAttractionType = TouristAttractionType.parse(poiType.subSubCategory);
-    }
-
-    public static BasicPoi parse(String array[]) {
-        Gson gson = new Gson();
-        String id = array[0];
-        String title = array[1];
-        double latitude = Double.parseDouble(array[2]);
-        double longitude = Double.parseDouble(array[3]);
-        Location location = new Location(latitude, longitude);
-        PoiType poiType = new PoiType(array[5], array[6], array[7]);
-        String address = array[9] + " " + array[10] + " " + array[11];
-        BusinessHour businessHour = gson.fromJson(array[12], BusinessHour.class);
-        businessHour.boot();
-        ClosingDays closingDays = gson.fromJson(array[13], ClosingDays.class);
-        int averageCostPerPerson = Integer.parseInt(array[15]);
-        double score = Double.parseDouble(array[17]);
-        double spendingTime = Double.parseDouble(array[18]);
-        double spendingSD = Double.parseDouble(array[19]);
-        String placeUrl = array[20];
-
-        BasicPoi basicPoi = new BasicPoi(id, title, address, poiType, location, businessHour, closingDays, score, placeUrl);
-
-        basicPoi.setAverageCostPerPerson(averageCostPerPerson);
-        basicPoi.setSpendingHour(spendingTime, spendingSD);
-        basicPoi.initTouristAttractionType();
-
-        return basicPoi;
     }
 
     @Override
