@@ -15,7 +15,6 @@ public class BasicPoi {
     private PoiType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
     private Location location;                                  // 위치 (경위도)                                      ? location class 필요한가?
     private BusinessHour businessHour;                          // 영업시간
-    private ClosingDays closingDays;                            // 휴일
     private int averageCostPerPerson = -1;                      // 평균 비용
     private ProbabilisticDuration spendingTime;                 // 머무는 시간
     private double score;                                       // 사용자 만족도
@@ -23,14 +22,13 @@ public class BasicPoi {
     private TouristAttractionType touristAttractionType = null; // ?
     private boolean isRestaurant;
 
-    public BasicPoi(int id, String title, String address, PoiType poiType, Location location, BusinessHour businessHour, ClosingDays closingDays, double score, String placeUrl) {
+    public BasicPoi(int id, String title, String address, PoiType poiType, Location location, BusinessHour businessHour, double score, String placeUrl) {
         this.id = id;
         this.title = title;
         this.address = address;
         this.poiType = poiType;
         this.location = location;
         this.businessHour = businessHour;
-        this.closingDays = closingDays;
         this.score = score;
         this.placeUrl = placeUrl;
         this.spendingTime = new ProbabilisticDuration(1.0, 0.05); // default spendingTime = 1hour +- 10min = 95%
@@ -202,13 +200,12 @@ public class BasicPoi {
     @Override
     public String toString() {
         return "BasicPoi{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", title='" + title + '\'' +
-                ", address=" + address +
+                ", address='" + address + '\'' +
                 ", poiType=" + poiType +
                 ", location=" + location +
                 ", businessHour=" + businessHour +
-                ", closingDays=" + closingDays +
                 ", averageCostPerPerson=" + averageCostPerPerson +
                 ", spendingTime=" + spendingTime +
                 ", score=" + score +

@@ -1,6 +1,5 @@
 package edu.hanyang.trip_planning.tripData.dataType;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
@@ -11,7 +10,6 @@ import org.joda.time.format.DateTimeFormat;
  * HH:mm
  */
 public class BusinessHour {
-    private static Logger logger = Logger.getLogger(BusinessHour.class);
     /**
      * 주중에 문여는 시간
      */

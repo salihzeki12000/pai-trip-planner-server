@@ -92,17 +92,17 @@ public class PoiManager {
     }
 
     public static void main(String[] args) {
-//        String filename = "datafiles/180813142600_제주특별자치도_basicpoi_new.json";
-//        List<BasicPoi> basicPoiList = PoiManager.getInstance().poiList;
-//        Gson gson = new Gson();
-//        String json = gson.toJson(basicPoiList);
-//        try {
-//            FileWriter writer = new FileWriter(filename);
-//            writer.write(json);
-//            writer.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        String filename = "datafiles/180813142600_제주특별자치도_basicpoi_new.json";
+        List<BasicPoi> basicPoiList = PoiManager.getInstance().poiList;
+        Gson gson = new Gson();
+        String json = gson.toJson(basicPoiList);
+        try {
+            FileWriter writer = new FileWriter(filename);
+            writer.write(json);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

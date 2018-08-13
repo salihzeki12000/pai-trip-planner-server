@@ -15,9 +15,8 @@ public class ItemConverter {
         UpdatePlaceURLInfo updatePlaceURLInfo = new UpdatePlaceURLInfo(placeUrl);
         double score = updatePlaceURLInfo.getScore();
         BusinessHour businessHour = updatePlaceURLInfo.getBusinessTime();
-        ClosingDays closingDays = updatePlaceURLInfo.getClosingDays();
 
-        BasicPoi basicPoi = new BasicPoi(id, title, address, poiType, location, businessHour, closingDays, score, placeUrl);
+        BasicPoi basicPoi = new BasicPoi(id, title, address, poiType, location, businessHour, score, placeUrl);
 
         return basicPoi;
     }

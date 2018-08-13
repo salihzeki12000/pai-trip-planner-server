@@ -1,9 +1,6 @@
 package edu.hanyang.trip_planning.tripData.daumLocalAPI;
 
 import edu.hanyang.trip_planning.tripData.dataType.BusinessHour;
-import edu.hanyang.trip_planning.tripData.dataType.ClosingDays;
-import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
-import edu.hanyang.trip_planning.tripData.poi.PoiManager;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -57,20 +54,6 @@ public class UpdatePlaceURLInfo {
         return new BusinessHour();
     }
 
-    public ClosingDays getClosingDays() {
-        Elements tit_list = doc.select("dl.list_info dt.tit");
-        Elements cont_list = doc.select("dl.list_info dd.cont");
-        int size = tit_list.size();
-        for (int i = 0; i < size; i++) {
-            String title = tit_list.get(i).text();
-            String content = cont_list.get(i).text();
-            if (title.equals("휴무일")) {
-                return parseClosingDays(content);
-            }
-        }
-        return new ClosingDays();
-    }
-
     private BusinessHour parseBusinessHour(String str) {
         /**
          * 1. 일단 , 로 분리한다.
@@ -106,29 +89,5 @@ public class UpdatePlaceURLInfo {
 
         // 평일, 주말 구분 없는 문자는 버릴것 .
         return businessHour;
-    }
-
-    /**
-     * 매주 일요일
-     */
-    private ClosingDays parseClosingDays(String str) {
-        String strs[] = str.split(", ");
-        ClosingDays closingDays = ClosingDays.parse(strs);
-        return closingDays;
-    }
-
-    public static void testAll() {
-        PoiManager poiManager = PoiManager.getInstance();
-        for (BasicPoi poi : poiManager.getAll()) {
-            String placeUrl = poi.getPlaceUrl();
-            UpdatePlaceURLInfo u = new UpdatePlaceURLInfo(placeUrl);
-            if (u.getClosingDays().toString().length() > 0) {
-                logger.debug(u.getClosingDays());
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        testAll();
     }
 }
