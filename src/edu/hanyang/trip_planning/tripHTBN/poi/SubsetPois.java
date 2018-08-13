@@ -12,7 +12,7 @@ import java.util.*;
 public class SubsetPois {
     List<BasicPoi> poiList = new ArrayList<>();
     String titleArray[];
-    Map<String, Integer> nameIndexMap = new FastMap<>();
+    Map<String, Integer> nameIndexMap;
 
     public SubsetPois(String... areas) {
         // {서귀포시, 부산}->서귀포시+부산 / {성산읍,제주시}->성산읍+제주시 / {성산읍,서귀포시}->서귀포시

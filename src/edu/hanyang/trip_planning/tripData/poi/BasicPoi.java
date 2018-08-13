@@ -8,10 +8,12 @@ import edu.hanyang.trip_planning.tripData.preference.TouristAttractionType;
 import edu.hanyang.trip_planning.trip_question.PreferenceOfPoiType;
 import util.Pair;
 
+import java.util.Objects;
+
 public class BasicPoi {
     private String id;                                          // ID
     private String title;                                       // 이름
-    private Address address;                                    // 주소                                               ? address class 필요한가?
+    private String address;
     private PoiType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
     private Location location;                                  // 위치 (경위도)                                      ? location class 필요한가?
     private BusinessHour businessHour;                          // 영업시간
@@ -23,7 +25,7 @@ public class BasicPoi {
     private TouristAttractionType touristAttractionType = null; // ?
     private boolean isRestaurant;
 
-    public BasicPoi(String id, String title, Address address, PoiType poiType, Location location, BusinessHour businessHour, ClosingDays closingDays, double score, String placeUrl) {
+    public BasicPoi(String id, String title, String address, PoiType poiType, Location location, BusinessHour businessHour, ClosingDays closingDays, double score, String placeUrl) {
         this.id = id;
         this.title = title;
         this.address = address;
@@ -62,7 +64,7 @@ public class BasicPoi {
         return title;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
@@ -103,25 +105,6 @@ public class BasicPoi {
         return placeUrl;
     }
 
-    @Override
-    public String toString() {
-        return "BasicPoi{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", address=" + address +
-                ", poiType=" + poiType +
-                ", location=" + location +
-                ", businessHour=" + businessHour +
-                ", closingDays=" + closingDays +
-                ", averageCostPerPerson=" + averageCostPerPerson +
-                ", spendingTime=" + spendingTime +
-                ", score=" + score +
-                ", placeUrl='" + placeUrl + '\'' +
-                ", touristAttractionType=" + touristAttractionType +
-                ", isRestaurant=" + isRestaurant +
-                '}';
-    }
-
     public static String[] csvHeader() {
         return new String[]{"#id", "title", "latitude", "longitude", "othernames", "category",
                 "subcategory", "subsubcategory", "Addresscode_1", "AddressCode_2", "AddressCode_3", "Detailed_address", "BusinessHours", "closingdays", "parkingLot", "cost",
@@ -140,10 +123,10 @@ public class BasicPoi {
         array[5] = poiType.category;
         array[6] = poiType.subCategory;
         array[7] = poiType.subSubCategory;
-        array[8] = address.addressCode.countryCode;
-        array[9] = address.addressCode.provinceCode;
-        array[10] = address.addressCode.cityCode;
-        array[11] = address.detailedAddress;
+        array[8] = "";
+        array[9] = "";
+        array[10] = "";
+        array[11] = "";
         array[12] = gson.toJson(businessHour);
         array[13] = gson.toJson(closingDays);
         array[14] = "";
@@ -258,8 +241,7 @@ public class BasicPoi {
         double longitude = Double.parseDouble(array[3]);
         Location location = new Location(latitude, longitude);
         PoiType poiType = new PoiType(array[5], array[6], array[7]);
-        AddressCode addressCode = new AddressCode(array[8], array[9], array[10]);
-        Address address = new Address(addressCode, array[11]);
+        String address = array[9] + " " + array[10] + " " + array[11];
         BusinessHour businessHour = gson.fromJson(array[12], BusinessHour.class);
         businessHour.boot();
         ClosingDays closingDays = gson.fromJson(array[13], ClosingDays.class);
@@ -276,6 +258,38 @@ public class BasicPoi {
         basicPoi.initTouristAttractionType();
 
         return basicPoi;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BasicPoi basicPoi = (BasicPoi) o;
+        return Objects.equals(id, basicPoi.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "BasicPoi{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", address=" + address +
+                ", poiType=" + poiType +
+                ", location=" + location +
+                ", businessHour=" + businessHour +
+                ", closingDays=" + closingDays +
+                ", averageCostPerPerson=" + averageCostPerPerson +
+                ", spendingTime=" + spendingTime +
+                ", score=" + score +
+                ", placeUrl='" + placeUrl + '\'' +
+                ", touristAttractionType=" + touristAttractionType +
+                ", isRestaurant=" + isRestaurant +
+                '}';
     }
 
     public static void main(String[] args) {
@@ -303,10 +317,5 @@ public class BasicPoi {
 //        for (String str : poi.toStrArray()) {
 //            logger.debug(str);
 //        }
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
     }
 }

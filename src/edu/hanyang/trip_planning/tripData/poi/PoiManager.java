@@ -2,6 +2,7 @@ package edu.hanyang.trip_planning.tripData.poi;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.gson.Gson;
 import edu.hanyang.trip_planning.tripData.dataType.PoiType;
 import edu.hanyang.trip_planning.tripData.daumLocalAPI.*;
 
@@ -91,21 +92,11 @@ public class PoiManager {
     public List<BasicPoi> getPoiListByAddresses(String... addresses) {
         List<BasicPoi> matchedPoiList = new ArrayList<>();
         for (BasicPoi poi : poiList) {
-            boolean match = false;  //false
-            for (String add : addresses) {
-                if (add.equals(poi.getAddress().addressCode.countryCode)) {
-                    match = true;
-                    break;
-                } else if (add.equals(poi.getAddress().addressCode.provinceCode)) {
-                    match = true;
-                    break;
-                } else if (add.equals(poi.getAddress().addressCode.cityCode)) {
-                    match = true;
+            for (String address: addresses){
+                if(poi.getAddress().contains(address)){
+                    matchedPoiList.add(poi);
                     break;
                 }
-            }
-            if (match) {
-                matchedPoiList.add(poi);
             }
         }
         return matchedPoiList;
@@ -199,7 +190,17 @@ public class PoiManager {
     }
 
     public static void main(String[] args) {
-        BasicPoi testPoi = PoiManager.getInstance().getPoiByTitle("제주이디");
-        System.out.println(testPoi);
+        String filename = "datafiles/180813142600_제주특별자치도_basicpoi_new.json";
+        List<BasicPoi> basicPoiList = PoiManager.getInstance().poiList;
+        Gson gson = new Gson();
+        String json = gson.toJson(basicPoiList);
+        try {
+            FileWriter writer = new FileWriter(filename);
+            writer.write(json);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
