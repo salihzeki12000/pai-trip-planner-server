@@ -11,7 +11,7 @@ import java.util.*;
 public class PoiManager {
     private static PoiManager poiManager = new PoiManager();
     private List<BasicPoi> poiList = new ArrayList<>();
-    private Map<String, BasicPoi> poiMapById = new HashMap<>();
+    private Map<Integer, BasicPoi> poiMapById = new HashMap<>();
     private Map<String, BasicPoi> poiMapByTitle = new HashMap<>();
     private Set<PoiType> poiTypeSet = new HashSet<>();
     private Gson GSON = new Gson();

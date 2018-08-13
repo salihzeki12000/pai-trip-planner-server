@@ -9,7 +9,7 @@ import util.Pair;
 import java.util.Objects;
 
 public class BasicPoi {
-    private String id;                                          // ID
+    private int id;                                             // ID
     private String title;                                       // 이름
     private String address;                                     // 주소
     private PoiType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
@@ -23,7 +23,7 @@ public class BasicPoi {
     private TouristAttractionType touristAttractionType = null; // ?
     private boolean isRestaurant;
 
-    public BasicPoi(String id, String title, String address, PoiType poiType, Location location, BusinessHour businessHour, ClosingDays closingDays, double score, String placeUrl) {
+    public BasicPoi(int id, String title, String address, PoiType poiType, Location location, BusinessHour businessHour, ClosingDays closingDays, double score, String placeUrl) {
         this.id = id;
         this.title = title;
         this.address = address;
@@ -46,7 +46,7 @@ public class BasicPoi {
         return this.score;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -180,7 +180,7 @@ public class BasicPoi {
     }
 
     private void initTouristAttractionType() {
-        if (poiType.subSubCategory == null && poiType.subSubCategory.isEmpty()) {
+        if (poiType.subSubCategory == null || poiType.subSubCategory.isEmpty()) {
             return;
         }
         this.touristAttractionType = TouristAttractionType.parse(poiType.subSubCategory);
@@ -191,7 +191,7 @@ public class BasicPoi {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BasicPoi basicPoi = (BasicPoi) o;
-        return Objects.equals(id, basicPoi.id);
+        return id == basicPoi.id;
     }
 
     @Override

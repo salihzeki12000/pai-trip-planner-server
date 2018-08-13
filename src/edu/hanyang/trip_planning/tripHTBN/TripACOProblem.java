@@ -118,10 +118,10 @@ public class TripACOProblem extends ItineraryPlanning {
 
             // check constraint, get heuristicValue
             for (PoiConstraint poiConstraint : poiConstraintList) {
-                if (dest.getId().equals(poiConstraint.getPoiId())) {
+                if (dest.getId() == poiConstraint.getPoiId()) {
                     isDestPoiMustVisited = true;
                 }
-                if (src.getId().equals(poiConstraint.getPoiId())) {
+                if (src.getId() == poiConstraint.getPoiId()) {
                     isSrcPoiMustVisited = true;
                 }
             }
@@ -173,7 +173,7 @@ public class TripACOProblem extends ItineraryPlanning {
         }
         for (int i = 0; i < poiConstraintList.size(); i++) {                        // mgkim: 모든 constraint들에 대해서
             PoiConstraint poiConstraint = poiConstraintList.get(i);
-            if (poiConstraint.getPoiId().equals(destPoi.getId())) {     // mgkim: destPoi와 일치하면서
+            if (poiConstraint.getPoiId() == destPoi.getId()) {     // mgkim: destPoi와 일치하면서
                 poiConstraintCnt[i] = true;
             }
         }
@@ -371,7 +371,7 @@ public class TripACOProblem extends ItineraryPlanning {
 
         // destPoi는 constrain되어야 하는 type인가?
         for (PoiConstraint poiConstraint : poiConstraintList) {         // mgkim: 모든 poiConstraint의
-            if (poiConstraint.getPoiId().equals(destPoi.getId())) {     // mgkim: poiConstraint와 destPoi 비교, 일치하면
+            if (poiConstraint.getPoiId() == destPoi.getId()) {     // mgkim: poiConstraint와 destPoi 비교, 일치하면
                 isDestPoiConstrainedType = true;                        // mgkim: true
             }
         }

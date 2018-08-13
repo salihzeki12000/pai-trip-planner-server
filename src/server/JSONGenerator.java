@@ -69,7 +69,7 @@ class JSONGenerator {
             }
 
             private class SimplePoi {
-                private String id;
+                private int id;
                 private String title;
                 private PoiType poiType;
                 private double x;

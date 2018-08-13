@@ -50,7 +50,7 @@ public class TripPlanner {
         // mgkim: output argument declaration
         MultiDayTripAnswer multiDayTripAnswer = new MultiDayTripAnswer();
 
-        List<String> visitedPoiIdList = new ArrayList<>();         // mgkim: for visitedPoiId
+        List<Integer> visitedPoiIdList = new ArrayList<>();         // mgkim: for visitedPoiId
         for (DailyTripEntry dailyTripEntry : dailyTripEntryList) {
             /* mgkim: planner input arguments*/
             // mgkim: time

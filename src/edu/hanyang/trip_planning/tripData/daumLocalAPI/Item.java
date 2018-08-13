@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.annotation.processing.Generated;
+import java.util.Objects;
 
 
 @Generated("org.jsonschema2pojo")
@@ -22,7 +23,7 @@ public class Item {
     @Expose
     private String placeUrl;
     @Expose
-    private String id;
+    private int id;
     @Expose
     private String title;
     @Expose
@@ -86,11 +87,11 @@ public class Item {
         this.placeUrl = placeUrl;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -153,16 +154,14 @@ public class Item {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Item)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-
-        return id.equals(item.id);
+        return id == item.id;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return Objects.hash(id);
     }
 
     @Override

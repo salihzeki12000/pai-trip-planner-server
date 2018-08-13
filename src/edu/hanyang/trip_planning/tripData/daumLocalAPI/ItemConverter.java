@@ -5,7 +5,7 @@ import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
 
 public class ItemConverter {
     public static BasicPoi getPoi(Item item) {
-        String id = "daum." + item.getId();
+        int id = item.getId();
         String title = item.getTitle();
         String address = item.getAddress();
         PoiType poiType = getType(item.getCategory());

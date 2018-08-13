@@ -4,11 +4,11 @@ import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
 import edu.hanyang.trip_planning.tripData.poi.PoiManager;
 
 public class PoiConstraint {
-    private String poiId;
+    private int poiId;
     private String poiTitle;
     private boolean visitOrNot;
 
-    public PoiConstraint(String inputString, boolean visitOrNot) {
+    PoiConstraint(String inputString, boolean visitOrNot) {
         PoiManager poiManager = PoiManager.getInstance();
         BasicPoi basicPoi = poiManager.getPoiByTitle(inputString);
 
@@ -21,7 +21,7 @@ public class PoiConstraint {
         }
     }
 
-    public String getPoiId() {
+    public int getPoiId() {
         return poiId;
     }
 

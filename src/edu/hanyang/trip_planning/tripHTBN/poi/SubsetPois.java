@@ -52,12 +52,12 @@ public class SubsetPois {
     }
 
     // mgkim:
-    public void reduceSubsetPoisByIdList(Collection<String> idList) {
+    public void reduceSubsetPoisByIdList(Collection<Integer> idList) {
         ArrayList<String> titleList = new ArrayList<>(Arrays.asList(titleArray));
-        for (String id : idList) {
+        for (int id : idList) {
             for (int poiIdx = 0; poiIdx < poiList.size(); poiIdx++) {
                 BasicPoi basicPoi = poiList.get(poiIdx);
-                if (id.equals(basicPoi.getId())) {
+                if (id == basicPoi.getId()) {
                     String poiTitle = getPoi(poiIdx).getTitle();
                     poiList.remove(poiIdx);
                     nameIndexMap.remove(poiTitle);
