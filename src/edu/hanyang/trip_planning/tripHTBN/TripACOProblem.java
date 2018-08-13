@@ -396,8 +396,7 @@ public class TripACOProblem extends ItineraryPlanning {
         double startHour = 9.00;
         double returnHour = 21.00;
 
-        SubsetPois subsetPois = new SubsetPois();
-        subsetPois.makeSubsetPoisByAreas("제주특별자치도");                // mgkim: 해당 areas 전체
+        SubsetPois subsetPois = new SubsetPois("제주특별자치도"); // mgkim: 해당 areas 전체
         GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(subsetPois, minuteStep);
         TripCPDs tripCPDs = generateTripCPDs.generate();
         PersonalInfo personalInfo = PersonalInfoFactory.personalInfoExample1();

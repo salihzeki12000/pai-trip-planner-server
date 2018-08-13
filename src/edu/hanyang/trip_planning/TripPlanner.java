@@ -64,10 +64,8 @@ public class TripPlanner {
             String endPoiTitle = dailyTripEntry.getEndPoiTitle();
 
             /* mgkim: planner setup & execution*/
-            // mgkim: tripCPDs
             // mgkim: subsetPois
-            SubsetPois subsetPois = new SubsetPois();
-            subsetPois.makeSubsetPoisByAreas(dailyTripEntry.getAreas());                // mgkim: 해당 areas 전체
+            SubsetPois subsetPois = new SubsetPois(dailyTripEntry.getAreas());          // mgkim: 해당 areas 전체
             subsetPois.reduceSubsetPoisByIdList(visitedPoiIdList);                      // mgkim: 들렀던 곳 제외
             subsetPois.reduceSubsetPoisByScoreAndConstraint(numTotalPoi, numConstrainedTypePoi, categoryConstraintList); // mgkim: (numTotalPoi-5*numConstraint) 여행typePoi + (5*numConstraint) 각 constraintPoiType 남기고 줄이기
             for (PoiConstraint poiConstraint : poiConstraintList) {                     // mgkim: poiConstraint 처리
@@ -78,6 +76,8 @@ public class TripPlanner {
                 }
             }
             subsetPois.addSubsetPoisByTitle(startPoiTitle, endPoiTitle);  // mgkim: 출발, 도착 장소 추가
+
+            // mgkim: tripCPDs
             GenerateTripCPDs generateTripCPDs = new GenerateTripCPDs(subsetPois, minuteTime);
             TripCPDs tripCPDs = generateTripCPDs.generate();
             // mgkim: start & end PoiIdx

@@ -14,10 +14,7 @@ public class SubsetPois {
     String titleArray[];
     Map<String, Integer> nameIndexMap = new FastMap<>();
 
-    public SubsetPois() {
-    }
-
-    public void makeSubsetPoisByAreas(String... areas) {
+    public SubsetPois(String... areas) {
         // {서귀포시, 부산}->서귀포시+부산 / {성산읍,제주시}->성산읍+제주시 / {성산읍,서귀포시}->서귀포시
         PoiManager poiManager = PoiManager.getInstance();
         poiList.addAll(poiManager.getPoiListByAddresses(areas));
@@ -42,7 +39,7 @@ public class SubsetPois {
     }
 
     public void reduceSubsetPoisByTitles(String... titles) {
-        ArrayList<String> titleList = new ArrayList<String>(Arrays.asList(titleArray));
+        ArrayList<String> titleList = new ArrayList<>(Arrays.asList(titleArray));
         for (String title : titles) {
             if (titleList.contains(title)) {
                 int poiIdx = getPoiIdx(title);

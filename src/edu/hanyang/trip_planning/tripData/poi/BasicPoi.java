@@ -13,7 +13,7 @@ public class BasicPoi {
     private String title;                                       // 이름
     private Address address;                                    // 주소                                               ? address class 필요한가?
     private PoiType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
-    private Location location;                                  // 위치 (경위도)                                      ?
+    private Location location;                                  // 위치 (경위도)                                      ? location class 필요한가?
     private BusinessHour businessHour;                          // 영업시간
     private ClosingDays closingDays;                            // 휴일
     private int averageCostPerPerson = -1;                      // 평균 비용
