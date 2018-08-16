@@ -1,10 +1,10 @@
 package server;
 
 import com.google.gson.Gson;
-import edu.hanyang.trip_planning.optimize.DetailItinerary;
-import edu.hanyang.trip_planning.optimize.MultiDayTripAnswer;
-import edu.hanyang.trip_planning.tripData.dataType.PoiType;
-import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
+import tripPlanning.optimize.DetailItinerary;
+import tripPlanning.optimize.MultiDayTripAnswer;
+import tripPlanning.tripData.dataType.PoiType;
+import tripPlanning.tripData.poi.BasicPoi;
 import kr.hyosang.coordinate.CoordPoint;
 import kr.hyosang.coordinate.TransCoord;
 

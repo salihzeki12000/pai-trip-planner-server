@@ -1,9 +1,9 @@
 package server;
 
-import edu.hanyang.trip_planning.optimize.MultiDayTripAnswer;
-import edu.hanyang.trip_planning.tripData.poi.BasicPoi;
-import edu.hanyang.trip_planning.tripData.poi.PoiManager;
-import edu.hanyang.trip_planning.optimize.DetailItinerary;
+import tripPlanning.optimize.MultiDayTripAnswer;
+import tripPlanning.tripData.poi.BasicPoi;
+import tripPlanning.tripData.poi.PoiManager;
+import tripPlanning.optimize.DetailItinerary;
 
 public class HTMLGenerator {
     private static final String alphabet[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};

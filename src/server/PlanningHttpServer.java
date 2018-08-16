@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import edu.hanyang.trip_planning.TripPlanner;
-import edu.hanyang.trip_planning.optimize.MultiDayTripAnswer;
-import edu.hanyang.trip_planning.trip_question.TripQuestion;
+import tripPlanning.TripPlanner;
+import tripPlanning.optimize.MultiDayTripAnswer;
+import tripPlanning.trip_question.TripQuestion;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
