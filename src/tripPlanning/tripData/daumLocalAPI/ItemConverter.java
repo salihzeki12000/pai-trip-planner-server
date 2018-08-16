@@ -9,7 +9,7 @@ public class ItemConverter {
         String title = item.getTitle();
         String address = item.getAddress();
         PoiType poiType = getType(item.getCategory());
-        Location location = new Location(Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
+        Location location = new Location(Double.parseDouble(item.getLongitude()), Double.parseDouble(item.getLatitude()));
         String placeUrl = item.getPlaceUrl();
         UpdatePlaceURLInfo updatePlaceURLInfo = new UpdatePlaceURLInfo(placeUrl);
         double score = updatePlaceURLInfo.getScore();

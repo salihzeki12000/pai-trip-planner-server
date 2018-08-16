@@ -6,12 +6,12 @@ package tripPlanning.tripData.dataType;
  * 서울 경도(longitude): 동경 126도
  */
 public class Location {
-    public double latitude; // 위도
-    public double longitude; // 경도
+    public double longitude; // 경도, X
+    public double latitude; // 위도, Y
 
-    public Location(double latitude, double longitude) {
-        this.latitude = latitude;
+    public Location(double longitude,double latitude) {
         this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     @Override
@@ -23,6 +23,6 @@ public class Location {
     }
 
     public Location deepCopy() {
-        return new Location(latitude, longitude);
+        return new Location(longitude,latitude);
     }
 }

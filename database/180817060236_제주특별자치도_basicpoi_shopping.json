@@ -1,0 +1,281 @@
+[
+  {
+    "id": 12140282,
+    "name": "제주시민속오일시장",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "시장",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 제주시 도두1동 1212",
+    "location": {
+      "latitude": 33.49723984667493,
+      "longitude": 126.47548451697298
+    },
+    "score": 1.5,
+    "businessHours": {
+      "businessHours": "06:00 ~ 19:00",
+      "closedDaySet": [
+        "끝자리 2, 7일만 영업"
+      ]
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  },
+  {
+    "id": 22304721,
+    "name": "더아일랜더",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "기념품",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 제주시 일도1동 1251",
+    "location": {
+      "latitude": 33.514903280992755,
+      "longitude": 126.52800558115035
+    },
+    "score": 3.0,
+    "businessHours": {
+      "businessHours": "11:00 ~ 20:00",
+      "closedDaySet": [
+        "수요일"
+      ]
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  },
+  {
+    "id": 18526100,
+    "name": "모슬포중앙시장",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "시장",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 서귀포시 대정읍 하모리 822-7",
+    "location": {
+      "latitude": 33.221846997162714,
+      "longitude": 126.25487147394652
+    },
+    "score": 3.0,
+    "businessHours": {
+      "businessHours": "10:30 ~ 17:00",
+      "closedDaySet": []
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  },
+  {
+    "id": 25020856,
+    "name": "중문오일시장",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "시장",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 서귀포시 중문동 2123-1",
+    "location": {
+      "latitude": 33.25079153861343,
+      "longitude": 126.42417435750743
+    },
+    "score": 5.0,
+    "businessHours": {
+      "businessHours": "08:00 ~ 18:00",
+      "closedDaySet": []
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  },
+  {
+    "id": 15365415,
+    "name": "한라마을쇼핑센터",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "기념품",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 제주시 용담3동 1042-1",
+    "location": {
+      "latitude": 33.515705311594324,
+      "longitude": 126.50187226621088
+    },
+    "score": 5.0,
+    "businessHours": {
+      "businessHours": "08:00 ~ 18:30",
+      "closedDaySet": []
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  },
+  {
+    "id": 9398816,
+    "name": "제주명품",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "식품",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 제주시 오라3동 2319-8",
+    "location": {
+      "latitude": 33.498025910517725,
+      "longitude": 126.50699283844787
+    },
+    "score": 4.5,
+    "businessHours": {
+      "businessHours": "10:30 ~ 17:00",
+      "closedDaySet": []
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  },
+  {
+    "id": 1220762226,
+    "name": "베리제주",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "식품",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 제주시 애월읍 고내리 1168",
+    "location": {
+      "latitude": 33.466617032795,
+      "longitude": 126.33631584227058
+    },
+    "score": 5.0,
+    "businessHours": {
+      "businessHours": "10:30 ~ 17:00",
+      "closedDaySet": []
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  },
+  {
+    "id": 8265854,
+    "name": "동문재래시장",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "시장",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 제주시 이도1동 1434",
+    "location": {
+      "latitude": 33.5118051071048,
+      "longitude": 126.526011881406
+    },
+    "score": 1.5,
+    "businessHours": {
+      "businessHours": "08:00 ~ 21:00",
+      "closedDaySet": []
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  },
+  {
+    "id": 7938166,
+    "name": "서귀포매일올레시장",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "시장",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 서귀포시 서귀동 277-1",
+    "location": {
+      "latitude": 33.250273993066045,
+      "longitude": 126.56360439226366
+    },
+    "score": 2.8,
+    "businessHours": {
+      "businessHours": "07:00 ~ 20:00",
+      "closedDaySet": []
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  },
+  {
+    "id": 17600338,
+    "name": "세화민속오일시장",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "시장",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 제주시 구좌읍 세화리 1500-5",
+    "location": {
+      "latitude": 33.52591152793723,
+      "longitude": 126.85746336618229
+    },
+    "score": 5.0,
+    "businessHours": {
+      "businessHours": "10:30 ~ 17:00",
+      "closedDaySet": []
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  },
+  {
+    "id": 27417792,
+    "name": "오달콤제주",
+    "poiType": {
+      "category": "쇼핑",
+      "subCategory": "식품",
+      "subSubCategory": ""
+    },
+    "address": "제주특별자치도 제주시 일도1동 1167-2",
+    "location": {
+      "latitude": 33.512866030552,
+      "longitude": 126.529019764389
+    },
+    "score": 5.0,
+    "businessHours": {
+      "businessHours": "09:00 ~ 20:00",
+      "closedDaySet": []
+    },
+    "costPerPerson": -1,
+    "spendingTime": {
+      "hour": 1.0,
+      "standardDeviation": 0.05
+    },
+    "isRestaurant": false
+  }
+]

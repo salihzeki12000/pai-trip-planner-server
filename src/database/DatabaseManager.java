@@ -54,7 +54,7 @@ public class DatabaseManager {
             {'N', 'O', 'L', 'M', 'R', 'S', 'P', 'Q', 'V', 'W'},
     };
 
-    private static final double MIN_SCORE = 0;
+    private static final double MIN_SCORE = 1;
     private static final int MIN_NUM_SCORED_REVIEWS = 0;
     private static final int MIN_NUM_REVIEWS = 10;
 
@@ -1003,7 +1003,7 @@ public class DatabaseManager {
                     String name = kakaoPoiPlus.getName();
                     PoiType poiType = new PoiType(kakaoPoiPlus.getCategory(), kakaoPoiPlus.getSubCategory(), kakaoPoiPlus.getSubSubcategory());
                     String address = kakaoPoiPlus.getAddress();
-                    Location location = new Location(kakaoPoiPlus.getWgsY(), kakaoPoiPlus.getWgsX());
+                    Location location = new Location(kakaoPoiPlus.getWgsX(),kakaoPoiPlus.getWgsY());
                     double score = kakaoPoiPlus.getScore() < 3 ? kakaoPoiPlus.getScore() + 0.5 : kakaoPoiPlus.getScore(); // 0~3점 애들도 조금이라도 점수 갖을 수 있도록...
                     BusinessHours businessHours;
                     if (i < 3) {
@@ -1023,6 +1023,70 @@ public class DatabaseManager {
             String filename = getNewFilename(BASICPOI_FILENAMES[i], area);
             String json = GSON.toJson(basicPoiList);
             createJsonFile(json, filename);
+        }
+    }
+
+    private static List<KakaoPoiPlus> getAllKakaoPoiPlusList(String area) {
+        List<KakaoPoiPlus> kakaoPoiPlusList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            String filename = getDataFilename(area, KAKAOPOIPLUS_FILENAMES[i]);
+            KakaoPoiPlus[] kakaoPoiPluses = null;
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(DATABASE_DIR + filename));
+                kakaoPoiPluses = GSON.fromJson(br, KakaoPoiPlus[].class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            kakaoPoiPlusList.addAll(Arrays.asList(kakaoPoiPluses));
+        }
+        return kakaoPoiPlusList;
+    }
+
+    private static List<BasicPoi> getAllBasicPoiList(String area) {
+        List<BasicPoi> basicPoiList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            String filename = getDataFilename(area, BASICPOI_FILENAMES[i]);
+            BasicPoi[] basicPois = null;
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(DATABASE_DIR + filename));
+                basicPois = GSON.fromJson(br, BasicPoi[].class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            basicPoiList.addAll(Arrays.asList(basicPois));
+        }
+        return basicPoiList;
+    }
+
+    private static KakaoPoiPlus getKakaoPoiPlusById(int id, List<KakaoPoiPlus> kakaoPoiPlusList) {
+        for (KakaoPoiPlus kakaoPoiPlus : kakaoPoiPlusList) {
+            if (id == kakaoPoiPlus.getId()) {
+                return kakaoPoiPlus;
+            }
+        }
+        return null;
+    }
+
+    private static void createRouteJsonFile(String area) {
+        WebDriver driver = getWebDriver(false);
+
+        List<KakaoPoiPlus> kakaoPoiPlusList = getAllKakaoPoiPlusList(area);
+        List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
+
+        for (BasicPoi fromBP : basicPoiList) {
+            for (BasicPoi toBP : basicPoiList) {
+                if (!fromBP.equals(toBP)) {
+                    KakaoPoiPlus fromKPP = getKakaoPoiPlusById(fromBP.getId(), kakaoPoiPlusList);
+                    KakaoPoiPlus toKPP = getKakaoPoiPlusById(toBP.getId(), kakaoPoiPlusList);
+                    String daumMobileMapUrl = "https://m.map.daum.net/actions/carRoute?&sxEnc=" + fromKPP.getMobX() + "&syEnc=" + fromKPP.getMobY() + "&exEnc=" + toKPP.getMobX() + "&eyEnc=" + toKPP.getMobY();
+                    driver.navigate().to(daumMobileMapUrl);
+                    String pageSource = driver.getPageSource();
+
+                    System.out.println();
+                }
+            }
         }
 
     }
@@ -1063,15 +1127,15 @@ public class DatabaseManager {
 //        createKakaoPoiPlusJsonFiles(area);
 
         // 10. checkKakaoPoiPlusFiles 실행하여 unknown type 이 발견되면 trimming 하는 부분에서 처리
-        checkKakaoPoiPlusFiles(area);
+//        checkKakaoPoiPlusFiles(area);
 
         // 11. createBasicPoiJsonFiles 실행
-        createBasicPoiJsonFiles(area);
+//        createBasicPoiJsonFiles(area);
 
         // 12. createCategoriesJsonFile 실행
 //        createCategoriesJsonFile(area);
 
         // 13. createRouteJsonFile 실행
-//        createRouteJsonFile(area); //TODO:
+        createRouteJsonFile(area); //TODO:
     }
 }
