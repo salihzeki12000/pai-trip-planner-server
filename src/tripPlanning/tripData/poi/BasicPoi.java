@@ -10,25 +10,23 @@ import java.util.Objects;
 
 public class BasicPoi {
     private int id;                                             // ID
-    private String name;                                       // 이름
-    private String address;                                     // 주소
+    private String name;                                        // 이름
     private PoiType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
     private Location location;                                  // 위치 (경위도)                                      ? location class 필요한가?
     private int averageCostPerPerson = -1;                      // 평균 비용
     private ProbabilisticDuration spendingTime;                 // 머무는 시간
     private double score;                                       // 사용자 만족도
-    private String placeUrl;
+    private String address;                                     // 주소
     private TouristAttractionType touristAttractionType = null; // ?
     private boolean isRestaurant;
 
-    public BasicPoi(int id, String name, String address, PoiType poiType, Location location, double score, String placeUrl) {
+    public BasicPoi(int id, String name, String address, PoiType poiType, Location location, double score) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.poiType = poiType;
         this.location = location;
         this.score = score;
-        this.placeUrl = placeUrl;
         this.spendingTime = new ProbabilisticDuration(1.0, 0.05); // default spendingTime = 1hour +- 10min = 95%
         this.isRestaurant = this.poiType.category.equals("음식점");
         this.initTouristAttractionType();
@@ -81,10 +79,6 @@ public class BasicPoi {
 
     public Integer getAverageCostPerPerson() {
         return averageCostPerPerson;
-    }
-
-    public String getPlaceUrl() {
-        return placeUrl;
     }
 
     public TouristAttractionType getTouristAttractionType() {
@@ -202,7 +196,6 @@ public class BasicPoi {
                 ", averageCostPerPerson=" + averageCostPerPerson +
                 ", spendingTime=" + spendingTime +
                 ", score=" + score +
-                ", placeUrl='" + placeUrl + '\'' +
                 ", touristAttractionType=" + touristAttractionType +
                 ", isRestaurant=" + isRestaurant +
                 '}';

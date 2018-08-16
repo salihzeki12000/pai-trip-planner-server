@@ -11,11 +11,10 @@ public class ItemConverter {
         PoiType poiType = getType(item.getCategory());
         Location location = new Location(Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude()));
         String placeUrl = item.getPlaceUrl();
-
         UpdatePlaceURLInfo updatePlaceURLInfo = new UpdatePlaceURLInfo(placeUrl);
         double score = updatePlaceURLInfo.getScore();
 
-        BasicPoi basicPoi = new BasicPoi(id, title, address, poiType, location, score, placeUrl);
+        BasicPoi basicPoi = new BasicPoi(id, title, address, poiType, location, score);
 
         return basicPoi;
     }
