@@ -215,7 +215,7 @@ public class BatchInferenceTripNetwork {
     private double[] inferenceCost(int destNodeIdx) {
         BasicPoi poi = tripCPDs.getPoi(destNodeIdx);
         double ret[] = new double[2];
-        ret[0] = (double) poi.getAverageCostPerPerson();
+        ret[0] = (double) poi.getCostPerPerson();
         ret[1] = 0.1;
 //        logger.debug("poi=" + poi.getName() + " cost=" + ret[0]);
         return ret;

@@ -12,11 +12,11 @@ public class BasicPoi {
     private int id;                                             // ID
     private String name;                                        // 이름
     private PoiType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
-    private Location location;                                  // 위치 (경위도)                                      ? location class 필요한가?
-    private int averageCostPerPerson = -1;                      // 평균 비용
-    private ProbabilisticDuration spendingTime;                 // 머무는 시간
-    private double score;                                       // 사용자 만족도
     private String address;                                     // 주소
+    private Location location;                                  // 위치 (경위도)                                      ? location class 필요한가?
+    private double score;                                       // 사용자 만족도
+    private int costPerPerson = -1;                             // 평균 비용
+    private ProbabilisticDuration spendingTime;                 // 머무는 시간
     private TouristAttractionType touristAttractionType = null; // ?
     private boolean isRestaurant;
 
@@ -77,8 +77,8 @@ public class BasicPoi {
         return defaultValue;
     }
 
-    public Integer getAverageCostPerPerson() {
-        return averageCostPerPerson;
+    public Integer getCostPerPerson() {
+        return costPerPerson;
     }
 
     public TouristAttractionType getTouristAttractionType() {
@@ -193,7 +193,7 @@ public class BasicPoi {
                 ", address='" + address + '\'' +
                 ", poiType=" + poiType +
                 ", location=" + location +
-                ", averageCostPerPerson=" + averageCostPerPerson +
+                ", costPerPerson=" + costPerPerson +
                 ", spendingTime=" + spendingTime +
                 ", score=" + score +
                 ", touristAttractionType=" + touristAttractionType +
