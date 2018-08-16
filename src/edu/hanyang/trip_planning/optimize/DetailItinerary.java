@@ -127,11 +127,11 @@ public class DetailItinerary {
 
     public Set<String> getPoiTitleSet() {
         Set<String> retList = new HashSet<>();
-        retList.add(startPoi.getTitle());
+        retList.add(startPoi.getName());
         for (BasicPoi poi : poiList) {
-            retList.add(poi.getTitle());
+            retList.add(poi.getName());
         }
-        retList.add(endPoi.getTitle());
+        retList.add(endPoi.getName());
         return retList;
     }
 
@@ -160,25 +160,25 @@ public class DetailItinerary {
 
     public List<String> getPoiTitles() {
         List<String> retList = new ArrayList<String>();
-        retList.add(startPoi.getTitle());
+        retList.add(startPoi.getName());
         for (BasicPoi poi : poiList) {
-            retList.add(poi.getTitle());
+            retList.add(poi.getName());
         }
-        retList.add(endPoi.getTitle());
+        retList.add(endPoi.getName());
         return retList;
     }
 
     public String toString() {
         StringBuffer strbuf = new StringBuffer();
-        strbuf.append(startPoi.getTitle());
+        strbuf.append(startPoi.getName());
         strbuf.append("->");
         for (BasicPoi poi : poiList) {
-            strbuf.append(poi.getTitle());
+            strbuf.append(poi.getName());
             strbuf.append("(" + poi.getPoiType() + ")");
             strbuf.append("->");
         }
         if (endPoi != null) {
-            strbuf.append(endPoi.getTitle());
+            strbuf.append(endPoi.getName());
             strbuf.append("(" + endPoi.getPoiType() + ")");
         } else {
             strbuf.deleteCharAt(strbuf.length() - 1);
@@ -273,14 +273,14 @@ public class DetailItinerary {
 
     public String toDetailString() {
         StringBuffer strbuf = new StringBuffer();
-        strbuf.append(startPoi.getTitle() + "에서 " + timeStr(startTime) + "에 출발\n");
+        strbuf.append(startPoi.getName() + "에서 " + timeStr(startTime) + "에 출발\n");
 
         for (int i = 0; i < poiList.size(); i++) {
-            strbuf.append(poiList.get(i).getTitle() + "에서 " + timeStr(arrivalTimes.get(i)[0]) + "에 도착 해서 " + durationStr(durations.get(i)[0]) + "분 동안 머물고 " + timeStr(departureTimes.get(i)[0]) + "에 출발\n");
+            strbuf.append(poiList.get(i).getName() + "에서 " + timeStr(arrivalTimes.get(i)[0]) + "에 도착 해서 " + durationStr(durations.get(i)[0]) + "분 동안 머물고 " + timeStr(departureTimes.get(i)[0]) + "에 출발\n");
         }
 
 
-        strbuf.append(endPoi.getTitle() + "에 " + timeStr(endTime[0]) + "에 도착\n");
+        strbuf.append(endPoi.getName() + "에 " + timeStr(endTime[0]) + "에 도착\n");
         return strbuf.toString();
     }
 
@@ -289,13 +289,13 @@ public class DetailItinerary {
 
         strbuf.append("<p>\n");
         strbuf.append("날짜:" + date + "<br>\n");
-        strbuf.append("1. " + startPoi.getTitle() + "에서 " + timeStr(startTime) + "에 출발<br>\n");
+        strbuf.append("1. " + startPoi.getName() + "에서 " + timeStr(startTime) + "에 출발<br>\n");
 
         for (int i = 0; i < poiList.size(); i++) {
-            strbuf.append((i + 2) + ". " + poiList.get(i).getTitle() + "에서 " + timeStr(arrivalTimes.get(i)[0]) + "에 도착해서 " + durationStr(durations.get(i)[0]) + "분 동안 머물고 " + timeStr(departureTimes.get(i)[0]) + "에 출발<br>\n");
+            strbuf.append((i + 2) + ". " + poiList.get(i).getName() + "에서 " + timeStr(arrivalTimes.get(i)[0]) + "에 도착해서 " + durationStr(durations.get(i)[0]) + "분 동안 머물고 " + timeStr(departureTimes.get(i)[0]) + "에 출발<br>\n");
         }
 
-        strbuf.append((poiList.size() + 2) + ". " + endPoi.getTitle() + "에 " + timeStr(endTime[0]) + "에 도착<br>\n");
+        strbuf.append((poiList.size() + 2) + ". " + endPoi.getName() + "에 " + timeStr(endTime[0]) + "에 도착<br>\n");
         strbuf.append("</p>\n");
         return strbuf.toString();
     }

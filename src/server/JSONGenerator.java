@@ -70,14 +70,14 @@ class JSONGenerator {
 
             private class SimplePoi {
                 private int id;
-                private String title;
+                private String name;
                 private PoiType poiType;
                 private double x;
                 private double y;
 
                 private SimplePoi(BasicPoi basicPoi) {
                     id = basicPoi.getId();
-                    title = basicPoi.getTitle();
+                    name = basicPoi.getName();
                     poiType = basicPoi.getPoiType();
                     CoordPoint wsgCoord = new CoordPoint(basicPoi.getLocation().longitude, basicPoi.getLocation().latitude);
                     CoordPoint wcoCoord = TransCoord.getTransCoord(wsgCoord, TransCoord.COORD_TYPE_WGS84, TransCoord.COORD_TYPE_WCONGNAMUL);

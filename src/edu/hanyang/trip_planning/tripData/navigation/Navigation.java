@@ -31,7 +31,7 @@ public class Navigation {
     }
 
     public List<UnitMovement> findPath(BasicPoi src, BasicPoi dest) {
-        return findPath(src.getTitle(), src.getLocation(), dest.getTitle(), dest.getLocation());
+        return findPath(src.getName(), src.getLocation(), dest.getName(), dest.getLocation());
     }
 
     private List<UnitMovement> findPath(String srcTitle, Location srcLocation, String destTitle, Location destLocation) {

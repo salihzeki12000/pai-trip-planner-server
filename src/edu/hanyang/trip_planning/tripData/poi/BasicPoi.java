@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class BasicPoi {
     private int id;                                             // ID
-    private String title;                                       // 이름
+    private String name;                                       // 이름
     private String address;                                     // 주소
     private PoiType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
     private Location location;                                  // 위치 (경위도)                                      ? location class 필요한가?
@@ -21,9 +21,9 @@ public class BasicPoi {
     private TouristAttractionType touristAttractionType = null; // ?
     private boolean isRestaurant;
 
-    public BasicPoi(int id, String title, String address, PoiType poiType, Location location, double score, String placeUrl) {
+    public BasicPoi(int id, String name, String address, PoiType poiType, Location location, double score, String placeUrl) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.address = address;
         this.poiType = poiType;
         this.location = location;
@@ -46,8 +46,8 @@ public class BasicPoi {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     public String getAddress() {
@@ -195,7 +195,7 @@ public class BasicPoi {
     public String toString() {
         return "BasicPoi{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
+                ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", poiType=" + poiType +
                 ", location=" + location +

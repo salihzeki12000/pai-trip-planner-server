@@ -313,7 +313,7 @@ public class TripACOProblem extends ItineraryPlanning {
             if (isTypeAffordableAtThatTime) {    // mgkim: destPoi에 도착하는 시간에 affordable한 constraint가 있으면
                 int affordableCategoryConstraintIdx = categoryConstraintList.indexOf(affordableCategoryConstraint);
                 // 해당 constraint type에 들를 수 있는 회수가 이미 꽉 찾으면 constraint violation
-//                    logger.debug(destPoi.getTitle()+": "+destPoi.getPoiType()+"-"+arrivalTime[0]);
+//                    logger.debug(destPoi.getName()+": "+destPoi.getPoiType()+"-"+arrivalTime[0]);
 // 해당 constraint type에 들를 수 있는 회수가 남아 있으면 no violation
                 return categoryConstraintCnt[affordableCategoryConstraintIdx] == affordableCategoryConstraint.getMaxCount();
             } else {
@@ -324,7 +324,7 @@ public class TripACOProblem extends ItineraryPlanning {
             for (int i = 0; i < categoryConstraintList.size(); i++) {
                 CategoryConstraint categoryConstraint = categoryConstraintList.get(i);
                 if (departureTime[0] > categoryConstraint.getEndHour() && categoryConstraintCnt[i] < categoryConstraint.getMinCount()) {
-//                    logger.debug(destPoi.getTitle()+": "+destPoi.getPoiType()+"-"+arrivalTime[0]);
+//                    logger.debug(destPoi.getName()+": "+destPoi.getPoiType()+"-"+arrivalTime[0]);
                     return true;    // mgkim: 있다면 constraint violation
                 }
             }

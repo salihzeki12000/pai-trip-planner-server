@@ -21,8 +21,8 @@ public class SubsetPois {
         titleArray = new String[poiList.size()];
         nameIndexMap = new FastMap<>();
         for (int i = 0; i < poiList.size(); i++) {
-            titleArray[i] = poiList.get(i).getTitle();
-            nameIndexMap.put(poiList.get(i).getTitle(), i);
+            titleArray[i] = poiList.get(i).getName();
+            nameIndexMap.put(poiList.get(i).getName(), i);
         }
     }
 
@@ -31,7 +31,7 @@ public class SubsetPois {
         for (String title : titles) {
             if (!titleList.contains(title)) {
                 poiList.add(PoiManager.getInstance().getPoiByTitle(title));
-                nameIndexMap.put(poiList.get(poiList.size() - 1).getTitle(), poiList.size() - 1);
+                nameIndexMap.put(poiList.get(poiList.size() - 1).getName(), poiList.size() - 1);
                 titleList.add(title);
             }
         }
@@ -58,7 +58,7 @@ public class SubsetPois {
             for (int poiIdx = 0; poiIdx < poiList.size(); poiIdx++) {
                 BasicPoi basicPoi = poiList.get(poiIdx);
                 if (id == basicPoi.getId()) {
-                    String poiTitle = getPoi(poiIdx).getTitle();
+                    String poiTitle = getPoi(poiIdx).getName();
                     poiList.remove(poiIdx);
                     nameIndexMap.remove(poiTitle);
                     titleList.remove(poiIdx);
@@ -78,8 +78,8 @@ public class SubsetPois {
         nameIndexMap = new FastMap<>();
         titleArray = new String[NumSubsetPois];
         for (int i = 0; i < NumSubsetPois; i++) {
-            titleArray[i] = poiList.get(i).getTitle();
-            nameIndexMap.put(poiList.get(i).getTitle(), i);
+            titleArray[i] = poiList.get(i).getName();
+            nameIndexMap.put(poiList.get(i).getName(), i);
         }
     }
 
@@ -137,8 +137,8 @@ public class SubsetPois {
         nameIndexMap = new FastMap<>();
         titleArray = new String[numTotalPoi];
         for (int i = 0; i < numTotalPoi; i++) {
-            titleArray[i] = poiList.get(i).getTitle();
-            nameIndexMap.put(poiList.get(i).getTitle(), i);
+            titleArray[i] = poiList.get(i).getName();
+            nameIndexMap.put(poiList.get(i).getName(), i);
         }
     }
 
@@ -167,7 +167,7 @@ public class SubsetPois {
 
     public int getPoiIdx(String poiTitle) {
         for (int i = 0; i < poiList.size(); i++) {
-            if (poiTitle.equals(poiList.get(i).getTitle())) {
+            if (poiTitle.equals(poiList.get(i).getName())) {
                 return i;
             }
         }

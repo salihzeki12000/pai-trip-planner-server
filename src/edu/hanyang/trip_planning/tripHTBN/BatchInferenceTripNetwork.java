@@ -208,7 +208,7 @@ public class BatchInferenceTripNetwork {
         double ret[] = new double[2];
         ret[0] = poi.getSatisfaction(personalInfo);
         ret[1] = 0.1;
-//        logger.debug("poi=" + poi.getTitle() + " preference=" + ret[0]);
+//        logger.debug("poi=" + poi.getName() + " preference=" + ret[0]);
         return ret;
     }
 
@@ -217,7 +217,7 @@ public class BatchInferenceTripNetwork {
         double ret[] = new double[2];
         ret[0] = (double) poi.getAverageCostPerPerson();
         ret[1] = 0.1;
-//        logger.debug("poi=" + poi.getTitle() + " cost=" + ret[0]);
+//        logger.debug("poi=" + poi.getName() + " cost=" + ret[0]);
         return ret;
 
 
@@ -226,7 +226,7 @@ public class BatchInferenceTripNetwork {
     private double[] inferencePhysicalActivity(int destNodeIdx) {
         BasicPoi poi = tripCPDs.getPoi(destNodeIdx);
         double ret[] = poi.getPhysicalActivity();
-//        logger.debug("poi=" + poi.getTitle() + " physical activity=" + ret[0]);
+//        logger.debug("poi=" + poi.getName() + " physical activity=" + ret[0]);
         return ret;
 
     }
@@ -249,7 +249,7 @@ public class BatchInferenceTripNetwork {
 
 //        // 시간,
 //        if (bDebug) {
-//        logger.debug(poi.getTitle() + "   tempCondition=" + tempCondition);
+//        logger.debug(poi.getName() + "   tempCondition=" + tempCondition);
 //        }
         TouristAttractionType type = poi.getTouristAttractionType();
         if (type == null) {

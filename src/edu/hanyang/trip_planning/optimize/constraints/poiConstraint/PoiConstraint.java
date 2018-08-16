@@ -14,7 +14,7 @@ public class PoiConstraint {
 
         if (basicPoi != null) {
             this.poiId = basicPoi.getId();
-            this.poiTitle = basicPoi.getTitle();
+            this.poiTitle = basicPoi.getName();
             this.visitOrNot = visitOrNot;
         } else {
             throw new RuntimeException("The corresponding POI does not exist:" + inputString);

@@ -25,7 +25,7 @@ public class PoiManager {
                 BasicPoi[] basicPois = GSON.fromJson(br, BasicPoi[].class);
                 for (BasicPoi basicPoi : basicPois) {
                     poiMapById.put(basicPoi.getId(), basicPoi);
-                    poiMapByTitle.put(basicPoi.getTitle(), basicPoi);
+                    poiMapByTitle.put(basicPoi.getName(), basicPoi);
                     poiList.add(basicPoi);
                     poiTypeSet.add(basicPoi.getPoiType());
                 }
@@ -79,7 +79,7 @@ public class PoiManager {
                 throw new RuntimeException("cannot find such poi " + title);
             } else {
                 poiMapById.put(basicPoi.getId(), basicPoi);
-                poiMapByTitle.put(basicPoi.getTitle(), basicPoi);
+                poiMapByTitle.put(basicPoi.getName(), basicPoi);
                 poiList.add(basicPoi);
             }
         }
