@@ -14,7 +14,6 @@ public class BasicPoi {
     private String address;                                     // 주소
     private PoiType poiType;                                    // 장소의 종류                                        ? poiType class 필요한가?
     private Location location;                                  // 위치 (경위도)                                      ? location class 필요한가?
-    private BusinessHour businessHour;                          // 영업시간
     private int averageCostPerPerson = -1;                      // 평균 비용
     private ProbabilisticDuration spendingTime;                 // 머무는 시간
     private double score;                                       // 사용자 만족도
@@ -22,13 +21,12 @@ public class BasicPoi {
     private TouristAttractionType touristAttractionType = null; // ?
     private boolean isRestaurant;
 
-    public BasicPoi(int id, String title, String address, PoiType poiType, Location location, BusinessHour businessHour, double score, String placeUrl) {
+    public BasicPoi(int id, String title, String address, PoiType poiType, Location location, double score, String placeUrl) {
         this.id = id;
         this.title = title;
         this.address = address;
         this.poiType = poiType;
         this.location = location;
-        this.businessHour = businessHour;
         this.score = score;
         this.placeUrl = placeUrl;
         this.spendingTime = new ProbabilisticDuration(1.0, 0.05); // default spendingTime = 1hour +- 10min = 95%
@@ -66,10 +64,6 @@ public class BasicPoi {
 
     public Location getLocation() {
         return location;
-    }
-
-    public BusinessHour getBusinessHour() {
-        return businessHour;
     }
 
     public Double getSatisfaction(PersonalInfo personalInfo) {
@@ -205,7 +199,6 @@ public class BasicPoi {
                 ", address='" + address + '\'' +
                 ", poiType=" + poiType +
                 ", location=" + location +
-                ", businessHour=" + businessHour +
                 ", averageCostPerPerson=" + averageCostPerPerson +
                 ", spendingTime=" + spendingTime +
                 ", score=" + score +
@@ -224,8 +217,6 @@ public class BasicPoi {
 //        poi.setPoiType(new PoiType("음식점", "한식", "곰탕"));
 ////5. 가능한 활동
 //        poi.addActivity(ActivityType.Eat);
-////7. 영업시간
-//        poi.setBusinessHour(new BusinessHour("07:00", "16:30"));
 //// 8. 휴일
 //        ClosingDays closingDays = new ClosingDays();
 //        closingDays.addMonthlyClosingDay(1, DayOfWeek.Sunday);

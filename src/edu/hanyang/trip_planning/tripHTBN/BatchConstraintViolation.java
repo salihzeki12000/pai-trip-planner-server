@@ -53,23 +53,17 @@ public class BatchConstraintViolation {
         return ChanceConstraint.inequalityValue(expectedReturnTime, returnHour, ChanceConstraint.LimitType.Lower, TripACOParameters.returnTimeLimitConfidenceLevel);
     }
 
-    private double openTimePenalty(double arrivalTime[], BasicPoi poi) {
-        double openHour = poi.getBusinessHour().getOpenHour(this.year, this.monthOfYear, this.dayOfMonth);
-//        logger.debug("openTimePenalty 제한=" + arrivalTime[0] + "\t" + openHour);
-        return ChanceConstraint.inequalityValue(arrivalTime, openHour, ChanceConstraint.LimitType.Upper, TripACOParameters.openTimeConfidenceInterval);
-//        return ChanceConstraint.inequalityValue(tripNetwork.marg_T[path.length - 1], endHour, ChanceConstraint.LimitType.Lower, returnTimeLimitConfidenceLevel);
-    }
-
-    private double closeTimePenalty(double departureTime[], BasicPoi poi) {
-
-        double closeHour = poi.getBusinessHour().getCloseHour(this.year, this.monthOfYear, this.dayOfMonth);
-//        logger.debug("closeHour 제한=" + departureTime[0] + "\t" + closeHour);
-        return ChanceConstraint.inequalityValue(departureTime, closeHour, ChanceConstraint.LimitType.Lower, TripACOParameters.closeTimeConfidenceInterval);
-//        return ChanceConstraint.inequalityValue(tripNetwork.marg_T[path.length - 1], endHour, ChanceConstraint.LimitType.Lower, returnTimeLimitConfidenceLevel);
-    }
+    //TODO: businessHours & closedDays Constraint
+//    private double openTimePenalty(double arrivalTime[], BasicPoi poi) {
+//        double openHour = poi.getBusinessHour().getOpenHour(this.year, this.monthOfYear, this.dayOfMonth);
+//        return ChanceConstraint.inequalityValue(arrivalTime, openHour, ChanceConstraint.LimitType.Upper, TripACOParameters.openTimeConfidenceInterval);
+//    }
+//    private double closeTimePenalty(double departureTime[], BasicPoi poi) {
+//        double closeHour = poi.getBusinessHour().getCloseHour(this.year, this.monthOfYear, this.dayOfMonth);
+//        return ChanceConstraint.inequalityValue(departureTime, closeHour, ChanceConstraint.LimitType.Lower, TripACOParameters.closeTimeConfidenceInterval);
+//    }
 
     private double costPenalty(double totalCost[]) {
-//        logger.debug("totalCost 제한=" + totalCost[0] + "\t" + TripACOParameters.costLimit);
         return ChanceConstraint.inequalityValue(totalCost, TripACOParameters.costLimit, ChanceConstraint.LimitType.Lower, TripACOParameters.costLimitConfidenceInterval);
     }
 

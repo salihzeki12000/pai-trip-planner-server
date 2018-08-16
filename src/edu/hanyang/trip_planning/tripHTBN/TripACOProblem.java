@@ -232,14 +232,15 @@ public class TripACOProblem extends ItineraryPlanning {
         if (returnTimeConstraint < 0) {
             return true;
         }
-        double openTimeConstraint = openTimePenalty(incrementalInferenceResults.getArrivalTime(), destPoi);
-        if (openTimeConstraint < 0) {
-            return true;
-        }
-        double closeTimeConstraint = closeTimePenalty(incrementalInferenceResults.getDepartureTime(), destPoi);
-        if (closeTimeConstraint < 0) {
-            return true;
-        }
+        //TODO: businessHours & closedDays Constraint
+//        double openTimeConstraint = openTimePenalty(incrementalInferenceResults.getArrivalTime(), destPoi);
+//        if (openTimeConstraint < 0) {
+//            return true;
+//        }
+//        double closeTimeConstraint = closeTimePenalty(incrementalInferenceResults.getDepartureTime(), destPoi);
+//        if (closeTimeConstraint < 0) {
+//            return true;
+//        }
         double costConstraint = costPenalty(incrementalInferenceResults.getTotalCosts());
         if (costConstraint < 0) {
             return true;
@@ -255,46 +256,19 @@ public class TripACOProblem extends ItineraryPlanning {
         return poiConstraintsViolation(destPoi, incrementalInferenceResults.getArrivalTime(), incrementalInferenceResults.getDepartureTime());
     }
 
-    protected boolean constraintViolation(IncrementalInferenceResults argResult, BasicPoi destPoi) {
-        double returnTimeConstraint = returnTimePenalty(argResult.getExpectedReturnTime());
-
-        if (returnTimeConstraint < 0) {
-            logger.debug("\t expected return time=" + argResult.getExpectedReturnTime()[0]);
-            return true;
-        }
-        double openTimeConstraint = openTimePenalty(argResult.getArrivalTime(), destPoi);
-        if (openTimeConstraint < 0) {
-            logger.debug("open constraint");
-            return true;
-        }
-        double closeTimeConsraint = closeTimePenalty(argResult.getDepartureTime(), destPoi);
-        if (closeTimeConsraint < 0) {
-            return true;
-        }
-        double costConstraint = costPenalty(argResult.getTotalCosts());
-        if (costConstraint < 0) {
-            return true;
-        }
-        double paUpperConstrant = physicalActivityUpperPenalty(argResult.getTotalPA());
-        if (paUpperConstrant < 0) {
-            return true;
-        }
-        return categoryConstraintsViolation(destPoi, argResult.getArrivalTime(), argResult.getDepartureTime());
-    }
-
     private double returnTimePenalty(double expectedReturnTime[]) {
         return ChanceConstraint.inequalityValue(expectedReturnTime, returnHour, ChanceConstraint.LimitType.Lower, TripACOParameters.returnTimeLimitConfidenceLevel);
     }
 
-    private double openTimePenalty(double arrivalTime[], BasicPoi poi) {
-        double openHour = poi.getBusinessHour().getOpenHour(this.year, this.monthOfYear, this.dayOfMonth);
-        return ChanceConstraint.inequalityValue(arrivalTime, openHour, ChanceConstraint.LimitType.Upper, TripACOParameters.openTimeConfidenceInterval);
-    }
-
-    private double closeTimePenalty(double departureTime[], BasicPoi poi) {
-        double closeHour = poi.getBusinessHour().getCloseHour(this.year, this.monthOfYear, this.dayOfMonth);
-        return ChanceConstraint.inequalityValue(departureTime, closeHour, ChanceConstraint.LimitType.Lower, TripACOParameters.closeTimeConfidenceInterval);
-    }
+    //TODO: businessHours & closedDays Constraint
+//    private double openTimePenalty(double arrivalTime[], BasicPoi poi) {
+//        double openHour = poi.getBusinessHour().getOpenHour(this.year, this.monthOfYear, this.dayOfMonth);
+//        return ChanceConstraint.inequalityValue(arrivalTime, openHour, ChanceConstraint.LimitType.Upper, TripACOParameters.openTimeConfidenceInterval);
+//    }
+//    private double closeTimePenalty(double departureTime[], BasicPoi poi) {
+//        double closeHour = poi.getBusinessHour().getCloseHour(this.year, this.monthOfYear, this.dayOfMonth);
+//        return ChanceConstraint.inequalityValue(departureTime, closeHour, ChanceConstraint.LimitType.Lower, TripACOParameters.closeTimeConfidenceInterval);
+//    }
 
     private double costPenalty(double totalCost[]) {
         return ChanceConstraint.inequalityValue(totalCost, TripACOParameters.costLimit, ChanceConstraint.LimitType.Lower, TripACOParameters.costLimitConfidenceInterval);
