@@ -1003,7 +1003,7 @@ public class DatabaseManager {
                     String name = kakaoPoiPlus.getName();
                     PoiType poiType = new PoiType(kakaoPoiPlus.getCategory(), kakaoPoiPlus.getSubCategory(), kakaoPoiPlus.getSubSubcategory());
                     String address = kakaoPoiPlus.getAddress();
-                    Location location = new Location(kakaoPoiPlus.getWgsX(),kakaoPoiPlus.getWgsY());
+                    Location location = new Location(kakaoPoiPlus.getWgsX(), kakaoPoiPlus.getWgsY());
                     double score = kakaoPoiPlus.getScore() < 3 ? kakaoPoiPlus.getScore() + 0.5 : kakaoPoiPlus.getScore(); // 0~3점 애들도 조금이라도 점수 갖을 수 있도록...
                     BusinessHours businessHours;
                     if (i < 3) {
@@ -1071,6 +1071,7 @@ public class DatabaseManager {
 
     private static void createRouteJsonFile(String area) {
         WebDriver driver = getWebDriver(false);
+        Matcher matcher;
 
         List<KakaoPoiPlus> kakaoPoiPlusList = getAllKakaoPoiPlusList(area);
         List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
@@ -1078,11 +1079,58 @@ public class DatabaseManager {
         for (BasicPoi fromBP : basicPoiList) {
             for (BasicPoi toBP : basicPoiList) {
                 if (!fromBP.equals(toBP)) {
-                    KakaoPoiPlus fromKPP = getKakaoPoiPlusById(fromBP.getId(), kakaoPoiPlusList);
-                    KakaoPoiPlus toKPP = getKakaoPoiPlusById(toBP.getId(), kakaoPoiPlusList);
+                    int fromId = fromBP.getId();
+                    int toId = toBP.getId();
+
+                    KakaoPoiPlus fromKPP = getKakaoPoiPlusById(fromId, kakaoPoiPlusList);
+                    KakaoPoiPlus toKPP = getKakaoPoiPlusById(toId, kakaoPoiPlusList);
                     String daumMobileMapUrl = "https://m.map.daum.net/actions/carRoute?&sxEnc=" + fromKPP.getMobX() + "&syEnc=" + fromKPP.getMobY() + "&exEnc=" + toKPP.getMobX() + "&eyEnc=" + toKPP.getMobY();
                     driver.navigate().to(daumMobileMapUrl);
                     String pageSource = driver.getPageSource();
+
+                    String routeType;
+                    double distance;
+                    int time;
+                    int taxiFare;
+                    int tollFare;
+                    List<Location> points = new ArrayList<>();  // wgs84
+
+                    if(pageSource.contains("자동차 길찾기 결과가 없습니다.")){
+                        routeType = "car";
+                        distance = 10000;
+                        time = 10000;
+                        taxiFare = 1000000;
+                        tollFare = 1000000;
+                    }else{
+                        routeType = getSubStringByRegexp(pageSource, "routeType : '(.*)',");
+
+                        String distanceStr = getSubStringByRegexp(pageSource, "distance : '(.*)m',");
+                        if (!distanceStr.contains("k")) {
+                            distance = Double.parseDouble(distanceStr) / 1000;
+                        } else {
+                            distance = Double.parseDouble(distanceStr.replace("k", ""));
+                        }
+
+                        String timeStr = getSubStringByRegexp(pageSource, "time : '(.*)',");
+                        if (timeStr.contains("시간")) {
+                            String hourStr = getSubStringByRegexp(timeStr, "(.*)시간.*");
+                            String minStr = getSubStringByRegexp(timeStr, ".* (.*)분");
+                            time = Integer.parseInt(hourStr) * 60 + Integer.parseInt(minStr);
+                        } else {
+                            String minStr = getSubStringByRegexp(timeStr, "(.*)분");
+                            time = Integer.parseInt(minStr);
+                        }
+
+                        String taxiFareStr = getSubStringByRegexp(pageSource, "taxiFare : '(.*)',");
+                        taxiFareStr = taxiFareStr.length() == 0 ? "0" : taxiFareStr;
+                        taxiFare = Integer.parseInt(taxiFareStr.replaceAll(",", ""));
+
+                        String tollFareStr = getSubStringByRegexp(pageSource, "tollFare : '(.*)',");
+                        tollFareStr = tollFareStr.length() == 0 ? "0" : tollFareStr;
+                        tollFare = Integer.parseInt(tollFareStr.replaceAll(",", ""));
+
+                        String pointsStr = getSubStringByRegexp(pageSource, "points : '(.*)',");    // TODO:수정필요
+                    }
 
                     System.out.println();
                 }
