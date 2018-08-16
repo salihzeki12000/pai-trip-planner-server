@@ -24,17 +24,6 @@ public class DaumLocalAPI {
         throw new RuntimeException("error");
     }
 
-    public static List<Item> getPois(String name, int numberOfItem) {
-        String str;
-        try {
-            str = "https://apis.daum.net/local/v1/search/keyword.json?apikey=a1238cbf32a23df62fcdfa4ffc4ecad63ee71e45&query=" + URLEncoder.encode(name, "UTF-8");
-            return parseLocation(str, numberOfItem);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        throw new RuntimeException("error");
-    }
-
     public static List<Item> parseLocation(String str, int numberOfItem) throws IOException {
         List<Item> infoPoiList = new ArrayList<>();
         URL url = new URL(str);
