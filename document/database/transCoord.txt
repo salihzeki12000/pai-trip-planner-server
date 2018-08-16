@@ -1,0 +1,76 @@
+Daum OpenAPI에 있는 좌표계 변환 javascript 코드를 java로 포팅해 보았습니다...클래스를 jar 형태로 배포합니다...
+
+라이센스는 Daum OpenAPI 라이센스를 따릅니다.
+
+TransCoord.jar
+
+지원되는 좌표계
+tm, ktm, utm, congnamul, wgs84, bessel, wtm, wktm, wcongnamul
+[code java]
+
+public static final int COORD_TYPE_TM = 1;
+public static final int COORD_TYPE_KTM = 2;
+public static final int COORD_TYPE_UTM = 3;
+public static final int COORD_TYPE_CONGNAMUL = 4;
+public static final int COORD_TYPE_WGS84 = 5;
+public static final int COORD_TYPE_BESSEL = 6;
+public static final int COORD_TYPE_WTM = 7;
+public static final int COORD_TYPE_WKTM = 8;
+public static final int COORD_TYPE_WCONGNAMUL = 10;
+[/code]
+
+사용법
+[code java]
+import kr.hyosang.coordinate.*;
+
+........
+
+CoordPoint pt = new CoordPoint(126.97553009053178, 37.56456569639763); //서울시청
+CoordPoint ktmPt = TransCoord.getTransCoord(pt, TransCoord.COORD_TYPE_WGS84, TransCoord.COORD_TYPE_KTM);
+
+[/code]
+
+
+
+서울 시청 위치를 기준으로 WGS84에서 각 좌표계로 변환 후 다시 WGS84로 변환해서 오차를 확인해 보니,
+다음과 같이 결과가 나옵니다. 허용 오차 범위로 생각됩니다..
+
+
+[TM]
+Translate : 197768.4520399699, 451365.13194132084 Retranslate : 126.9755301111964, 37.56456569207776
+Diff : 2.0664629118982702E-8, -4.319872459745966E-9
+
+[KTM]
+Translate : 309689.5976059905, 551860.9156454466 Retranslate : 126.9755301111964, 37.56456569207774
+Diff : 2.0664629118982702E-8, -4.319886670600681E-9
+
+[UTM]
+Translate : 321201.5037010669, 4159430.7062740386 Retranslate : 126.9755300905307, 37.564565696397636
+Diff : -1.0800249583553523E-12, 7.105427357601002E-15
+
+[CONGNAMUL]
+Translate : 494421.0, 1128413.0 Retranslate : 126.97552952196261, 37.56456630514921
+Diff : -5.685691633061651E-7, 6.087515771469043E-7
+
+[WGS84]
+Translate : 126.97553009053178, 37.56456569639763 Retranslate : 126.97553009053178, 37.56456569639763
+Diff : 0.0, 0.0
+
+[BESSEL]
+Translate : 126.97762994246017, 37.56176812268042 Retranslate : 126.9755301111964, 37.56456569207776
+Diff : 2.0664629118982702E-8, -4.319872459745966E-9
+
+[WTM]
+Translate : 197838.10182558166, 451670.3995200698 Retranslate : 126.9755301111964, 37.56456569207776
+Diff : 2.0664629118982702E-8, -4.319872459745966E-9
+
+[WKTM]
+Translate : 309496.6523318976, 552168.2631194722 Retranslate : 126.9755301111964, 37.56456569207776
+Diff : 2.0664629118982702E-8, -4.319872459745966E-9
+
+[WCONGNAMUL]
+Translate : 494595.0, 1129176.0 Retranslate : 126.97552895866035, 37.56456569616303
+Diff : -1.1318714285835085E-6, -2.345998950659123E-10
+
+
+출처: http://hyosang82.tistory.com/269 [Blah-ging]
