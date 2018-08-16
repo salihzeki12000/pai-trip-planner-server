@@ -15,6 +15,7 @@ public class BasicPoi {
     private String address;                                     // 주소
     private Location location;                                  // 위치 (경위도)                                      ? location class 필요한가?
     private double score;                                       // 사용자 만족도
+    private BusinessHours businessHours;                        // 영업시간
     private int costPerPerson = -1;                             // 평균 비용
     private ProbabilisticDuration spendingTime;                 // 머무는 시간
     private TouristAttractionType touristAttractionType = null; // ?
@@ -28,8 +29,22 @@ public class BasicPoi {
         this.location = location;
         this.score = score;
         this.spendingTime = new ProbabilisticDuration(1.0, 0.05); // default spendingTime = 1hour +- 10min = 95%
-        this.isRestaurant = this.poiType.category.equals("음식점");
         this.initTouristAttractionType();
+        this.isRestaurant = this.poiType.category.equals("음식점");
+    }
+
+    public BasicPoi(int id, String name, PoiType poiType, String address, Location location, double score, BusinessHours businessHours) {
+        this.id = id;
+        this.name = name;
+        this.poiType = poiType;
+        this.address = address;
+        this.location = location;
+        this.score = score;
+        this.businessHours = businessHours;
+        this.costPerPerson = -1;
+        this.spendingTime = new ProbabilisticDuration(1.0, 0.05); // default spendingTime = 1hour +- 10min = 95%
+        this.initTouristAttractionType();
+        this.isRestaurant = this.poiType.category.equals("음식점");
     }
 
     public boolean getIsRestaurant() {
@@ -190,12 +205,13 @@ public class BasicPoi {
         return "BasicPoi{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
                 ", poiType=" + poiType +
+                ", address='" + address + '\'' +
                 ", location=" + location +
+                ", score=" + score +
+                ", businessHours=" + businessHours +
                 ", costPerPerson=" + costPerPerson +
                 ", spendingTime=" + spendingTime +
-                ", score=" + score +
                 ", touristAttractionType=" + touristAttractionType +
                 ", isRestaurant=" + isRestaurant +
                 '}';
