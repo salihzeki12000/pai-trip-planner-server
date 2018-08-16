@@ -8,6 +8,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import tripPlanning.tripData.dataType.BusinessHours;
+import tripPlanning.tripData.dataType.Location;
+import tripPlanning.tripData.dataType.PoiType;
+import tripPlanning.tripData.poi.BasicPoi;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
@@ -49,6 +53,10 @@ public class DatabaseManager {
             {'M', 'L', 'O', 'N', 'Q', 'P', 'S', 'R', 'U', 'T'},
             {'N', 'O', 'L', 'M', 'R', 'S', 'P', 'Q', 'V', 'W'},
     };
+
+    private static final double MIN_SCORE = 0;
+    private static final int MIN_NUM_SCORED_REVIEWS = 0;
+    private static final int MIN_NUM_REVIEWS = 10;
 
     private static Map<String, String> createAreaUrlMap() {
         Map<String, String> areaUrlMap = new HashMap<>();
@@ -652,299 +660,306 @@ public class DatabaseManager {
         return kakaoPoiPluses;
     }
 
+    private static BusinessHours getBusinessHours(KakaoPoiPlus kakaoPoiPlus) {
+        Matcher matcher1;
+        Matcher matcher2;
+
+        String businessHours = kakaoPoiPlus.getBusinessHours();
+        Set<String> closedDaySet = new HashSet<>();
+
+        /* split */
+        String[] businessHoursAndClosedDaysArray = businessHours.split("(\n)*휴무일\n");
+        if (businessHoursAndClosedDaysArray.length > 1) {
+            businessHours = businessHoursAndClosedDaysArray[0];
+            closedDaySet.addAll(Arrays.asList(businessHoursAndClosedDaysArray[1].split("\n")));
+        } else {
+            businessHours = businessHoursAndClosedDaysArray[0];
+        }
+
+        /* businessHours replace */
+        businessHours = businessHours.replaceAll("영업시간\n", "");
+        businessHours = businessHours.replaceAll("영업시간 영업중\n", "");
+        businessHours = businessHours.replaceAll("영업시간 영업종료\n", "");
+        businessHours = businessHours.replaceAll("상담시간 ", "");
+        businessHours = businessHours.replaceAll(" \\(고객센터\\)", "");
+        businessHours = businessHours.replaceAll("\n홈페이지 공지", "");
+        businessHours = businessHours.replaceAll("기타 \\(홈페이지 공지\\)", "");
+        businessHours = businessHours.replaceAll("\n비정기 휴무", "");
+        businessHours = businessHours.replaceAll("\n비정기적 휴무", "");
+        businessHours = businessHours.replaceAll("\n연말연시", "");
+        businessHours = businessHours.replaceAll("개장기간 - 상시", "");
+        businessHours = businessHours.replaceAll(" \\(관람 당일 통제 확인 필요\\)", "");
+        businessHours = businessHours.replaceAll(" \\(예약문의 오후3시부터 가능\\)", "");
+        businessHours = businessHours.replaceAll(" \\(일출, 일몰시간에 따라 변경될 수 있음\\)", "");
+        businessHours = businessHours.replaceAll(" \\(일몰시간에 따라 변경될 수 있음\\)", "");
+        businessHours = businessHours.replaceAll(" \\(일몰시간에 따라 변경될수 있음\\)", "");
+        businessHours = businessHours.replaceAll(" \\(문의 시간\\)", "");
+        businessHours = businessHours.replaceAll(" \\(예약문의\\)", "");
+        businessHours = businessHours.replaceAll(" \\(마감 후 죽포장만 가능\\)", "");
+        businessHours = businessHours.replaceAll(" \\(매표\\)", "");
+        businessHours = businessHours.replaceAll("입장시간은 계절에 따라 변경될수 있음\n", "");
+        businessHours = businessHours.replaceAll("공휴일\n", "공휴일 ");
+        businessHours = businessHours.replaceAll("연장운영\n", "");
+        businessHours = businessHours.replaceAll("\\s?까지", "");
+        // 00시00분 -> 00:00
+        matcher1 = getMatcher(businessHours, "\\d\\d시\\d\\d분");
+        while (matcher1.find()) {
+            String start = businessHours.substring(0, matcher1.start());
+            String end = businessHours.substring(matcher1.end());
+            String body = matcher1.group();
+            body = body.replaceAll("시", ":");
+            body = body.replaceAll("분", "");
+
+            businessHours = start + body + end;
+            matcher1 = getMatcher(businessHours, "\\d\\d시\\d\\d분");
+        }
+        // 요일
+        businessHours = businessHours.replaceAll("매일", "월,화,수,목,금,토,일");
+        businessHours = businessHours.replaceAll("월~금", "월,화,수,목,금");
+        businessHours = businessHours.replaceAll("월~토", "월,화,수,목,금,토");
+        businessHours = businessHours.replaceAll("화~토", "화,수,목,금,토");
+        businessHours = businessHours.replaceAll("화~일", "화,수,목,금,토,일");
+        businessHours = businessHours.replaceAll("수~토", "수,목,금,토");
+        businessHours = businessHours.replaceAll("수~일", "수,목,금,토,일");
+        // 월,화,수,목,금,토,일 10:00 ~ 22:30 (식사 21:30) -> 월,화,수,목,금,토,일 10:00 ~ 21:30
+        matcher1 = getMatcher(businessHours, "\\d\\d:\\d\\d \\((체험이용시간|매표마감|입장|식사|대기 마감|매표가능시간) \\d\\d:\\d\\d\\)");
+        while (matcher1.find()) {
+            String start = businessHours.substring(0, matcher1.start());
+            String end = businessHours.substring(matcher1.end());
+            String body = matcher1.group();
+            body = body.replaceAll("\\d\\d:\\d\\d \\((체험이용시간|매표마감|입장|식사|대기 마감|매표가능시간) ", "");
+            body = body.replaceAll("\\)", "");
+
+            businessHours = start + body + end;
+            matcher1 = getMatcher(businessHours, "\\d\\d:\\d\\d \\((체험이용시간|매표마감|입장|식사|대기 마감|매표가능시간) \\d\\d:\\d\\d\\)");
+
+        }
+        // special 처리 (general 하지 못한 경우들 처리)
+        businessHours = businessHours.replaceAll("월,화,수,목,금,토,일 ~ 18:00", "월,화,수,목,금,토,일 10:30 ~ 18:00");
+        businessHours = businessHours.replaceAll("월,화,수,목,금,토,일 11:00 ~ 22:50 \\(21:30 이후 입장은 미리 예약 필요\\)", "월,화,수,목,금,토,일 11:00 ~ 21:30");
+        businessHours = businessHours.replaceAll("월,화,수,목,금,토,일 09:00 ~ 18:00 \\(1/1,설,추석당일은 10:00 개장\\)", "월,화,수,목,금,토,일 10:00 ~ 18:00");
+        businessHours = businessHours.replaceAll(" \\(사전 예약시 오전 10:00~24:00\\)", "");
+        businessHours = businessHours.replaceAll(" \\(단체손님 있을 시 06:00 ~ 재료 소진시\\)", "");
+        businessHours = businessHours.replaceAll("\n2018년 7월 20일 ~ 8월 25일 : 19시 운영", "");
+        businessHours = businessHours.replaceAll("기타 \\(입장시간 : 08:30 ~ 일몰 한사간 전\\)", "월,화,수,목,금,토,일 08:30 ~ 16:00");
+        businessHours = businessHours.replaceAll("기타 \\(08:30 ~ 일몰 1시간 전 입장마감\\)", "월,화,수,목,금,토,일 08:30 ~ 16:00");
+        businessHours = businessHours.replaceAll("기타 \\(8:30~일몰시\\)", "월,화,수,목,금,토,일 08:30 ~ 16:00");
+        businessHours = businessHours.replaceAll("기타 \\(09:00 ~ 13:00 출발시간\\)", "월,화,수,목,금,토,일 09:00 ~ 13:00");
+        businessHours = businessHours.replaceAll("기타 \\(주문시간 11시~21시\\)", "월,화,수,목,금,토,일 11:00 ~ 21:00");
+        businessHours = businessHours.replaceAll("기타 \\(매장 오픈시간 오전 9시\\)", "월,화,수,목,금,토,일 09:00 ~ 13:00");
+        businessHours = businessHours.replaceAll("기타 \\(일출~22시 이용 가능 \\(21:20 입장마감\\)\\)", "월,화,수,목,금,토,일 08:00 ~ 21:20");
+        businessHours = businessHours.replaceAll("기타 \\(주문시간 10:00~20:00 / 7,8월 주문시간 9:00~21:00\\)", "월,화,수,목,금,토,일 10:00 ~ 20:00");
+        businessHours = businessHours.replaceAll("기타 \\(매월 끝자리 4,9일 장날 ~17:00\\)", "기타 \\(매월 끝자리 4, 9일\\)");
+        businessHours = businessHours.replaceAll("매월 2일, 7일, 12일, 17일, 22일, 27일", "기타 \\(매월 끝자리 2, 7일\\)");
+        businessHours = businessHours.replaceAll("\n?개장기간 - \\d\\d\\d\\d년 \\d{1,2}월 \\d{1,2}일 ~ \\d{1,2}월 \\d{1,2}일", "");
+        businessHours = businessHours.replaceAll("공휴일 매월 끝자리 3, 8일\n", "공휴일 ");
+        businessHours = businessHours.replaceAll("[^(]매월 끝자리 3, 8일", "기타 \\(매월 끝자리 3, 8일\\)");
+        businessHours = businessHours.replaceAll("공휴일 매월 끝자리 1, 6일\n", "공휴일 ");
+        businessHours = businessHours.replaceAll("[^(]매월 끝자리 1, 6일", "기타 \\(매월 끝자리 1, 6일\\)");
+        businessHours = businessHours.replaceAll("매월 1, 6, 11, 16, 21, 26일\\(31일이 있는 달은 31일에 열고 1일에 휴무\\)", "기타 \\(매월 끝자리 1, 6일\\)");
+        businessHours = businessHours.replaceAll("월,화,수,금,토,일 11:00 ~ 17:00 \\(4시30분 ~ 5시 포장주문만 가능\\)", "월,화,수,금,토,일 11:00 ~ 16:30");
+        businessHours = businessHours.replaceAll("월,화,수,목,금,토,일 06:00 ~ 24:00 \\(실내온천\\)\n기타 \\(찜질방 24시간 / 노천탕\\(수영장\\) 11:00 ~ 23:00\\)", "월,화,수,목,금,토,일 11:00 ~ 23:00");
+        businessHours = businessHours.replaceAll("월,화,수,목,금,토,일 08:30 ~ 22:00\n설날이랑 추석날은 오후부터 식당운영", "월,화,수,목,금,토,일 12:00 ~ 22:00");
+        // 기타 (매월 끝자리 0, 0일) -> closedDays 로
+        matcher1 = getMatcher(businessHours, "기타 \\(매월 끝자리 \\d, \\d일\\)");
+        if (matcher1.find()) {
+            String start = businessHours.substring(0, matcher1.start());
+            String end = businessHours.substring(matcher1.end());
+            String body = matcher1.group();
+
+            closedDaySet.add(body);
+            businessHours = start + end;
+            businessHours = businessHours.replaceAll("^\n", "");
+            businessHours = businessHours.replaceAll("\n$", "");
+        }
+        // 브레이크타임, 디너타임, 런치타임 (브레이크타임은 식당에서만 사용함, 식당은 브레이크타임에는 플래닝되지 않음, 따라서 삭제)
+        businessHours = businessHours.replaceAll("\n.+브레이크타임.+0", "");
+        businessHours = businessHours.replaceAll("\n.+디너타임.+0", "");
+        businessHours = businessHours.replaceAll("\n.+런치타임.+0", "");
+        businessHours = businessHours.replaceAll("\n기타 \\(브레이크타임 수시변동\\)", "");
+        // 재료소진시 마감 or 입장은 마감 1시간 전 (정해진 시간보다 한시간 앞당겨 마감으로 설정 or 13:00)
+        businessHours = businessHours.replaceAll("\\(단체손님 있을 시 06:00 ~ 재료 소진시까지\\)", "(재료소진시 마감)");
+        businessHours = businessHours.replaceAll("\\(재료.+\\)", "(재료소진시 마감)");
+        businessHours = businessHours.replaceAll("재료소진시\\)", "재료소진시 마감)");
+        businessHours = businessHours.replaceAll("재료소진시까지\\)", "재료소진시 마감)");
+        businessHours = businessHours.replaceAll("재료 소진시 마감\\)", "재료소진시 마감)");
+        matcher1 = getMatcher(businessHours, "([월화수목금토일],)+[월화수목금토일] \\d\\d:\\d\\d ~ \\d\\d:\\d\\d \\((재료소진시 마감|입장은 마감 1시간 전)\\)");
+        while (matcher1.find()) {
+            String start = businessHours.substring(0, matcher1.start());
+            String end = businessHours.substring(matcher1.end());
+            String body = matcher1.group();
+            body = body.replaceAll(" \\((재료소진시 마감|입장은 마감 1시간 전)\\)", "");
+
+            String bodyStart = body.substring(0, body.length() - 5);
+            String bodyEnd = body.substring(body.length() - 3);
+            String bodyBody = body.substring(body.length() - 5, body.length() - 3);
+            int newBodyBody = (Integer.parseInt(bodyBody) - 1);
+
+            businessHours = start + bodyStart + newBodyBody + bodyEnd + end;
+            matcher1 = getMatcher(businessHours, "([월화수목금토일],)+[월화수목금토일] \\d\\d:\\d\\d ~ \\d\\d:\\d\\d \\((재료소진시 마감|입장은 마감 1시간 전)\\)");
+        }
+        matcher1 = getMatcher(businessHours, "기타 \\((오전 )?\\d\\d:\\d\\d ~ 재료소진시 마감\\)");
+        while (matcher1.find()) {
+            String start = businessHours.substring(0, matcher1.start());
+            String end = businessHours.substring(matcher1.end());
+            String body = matcher1.group();
+            body = body.replaceAll("기타 \\((오전 )?", "월,화,수,목,금,토,일 ");
+            body = body.replaceAll("재료소진시 마감\\)", "13:00");
+
+            businessHours = start + body + end;
+            matcher1 = getMatcher(businessHours, "기타 \\((오전 )?\\d\\d:\\d\\d ~ 재료소진시 마감\\)");
+        }
+        // 입장시간, 접수시간, 라스트오더
+        businessHours = businessHours.replaceAll("\n.+라스트오더1.+0", ""); // 라스트오더1,2로 나뉜경우는 1이 점심라스트 오더
+        businessHours = businessHours.replaceAll("라스트오더2", "라스트오더"); // 브레이크타임과 같은 이유로 삭제가능
+        matcher1 = getMatcher(businessHours, "([월화수목금토일],?)+ \\d\\d:\\d\\d ~ \\d\\d:\\d\\d\\n([월화수목금토일],?)+ (라스트오더|입장시간|접수시간) (\\d\\d:\\d\\d )?~ \\d\\d:\\d\\d");
+        while (matcher1.find()) {
+            String start = businessHours.substring(0, matcher1.start());
+            String end = businessHours.substring(matcher1.end());
+            String body = matcher1.group();
+            body = body.replaceAll("\\d\\d:\\d\\d\\n([월화수목금토일],?)+ (라스트오더|입장시간|접수시간) (\\d\\d:\\d\\d )?~ ", "");
+
+            businessHours = start + body + end;
+            matcher1 = getMatcher(businessHours, "([월화수목금토일],?)+ \\d\\d:\\d\\d ~ \\d\\d:\\d\\d\\n([월화수목금토일],?)+ (라스트오더|입장시간|접수시간) (\\d\\d:\\d\\d )?~ \\d\\d:\\d\\d");
+        }
+        businessHours = businessHours.replaceAll(" 입장시간", "");
+        // 동절기, 하절기, 00월~00월, 요일 등 기간에 따라 다른경우 짧은 쪽으로 합침
+        matcher1 = getMatcher(businessHours, "(.+\\n)?(.+\\n)?(((월|화|수|목|금|토|일|공휴일),?)+ \\d\\d:\\d\\d ~ \\d\\d:\\d\\d(\\n)?(.+\\n)?(.+\\n)?){2,}");
+        if (matcher1.find()) {
+            // 동절기, 하절기, 00월~00월 등 삭제
+            matcher2 = getMatcher(businessHours, "((월|화|수|목|금|토|일|공휴일),?)+ \\d\\d:\\d\\d ~ \\d\\d:\\d\\d");
+            matcher2.find();
+            businessHours = matcher2.group();
+            while (matcher2.find()) {
+                businessHours += "\n";
+                businessHours += matcher2.group();
+            }
+            // 요일 합치기
+            String daysOfTheWeek = "";
+            for (String dayOfTheWeek : new String[]{"월", "화", "수", "목", "금", "토", "일"}) {
+                if (businessHours.contains(dayOfTheWeek)) {
+                    daysOfTheWeek += dayOfTheWeek + ",";
+                }
+            }
+            daysOfTheWeek = daysOfTheWeek.substring(0, daysOfTheWeek.length() - 1);
+            // 시간 합치기
+            List<String> timeList = new ArrayList<>();
+            for (String bh : businessHours.split("\n")) {
+                timeList.add(bh.substring(bh.length() - 13));
+            }
+            String time = timeList.get(0);
+            for (int j = 1; j < timeList.size(); j++) {
+                String newTime = timeList.get(j);
+                int timeStart = Integer.parseInt(time.substring(0, 5).replace(":", ""));
+                int timeEnd = Integer.parseInt(time.substring(8).replace(":", ""));
+                int newTimeStart = Integer.parseInt(newTime.substring(0, 5).replace(":", ""));
+                int newTimeEnd = Integer.parseInt(newTime.substring(8).replace(":", ""));
+
+                if (timeStart < newTimeStart) { // new time start is bigger
+                    time = time.replaceAll("^\\d\\d:\\d\\d", newTime.substring(0, 5));
+                }
+                if (timeEnd > newTimeEnd) { // new time end is smaller
+                    time = time.replaceAll("\\d\\d:\\d\\d$", newTime.substring(8));
+                }
+            }
+            businessHours = daysOfTheWeek + " " + time;
+        }
+        businessHours = businessHours.replaceAll("동절기\n", "");
+        businessHours = businessHours.replaceAll("하절기\n", "");
+        // "" (아무것도 없는경우)
+        if (businessHours.length() == 0) {
+            businessHours = "월,화,수,목,금,토,일 10:30 ~ 17:00";
+        }
+        // 월,화,수,목,금,토,일 확인하여 없는 요일 closedDays 로 옮기고 월,화,수,목,금,토,일 삭제
+        for (String dayOfTheWeek : new String[]{"월", "화", "수", "목", "금", "토", "일"}) {
+            if (!businessHours.contains(dayOfTheWeek)) {
+                closedDaySet.add(dayOfTheWeek + "요일");
+            }
+        }
+        businessHours = businessHours.replaceAll("([월화수목금토일],?)+ ", "");
+
+        /* closedDays replace */
+        Set<String> closedDaySetTemp = new HashSet<>(closedDaySet);
+        for (String closedDay : closedDaySetTemp) {
+            if (closedDay.equals("계절별 이용시간이 상이하므로 정확한 시간은 대표번호로 문의") ||
+                    closedDay.equals("연중무휴 (만조 및 기상악화 시 통제)") ||
+                    closedDay.equals("태풍 등 기상특보 발효 시 휴관") ||
+                    closedDay.equals("연중무휴") ||
+                    closedDay.equals("우천시") ||
+                    closedDay.equals("2018년 02월 12일 ~ 2018년 02월 20일 휴무")) {
+                closedDaySet.remove(closedDay);
+            } else if (closedDay.matches("((첫|둘|셋|넷|다섯)째,?){2,} [월화수목금토일]요일")) { // 첫째,둘째 월요일
+                closedDaySet.remove(closedDay);
+                String[] ordinalNumbers = closedDay.split(" ")[0].split(",");
+                String dayOfTheWeek = closedDay.split(" ")[1];
+                for (String ordinalNumber : ordinalNumbers) {
+                    closedDaySet.add(ordinalNumber + " " + dayOfTheWeek);
+                }
+            } else if (closedDay.matches("([월화수목금토일],?){2,}요일")) { // 화,수요일
+                closedDaySet.remove(closedDay);
+                String[] daysOfTheWeek = closedDay.split(",");
+                for (int j = 0; j < daysOfTheWeek.length - 1; j++) {
+                    closedDaySet.add(daysOfTheWeek[j] + "요일");
+                }
+                closedDaySet.add(daysOfTheWeek[daysOfTheWeek.length - 1]);
+            } else if (closedDay.matches("(명절|연중무휴 \\(명절연휴 제외\\))")) { // 명절
+                closedDaySet.remove(closedDay);
+                closedDaySet.add("설연휴");
+                closedDaySet.add("추석연휴");
+            } else if (closedDay.matches("기타 \\(매월 끝자리 \\d, \\d일\\)")) { // 기타 (매월 끝자리 1, 6일)
+                closedDaySet.remove(closedDay);
+                closedDaySet.add(closedDay.replace("기타 (매월 ", "").replace(")", "만 영업"));
+            } else if (closedDay.matches("\\d\\d월 ~ \\d\\d월 휴무 [월화수목금토일]요일 \\(매주 \\)")) {
+                closedDaySet.remove(closedDay);
+                closedDaySet.add(closedDay.replaceAll("\\d\\d월 ~ \\d\\d월 휴무 ", "").replaceAll(" \\(매주 \\)", ""));
+            } else if (closedDay.matches("[월화수목금토일]요일 \\(오전\\)")) { // 일요일 (오전)
+                closedDaySet.remove(closedDay);
+                closedDaySet.add(closedDay.replaceAll(" \\(오전\\)", ""));
+            } else if (closedDay.matches("[월화수목금토일]요일 \\(명절 연휴기간 제외\\)")) { // 화요일 (명절 연휴기간 제외)
+                closedDaySet.remove(closedDay);
+                closedDaySet.add(closedDay.replaceAll(" \\(명절 연휴기간 제외\\)", ""));
+            } else if (closedDay.equals("임시 공휴일")) { // 임시 공휴일
+                closedDaySet.remove(closedDay);
+                closedDaySet.add("공휴일");
+            } else if (closedDay.equals("월요일 (단, 월요일이 공휴일인 경우 다음날)")) { // 월요일 (단, 월요일이 공휴일인 경우 다음날)
+                closedDaySet.remove(closedDay);
+                closedDaySet.add("월요일");
+                closedDaySet.add("화요일");
+            } else if (closedDay.equals("첫째 월요일 (첫째주 월요일이 공휴일인 경우 둘째주 월요일이 정기휴무)")) { // 첫째 월요일 (첫째주 월요일이 공휴일인 경우 둘째주 월요일이 정기휴무)
+                closedDaySet.remove(closedDay);
+                closedDaySet.add("첫째 월요일");
+                closedDaySet.add("둘째 월요일");
+            } else if (closedDay.equals("일요일 (명절과 연휴가 끼어있는 일요일은 정상운영)")) { // 일요일 (명절과 연휴가 끼어있는 일요일은 정상운영)
+                closedDaySet.remove(closedDay);
+                closedDaySet.add("일요일");
+            } else if (closedDay.equals("2018년 03월 ~ 휴무 화요일 (매주)")) { // 2018년 03월 ~ 휴무 화요일 (매주)
+                closedDaySet.remove(closedDay);
+                closedDaySet.add("화요일");
+            } else if (closedDay.equals("개관기념일 (5월24일),훈증소독기간(상반기3일,하반기3일)")) { // 개관기념일 (5월24일),훈증소독기간(상반기3일,하반기3일)
+                closedDaySet.remove(closedDay);
+                closedDaySet.add("5월24일");
+            }
+        }
+
+        return new BusinessHours(businessHours, closedDaySet);
+    }
+
     private static void checkKakaoPoiPlusFiles(String area) {
         Set<String> unknownTypeOfBusinessHoursSet = new HashSet<>();
         Set<String> unknownTypeOfClosedDaysSet = new HashSet<>(); //TODO: closed Days도 처리 필요
 
-        Matcher matcher1;
-        Matcher matcher2;
         for (int i = 0; i < 3; i++) {
             KakaoPoiPlus[] kakaoPoiPluses = getKakaoPoiPluses(area, KAKAOPOIPLUS_FILENAMES[i]);
             for (KakaoPoiPlus kakaoPoiPlus : kakaoPoiPluses) {
-                String businessHours = kakaoPoiPlus.getBusinessHours();
-                Set<String> closedDaySet = new HashSet<>();
-
-                /* split */
-                String[] businessHoursAndClosedDaysArray = businessHours.split("(\n)*휴무일\n");
-                if (businessHoursAndClosedDaysArray.length > 1) {
-                    businessHours = businessHoursAndClosedDaysArray[0];
-                    closedDaySet.addAll(Arrays.asList(businessHoursAndClosedDaysArray[1].split("\n")));
-                } else {
-                    businessHours = businessHoursAndClosedDaysArray[0];
-                }
-
-                /* businessHours replace */
-                businessHours = businessHours.replaceAll("영업시간\n", "");
-                businessHours = businessHours.replaceAll("영업시간 영업중\n", "");
-                businessHours = businessHours.replaceAll("영업시간 영업종료\n", "");
-                businessHours = businessHours.replaceAll("상담시간 ", "");
-                businessHours = businessHours.replaceAll(" \\(고객센터\\)", "");
-                businessHours = businessHours.replaceAll("\n홈페이지 공지", "");
-                businessHours = businessHours.replaceAll("기타 \\(홈페이지 공지\\)", "");
-                businessHours = businessHours.replaceAll("\n비정기 휴무", "");
-                businessHours = businessHours.replaceAll("\n비정기적 휴무", "");
-                businessHours = businessHours.replaceAll("\n연말연시", "");
-                businessHours = businessHours.replaceAll("개장기간 - 상시", "");
-                businessHours = businessHours.replaceAll(" \\(관람 당일 통제 확인 필요\\)", "");
-                businessHours = businessHours.replaceAll(" \\(예약문의 오후3시부터 가능\\)", "");
-                businessHours = businessHours.replaceAll(" \\(일출, 일몰시간에 따라 변경될 수 있음\\)", "");
-                businessHours = businessHours.replaceAll(" \\(일몰시간에 따라 변경될 수 있음\\)", "");
-                businessHours = businessHours.replaceAll(" \\(일몰시간에 따라 변경될수 있음\\)", "");
-                businessHours = businessHours.replaceAll(" \\(문의 시간\\)", "");
-                businessHours = businessHours.replaceAll(" \\(예약문의\\)", "");
-                businessHours = businessHours.replaceAll(" \\(마감 후 죽포장만 가능\\)", "");
-                businessHours = businessHours.replaceAll(" \\(매표\\)", "");
-                businessHours = businessHours.replaceAll("입장시간은 계절에 따라 변경될수 있음\n", "");
-                businessHours = businessHours.replaceAll("공휴일\n", "공휴일 ");
-                businessHours = businessHours.replaceAll("연장운영\n", "");
-                businessHours = businessHours.replaceAll("\\s?까지", "");
-                // 00시00분 -> 00:00
-                matcher1 = getMatcher(businessHours, "\\d\\d시\\d\\d분");
-                while (matcher1.find()) {
-                    String start = businessHours.substring(0, matcher1.start());
-                    String end = businessHours.substring(matcher1.end());
-                    String body = matcher1.group();
-                    body = body.replaceAll("시", ":");
-                    body = body.replaceAll("분", "");
-
-                    businessHours = start + body + end;
-                    matcher1 = getMatcher(businessHours, "\\d\\d시\\d\\d분");
-                }
-                // 요일
-                businessHours = businessHours.replaceAll("매일", "월,화,수,목,금,토,일");
-                businessHours = businessHours.replaceAll("월~금", "월,화,수,목,금");
-                businessHours = businessHours.replaceAll("월~토", "월,화,수,목,금,토");
-                businessHours = businessHours.replaceAll("화~토", "화,수,목,금,토");
-                businessHours = businessHours.replaceAll("화~일", "화,수,목,금,토,일");
-                businessHours = businessHours.replaceAll("수~토", "수,목,금,토");
-                businessHours = businessHours.replaceAll("수~일", "수,목,금,토,일");
-                // 월,화,수,목,금,토,일 10:00 ~ 22:30 (식사 21:30) -> 월,화,수,목,금,토,일 10:00 ~ 21:30
-                matcher1 = getMatcher(businessHours, "\\d\\d:\\d\\d \\((체험이용시간|매표마감|입장|식사|대기 마감|매표가능시간) \\d\\d:\\d\\d\\)");
-                while (matcher1.find()) {
-                    String start = businessHours.substring(0, matcher1.start());
-                    String end = businessHours.substring(matcher1.end());
-                    String body = matcher1.group();
-                    body = body.replaceAll("\\d\\d:\\d\\d \\((체험이용시간|매표마감|입장|식사|대기 마감|매표가능시간) ", "");
-                    body = body.replaceAll("\\)", "");
-
-                    businessHours = start + body + end;
-                    matcher1 = getMatcher(businessHours, "\\d\\d:\\d\\d \\((체험이용시간|매표마감|입장|식사|대기 마감|매표가능시간) \\d\\d:\\d\\d\\)");
-
-                }
-                // special 처리 (general 하지 못한 경우들 처리)
-                businessHours = businessHours.replaceAll("월,화,수,목,금,토,일 ~ 18:00", "월,화,수,목,금,토,일 10:30 ~ 18:00");
-                businessHours = businessHours.replaceAll("월,화,수,목,금,토,일 11:00 ~ 22:50 \\(21:30 이후 입장은 미리 예약 필요\\)", "월,화,수,목,금,토,일 11:00 ~ 21:30");
-                businessHours = businessHours.replaceAll("월,화,수,목,금,토,일 09:00 ~ 18:00 \\(1/1,설,추석당일은 10:00 개장\\)", "월,화,수,목,금,토,일 10:00 ~ 18:00");
-                businessHours = businessHours.replaceAll(" \\(사전 예약시 오전 10:00~24:00\\)", "");
-                businessHours = businessHours.replaceAll(" \\(단체손님 있을 시 06:00 ~ 재료 소진시\\)", "");
-                businessHours = businessHours.replaceAll("\n2018년 7월 20일 ~ 8월 25일 : 19시 운영", "");
-                businessHours = businessHours.replaceAll("기타 \\(입장시간 : 08:30 ~ 일몰 한사간 전\\)", "월,화,수,목,금,토,일 08:30 ~ 16:00");
-                businessHours = businessHours.replaceAll("기타 \\(08:30 ~ 일몰 1시간 전 입장마감\\)", "월,화,수,목,금,토,일 08:30 ~ 16:00");
-                businessHours = businessHours.replaceAll("기타 \\(8:30~일몰시\\)", "월,화,수,목,금,토,일 08:30 ~ 16:00");
-                businessHours = businessHours.replaceAll("기타 \\(09:00 ~ 13:00 출발시간\\)", "월,화,수,목,금,토,일 09:00 ~ 13:00");
-                businessHours = businessHours.replaceAll("기타 \\(주문시간 11시~21시\\)", "월,화,수,목,금,토,일 11:00 ~ 21:00");
-                businessHours = businessHours.replaceAll("기타 \\(매장 오픈시간 오전 9시\\)", "월,화,수,목,금,토,일 09:00 ~ 13:00");
-                businessHours = businessHours.replaceAll("기타 \\(일출~22시 이용 가능 \\(21:20 입장마감\\)\\)", "월,화,수,목,금,토,일 08:00 ~ 21:20");
-                businessHours = businessHours.replaceAll("기타 \\(주문시간 10:00~20:00 / 7,8월 주문시간 9:00~21:00\\)", "월,화,수,목,금,토,일 10:00 ~ 20:00");
-                businessHours = businessHours.replaceAll("기타 \\(매월 끝자리 4,9일 장날 ~17:00\\)", "기타 \\(매월 끝자리 4, 9일\\)");
-                businessHours = businessHours.replaceAll("매월 2일, 7일, 12일, 17일, 22일, 27일", "기타 \\(매월 끝자리 2, 7일\\)");
-                businessHours = businessHours.replaceAll("\n?개장기간 - \\d\\d\\d\\d년 \\d{1,2}월 \\d{1,2}일 ~ \\d{1,2}월 \\d{1,2}일", "");
-                businessHours = businessHours.replaceAll("공휴일 매월 끝자리 3, 8일\n", "공휴일 ");
-                businessHours = businessHours.replaceAll("[^(]매월 끝자리 3, 8일", "기타 \\(매월 끝자리 3, 8일\\)");
-                businessHours = businessHours.replaceAll("공휴일 매월 끝자리 1, 6일\n", "공휴일 ");
-                businessHours = businessHours.replaceAll("[^(]매월 끝자리 1, 6일", "기타 \\(매월 끝자리 1, 6일\\)");
-                businessHours = businessHours.replaceAll("매월 1, 6, 11, 16, 21, 26일\\(31일이 있는 달은 31일에 열고 1일에 휴무\\)", "기타 \\(매월 끝자리 1, 6일\\)");
-                businessHours = businessHours.replaceAll("월,화,수,금,토,일 11:00 ~ 17:00 \\(4시30분 ~ 5시 포장주문만 가능\\)", "월,화,수,금,토,일 11:00 ~ 16:30");
-                businessHours = businessHours.replaceAll("월,화,수,목,금,토,일 06:00 ~ 24:00 \\(실내온천\\)\n기타 \\(찜질방 24시간 / 노천탕\\(수영장\\) 11:00 ~ 23:00\\)", "월,화,수,목,금,토,일 11:00 ~ 23:00");
-                businessHours = businessHours.replaceAll("월,화,수,목,금,토,일 08:30 ~ 22:00\n설날이랑 추석날은 오후부터 식당운영", "월,화,수,목,금,토,일 12:00 ~ 22:00");
-                // 기타 (매월 끝자리 0, 0일) -> closedDays 로
-                matcher1 = getMatcher(businessHours, "기타 \\(매월 끝자리 \\d, \\d일\\)");
-                if (matcher1.find()) {
-                    String start = businessHours.substring(0, matcher1.start());
-                    String end = businessHours.substring(matcher1.end());
-                    String body = matcher1.group();
-
-                    closedDaySet.add(body);
-                    businessHours = start + end;
-                    businessHours = businessHours.replaceAll("^\n", "");
-                    businessHours = businessHours.replaceAll("\n$", "");
-                }
-                // 브레이크타임, 디너타임, 런치타임 (브레이크타임은 식당에서만 사용함, 식당은 브레이크타임에는 플래닝되지 않음, 따라서 삭제)
-                businessHours = businessHours.replaceAll("\n.+브레이크타임.+0", "");
-                businessHours = businessHours.replaceAll("\n.+디너타임.+0", "");
-                businessHours = businessHours.replaceAll("\n.+런치타임.+0", "");
-                businessHours = businessHours.replaceAll("\n기타 \\(브레이크타임 수시변동\\)", "");
-                // 재료소진시 마감 or 입장은 마감 1시간 전 (정해진 시간보다 한시간 앞당겨 마감으로 설정 or 13:00)
-                businessHours = businessHours.replaceAll("\\(단체손님 있을 시 06:00 ~ 재료 소진시까지\\)", "(재료소진시 마감)");
-                businessHours = businessHours.replaceAll("\\(재료.+\\)", "(재료소진시 마감)");
-                businessHours = businessHours.replaceAll("재료소진시\\)", "재료소진시 마감)");
-                businessHours = businessHours.replaceAll("재료소진시까지\\)", "재료소진시 마감)");
-                businessHours = businessHours.replaceAll("재료 소진시 마감\\)", "재료소진시 마감)");
-                matcher1 = getMatcher(businessHours, "([월화수목금토일],)+[월화수목금토일] \\d\\d:\\d\\d ~ \\d\\d:\\d\\d \\((재료소진시 마감|입장은 마감 1시간 전)\\)");
-                while (matcher1.find()) {
-                    String start = businessHours.substring(0, matcher1.start());
-                    String end = businessHours.substring(matcher1.end());
-                    String body = matcher1.group();
-                    body = body.replaceAll(" \\((재료소진시 마감|입장은 마감 1시간 전)\\)", "");
-
-                    String bodyStart = body.substring(0, body.length() - 5);
-                    String bodyEnd = body.substring(body.length() - 3);
-                    String bodyBody = body.substring(body.length() - 5, body.length() - 3);
-                    int newBodyBody = (Integer.parseInt(bodyBody) - 1);
-
-                    businessHours = start + bodyStart + newBodyBody + bodyEnd + end;
-                    matcher1 = getMatcher(businessHours, "([월화수목금토일],)+[월화수목금토일] \\d\\d:\\d\\d ~ \\d\\d:\\d\\d \\((재료소진시 마감|입장은 마감 1시간 전)\\)");
-                }
-                matcher1 = getMatcher(businessHours, "기타 \\((오전 )?\\d\\d:\\d\\d ~ 재료소진시 마감\\)");
-                while (matcher1.find()) {
-                    String start = businessHours.substring(0, matcher1.start());
-                    String end = businessHours.substring(matcher1.end());
-                    String body = matcher1.group();
-                    body = body.replaceAll("기타 \\((오전 )?", "월,화,수,목,금,토,일 ");
-                    body = body.replaceAll("재료소진시 마감\\)", "13:00");
-
-                    businessHours = start + body + end;
-                    matcher1 = getMatcher(businessHours, "기타 \\((오전 )?\\d\\d:\\d\\d ~ 재료소진시 마감\\)");
-                }
-                // 입장시간, 접수시간, 라스트오더
-                businessHours = businessHours.replaceAll("\n.+라스트오더1.+0", ""); // 라스트오더1,2로 나뉜경우는 1이 점심라스트 오더
-                businessHours = businessHours.replaceAll("라스트오더2", "라스트오더"); // 브레이크타임과 같은 이유로 삭제가능
-                matcher1 = getMatcher(businessHours, "([월화수목금토일],?)+ \\d\\d:\\d\\d ~ \\d\\d:\\d\\d\\n([월화수목금토일],?)+ (라스트오더|입장시간|접수시간) (\\d\\d:\\d\\d )?~ \\d\\d:\\d\\d");
-                while (matcher1.find()) {
-                    String start = businessHours.substring(0, matcher1.start());
-                    String end = businessHours.substring(matcher1.end());
-                    String body = matcher1.group();
-                    body = body.replaceAll("\\d\\d:\\d\\d\\n([월화수목금토일],?)+ (라스트오더|입장시간|접수시간) (\\d\\d:\\d\\d )?~ ", "");
-
-                    businessHours = start + body + end;
-                    matcher1 = getMatcher(businessHours, "([월화수목금토일],?)+ \\d\\d:\\d\\d ~ \\d\\d:\\d\\d\\n([월화수목금토일],?)+ (라스트오더|입장시간|접수시간) (\\d\\d:\\d\\d )?~ \\d\\d:\\d\\d");
-                }
-                businessHours = businessHours.replaceAll(" 입장시간", "");
-                // 동절기, 하절기, 00월~00월, 요일 등 기간에 따라 다른경우 짧은 쪽으로 합침
-                matcher1 = getMatcher(businessHours, "(.+\\n)?(.+\\n)?(((월|화|수|목|금|토|일|공휴일),?)+ \\d\\d:\\d\\d ~ \\d\\d:\\d\\d(\\n)?(.+\\n)?(.+\\n)?){2,}");
-                if (matcher1.find()) {
-                    // 동절기, 하절기, 00월~00월 등 삭제
-                    matcher2 = getMatcher(businessHours, "((월|화|수|목|금|토|일|공휴일),?)+ \\d\\d:\\d\\d ~ \\d\\d:\\d\\d");
-                    matcher2.find();
-                    businessHours = matcher2.group();
-                    while (matcher2.find()) {
-                        businessHours += "\n";
-                        businessHours += matcher2.group();
-                    }
-                    // 요일 합치기
-                    String daysOfTheWeek = "";
-                    for (String dayOfTheWeek : new String[]{"월", "화", "수", "목", "금", "토", "일"}) {
-                        if (businessHours.contains(dayOfTheWeek)) {
-                            daysOfTheWeek += dayOfTheWeek + ",";
-                        }
-                    }
-                    daysOfTheWeek = daysOfTheWeek.substring(0, daysOfTheWeek.length() - 1);
-                    // 시간 합치기
-                    List<String> timeList = new ArrayList<>();
-                    for (String bh : businessHours.split("\n")) {
-                        timeList.add(bh.substring(bh.length() - 13));
-                    }
-                    String time = timeList.get(0);
-                    for (int j = 1; j < timeList.size(); j++) {
-                        String newTime = timeList.get(j);
-                        int timeStart = Integer.parseInt(time.substring(0, 5).replace(":", ""));
-                        int timeEnd = Integer.parseInt(time.substring(8).replace(":", ""));
-                        int newTimeStart = Integer.parseInt(newTime.substring(0, 5).replace(":", ""));
-                        int newTimeEnd = Integer.parseInt(newTime.substring(8).replace(":", ""));
-
-                        if (timeStart < newTimeStart) { // new time start is bigger
-                            time = time.replaceAll("^\\d\\d:\\d\\d", newTime.substring(0, 5));
-                        }
-                        if (timeEnd > newTimeEnd) { // new time end is smaller
-                            time = time.replaceAll("\\d\\d:\\d\\d$", newTime.substring(8));
-                        }
-                    }
-                    businessHours = daysOfTheWeek + " " + time;
-                }
-                businessHours = businessHours.replaceAll("동절기\n", "");
-                businessHours = businessHours.replaceAll("하절기\n", "");
-                // "" (아무것도 없는경우)
-                if (businessHours.length() == 0) {
-                    businessHours = "월,화,수,목,금,토,일 10:30 ~ 17:00";
-                }
-                // 월,화,수,목,금,토,일 확인하여 없는 요일 closedDays 로 옮기고 월,화,수,목,금,토,일 삭제
-                for (String dayOfTheWeek : new String[]{"월", "화", "수", "목", "금", "토", "일"}) {
-                    if (!businessHours.contains(dayOfTheWeek)) {
-                        closedDaySet.add(dayOfTheWeek + "요일");
-                    }
-                }
-                businessHours = businessHours.replaceAll("([월화수목금토일],?)+ ", "");
-
-                /* closedDays replace */
-                Set<String> closedDaySetTemp = new HashSet<>(closedDaySet);
-                for (String closedDay : closedDaySetTemp) {
-                    if (closedDay.equals("계절별 이용시간이 상이하므로 정확한 시간은 대표번호로 문의") ||
-                            closedDay.equals("연중무휴 (만조 및 기상악화 시 통제)") ||
-                            closedDay.equals("태풍 등 기상특보 발효 시 휴관") ||
-                            closedDay.equals("연중무휴") ||
-                            closedDay.equals("우천시") ||
-                            closedDay.equals("2018년 02월 12일 ~ 2018년 02월 20일 휴무")) {
-                        closedDaySet.remove(closedDay);
-                    } else if (closedDay.matches("((첫|둘|셋|넷|다섯)째,?){2,} [월화수목금토일]요일")) { // 첫째,둘째 월요일
-                        closedDaySet.remove(closedDay);
-                        String[] ordinalNumbers = closedDay.split(" ")[0].split(",");
-                        String dayOfTheWeek = closedDay.split(" ")[1];
-                        for (String ordinalNumber : ordinalNumbers) {
-                            closedDaySet.add(ordinalNumber + " " + dayOfTheWeek);
-                        }
-                    } else if (closedDay.matches("([월화수목금토일],?){2,}요일")) { // 화,수요일
-                        closedDaySet.remove(closedDay);
-                        String[] daysOfTheWeek = closedDay.split(",");
-                        for (int j = 0; j < daysOfTheWeek.length - 1; j++) {
-                            closedDaySet.add(daysOfTheWeek[j] + "요일");
-                        }
-                        closedDaySet.add(daysOfTheWeek[daysOfTheWeek.length - 1]);
-                    } else if (closedDay.matches("(명절|연중무휴 \\(명절연휴 제외\\))")) { // 명절
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add("설연휴");
-                        closedDaySet.add("추석연휴");
-                    } else if (closedDay.matches("기타 \\(매월 끝자리 \\d, \\d일\\)")) { // 기타 (매월 끝자리 1, 6일)
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add(closedDay.replace("기타 (매월 ", "").replace(")", "만 영업"));
-                    } else if (closedDay.matches("\\d\\d월 ~ \\d\\d월 휴무 [월화수목금토일]요일 \\(매주 \\)")) {
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add(closedDay.replaceAll("\\d\\d월 ~ \\d\\d월 휴무 ", "").replaceAll(" \\(매주 \\)", ""));
-                    } else if (closedDay.matches("[월화수목금토일]요일 \\(오전\\)")) { // 일요일 (오전)
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add(closedDay.replaceAll(" \\(오전\\)",""));
-                    } else if (closedDay.matches("[월화수목금토일]요일 \\(명절 연휴기간 제외\\)")) { // 화요일 (명절 연휴기간 제외)
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add(closedDay.replaceAll(" \\(명절 연휴기간 제외\\)", ""));
-                    } else if (closedDay.equals("임시 공휴일")) { // 임시 공휴일
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add("공휴일");
-                    } else if (closedDay.equals("월요일 (단, 월요일이 공휴일인 경우 다음날)")) { // 월요일 (단, 월요일이 공휴일인 경우 다음날)
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add("월요일");
-                        closedDaySet.add("화요일");
-                    } else if (closedDay.equals("첫째 월요일 (첫째주 월요일이 공휴일인 경우 둘째주 월요일이 정기휴무)")) { // 첫째 월요일 (첫째주 월요일이 공휴일인 경우 둘째주 월요일이 정기휴무)
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add("첫째 월요일");
-                        closedDaySet.add("둘째 월요일");
-                    } else if (closedDay.equals("일요일 (명절과 연휴가 끼어있는 일요일은 정상운영)")) { // 일요일 (명절과 연휴가 끼어있는 일요일은 정상운영)
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add("일요일");
-                    } else if (closedDay.equals("2018년 03월 ~ 휴무 화요일 (매주)")) { // 2018년 03월 ~ 휴무 화요일 (매주)
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add("화요일");
-                    }else if (closedDay.equals("개관기념일 (5월24일),훈증소독기간(상반기3일,하반기3일)")) { // 개관기념일 (5월24일),훈증소독기간(상반기3일,하반기3일)
-                        closedDaySet.remove(closedDay);
-                        closedDaySet.add("5월24일");
-                    }
-                }
+                BusinessHours businessHours = getBusinessHours(kakaoPoiPlus);
 
                 // unknown type of businessHours
-                if (!businessHours.matches("\\d\\d:\\d\\d ~ \\d\\d:\\d\\d")) {
-                    unknownTypeOfBusinessHoursSet.add(businessHours);
+                if (!businessHours.getBusinessHours().matches("\\d\\d:\\d\\d ~ \\d\\d:\\d\\d")) {
+                    unknownTypeOfBusinessHoursSet.add(businessHours.getBusinessHours());
                 }
 
                 // unknown type of closedDays
-                for (String closedDay : closedDaySet) {
+                for (String closedDay : businessHours.getClosedDaySet()) {
                     if (!closedDay.matches("[월화수목금토일]요일") &&
                             !closedDay.matches("(추석|설)(전날|당일|다음날|연휴)") &&
                             !closedDay.matches("(첫|둘|셋|넷|다섯)째 [월화수목금토일]요일") &&
@@ -976,6 +991,40 @@ public class DatabaseManager {
         } else {
             System.out.println("Good: No unknown types of closedDay!!");
         }
+    }
+
+    private static void createBasicPoiJsonFiles(String area) {
+        for (int i = 0; i < 5; i++) {
+            KakaoPoiPlus[] kakaoPoiPluses = getKakaoPoiPluses(area, KAKAOPOIPLUS_FILENAMES[i]);
+            List<BasicPoi> basicPoiList = new ArrayList<>();
+            for (KakaoPoiPlus kakaoPoiPlus : kakaoPoiPluses) {
+                if (kakaoPoiPlus.getScore() >= MIN_SCORE && kakaoPoiPlus.getNumScoredReviews() >= MIN_NUM_SCORED_REVIEWS && kakaoPoiPlus.getNumReviews() >= MIN_NUM_REVIEWS || i == 4) { // i == 4 -> transportation
+                    int id = kakaoPoiPlus.getId();
+                    String name = kakaoPoiPlus.getName();
+                    PoiType poiType = new PoiType(kakaoPoiPlus.getCategory(), kakaoPoiPlus.getSubCategory(), kakaoPoiPlus.getSubSubcategory());
+                    String address = kakaoPoiPlus.getAddress();
+                    Location location = new Location(kakaoPoiPlus.getWgsY(), kakaoPoiPlus.getWgsX());
+                    double score = kakaoPoiPlus.getScore() < 3 ? kakaoPoiPlus.getScore() + 0.5 : kakaoPoiPlus.getScore(); // 0~3점 애들도 조금이라도 점수 갖을 수 있도록...
+                    BusinessHours businessHours;
+                    if (i < 3) {
+                        businessHours = getBusinessHours(kakaoPoiPlus);
+                    } else {
+                        String bh = "00:00 ~ 24:00";
+                        Set<String> cd = new HashSet<>();
+                        businessHours = new BusinessHours(bh, cd);
+                    }
+
+                    BasicPoi basicPoi = new BasicPoi(id, name, poiType, address, location, score, businessHours);
+                    basicPoiList.add(basicPoi);
+                }
+            }
+
+            // write json file
+            String filename = getNewFilename(BASICPOI_FILENAMES[i], area);
+            String json = GSON.toJson(basicPoiList);
+            createJsonFile(json, filename);
+        }
+
     }
 
     public static void main(String[] args) {
@@ -1017,7 +1066,7 @@ public class DatabaseManager {
         checkKakaoPoiPlusFiles(area);
 
         // 11. createBasicPoiJsonFiles 실행
-//        createBasicPoiJsonFiles(area); //TODO:
+        createBasicPoiJsonFiles(area);
 
         // 12. createCategoriesJsonFile 실행
 //        createCategoriesJsonFile(area);
