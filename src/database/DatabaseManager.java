@@ -17,6 +17,7 @@ import tripPlanning.tripData.poi.BasicPoi;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -34,8 +35,8 @@ public class DatabaseManager {
     private static final Map<String, String> AREA_URL_MAP = createAreaUrlMap(); // 네이버 여행 가볼만한곳 페이지
     private static final Map<String, String> AREA_RECTS = createAreaRects(); // 지역 좌표 사각형 (좌상단 x,y,우하단 x,y)
 
-    private static final String API_SERVER_HOST = "https://dapi.kakao.com";
-    private static final String API_KEY = "4de6f3195493e6e3110c34c2b34d7c8a";    // 이거 이대로 github 올라가면 보안 이슈 있음, 해결 필요
+    private static final String KAKAO_API_HOST = "https://dapi.kakao.com";
+    private static final String KAKAO_API_KEY = "4de6f3195493e6e3110c34c2b34d7c8a";    // 이거 이대로 github 올라가면 보안 이슈 있음, 해결 필요
     private static final String SEARCH_KEYWORD_PATH = "/v2/local/search/keyword.json?";
     private static final String DAUM_MOBILE_MAP_HOST = "https://m.map.daum.net/actions/";
 
@@ -206,7 +207,7 @@ public class DatabaseManager {
     }
 
     private static String request(String apiPath, Map<String, String> params) {
-        String requestUrl = API_SERVER_HOST + apiPath + mapParamToStrParam(params);
+        String requestUrl = KAKAO_API_HOST + apiPath + mapParamToStrParam(params);
 
         BufferedReader reader = null;
         InputStreamReader isr = null;
@@ -215,7 +216,7 @@ public class DatabaseManager {
             URL url = new URL(requestUrl);
             HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", "KakaoAK " + API_KEY);
+            con.setRequestProperty("Authorization", "KakaoAK " + KAKAO_API_KEY);
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             con.setRequestProperty("charset", "utf-8");
 
@@ -535,8 +536,7 @@ public class DatabaseManager {
     }
 
     private static Matcher getMatcher(String str, String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        return pattern.matcher(str);
+        return Pattern.compile(regex).matcher(str);
     }
 
     private static String getSubStringByRegexp(String str, String regexp) {
@@ -1073,9 +1073,7 @@ public class DatabaseManager {
         return null;
     }
 
-    private static void createRouteJsonFile(String area) {
-        WebDriver driver = getWebDriver(false);
-
+    private static void createRouteJsonFile(String area) throws Exception {
         List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
         List<KakaoPoiPlus> kakaoPoiPlusList = getAllKakaoPoiPlusList(area);
 
@@ -1091,12 +1089,18 @@ public class DatabaseManager {
                         KakaoPoiPlus fromKPP = getKakaoPoiPlusById(fromId, kakaoPoiPlusList);
                         KakaoPoiPlus toKPP = getKakaoPoiPlusById(toId, kakaoPoiPlusList);
 
-                        String daumMobileMapUrl = DAUM_MOBILE_MAP_HOST + routeType + "Route?"
+                        String daumMobileMapUrlStr = DAUM_MOBILE_MAP_HOST + routeType + "Route?"
                                 + "&sxEnc=" + fromKPP.getMobX() + "&syEnc=" + fromKPP.getMobY()
                                 + "&exEnc=" + toKPP.getMobX() + "&eyEnc=" + toKPP.getMobY();
-                        driver.navigate().to(daumMobileMapUrl);
-                        delay(2);
-                        String pageSource = driver.getPageSource();
+
+                        URL daumMobileMapUrl = new URL(daumMobileMapUrlStr);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(daumMobileMapUrl.openStream()));
+                        StringBuilder pageSourceBuilder = new StringBuilder();
+                        String inputLine;
+                        while ((inputLine = in.readLine()) != null)
+                            pageSourceBuilder.append(inputLine).append("\n");
+                        in.close();
+                        String pageSource = pageSourceBuilder.toString();
 
                         double distance = 10000;
                         int time = 10000;
@@ -1159,7 +1163,7 @@ public class DatabaseManager {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         /* 새로운 지역 추가 방법 */
         // 1. createAreaUrlMap 에 새로운 지역명 및  네이버 여행 가볼만한곳 페이지 url 추가
 
