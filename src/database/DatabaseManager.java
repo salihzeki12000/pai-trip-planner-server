@@ -44,7 +44,7 @@ public class DatabaseManager {
     private static final String[] KAKAOPOI_FILENAMES = {"kakaopoi_attraction", "kakaopoi_restaurant", "kakaopoi_shopping", "kakaopoi_accommodation", "kakaopoi_transportation"};
     private static final String[] KAKAOPOIPLUS_FILENAMES = {"kakaopoiplus_attraction", "kakaopoiplus_restaurant", "kakaopoiplus_shopping", "kakaopoiplus_accommodation", "kakaopoiplus_transportation"};
     private static final String[] BASICPOI_FILENAMES = {"basicpoi_attraction", "basicpoi_restaurant", "basicpoi_shopping", "basicpoi_accommodation", "basicpoi_transportation"};
-    private static final String[] ROUTE_TYPES = {"walk", "car"}; //TODO: add public {"car", "public", "walk"};
+    private static final String[] ROUTE_TYPES = {"car", "walk"}; //TODO: add public {"car", "public", "walk"};
 
     private static final String[] INVALID_CATEGORIES = {"카페", "간식", "관광안내소", "드라이브코스", "주차장", "술집", "패스트푸드", "문구,사무용품", "슈퍼마켓", "인터넷쇼핑몰"};
 
@@ -1095,6 +1095,7 @@ public class DatabaseManager {
                                 + "&sxEnc=" + fromKPP.getMobX() + "&syEnc=" + fromKPP.getMobY()
                                 + "&exEnc=" + toKPP.getMobX() + "&eyEnc=" + toKPP.getMobY();
                         driver.navigate().to(daumMobileMapUrl);
+                        delay(2);
                         String pageSource = driver.getPageSource();
 
                         double distance = 10000;
@@ -1203,6 +1204,6 @@ public class DatabaseManager {
 //        createCategoriesJsonFile(area);
 
         // 13. createRouteJsonFile 실행
-        createRouteJsonFile(area); //TODO:
+        createRouteJsonFile(area);
     }
 }
