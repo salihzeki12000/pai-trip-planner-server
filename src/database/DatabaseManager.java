@@ -61,7 +61,7 @@ public class DatabaseManager {
 
     private static final double MIN_SCORE = 1;
     private static final int MIN_NUM_SCORED_REVIEWS = 0;
-    private static final int MIN_NUM_REVIEWS = 10;
+    private static final int MIN_NUM_REVIEWS = 100;
 
     private static Map<String, String> createAreaUrlMap() {
         Map<String, String> areaUrlMap = new HashMap<>();
@@ -950,7 +950,7 @@ public class DatabaseManager {
 
     private static void checkKakaoPoiPlusFiles(String area) {
         Set<String> unknownTypeOfBusinessHoursSet = new HashSet<>();
-        Set<String> unknownTypeOfClosedDaysSet = new HashSet<>(); //TODO: closed Days도 처리 필요
+        Set<String> unknownTypeOfClosedDaysSet = new HashSet<>();
 
         for (int i = 0; i < 3; i++) {
             KakaoPoiPlus[] kakaoPoiPluses = getKakaoPoiPluses(area, KAKAOPOIPLUS_FILENAMES[i]);
@@ -1082,7 +1082,14 @@ public class DatabaseManager {
             List<Route> routeList = new ArrayList<>();
             for (BasicPoi fromBP : basicPoiList) {
                 for (BasicPoi toBP : basicPoiList) {
-                    if (!fromBP.equals(toBP)) {
+                    boolean isRouteRequired = true;
+                    if ((fromBP.getPoiType().category.equals("숙박") && toBP.getPoiType().category.equals("숙박"))
+                            || (fromBP.getPoiType().category.equals("교통,수송") && toBP.getPoiType().category.equals("교통,수송"))
+                            || (fromBP.getPoiType().category.equals("음식점") && toBP.getPoiType().category.equals("음식점"))
+                            || (fromBP.equals(toBP)))
+                        isRouteRequired = false;
+
+                    if (isRouteRequired) {
                         int fromId = fromBP.getId();
                         int toId = toBP.getId();
 
@@ -1152,7 +1159,7 @@ public class DatabaseManager {
 
                         routeList.add(new Route(fromId, toId, distance, time, taxiFare, tollFare, pointList));
                         System.out.println(routeType + ": " + idx++ + "/" + basicPoiList.size() * basicPoiList.size());
-                        delay(0.5);
+                        delay(1);
                     }
                 }
             }
