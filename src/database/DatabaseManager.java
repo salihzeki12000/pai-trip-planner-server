@@ -1165,7 +1165,7 @@ public class DatabaseManager {
             }
 
             // write json file
-            String filename = getNewFilename("route_" + routeType, area);     //TODO: route file name
+            String filename = getNewFilename("route_" + routeType, area);
             String json = GSON.toJson(routeList);
             createJsonFile(json, filename);
         }
