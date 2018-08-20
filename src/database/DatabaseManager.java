@@ -87,9 +87,9 @@ public class DatabaseManager {
         }
     }
 
-    private static void delay(int sec) {
+    private static void delay(double sec) {
         try {
-            TimeUnit.SECONDS.sleep(sec);
+            TimeUnit.MILLISECONDS.sleep((long) (sec * 1000));
         } catch (InterruptedException e) {
             System.out.println("delay error");
         }
@@ -1152,6 +1152,7 @@ public class DatabaseManager {
 
                         routeList.add(new Route(fromId, toId, distance, time, taxiFare, tollFare, pointList));
                         System.out.println(routeType + ": " + idx++ + "/" + basicPoiList.size() * basicPoiList.size());
+                        delay(0.5);
                     }
                 }
             }
