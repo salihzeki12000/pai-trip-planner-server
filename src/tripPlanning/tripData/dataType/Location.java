@@ -2,8 +2,8 @@ package tripPlanning.tripData.dataType;
 
 /**
  * 위치 좌표를 나타내는 인터페이스 (경위도 사용함)
- * 서울 위도(latitude): 북위 37도
  * 서울 경도(longitude): 동경 126도
+ * 서울 위도(latitude): 북위 37도
  */
 public class Location {
     public double longitude; // 경도, X

@@ -6,22 +6,20 @@ import java.util.Objects;
 public class Route {
     private int fromId;
     private int toId;
-    private String routeType;       // 'car',
     private double distance;        // '35.8km',
     private int time;               // '43분',
     private int taxiFare;           // '27,200',
     private int tollFare;           // '',
-    private List<Location> points;  // wgs84
+    private List<double[]> pointList;  // wgs84
 
-    public Route(int fromId, int toId, String routeType, double distance, int time, int taxiFare, int tollFare, List<Location> points) {
+    public Route(int fromId, int toId, double distance, int time, int taxiFare, int tollFare, List<double[]> pointList) {
         this.fromId = fromId;
         this.toId = toId;
-        this.routeType = routeType;
         this.distance = distance;
         this.time = time;
         this.taxiFare = taxiFare;
         this.tollFare = tollFare;
-        this.points = points;
+        this.pointList = pointList;
     }
 
     @Override
@@ -43,7 +41,6 @@ public class Route {
         return "Route{" +
                 "fromId=" + fromId +
                 ", toId=" + toId +
-                ", routeType='" + routeType + '\'' +
                 ", distance=" + distance +
                 ", time=" + time +
                 ", taxiFare=" + taxiFare +
