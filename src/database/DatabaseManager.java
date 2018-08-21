@@ -1096,7 +1096,7 @@ public class DatabaseManager {
         return basicPoiPairList;
     }
 
-    private static void createRouteJsonFile(String area) {
+    private static void createRouteJsonFiles(String area) {
         WebDriver driver = getWebDriver(false);
         List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
         List<KakaoPoiPlus> kakaoPoiPlusList = getAllKakaoPoiPlusList(area);
@@ -1341,8 +1341,8 @@ public class DatabaseManager {
         // 12. createCategoriesJsonFile 실행
 //        createCategoriesJsonFile(area);
 
-        // 13. createRouteJsonFile 실행
-//        createRouteJsonFile(area);
+        // 13. createRouteJsonFiles 실행
+//        createRouteJsonFiles(area);
         String filename = "180821144225_제주특별자치도_route_car.json";
         updateRouteJsonFile(area, filename);
 
