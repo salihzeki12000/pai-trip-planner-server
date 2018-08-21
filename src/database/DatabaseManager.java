@@ -17,7 +17,6 @@ import tripPlanning.tripData.poi.BasicPoi;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -45,7 +44,7 @@ public class DatabaseManager {
     private static final String[] KAKAOPOI_FILENAMES = {"kakaopoi_attraction", "kakaopoi_restaurant", "kakaopoi_shopping", "kakaopoi_accommodation", "kakaopoi_transportation"};
     private static final String[] KAKAOPOIPLUS_FILENAMES = {"kakaopoiplus_attraction", "kakaopoiplus_restaurant", "kakaopoiplus_shopping", "kakaopoiplus_accommodation", "kakaopoiplus_transportation"};
     private static final String[] BASICPOI_FILENAMES = {"basicpoi_attraction", "basicpoi_restaurant", "basicpoi_shopping", "basicpoi_accommodation", "basicpoi_transportation"};
-    private static final String[] ROUTE_TYPES = {"car", "walk"}; //TODO: add public {"car", "public", "walk"};
+    private static final String[] ROUTE_TYPES = {"walk", "car"}; //TODO: add public {"car", "public", "walk"};
 
     private static final String[] INVALID_CATEGORIES = {"카페", "간식", "관광안내소", "드라이브코스", "주차장", "술집", "패스트푸드", "문구,사무용품", "슈퍼마켓", "인터넷쇼핑몰"};
 
@@ -1075,7 +1074,8 @@ public class DatabaseManager {
         return null;
     }
 
-    private static List<BasicPoi[]> getBasicPoiPairList(List<BasicPoi> basicPoiList) {
+    private static List<BasicPoi[]> getBasicPoiPairList(String area) {
+        List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
         List<BasicPoi[]> basicPoiPairList = new ArrayList<>();
         for (BasicPoi fromBP : basicPoiList) {
             for (BasicPoi toBP : basicPoiList) {
@@ -1096,13 +1096,22 @@ public class DatabaseManager {
         return basicPoiPairList;
     }
 
-    private static void createRouteJsonFile(String area, String routeType, List<BasicPoi[]> basicPoiPairList, List<Route> routeList) {
+    private static void createRouteJsonFile(String area, String filename, List<BasicPoi[]> basicPoiPairList, List<Route> routeList) {
         WebDriver driver = getWebDriver(false);
         List<KakaoPoiPlus> kakaoPoiPlusList = getAllKakaoPoiPlusList(area);
+        String routeType = "car";
+        for (String rt : ROUTE_TYPES) {
+            if (filename.contains(rt)) {
+                routeType = rt;
+                break;
+            }
+        }
 
         int idx = 1;
-        String filename = getNewFilename("route_" + routeType, area);
+        double SEC_PER_LOOP = 1.5;
         for (BasicPoi[] basicPoiPair : basicPoiPairList) {
+            long startTime = System.currentTimeMillis();
+
             BasicPoi fromBP = basicPoiPair[0];
             BasicPoi toBP = basicPoiPair[1];
 
@@ -1118,7 +1127,6 @@ public class DatabaseManager {
 
             // Selenium
             driver.navigate().to(daumMobileMapUrlStr);
-            delay(1);
             String pageSource = driver.getPageSource();
             // URL
 //                URL daumMobileMapUrl = new URL(daumMobileMapUrlStr);
@@ -1178,35 +1186,36 @@ public class DatabaseManager {
                 }
             }
             routeList.add(new Route(fromId, toId, distance, time, taxiFare, tollFare, pointList));
-            System.out.println(routeType + ": " + idx++ + "/" + basicPoiPairList.size());
-            // write json file
-            String json = GSON.toJson(routeList);
-            createJsonFile(json, filename);
+            if (idx % 100 == 0) {
+                // write json file
+                String json = GSON.toJson(routeList);
+                createJsonFile(json, filename);
+            }
+
+            long endTime1 = System.currentTimeMillis();
+            double duration1 = ((double) (endTime1 - startTime)) / 1000; //sec
+            if (duration1 < SEC_PER_LOOP)
+                delay(SEC_PER_LOOP - duration1);
+            long endTime2 = System.currentTimeMillis();
+            double duration2 = ((double) (endTime2 - startTime)) / 1000; //sec
+
+            System.out.println(routeType + ": " + idx++ + "/" + basicPoiPairList.size() + " - " + duration1 + "/" + duration2);
         }
         driver.close();
     }
 
     private static void createRouteJsonFiles(String area) {
-        List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
-        List<BasicPoi[]> basicPoiPairList = getBasicPoiPairList(basicPoiList);
+        List<BasicPoi[]> basicPoiPairList = getBasicPoiPairList(area);
         for (String routeType : ROUTE_TYPES) {
             List<Route> routeList = new ArrayList<>();
-            createRouteJsonFile(area, routeType, basicPoiPairList, routeList);
+            String filename = getNewFilename("route_" + routeType, area);
+            createRouteJsonFile(area, filename, basicPoiPairList, routeList);
         }
     }
 
     private static void updateRouteJsonFile(String area, String filename) {
-        List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
-        List<BasicPoi[]> basicPoiPairList = getBasicPoiPairList(basicPoiList);
+        List<BasicPoi[]> basicPoiPairList = getBasicPoiPairList(area);
         List<Route> routeList = new ArrayList<>();
-
-        String routeType = "car";
-        for (String rt : ROUTE_TYPES) {
-            if (filename.contains(rt)) {
-                routeType = rt;
-                break;
-            }
-        }
 
         Route[] routes = null;
         try {
@@ -1227,7 +1236,7 @@ public class DatabaseManager {
             routeList.add(route);
         }
 
-        createRouteJsonFile(area, routeType, basicPoiPairList, routeList);
+        createRouteJsonFile(area, DATABASE_DIR + filename, basicPoiPairList, routeList);
     }
 
     public static void main(String[] args) {
@@ -1276,7 +1285,7 @@ public class DatabaseManager {
 
         // 13. createRouteJsonFiles 실행
 //        createRouteJsonFiles(area);
-        String filename = "180821144225_제주특별자치도_route_car.json";
+        String filename = "180821162112_제주특별자치도_route_car.json";
         updateRouteJsonFile(area, filename);
 
     }
