@@ -22,6 +22,14 @@ public class Route {
         this.pointList = pointList;
     }
 
+    public int getFromId() {
+        return fromId;
+    }
+
+    public int getToId() {
+        return toId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
