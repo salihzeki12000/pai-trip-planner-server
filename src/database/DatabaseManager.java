@@ -1096,134 +1096,12 @@ public class DatabaseManager {
         return basicPoiPairList;
     }
 
-    private static void createRouteJsonFiles(String area) {
+    private static void createRouteJsonFile(String area, String routeType, List<BasicPoi[]> basicPoiPairList, List<Route> routeList) {
         WebDriver driver = getWebDriver(false);
-        List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
         List<KakaoPoiPlus> kakaoPoiPlusList = getAllKakaoPoiPlusList(area);
-        List<BasicPoi[]> basicPoiPairList = getBasicPoiPairList(basicPoiList);
-        for (String routeType : ROUTE_TYPES) {
-            int idx = 1;
-            List<Route> routeList = new ArrayList<>();
-            String filename = getNewFilename("route_" + routeType, area);
-            for (BasicPoi[] basicPoiPair : basicPoiPairList) {
-                BasicPoi fromBP = basicPoiPair[0];
-                BasicPoi toBP = basicPoiPair[1];
-
-                int fromId = fromBP.getId();
-                int toId = toBP.getId();
-
-                KakaoPoiPlus fromKPP = getKakaoPoiPlusById(fromId, kakaoPoiPlusList);
-                KakaoPoiPlus toKPP = getKakaoPoiPlusById(toId, kakaoPoiPlusList);
-
-                String daumMobileMapUrlStr = DAUM_MOBILE_MAP_HOST + routeType + "Route?"
-                        + "&sxEnc=" + fromKPP.getMobX() + "&syEnc=" + fromKPP.getMobY()
-                        + "&exEnc=" + toKPP.getMobX() + "&eyEnc=" + toKPP.getMobY();
-
-                // Selenium
-                driver.navigate().to(daumMobileMapUrlStr);
-                delay(1);
-                String pageSource = driver.getPageSource();
-                // URL
-//                URL daumMobileMapUrl = new URL(daumMobileMapUrlStr);
-//                BufferedReader in = new BufferedReader(new InputStreamReader(daumMobileMapUrl.openStream()));
-//                StringBuilder pageSourceBuilder = new StringBuilder();
-//                String inputLine;
-//                while ((inputLine = in.readLine()) != null)
-//                    pageSourceBuilder.append(inputLine).append("\n");
-//                in.close();
-//                String pageSource = pageSourceBuilder.toString();
-
-                double distance = 10000;
-                int time = 10000;
-                int taxiFare = 0;
-                int tollFare = 0;
-                List<double[]> pointList = new ArrayList<>();  // wgs84
-
-                if (!pageSource.contains("결과가 없습니다.")) {
-                    String distanceStr = getSubStringByRegexp(pageSource, "distance : '(.*)m'");
-                    if (!distanceStr.contains("k")) {
-                        distance = Double.parseDouble(distanceStr) / 1000;
-                    } else {
-                        distance = Double.parseDouble(distanceStr.replace("k", ""));
-                    }
-
-                    String timeStr = getSubStringByRegexp(pageSource, "time : '(.*)'");
-                    if (timeStr.contains("시간")) {
-                        String hourStr = getSubStringByRegexp(timeStr, "(.*)시간.*");
-                        String minStr = getSubStringByRegexp(timeStr, ".* (.*)분");
-                        time = Integer.parseInt(hourStr) * 60 + Integer.parseInt(minStr);
-                    } else {
-                        String minStr = getSubStringByRegexp(timeStr, "(.*)분");
-                        time = Integer.parseInt(minStr);
-                    }
-
-                    if (routeType.equals("car")) {
-                        String taxiFareStr = getSubStringByRegexp(pageSource, "taxiFare : '(.*)'");
-                        String tollFareStr = getSubStringByRegexp(pageSource, "tollFare : '(.*)'");
-                        taxiFare = taxiFareStr.length() > 0 ? Integer.parseInt(taxiFareStr.replaceAll(",", "")) : 0;
-                        tollFare = tollFareStr.length() > 0 ? Integer.parseInt(tollFareStr.replaceAll(",", "")) : 0;
-                    }
-
-                    Matcher matcher = getMatcher(pageSource, "points : '(.*)'");
-                    List<String> pointsStrList = new ArrayList<>();
-                    while (matcher.find()) {
-                        pointsStrList.add(matcher.group(1));
-                    }
-                    for (String pointsStr : pointsStrList) {
-                        if (pointsStr.length() > 0) {
-                            for (String point : pointsStr.split("\\|")) {
-                                String[] xyStr = point.split(",");
-                                CoordPoint wcoCoord = new CoordPoint(Double.parseDouble(xyStr[0]), Double.parseDouble((xyStr[1])));
-                                CoordPoint wsgCoord = TransCoord.getTransCoord(wcoCoord, TransCoord.COORD_TYPE_WCONGNAMUL, TransCoord.COORD_TYPE_WGS84);
-                                pointList.add(new double[]{wsgCoord.x, wsgCoord.y});
-                            }
-                        }
-                    }
-                }
-                routeList.add(new Route(fromId, toId, distance, time, taxiFare, tollFare, pointList));
-                System.out.println(routeType + ": " + idx++ + "/" + basicPoiPairList.size());
-                // write json file
-                String json = GSON.toJson(routeList);
-                createJsonFile(json, filename);
-            }
-        }
-    }
-
-    private static void updateRouteJsonFile(String area, String filename) {
-        WebDriver driver = getWebDriver(false);
-        List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
-        List<KakaoPoiPlus> kakaoPoiPlusList = getAllKakaoPoiPlusList(area);
-        List<BasicPoi[]> basicPoiPairList = getBasicPoiPairList(basicPoiList);
-        List<Route> routeList = new ArrayList<>();
-
-        Route[] routes = null;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(DATABASE_DIR + filename));
-            routes = GSON.fromJson(br, Route[].class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for (Route route : routes) {
-            //1. basicPoiPairList에서 기존거 빼기
-            for (BasicPoi[] bpPair : new ArrayList<>(basicPoiPairList)) {
-                if (route.getFromId() == bpPair[0].getId() && route.getToId() == bpPair[1].getId()) {
-                    basicPoiPairList.remove(bpPair);
-                    break;
-                }
-            }
-            //2. routeList에 기존거 추가하기
-            routeList.add(route);
-        }
-
-        String routeType = "car";
-        for (String rt : ROUTE_TYPES) {
-            if (filename.contains(rt)) {
-                routeType = rt;
-                break;
-            }
-        }
 
         int idx = 1;
+        String filename = getNewFilename("route_" + routeType, area);
         for (BasicPoi[] basicPoiPair : basicPoiPairList) {
             BasicPoi fromBP = basicPoiPair[0];
             BasicPoi toBP = basicPoiPair[1];
@@ -1238,9 +1116,19 @@ public class DatabaseManager {
                     + "&sxEnc=" + fromKPP.getMobX() + "&syEnc=" + fromKPP.getMobY()
                     + "&exEnc=" + toKPP.getMobX() + "&eyEnc=" + toKPP.getMobY();
 
+            // Selenium
             driver.navigate().to(daumMobileMapUrlStr);
             delay(1);
             String pageSource = driver.getPageSource();
+            // URL
+//                URL daumMobileMapUrl = new URL(daumMobileMapUrlStr);
+//                BufferedReader in = new BufferedReader(new InputStreamReader(daumMobileMapUrl.openStream()));
+//                StringBuilder pageSourceBuilder = new StringBuilder();
+//                String inputLine;
+//                while ((inputLine = in.readLine()) != null)
+//                    pageSourceBuilder.append(inputLine).append("\n");
+//                in.close();
+//                String pageSource = pageSourceBuilder.toString();
 
             double distance = 10000;
             int time = 10000;
@@ -1295,6 +1183,51 @@ public class DatabaseManager {
             String json = GSON.toJson(routeList);
             createJsonFile(json, filename);
         }
+        driver.close();
+    }
+
+    private static void createRouteJsonFiles(String area) {
+        List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
+        List<BasicPoi[]> basicPoiPairList = getBasicPoiPairList(basicPoiList);
+        for (String routeType : ROUTE_TYPES) {
+            List<Route> routeList = new ArrayList<>();
+            createRouteJsonFile(area, routeType, basicPoiPairList, routeList);
+        }
+    }
+
+    private static void updateRouteJsonFile(String area, String filename) {
+        List<BasicPoi> basicPoiList = getAllBasicPoiList(area);
+        List<BasicPoi[]> basicPoiPairList = getBasicPoiPairList(basicPoiList);
+        List<Route> routeList = new ArrayList<>();
+
+        String routeType = "car";
+        for (String rt : ROUTE_TYPES) {
+            if (filename.contains(rt)) {
+                routeType = rt;
+                break;
+            }
+        }
+
+        Route[] routes = null;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(DATABASE_DIR + filename));
+            routes = GSON.fromJson(br, Route[].class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (Route route : routes) {
+            //1. basicPoiPairList에서 기존거 빼기
+            for (BasicPoi[] bpPair : new ArrayList<>(basicPoiPairList)) {
+                if (route.getFromId() == bpPair[0].getId() && route.getToId() == bpPair[1].getId()) {
+                    basicPoiPairList.remove(bpPair);
+                    break;
+                }
+            }
+            //2. routeList에 기존거 추가하기
+            routeList.add(route);
+        }
+
+        createRouteJsonFile(area, routeType, basicPoiPairList, routeList);
     }
 
     public static void main(String[] args) {
