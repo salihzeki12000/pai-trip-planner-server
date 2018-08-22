@@ -22,11 +22,7 @@ import util.Triple;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by wykwon on 2016-11-02.
- */
 public class BatchInferenceTripNetwork {
-    private boolean bDebug = false;
     private static Logger logger = Logger.getLogger(BatchInferenceTripNetwork.class);
     private TripCPDs tripCPDs;
     private PersonalInfo personalInfo;
@@ -35,7 +31,6 @@ public class BatchInferenceTripNetwork {
     private int year;
     private int monthOfYear;
     private int dayOfMonth;
-
 
     private int startNodeIdx;
     private int endNodeIdx;
@@ -47,7 +42,6 @@ public class BatchInferenceTripNetwork {
     private double zeroDelta[];
     //  누적되는 marginal inference 결과들
     private double previousDepartureTime[] = new double[2];
-    private double totalPA[] = new double[2];
     private double totalCost[] = new double[2];
     private double totalSatisfaction[] = new double[2];
 
@@ -109,16 +103,11 @@ public class BatchInferenceTripNetwork {
             double departureTime[] = inferenceDepartureTime(arrivalTime, duration);
             Triple<double[], Integer, Integer> discretizedTime = PDFtoPMF.getGaussianPMFDayTime(arrivalTime[0], arrivalTime[1], tripNodesAndValues.getDiscreteTimeWidth());
             double satisfaction[] = inferenceSatisfaction(destNodeIdx, discretizedTime.first());
-            double pa[] = inferencePhysicalActivity(destNodeIdx);
             double cost[] = inferenceCost(destNodeIdx);
-//        public void addEntry(String poiTitle, double arrivalTime[], double duration[], double departureTime[], double cost[], double pa[])
 
-
-            detailItinerary.addEntry(tripCPDs.getPoi(destNodeIdx), arrivalTime, duration, departureTime, cost, pa);
+            detailItinerary.addEntry(tripCPDs.getPoi(destNodeIdx), arrivalTime, duration, departureTime, cost);
             previousDepartureTime = departureTime.clone();
 
-            totalPA[0] += pa[0];
-            totalPA[1] += pa[1];
             totalCost[0] += cost[0];
             totalCost[1] += cost[1];
             totalSatisfaction[0] += satisfaction[0];
@@ -126,18 +115,15 @@ public class BatchInferenceTripNetwork {
             srcNodeIdx = destNodeIdx;
         }
 
-
         double returnMovement[] = inferenceMovement(trail.get(trail.size() - 1), endNodeIdx, null);
 
         detailItinerary.setEndTime(previousDepartureTime[0] + returnMovement[0], previousDepartureTime[1] + returnMovement[1]);
         detailItinerary.setValue(totalSatisfaction[0]);
         return detailItinerary;
-
     }
 
 
     private double[] inferenceArrivalTime(double movement[], double endtime[]) {
-
         double ret[] = new double[2];
         ret[0] = movement[0] + endtime[0];
         ret[1] = movement[1] + endtime[1];
@@ -179,7 +165,6 @@ public class BatchInferenceTripNetwork {
         double ret[] = new double[2];
         ret[0] = factor.getMean();
         ret[1] = factor.getVariance();
-//        logger.debug("src="+srcNodeIdx+ "\tdest="+destNodeIdx + "\t"+String.format("%2.2f",ret[0])) ;
         return ret;
     }
 
@@ -191,7 +176,6 @@ public class BatchInferenceTripNetwork {
             logger.debug("왜?");
         }
         double weatherSuit = Erf.MyArrays.expectation(values, weather);
-//        logger.debug("weather=" + DoubleArray.toString("%3.3f", weather) + "\t" + weatherSuit);
 
         double ret[] = new double[2];
         ret[0] = pref[0] * weatherSuit;
@@ -208,7 +192,6 @@ public class BatchInferenceTripNetwork {
         double ret[] = new double[2];
         ret[0] = poi.getSatisfaction(personalInfo);
         ret[1] = 0.1;
-//        logger.debug("poi=" + poi.getName() + " preference=" + ret[0]);
         return ret;
     }
 
@@ -217,18 +200,7 @@ public class BatchInferenceTripNetwork {
         double ret[] = new double[2];
         ret[0] = (double) poi.getCostPerPerson();
         ret[1] = 0.1;
-//        logger.debug("poi=" + poi.getName() + " cost=" + ret[0]);
         return ret;
-
-
-    }
-
-    private double[] inferencePhysicalActivity(int destNodeIdx) {
-        BasicPoi poi = tripCPDs.getPoi(destNodeIdx);
-        double ret[] = poi.getPhysicalActivity();
-//        logger.debug("poi=" + poi.getName() + " physical activity=" + ret[0]);
-        return ret;
-
     }
 
     /**
@@ -237,8 +209,6 @@ public class BatchInferenceTripNetwork {
      * @return 결국 반환은 normal distribution으로 할것
      */
     private double[] weatherSuitability(int destNodeIdx, double arrivalTime[]) {
-        // 주어진 날짜의 날짜는 위에 있고
-//        double hour = tripNetwork.marg_T[order].getMean();
         BasicPoi poi = tripCPDs.getPoi(destNodeIdx);
 
         double hour = MyArrays.argMax(arrivalTime) * ((double) tripNodesAndValues.getDiscreteTimeWidth() / 60.0);
@@ -247,10 +217,6 @@ public class BatchInferenceTripNetwork {
         int tempCondition = Temperature.condition(weatherEntry.temperature);
         int rainCondition = MyArrays.argMax(weatherEntry.rainProbability);
 
-//        // 시간,
-//        if (bDebug) {
-//        logger.debug(poi.getName() + "   tempCondition=" + tempCondition);
-//        }
         TouristAttractionType type = poi.getTouristAttractionType();
         if (type == null) {
 
@@ -279,9 +245,5 @@ public class BatchInferenceTripNetwork {
             default:
                 return weatherType4_sensitive.getProbability(rainCondition, tempCondition);
         }
-//        logger.debug(hour);
-//        logger.debug("tempCondition="+tempCondition + "\trainCondition="+rainCondition);
-
-
     }
 }

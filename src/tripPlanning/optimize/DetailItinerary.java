@@ -34,7 +34,6 @@ public class DetailItinerary {
     private List<double[]> durations = new ArrayList<>();
     private List<double[]> departureTimes = new ArrayList<>();
     private List<double[]> costs = new ArrayList<>();
-    private List<double[]> PAs = new ArrayList<>();
     DecimalFormat df = new DecimalFormat("00");
     public double value;
 
@@ -52,17 +51,16 @@ public class DetailItinerary {
         this.endPoi = endPoi;
     }
 
-    public void addEntry(BasicPoi poi, double arrivalTime[], double duration[], double departureTime[], double cost[], double pa[]) {
+    public void addEntry(BasicPoi poi, double arrivalTime[], double duration[], double departureTime[], double cost[]) {
         poiList.add(poi);
         arrivalTimes.add(arrivalTime.clone());
         departureTimes.add(departureTime.clone());
         durations.add(duration.clone());
         costs.add(cost.clone());
-        PAs.add(pa.clone());
     }
 
     //deterministic version
-    public void addEntry(BasicPoi poi, double arrivalTime, double duration, double departureTime, double cost, double pa) {
+    public void addEntry(BasicPoi poi, double arrivalTime, double duration, double departureTime, double cost) {
         poiList.add(poi);
         double tmp[] = new double[2];
         tmp[0] = arrivalTime;
@@ -73,8 +71,6 @@ public class DetailItinerary {
         durations.add(tmp.clone());
         tmp[0] = cost;
         costs.add(tmp.clone());
-        tmp[0] = pa;
-        PAs.add(tmp.clone());
     }
 
     public List<BasicPoi> getPoiList() {
@@ -142,16 +138,6 @@ public class DetailItinerary {
             totalCost[1] += cost[1];
         }
         return totalCost;
-    }
-
-    public double[] getTotalPhysicalActivity() {
-        double totalPA[] = new double[2];
-        for (double pa[] : PAs) {
-            totalPA[0] += pa[0];
-            totalPA[1] += pa[1];
-        }
-        return totalPA;
-
     }
 
     public double[] getEndTime() {

@@ -15,7 +15,6 @@ public class TripCPDs {
 
     public InterfaceCLGCPD endTimeCPDs;
     public InterfaceHybridCPD weatherCPDs;
-    public InterfaceHybridCPD physicalActivity;
 
     // 보조변수들
     private SubsetPois subsetPois;
@@ -92,14 +91,6 @@ public class TripCPDs {
 
     public void setWeatherCPDs(InterfaceHybridCPD weatherCPDs) {
         this.weatherCPDs = weatherCPDs;
-    }
-
-    public InterfaceHybridCPD getPhysicalActivity() {
-        return physicalActivity;
-    }
-
-    public void setPhysicalActivity(InterfaceHybridCPD physicalActivity) {
-        this.physicalActivity = physicalActivity;
     }
 
     public TripNodesAndValues getTripNodesAndValues() {

@@ -14,17 +14,15 @@ public class DailyTripEntry {
     private String startPoiTitle;       // 여정 시작장소
     private String endPoiTitle;         // 여정 종료장소
     private String[] areas;               // 여정 지역
-    private Double physicalActivityLimit; // 활동량 상한
     private List<CategoryConstraint> categoryConstraintList = new ArrayList<>();
     private List<PoiConstraint> poiConstraintList = new ArrayList<>();
 
-    public DailyTripEntry(String startTimeStr, String returnTimeStr, String[] areas, String startPoiTitle, String endPoiTitle, double physicalActivityLimit) {
+    public DailyTripEntry(String startTimeStr, String returnTimeStr, String[] areas, String startPoiTitle, String endPoiTitle) {
         this.startTimeStr = startTimeStr;
         this.returnTimeStr = returnTimeStr;
         this.startPoiTitle = startPoiTitle;
         this.endPoiTitle = endPoiTitle;
         this.areas = areas;
-        this.physicalActivityLimit = physicalActivityLimit;
     }
 
     public void addCategoryConstraint(CategoryConstraint categoryConstraint) {
@@ -68,7 +66,6 @@ public class DailyTripEntry {
         StringBuffer strbuf = new StringBuffer();
         strbuf.append("daily itinerary [" + startTimeStr + "--" + returnTimeStr + "]\n");
         strbuf.append("\tareas=" + areas + " from " + startPoiTitle + " to " + endPoiTitle + "\n");
-        strbuf.append("\tphysical activity limit=" + physicalActivityLimit + "\n");
         for (CategoryConstraint categoryConstraint : categoryConstraintList) {
             strbuf.append("\t" + categoryConstraint + "\n");
         }

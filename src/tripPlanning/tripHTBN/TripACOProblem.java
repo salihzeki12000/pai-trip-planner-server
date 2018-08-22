@@ -202,7 +202,7 @@ public class TripACOProblem extends ItineraryPlanning {
         DetailItinerary detailItinerary = batchInferenceTripNetwork.inference(this.trail);
         /* mgkim: 아래 부분은 휴리스틱에서 constraint를 완벽히 적용했다면 필요 없음
         // 다만, return time 등을 완벽히 막기 힘듬 & 아래 주석을 풀면 최소한 return보다 늦지는 않게 할 수 있음
-        // 또한, 아래 constraint에서 cost와 physical등도 체크하고 있음
+        // 또한, 아래 constraint에서 cost도 체크하고 있음
         BatchConstraintViolation batchConstraintViolation = new BatchConstraintViolation(subsetPois, returnHour, year, monthOfYear, dayOfMonth);
         if (batchConstraintViolation.checkConstraintViolation(detailItinerary, categoryConstraintList)) {
             return 0.0;
@@ -245,10 +245,6 @@ public class TripACOProblem extends ItineraryPlanning {
         if (costConstraint < 0) {
             return true;
         }
-        double paUpperConstraint = physicalActivityUpperPenalty(incrementalInferenceResults.getTotalPA());
-        if (paUpperConstraint < 0) {
-            return true;
-        }
         boolean categoryConstraint = categoryConstraintsViolation(destPoi, incrementalInferenceResults.getArrivalTime(), incrementalInferenceResults.getDepartureTime());
         if (categoryConstraint) {
             return true;
@@ -272,14 +268,6 @@ public class TripACOProblem extends ItineraryPlanning {
 
     private double costPenalty(double totalCost[]) {
         return ChanceConstraint.inequalityValue(totalCost, TripACOParameters.costLimit, ChanceConstraint.LimitType.Lower, TripACOParameters.costLimitConfidenceInterval);
-    }
-
-    private double physicalActivityUpperPenalty(double totalPA[]) {
-        return ChanceConstraint.inequalityValue(totalPA, TripACOParameters.physicalActivityUpperLimit, ChanceConstraint.LimitType.Lower, TripACOParameters.physicalActivityLimitConfidenceLevel);
-    }
-
-    private double physicalActivityLowerPenalty(double totalPA[]) {
-        return ChanceConstraint.inequalityValue(totalPA, TripACOParameters.physicalActivityLowerLimit, ChanceConstraint.LimitType.Upper, TripACOParameters.physicalActivityLimitConfidenceLevel);
     }
 
     private boolean categoryConstraintsViolation(BasicPoi destPoi, double arrivalTime[], double departureTime[]) {

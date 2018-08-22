@@ -10,8 +10,7 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "제주국제공항";          // 여정 시작장소
         String endPoiTitle = "켄싱턴제주호텔";          // 여정 종료장소
         String[] area = {"제주특별자치도"};             // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
 
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createDinnerConstraint());       // Dinner
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createShoppingConstraint());     // Shopping
@@ -25,8 +24,7 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "켄싱턴제주호텔";        // 여정 시작장소
         String endPoiTitle = "제주퍼시픽호텔";          // 여정 종료장소
         String[] area = {"서귀포시"};                   // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
 
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createLunchConstraint());        // Lunch
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createDinnerConstraint());       // Dinner
@@ -40,8 +38,7 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "제주퍼시픽호텔";        // 여정 시작장소
         String endPoiTitle = "제주국제공항";            // 여정 종료장소
         String[] area = {"제주시"};                     // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
 
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createLunchConstraint());        // Lunch
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createShoppingConstraint());     // Shopping
@@ -55,8 +52,7 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "제주국제공항";          // 여정 시작장소
         String endPoiTitle = "켄싱턴제주호텔";          // 여정 종료장소
         String[] area = {"제주특별자치도"};             // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
 
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createDinnerConstraint());       // Dinner
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createShoppingConstraint());     // Shopping
@@ -72,8 +68,7 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "켄싱턴제주호텔";        // 여정 시작장소
         String endPoiTitle = "제주퍼시픽호텔";          // 여정 종료장소
         String[] area = {"서귀포시"};                   // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
 
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createLunchConstraint());        // Lunch
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createDinnerConstraint());       // Dinner
@@ -88,8 +83,7 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "제주퍼시픽호텔";        // 여정 시작장소
         String endPoiTitle = "제주국제공항";            // 여정 종료장소
         String[] area = {"제주시"};                     // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
 
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createLunchConstraint());        // Lunch
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createShoppingConstraint());     // Shopping
@@ -104,9 +98,8 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "제주국제공항";          // 여정 시작장소
         String endPoiTitle = "켄싱턴제주호텔";          // 여정 종료장소
         String[] area = {"제주특별자치도"};             // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
 
-        return new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        return new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
     }
 
     public static DailyTripEntry dailyTripEntryExample8() {
@@ -115,9 +108,8 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "켄싱턴제주호텔";        // 여정 시작장소
         String endPoiTitle = "제주퍼시픽호텔";          // 여정 종료장소
         String[] area = {"서귀포시"};                   // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
 
-        return new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        return new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
     }
 
     public static DailyTripEntry dailyTripEntryExample9() {
@@ -126,9 +118,8 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "제주퍼시픽호텔";        // 여정 시작장소
         String endPoiTitle = "제주국제공항";            // 여정 종료장소
         String[] area = {"제주시"};                     // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
 
-        return new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        return new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
     }
 
     public static DailyTripEntry dailyTripEntryExample10() {
@@ -137,9 +128,8 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "제주국제공항";          // 여정 시작장소
         String endPoiTitle = "제주국제공항";            // 여정 종료장소
         String[] area = {"제주특별자치도"};             // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
 
-        return new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        return new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
     }
 
     public static DailyTripEntry dailyTripEntryExample11() {
@@ -148,8 +138,7 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "제주국제공항";          // 여정 시작장소
         String endPoiTitle = "켄싱턴제주호텔";          // 여정 종료장소
         String[] area = {"제주특별자치도"};             // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
 
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createLunchConstraint());        // Lunch
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createDinnerConstraint());       // Dinner
@@ -164,8 +153,7 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "켄싱턴제주호텔";        // 여정 시작장소
         String endPoiTitle = "제주퍼시픽호텔";          // 여정 종료장소
         String[] area = {"서귀포시"};                   // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
 
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createLunchConstraint());        // Lunch
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createDinnerConstraint());       // Dinner
@@ -180,8 +168,7 @@ public class DailyTripEntryFactory {
         String startPoiTitle = "제주퍼시픽호텔";        // 여정 시작장소
         String endPoiTitle = "제주국제공항";            // 여정 종료장소
         String[] area = {"제주시"};                     // 여정 지역
-        Double physicalActivityLimit = 2000.0;          // 활동량 상한
-        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle, physicalActivityLimit);
+        DailyTripEntry dailyTripEntry = new DailyTripEntry(startTimeStr, returnTimeStr, area, startPoiTitle, endPoiTitle);
 
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createLunchConstraint());        // Lunch
         dailyTripEntry.addCategoryConstraint(CategoryConstraintFactory.createDinnerConstraint());       // Dinner
