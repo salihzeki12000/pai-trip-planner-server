@@ -7,6 +7,3 @@ mustlist daily->전체로 적용
 
 issues:
 KakaoLocalApiHelper에 restApiKey github 올라가면 보안 이슈 있음, 해결 필요
-
-daumMap iframe으로 넣는 방식
-KakaoLocalApiHelper에 restApiKey github 올라가면 보안 이슈 있음, 해결 필요
