@@ -62,7 +62,7 @@ public class DatabaseManager {
     private static final int MIN_NUM_SCORED_REVIEWS = 0;
     private static final int MIN_NUM_REVIEWS = 100;
 
-    private static final double MIN_DISTANCE_BW_POIS = 15;
+    private static final double MIN_DISTANCE_BTW_POIS = 15;
 
     private static Map<String, String> createAreaUrlMap() {
         Map<String, String> areaUrlMap = new HashMap<>();
@@ -1089,7 +1089,7 @@ public class DatabaseManager {
                         || (fromBP.getPoiType().category.equals("교통,수송") && toBP.getPoiType().category.equals("교통,수송"))
                         || (fromBP.getPoiType().category.equals("음식점") && toBP.getPoiType().category.equals("음식점"))
                         || fromBP.equals(toBP)
-                        || distance > MIN_DISTANCE_BW_POIS))
+                        || distance > MIN_DISTANCE_BTW_POIS))
                     basicPoiPairList.add(new BasicPoi[]{fromBP, toBP});
             }
         }
@@ -1108,7 +1108,7 @@ public class DatabaseManager {
         }
 
         int idx = 1;
-        double SEC_PER_LOOP = 1.5;
+        double SEC_PER_LOOP = 2.15; // this is minimum value
         for (BasicPoi[] basicPoiPair : basicPoiPairList) {
             long startTime = System.currentTimeMillis();
 
@@ -1283,7 +1283,7 @@ public class DatabaseManager {
         // 12. createCategoriesJsonFile 실행
 //        createCategoriesJsonFile(area);
 
-        // 13. createRouteJsonFiles 실행
+        // 13. createRouteJsonFiles 실행 (중간에 멈춘경우 update 실행하여 마무리)
 //        createRouteJsonFiles(area);
         String filename = "180821162112_제주특별자치도_route_car.json";
         updateRouteJsonFile(area, filename);
